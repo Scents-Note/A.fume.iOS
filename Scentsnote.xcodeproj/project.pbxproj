@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2117286FC2FD9949DCD33AA8 /* Pods_Scentsnote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94FFF111A189ED842A449AAE /* Pods_Scentsnote.framework */; };
+		3863AC847E6A85C6F2A4D3D7 /* Pods_ScentsnoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A65933E90DD0C986D627F9 /* Pods_ScentsnoteTests.framework */; };
 		4A8F89C828F4F91A00ACE0F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89C728F4F91A00ACE0F1 /* AppDelegate.swift */; };
 		4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89C928F4F91A00ACE0F1 /* SceneDelegate.swift */; };
 		4A8F89CC28F4F91A00ACE0F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89CB28F4F91A00ACE0F1 /* ViewController.swift */; };
@@ -16,6 +18,7 @@
 		4A8F89DF28F4F91A00ACE0F1 /* ScentsnoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89DE28F4F91A00ACE0F1 /* ScentsnoteTests.swift */; };
 		4A8F89E928F4F91A00ACE0F1 /* ScentsnoteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89E828F4F91A00ACE0F1 /* ScentsnoteUITests.swift */; };
 		4A8F89EB28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */; };
+		BA85E91C3DD97F8653EC93FF /* Pods_Scentsnote_ScentsnoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4710437B95567FDFCACC4DBE /* Pods_Scentsnote_ScentsnoteUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02ECD673E98C72A46A8B32D3 /* Pods-Scentsnote-ScentsnoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote-ScentsnoteUITests.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests.release.xcconfig"; sourceTree = "<group>"; };
+		08C74AC5C1D83FD46A833F85 /* Pods-Scentsnote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.debug.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.debug.xcconfig"; sourceTree = "<group>"; };
+		1A82A9EC388AC1FD16853DFC /* Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		4710437B95567FDFCACC4DBE /* Pods_Scentsnote_ScentsnoteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scentsnote_ScentsnoteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8F89C428F4F91A00ACE0F1 /* Scentsnote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Scentsnote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8F89C728F4F91A00ACE0F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A8F89C928F4F91A00ACE0F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +56,11 @@
 		4A8F89E428F4F91A00ACE0F1 /* ScentsnoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScentsnoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8F89E828F4F91A00ACE0F1 /* ScentsnoteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsnoteUITests.swift; sourceTree = "<group>"; };
 		4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsnoteUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		50A65933E90DD0C986D627F9 /* Pods_ScentsnoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsnoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		94FFF111A189ED842A449AAE /* Pods_Scentsnote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scentsnote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.release.xcconfig"; sourceTree = "<group>"; };
+		FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2117286FC2FD9949DCD33AA8 /* Pods_Scentsnote.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3863AC847E6A85C6F2A4D3D7 /* Pods_ScentsnoteTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,12 +84,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA85E91C3DD97F8653EC93FF /* Pods_Scentsnote_ScentsnoteUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		28738E7BE54139D15744E949 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				94FFF111A189ED842A449AAE /* Pods_Scentsnote.framework */,
+				4710437B95567FDFCACC4DBE /* Pods_Scentsnote_ScentsnoteUITests.framework */,
+				50A65933E90DD0C986D627F9 /* Pods_ScentsnoteTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4A8F89BB28F4F91A00ACE0F1 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +108,8 @@
 				4A8F89DD28F4F91A00ACE0F1 /* ScentsnoteTests */,
 				4A8F89E728F4F91A00ACE0F1 /* ScentsnoteUITests */,
 				4A8F89C528F4F91A00ACE0F1 /* Products */,
+				607E45E672FB1FF5907CBA7A /* Pods */,
+				28738E7BE54139D15744E949 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +154,20 @@
 			path = ScentsnoteUITests;
 			sourceTree = "<group>";
 		};
+		607E45E672FB1FF5907CBA7A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				08C74AC5C1D83FD46A833F85 /* Pods-Scentsnote.debug.xcconfig */,
+				FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */,
+				1A82A9EC388AC1FD16853DFC /* Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig */,
+				02ECD673E98C72A46A8B32D3 /* Pods-Scentsnote-ScentsnoteUITests.release.xcconfig */,
+				C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */,
+				D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -134,9 +175,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A8F89EE28F4F91A00ACE0F1 /* Build configuration list for PBXNativeTarget "Scentsnote" */;
 			buildPhases = (
+				4204213D8FF75406F6599CB3 /* [CP] Check Pods Manifest.lock */,
 				4A8F89C028F4F91A00ACE0F1 /* Sources */,
 				4A8F89C128F4F91A00ACE0F1 /* Frameworks */,
 				4A8F89C228F4F91A00ACE0F1 /* Resources */,
+				2251A39601BE024341B31729 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -151,6 +194,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A8F89F128F4F91A00ACE0F1 /* Build configuration list for PBXNativeTarget "ScentsnoteTests" */;
 			buildPhases = (
+				0DD4804CEDDAAA1562D8B45F /* [CP] Check Pods Manifest.lock */,
 				4A8F89D628F4F91A00ACE0F1 /* Sources */,
 				4A8F89D728F4F91A00ACE0F1 /* Frameworks */,
 				4A8F89D828F4F91A00ACE0F1 /* Resources */,
@@ -169,9 +213,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A8F89F428F4F91A00ACE0F1 /* Build configuration list for PBXNativeTarget "ScentsnoteUITests" */;
 			buildPhases = (
+				C691C81EFBC84C9F912BF1C8 /* [CP] Check Pods Manifest.lock */,
 				4A8F89E028F4F91A00ACE0F1 /* Sources */,
 				4A8F89E128F4F91A00ACE0F1 /* Frameworks */,
 				4A8F89E228F4F91A00ACE0F1 /* Resources */,
+				648694101AC4F0A339CC86F1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -207,7 +253,7 @@
 				};
 			};
 			buildConfigurationList = 4A8F89BF28F4F91A00ACE0F1 /* Build configuration list for PBXProject "Scentsnote" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -252,6 +298,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0DD4804CEDDAAA1562D8B45F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ScentsnoteTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2251A39601BE024341B31729 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Scentsnote/Pods-Scentsnote-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Scentsnote/Pods-Scentsnote-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Scentsnote/Pods-Scentsnote-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4204213D8FF75406F6599CB3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Scentsnote-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		648694101AC4F0A339CC86F1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C691C81EFBC84C9F912BF1C8 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Scentsnote-ScentsnoteUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4A8F89C028F4F91A00ACE0F1 /* Sources */ = {
@@ -432,6 +581,7 @@
 		};
 		4A8F89EF28F4F91A00ACE0F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08C74AC5C1D83FD46A833F85 /* Pods-Scentsnote.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -460,6 +610,7 @@
 		};
 		4A8F89F028F4F91A00ACE0F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -488,6 +639,7 @@
 		};
 		4A8F89F228F4F91A00ACE0F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -508,6 +660,7 @@
 		};
 		4A8F89F328F4F91A00ACE0F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -528,6 +681,7 @@
 		};
 		4A8F89F528F4F91A00ACE0F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A82A9EC388AC1FD16853DFC /* Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -546,6 +700,7 @@
 		};
 		4A8F89F628F4F91A00ACE0F1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02ECD673E98C72A46A8B32D3 /* Pods-Scentsnote-ScentsnoteUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
