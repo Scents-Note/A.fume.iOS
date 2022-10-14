@@ -126,13 +126,13 @@
 		4A8F89C628F4F91A00ACE0F1 /* Scentsnote */ = {
 			isa = PBXGroup;
 			children = (
-				4A8F89C728F4F91A00ACE0F1 /* AppDelegate.swift */,
-				4A8F89C928F4F91A00ACE0F1 /* SceneDelegate.swift */,
+				4AAFE78728F8E80100EA6FB4 /* Application */,
+				4AAFE78428F8E7AC00EA6FB4 /* Resource */,
+				4AAFE78328F8E7A400EA6FB4 /* Domain */,
+				4AAFE78228F8E79B00EA6FB4 /* Presentation */,
+				4AAFE78128F8E79400EA6FB4 /* Data */,
+				4AAFE78028F8E78100EA6FB4 /* Network */,
 				4A8F89CB28F4F91A00ACE0F1 /* ViewController.swift */,
-				4A8F89CD28F4F91A00ACE0F1 /* Main.storyboard */,
-				4A8F89D028F4F91A00ACE0F1 /* Assets.xcassets */,
-				4A8F89D228F4F91A00ACE0F1 /* LaunchScreen.storyboard */,
-				4A8F89D528F4F91A00ACE0F1 /* Info.plist */,
 			);
 			path = Scentsnote;
 			sourceTree = "<group>";
@@ -152,6 +152,70 @@
 				4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */,
 			);
 			path = ScentsnoteUITests;
+			sourceTree = "<group>";
+		};
+		4AAFE78028F8E78100EA6FB4 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		4AAFE78128F8E79400EA6FB4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4AAFE78228F8E79B00EA6FB4 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		4AAFE78328F8E7A400EA6FB4 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		4AAFE78428F8E7AC00EA6FB4 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE78628F8E7EE00EA6FB4 /* Storyboard */,
+				4AAFE78528F8E7C800EA6FB4 /* Asset */,
+				4A8F89D528F4F91A00ACE0F1 /* Info.plist */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		4AAFE78528F8E7C800EA6FB4 /* Asset */ = {
+			isa = PBXGroup;
+			children = (
+				4A8F89D028F4F91A00ACE0F1 /* Assets.xcassets */,
+			);
+			path = Asset;
+			sourceTree = "<group>";
+		};
+		4AAFE78628F8E7EE00EA6FB4 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				4A8F89CD28F4F91A00ACE0F1 /* Main.storyboard */,
+				4A8F89D228F4F91A00ACE0F1 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		4AAFE78728F8E80100EA6FB4 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				4A8F89C728F4F91A00ACE0F1 /* AppDelegate.swift */,
+				4A8F89C928F4F91A00ACE0F1 /* SceneDelegate.swift */,
+			);
+			path = Application;
 			sourceTree = "<group>";
 		};
 		607E45E672FB1FF5907CBA7A /* Pods */ = {
