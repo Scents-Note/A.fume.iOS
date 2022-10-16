@@ -21,6 +21,12 @@
 		4AAFE78C28FA825900EA6FB4 /* NanumMyeongjo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE78928FA825900EA6FB4 /* NanumMyeongjo.otf */; };
 		4AAFE78D28FA825900EA6FB4 /* NanumMyeongjoBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE78A28FA825900EA6FB4 /* NanumMyeongjoBold.otf */; };
 		4AAFE78E28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE78B28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf */; };
+		4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */; };
+		4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */; };
+		4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */; };
+		4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */; };
+		4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */; };
+		4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */; };
 		BA85E91C3DD97F8653EC93FF /* Pods_Scentsnote_ScentsnoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4710437B95567FDFCACC4DBE /* Pods_Scentsnote_ScentsnoteUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +68,12 @@
 		4AAFE78928FA825900EA6FB4 /* NanumMyeongjo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjo.otf; path = "../../../../../Downloads/나눔명조/NanumMyeongjo.otf"; sourceTree = "<group>"; };
 		4AAFE78A28FA825900EA6FB4 /* NanumMyeongjoBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjoBold.otf; path = "../../../../../Downloads/나눔명조/NanumMyeongjoBold.otf"; sourceTree = "<group>"; };
 		4AAFE78B28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjoExtraBold.otf; path = "../../../../../Downloads/나눔명조/NanumMyeongjoExtraBold.otf"; sourceTree = "<group>"; };
+		4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishDelegate.swift; sourceTree = "<group>"; };
+		4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
+		4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
+		4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
+		4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultApplicationCoordinator.swift; sourceTree = "<group>"; };
 		50A65933E90DD0C986D627F9 /* Pods_ScentsnoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsnoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FFF111A189ED842A449AAE /* Pods_Scentsnote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scentsnote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -132,6 +144,7 @@
 		4A8F89C628F4F91A00ACE0F1 /* Scentsnote */ = {
 			isa = PBXGroup;
 			children = (
+				4AAFE78F28FAA79000EA6FB4 /* Util */,
 				4AAFE78728F8E80100EA6FB4 /* Application */,
 				4AAFE78428F8E7AC00EA6FB4 /* Resource */,
 				4AAFE78328F8E7A400EA6FB4 /* Domain */,
@@ -177,6 +190,8 @@
 		4AAFE78228F8E79B00EA6FB4 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AAFE79328FAA81E00EA6FB4 /* Common */,
+				4AAFE7DE28FBC11700EA6FB4 /* SignScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -233,6 +248,97 @@
 				4AAFE78B28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf */,
 			);
 			path = Font;
+			sourceTree = "<group>";
+		};
+		4AAFE78F28FAA79000EA6FB4 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE79028FAA79B00EA6FB4 /* Extension */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		4AAFE79028FAA79B00EA6FB4 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE79A28FAA94200EA6FB4 /* Constant */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		4AAFE79328FAA81E00EA6FB4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE79428FAA82900EA6FB4 /* Coordinator */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		4AAFE79428FAA82900EA6FB4 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE7DA28FB9E8F00EA6FB4 /* Factory */,
+				4AAFE7D128FB974A00EA6FB4 /* Protocol */,
+				4AAFE79728FAA8A100EA6FB4 /* Delegate */,
+				4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		4AAFE79728FAA8A100EA6FB4 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		4AAFE79A28FAA94200EA6FB4 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		4AAFE7D128FB974A00EA6FB4 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */,
+				4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		4AAFE7DA28FB9E8F00EA6FB4 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		4AAFE7DE28FBC11700EA6FB4 /* SignScene */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE7E428FBCA7100EA6FB4 /* ViewController */,
+				4AAFE7E328FBCA6700EA6FB4 /* Coordinator */,
+			);
+			path = SignScene;
+			sourceTree = "<group>";
+		};
+		4AAFE7E328FBCA6700EA6FB4 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		4AAFE7E428FBCA7100EA6FB4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		607E45E672FB1FF5907CBA7A /* Pods */ = {
@@ -490,8 +596,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */,
+				4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */,
+				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
+				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
+				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4A8F89CC28F4F91A00ACE0F1 /* ViewController.swift in Sources */,
 				4A8F89C828F4F91A00ACE0F1 /* AppDelegate.swift in Sources */,
+				4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
