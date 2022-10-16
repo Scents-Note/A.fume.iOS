@@ -20,14 +20,14 @@ final class DefaultApplicationCoordinator: ApplicationCoordinator {
   }
   
   func start() {
-    
+    self.runOnboardingFlow()
   }
   
-  func runSigningFlow() {
-//    let loginCoordinator = DefaultLoginCoordinator(self.navigationController)
-//    loginCoordinator.finishDelegate = self
-//    loginCoordinator.start()
-//    childCoordinators.append(loginCoordinator)
+  func runOnboardingFlow() {
+    let onboardingCoordinator = DefaultOnboardingCoordinator(self.navigationController)
+    onboardingCoordinator.finishDelegate = self
+    onboardingCoordinator.start()
+    childCoordinators.append(onboardingCoordinator)
   }
 }
 
@@ -39,8 +39,8 @@ extension DefaultApplicationCoordinator: CoordinatorFinishDelegate {
     self.navigationController.viewControllers.removeAll()
     
     switch childCoordinator.type {
-    case .signing:
-      self.runSigningFlow()
+    case .onboarding:
+      self.runOnboardingFlow()
     default:
       break
     }

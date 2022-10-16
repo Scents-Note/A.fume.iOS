@@ -18,15 +18,28 @@
 		4A8F89DF28F4F91A00ACE0F1 /* ScentsnoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89DE28F4F91A00ACE0F1 /* ScentsnoteTests.swift */; };
 		4A8F89E928F4F91A00ACE0F1 /* ScentsnoteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89E828F4F91A00ACE0F1 /* ScentsnoteUITests.swift */; };
 		4A8F89EB28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */; };
-		4AAFE78C28FA825900EA6FB4 /* NanumMyeongjo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE78928FA825900EA6FB4 /* NanumMyeongjo.otf */; };
-		4AAFE78D28FA825900EA6FB4 /* NanumMyeongjoBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE78A28FA825900EA6FB4 /* NanumMyeongjoBold.otf */; };
-		4AAFE78E28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE78B28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf */; };
 		4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */; };
 		4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */; };
 		4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */; };
 		4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */; };
 		4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */; };
 		4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */; };
+		4AAFE7E728FBCF0F00EA6FB4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E628FBCF0F00EA6FB4 /* OnboardingViewController.swift */; };
+		4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E828FBCF2700EA6FB4 /* OnboardingViewModel.swift */; };
+		4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7EB28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift */; };
+		4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7ED28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift */; };
+		4AAFE7F028FBDBCB00EA6FB4 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7EF28FBDBCB00EA6FB4 /* LoginCoordinator.swift */; };
+		4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7F128FBE32200EA6FB4 /* UIColor+Custom.swift */; };
+		4AAFE7F428FBE48F00EA6FB4 /* UIFont+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7F328FBE48F00EA6FB4 /* UIFont+Custom.swift */; };
+		4AAFE80B28FBF7DE00EA6FB4 /* NotoSansCJKkr-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE80828FBF7DE00EA6FB4 /* NotoSansCJKkr-Bold.otf */; };
+		4AAFE80C28FBF7DE00EA6FB4 /* NotoSansCJKkr-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE80928FBF7DE00EA6FB4 /* NotoSansCJKkr-Medium.otf */; };
+		4AAFE80D28FBF7DE00EA6FB4 /* NotoSansCJKkr-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE80A28FBF7DE00EA6FB4 /* NotoSansCJKkr-Regular.otf */; };
+		4AAFE81128FBF7F600EA6FB4 /* NanumMyeongjoExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE80E28FBF7F600EA6FB4 /* NanumMyeongjoExtraBold.otf */; };
+		4AAFE81228FBF7F600EA6FB4 /* NanumMyeongjo.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE80F28FBF7F600EA6FB4 /* NanumMyeongjo.otf */; };
+		4AAFE81328FBF7F600EA6FB4 /* NanumMyeongjoBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AAFE81028FBF7F600EA6FB4 /* NanumMyeongjoBold.otf */; };
+		4AAFE81528FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81428FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift */; };
+		4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81628FC035D00EA6FB4 /* LoginViewController.swift */; };
+		4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81828FC058800EA6FB4 /* LoginViewModel.swift */; };
 		BA85E91C3DD97F8653EC93FF /* Pods_Scentsnote_ScentsnoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4710437B95567FDFCACC4DBE /* Pods_Scentsnote_ScentsnoteUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,15 +78,28 @@
 		4A8F89E428F4F91A00ACE0F1 /* ScentsnoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ScentsnoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8F89E828F4F91A00ACE0F1 /* ScentsnoteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsnoteUITests.swift; sourceTree = "<group>"; };
 		4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsnoteUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		4AAFE78928FA825900EA6FB4 /* NanumMyeongjo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjo.otf; path = "../../../../../Downloads/나눔명조/NanumMyeongjo.otf"; sourceTree = "<group>"; };
-		4AAFE78A28FA825900EA6FB4 /* NanumMyeongjoBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjoBold.otf; path = "../../../../../Downloads/나눔명조/NanumMyeongjoBold.otf"; sourceTree = "<group>"; };
-		4AAFE78B28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = NanumMyeongjoExtraBold.otf; path = "../../../../../Downloads/나눔명조/NanumMyeongjoExtraBold.otf"; sourceTree = "<group>"; };
 		4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishDelegate.swift; sourceTree = "<group>"; };
 		4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
 		4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
 		4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultApplicationCoordinator.swift; sourceTree = "<group>"; };
+		4AAFE7E628FBCF0F00EA6FB4 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		4AAFE7E828FBCF2700EA6FB4 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		4AAFE7EB28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		4AAFE7ED28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultOnboardingCoordinator.swift; sourceTree = "<group>"; };
+		4AAFE7EF28FBDBCB00EA6FB4 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		4AAFE7F128FBE32200EA6FB4 /* UIColor+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
+		4AAFE7F328FBE48F00EA6FB4 /* UIFont+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Custom.swift"; sourceTree = "<group>"; };
+		4AAFE80828FBF7DE00EA6FB4 /* NotoSansCJKkr-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Bold.otf"; sourceTree = "<group>"; };
+		4AAFE80928FBF7DE00EA6FB4 /* NotoSansCJKkr-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Medium.otf"; sourceTree = "<group>"; };
+		4AAFE80A28FBF7DE00EA6FB4 /* NotoSansCJKkr-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansCJKkr-Regular.otf"; sourceTree = "<group>"; };
+		4AAFE80E28FBF7F600EA6FB4 /* NanumMyeongjoExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoExtraBold.otf; sourceTree = "<group>"; };
+		4AAFE80F28FBF7F600EA6FB4 /* NanumMyeongjo.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjo.otf; sourceTree = "<group>"; };
+		4AAFE81028FBF7F600EA6FB4 /* NanumMyeongjoBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = NanumMyeongjoBold.otf; sourceTree = "<group>"; };
+		4AAFE81428FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginCoordinator.swift; sourceTree = "<group>"; };
+		4AAFE81628FC035D00EA6FB4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4AAFE81828FC058800EA6FB4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		50A65933E90DD0C986D627F9 /* Pods_ScentsnoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsnoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FFF111A189ED842A449AAE /* Pods_Scentsnote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scentsnote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -191,7 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE79328FAA81E00EA6FB4 /* Common */,
-				4AAFE7DE28FBC11700EA6FB4 /* SignScene */,
+				4AAFE7DE28FBC11700EA6FB4 /* OnboardingScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -243,9 +269,12 @@
 		4AAFE78828FA824200EA6FB4 /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				4AAFE78928FA825900EA6FB4 /* NanumMyeongjo.otf */,
-				4AAFE78A28FA825900EA6FB4 /* NanumMyeongjoBold.otf */,
-				4AAFE78B28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf */,
+				4AAFE80F28FBF7F600EA6FB4 /* NanumMyeongjo.otf */,
+				4AAFE81028FBF7F600EA6FB4 /* NanumMyeongjoBold.otf */,
+				4AAFE80E28FBF7F600EA6FB4 /* NanumMyeongjoExtraBold.otf */,
+				4AAFE80828FBF7DE00EA6FB4 /* NotoSansCJKkr-Bold.otf */,
+				4AAFE80928FBF7DE00EA6FB4 /* NotoSansCJKkr-Medium.otf */,
+				4AAFE80A28FBF7DE00EA6FB4 /* NotoSansCJKkr-Regular.otf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -262,6 +291,8 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE79A28FAA94200EA6FB4 /* Constant */,
+				4AAFE7F128FBE32200EA6FB4 /* UIColor+Custom.swift */,
+				4AAFE7F328FBE48F00EA6FB4 /* UIFont+Custom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -318,18 +349,23 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
-		4AAFE7DE28FBC11700EA6FB4 /* SignScene */ = {
+		4AAFE7DE28FBC11700EA6FB4 /* OnboardingScene */ = {
 			isa = PBXGroup;
 			children = (
-				4AAFE7E428FBCA7100EA6FB4 /* ViewController */,
 				4AAFE7E328FBCA6700EA6FB4 /* Coordinator */,
+				4AAFE7F528FBE5E100EA6FB4 /* View */,
+				4AAFE7E428FBCA7100EA6FB4 /* ViewController */,
+				4AAFE7E528FBCCBB00EA6FB4 /* ViewModel */,
 			);
-			path = SignScene;
+			path = OnboardingScene;
 			sourceTree = "<group>";
 		};
 		4AAFE7E328FBCA6700EA6FB4 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				4AAFE7EA28FBCF3F00EA6FB4 /* Protocol */,
+				4AAFE7ED28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift */,
+				4AAFE81428FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -337,8 +373,35 @@
 		4AAFE7E428FBCA7100EA6FB4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4AAFE7E628FBCF0F00EA6FB4 /* OnboardingViewController.swift */,
+				4AAFE81628FC035D00EA6FB4 /* LoginViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4AAFE7E528FBCCBB00EA6FB4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE7E828FBCF2700EA6FB4 /* OnboardingViewModel.swift */,
+				4AAFE81828FC058800EA6FB4 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AAFE7EA28FBCF3F00EA6FB4 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				4AAFE7EB28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift */,
+				4AAFE7EF28FBDBCB00EA6FB4 /* LoginCoordinator.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		4AAFE7F528FBE5E100EA6FB4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		607E45E672FB1FF5907CBA7A /* Pods */ = {
@@ -464,11 +527,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A8F89D428F4F91A00ACE0F1 /* LaunchScreen.storyboard in Resources */,
-				4AAFE78E28FA825900EA6FB4 /* NanumMyeongjoExtraBold.otf in Resources */,
+				4AAFE80D28FBF7DE00EA6FB4 /* NotoSansCJKkr-Regular.otf in Resources */,
+				4AAFE80B28FBF7DE00EA6FB4 /* NotoSansCJKkr-Bold.otf in Resources */,
 				4A8F89D128F4F91A00ACE0F1 /* Assets.xcassets in Resources */,
 				4A8F89CF28F4F91A00ACE0F1 /* Main.storyboard in Resources */,
-				4AAFE78D28FA825900EA6FB4 /* NanumMyeongjoBold.otf in Resources */,
-				4AAFE78C28FA825900EA6FB4 /* NanumMyeongjo.otf in Resources */,
+				4AAFE80C28FBF7DE00EA6FB4 /* NotoSansCJKkr-Medium.otf in Resources */,
+				4AAFE81128FBF7F600EA6FB4 /* NanumMyeongjoExtraBold.otf in Resources */,
+				4AAFE81328FBF7F600EA6FB4 /* NanumMyeongjoBold.otf in Resources */,
+				4AAFE81228FBF7F600EA6FB4 /* NanumMyeongjo.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,14 +662,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
+				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */,
 				4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */,
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
+				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
+				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
+				4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */,
+				4AAFE7F428FBE48F00EA6FB4 /* UIFont+Custom.swift in Sources */,
+				4AAFE7F028FBDBCB00EA6FB4 /* LoginCoordinator.swift in Sources */,
+				4AAFE81528FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift in Sources */,
 				4A8F89CC28F4F91A00ACE0F1 /* ViewController.swift in Sources */,
 				4A8F89C828F4F91A00ACE0F1 /* AppDelegate.swift in Sources */,
+				4AAFE7E728FBCF0F00EA6FB4 /* OnboardingViewController.swift in Sources */,
 				4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */,
+				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

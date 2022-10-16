@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ApplicationCoordinator: Coordinator {
-  func runSigningFlow()
+  func runOnboardingFlow()
   
 }
