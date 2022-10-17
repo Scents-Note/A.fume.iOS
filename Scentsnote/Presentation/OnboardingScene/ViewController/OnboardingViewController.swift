@@ -24,14 +24,14 @@ final class OnboardingViewController: UIViewController {
   
   private let loginButton = UIButton().then {
     $0.setTitle("로그인 하기", for: .normal)
-    $0.titleLabel?.font = .notosans(type: .bold)
+    $0.titleLabel?.font = .notoSans(type: .bold)
     $0.setTitleColor(.white, for: .normal)
     $0.layer.backgroundColor = UIColor.blackText.cgColor
   }
   
   private let signInButton = UIButton().then {
     $0.setTitle("회원가입하기", for: .normal)
-    $0.titleLabel?.font = .notosans(type: .bold)
+    $0.titleLabel?.font = .notoSans(type: .bold)
     $0.setTitleColor(.blackText, for: .normal)
     $0.layer.backgroundColor = UIColor.white.cgColor
   }
