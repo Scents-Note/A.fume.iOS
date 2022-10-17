@@ -42,7 +42,12 @@ final class OnboardingViewController: UIViewController {
     self.bindViewModel()
   }
   
-  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationItem.backBarButtonItem = self.navigationController?.setNavigationBackButton()
+    self.navigationController?.setNavigationBarHidden(true, animated: animated)
+  }
+    
 }
 
 extension OnboardingViewController {

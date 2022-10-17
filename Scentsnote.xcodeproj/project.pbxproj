@@ -40,6 +40,8 @@
 		4AAFE81528FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81428FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift */; };
 		4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81628FC035D00EA6FB4 /* LoginViewController.swift */; };
 		4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81828FC058800EA6FB4 /* LoginViewModel.swift */; };
+		4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81A28FCE7F000EA6FB4 /* BaseNavigationController.swift */; };
+		4AAFE81D28FCF4B300EA6FB4 /* UINavigationController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE81C28FCF4B300EA6FB4 /* UINavigationController+Extension.swift */; };
 		BA85E91C3DD97F8653EC93FF /* Pods_Scentsnote_ScentsnoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4710437B95567FDFCACC4DBE /* Pods_Scentsnote_ScentsnoteUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -100,6 +102,8 @@
 		4AAFE81428FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultLoginCoordinator.swift; sourceTree = "<group>"; };
 		4AAFE81628FC035D00EA6FB4 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4AAFE81828FC058800EA6FB4 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		4AAFE81A28FCE7F000EA6FB4 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
+		4AAFE81C28FCF4B300EA6FB4 /* UINavigationController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Extension.swift"; sourceTree = "<group>"; };
 		50A65933E90DD0C986D627F9 /* Pods_ScentsnoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsnoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		94FFF111A189ED842A449AAE /* Pods_Scentsnote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Scentsnote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -293,6 +297,7 @@
 				4AAFE79A28FAA94200EA6FB4 /* Constant */,
 				4AAFE7F128FBE32200EA6FB4 /* UIColor+Custom.swift */,
 				4AAFE7F328FBE48F00EA6FB4 /* UIFont+Custom.swift */,
+				4AAFE81C28FCF4B300EA6FB4 /* UINavigationController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -301,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE79428FAA82900EA6FB4 /* Coordinator */,
+				4AAFE81A28FCE7F000EA6FB4 /* BaseNavigationController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -670,8 +676,10 @@
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
+				4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */,
+				4AAFE81D28FCF4B300EA6FB4 /* UINavigationController+Extension.swift in Sources */,
 				4AAFE7F428FBE48F00EA6FB4 /* UIFont+Custom.swift in Sources */,
 				4AAFE7F028FBDBCB00EA6FB4 /* LoginCoordinator.swift in Sources */,
 				4AAFE81528FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift in Sources */,

@@ -25,7 +25,6 @@ final class OnboardingViewModel {
   func transform(from input: Input, disposeBag: DisposeBag) {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        print("User Log: gigigiggi ")
         self?.coordinator?.runLoginFlow()
       })
       .disposed(by: disposeBag)

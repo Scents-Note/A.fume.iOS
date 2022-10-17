@@ -25,7 +25,7 @@ extension UIFont {
   }
   
   static func nanumMyeongjo(type: nanumMyeongjoType = .regular, size: CGFloat = 14) -> UIFont {
-    return UIFont(name: "NanumMyeongjo\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
+    return UIFont(name: "NanumMyeongjoOTF\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
   }
   
 }

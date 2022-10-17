@@ -8,6 +8,7 @@
 import UIKit
 
 import RxSwift
+import SnapKit
 
 final class LoginViewController: ViewController {
   
@@ -16,21 +17,15 @@ final class LoginViewController: ViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-//    self.configureNavigation()
+    self.view.backgroundColor = .systemBackground
   }
   
-//  override func viewWillAppear(_ animated: Bool) {
-//    super.viewWillAppear(animated)
-//    self.navigationController?.setNavigationBarHidden(false, animated: animated)
-//  }
-}
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    self.navigationItem.titleView = self.navigationController?.setNavigationTitle(title: "로그인")
 
-extension LoginViewController {
-  private func configureNavigation() {
-    let backBarButtonItem = UIBarButtonItem(title: "로그인", style: .plain, target: nil, action: nil)
-    let backImage = UIImage(named: "btnBack")
-    backBarButtonItem.image = backImage
-    backBarButtonItem.tintColor = .blackText
-    self.navigationItem.backBarButtonItem = backBarButtonItem
+    
   }
 }
+
