@@ -20,11 +20,11 @@ extension UIFont {
     case bold = "Bold"
   }
   
-  static func notoSans(type: notoSansType = .regular, size: CGFloat = 14) -> UIFont {
+  static func notoSans(type: notoSansType, size: CGFloat) -> UIFont {
     return UIFont(name: "NotoSansCJKkr-\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
   }
   
-  static func nanumMyeongjo(type: nanumMyeongjoType = .regular, size: CGFloat = 14) -> UIFont {
+  static func nanumMyeongjo(type: nanumMyeongjoType, size: CGFloat) -> UIFont {
     return UIFont(name: "NanumMyeongjoOTF\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
   }
   
