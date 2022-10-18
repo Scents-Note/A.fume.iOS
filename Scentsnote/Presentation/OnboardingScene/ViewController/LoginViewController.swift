@@ -25,13 +25,15 @@ class LoginViewController: ViewController {
   
   private let passwordTextField = UnderLineTextField().then {
     $0.setPlaceholder(string: "최소 4자리 이상 입력해주세요.")
+    $0.isSecureTextEntry = true
+    
   }
   
   private let loginButton = UIButton().then {
     $0.setTitle("로그인 하기", for: .normal)
     $0.titleLabel?.font = .notoSans(type: .bold, size: 15)
     $0.setTitleColor(.white, for: .normal)
-    $0.layer.backgroundColor = UIColor.blackText.cgColor
+    $0.layer.backgroundColor = UIColor.grayCd.cgColor
   }
   
   private lazy var emailSection = InputSection(title: "이메일 주소를 입력해주세요.", textField: self.emailTextField)
@@ -90,12 +92,23 @@ extension LoginViewController {
   }
   
   private func bindViewModel() {
-    let input = LoginViewModel.Input(nicknameTextFieldDidEditEvent: self.emailTextField.rx.text.orEmpty.asObservable())
-    self.viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    let input = LoginViewModel.Input(emailTextFieldDidEditEvent: self.emailTextField.rx.text.orEmpty.asObservable(), passwordTextFieldDidEditEvent: self.passwordTextField.rx.text.orEmpty.asObservable())
+    let output = self.viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindLoginButton(output: output)
   }
 }
 
 extension LoginViewController {
+  func bindLoginButton(output: LoginViewModel.Output?) {
+      output?.doneButtonShouldEnable
+          .asDriver(onErrorJustReturn: false)
+          .drive(onNext: { [weak self] isValid in
+            self?.loginButton.isEnabled = isValid
+            self?.loginButton.backgroundColor = isValid ? .blackText : .grayCd
+          })
+          .disposed(by: self.disposeBag)
+  }
+  
   private func createSignupSection() -> UIStackView {
     let noAccountLabel = UILabel().then {
       $0.text = "혹시 계정이 없으신가요?"
