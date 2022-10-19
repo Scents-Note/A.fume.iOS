@@ -44,7 +44,15 @@ final class OnboardingViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationItem.backBarButtonItem = self.navigationController?.setNavigationBackButton()
+//    self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+//    let backImage = UIImage(named: "btnBack")
+//        let backBarButtonItem = UIBarButtonItem(image: backImage, style: .plain, target: self, action: nil)
+//    //    backBarButtonItem.image = backImage
+//        backBarButtonItem.tintColor = .blackText
+//        backBarButtonItem.title = title
+//
+//        self.navigationItem.backBarButtonItem = backBarButtonItem
+//    self.navigationItem.backBarButtonItem = leftItem
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
     
@@ -53,6 +61,8 @@ final class OnboardingViewController: UIViewController {
 extension OnboardingViewController {
   private func configureUI() {
     self.view.backgroundColor = .brown
+    self.setBackButton()
+    
     self.view.addSubview(self.titleView)
     self.titleView.snp.makeConstraints {
       $0.centerX.centerY.equalToSuperview()

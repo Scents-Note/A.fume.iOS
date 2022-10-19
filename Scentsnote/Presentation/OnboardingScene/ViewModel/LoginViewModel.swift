@@ -18,6 +18,7 @@ final class LoginViewModel {
   struct Input {
     let emailTextFieldDidEditEvent: Observable<String>
     let passwordTextFieldDidEditEvent: Observable<String>
+    let signupButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
@@ -43,6 +44,12 @@ final class LoginViewModel {
       })
       .disposed(by: disposeBag)
     
+    input.signupButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.finish()
+      })
+      .disposed(by: disposeBag)
+
     return output
   }
   

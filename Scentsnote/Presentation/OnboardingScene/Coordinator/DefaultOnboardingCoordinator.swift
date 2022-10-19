@@ -32,20 +32,32 @@ class DefaultOnboardingCoordinator: OnboardingCoordinator {
   func runLoginFlow() {
     let loginCoordinator = DefaultLoginCoordinator(self.navigationController)
     loginCoordinator.finishDelegate = self
+    loginCoordinator.loginFinishDelegate = self
     self.childCoordinators.append(loginCoordinator)
     loginCoordinator.showLoginViewController()
   }
   
   func runSignUpFlow() {
-    
+    let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
+    signupCoordinator.finishDelegate = self
+    self.childCoordinators.append(signupCoordinator)
+    signupCoordinator.showSignUpViewController()
   }
   
   
 }
 
 extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {
-    func coordinatorDidFinish(childCoordinator: Coordinator) {
-        self.childCoordinators.removeAll()
-        self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
-    }
+  func coordinatorDidFinish(childCoordinator: Coordinator) {
+    print("User Log: 12312313")
+
+    self.childCoordinators.removeAll()
+    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+  }
+}
+
+extension DefaultOnboardingCoordinator: LoginCoordinatorDidFinishDelegate {
+  func loginCoordinatorDidFinish() {
+    self.runSignUpFlow()
+  }
 }

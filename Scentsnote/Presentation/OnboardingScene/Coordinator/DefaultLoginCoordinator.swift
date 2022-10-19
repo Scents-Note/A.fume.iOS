@@ -9,6 +9,8 @@ import UIKit
 
 final class DefaultLoginCoordinator: LoginCoordinator {
   weak var finishDelegate: CoordinatorFinishDelegate?
+  weak var loginFinishDelegate: LoginCoordinatorDidFinishDelegate?
+
   var navigationController: UINavigationController
   var loginViewController: LoginViewController
   var childCoordinators: [Coordinator] = []
@@ -29,6 +31,7 @@ final class DefaultLoginCoordinator: LoginCoordinator {
   }
   
   func finish() {
-      self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+    print("User Log: finish")
+    self.loginFinishDelegate?.loginCoordinatorDidFinish()
   }
 }
