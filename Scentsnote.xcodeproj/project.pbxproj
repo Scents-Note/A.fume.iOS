@@ -19,6 +19,10 @@
 		4A8F89E928F4F91A00ACE0F1 /* ScentsnoteUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89E828F4F91A00ACE0F1 /* ScentsnoteUITests.swift */; };
 		4A8F89EB28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */; };
 		4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */; };
+		4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914728FFCA2D001551A8 /* String+Extension.swift */; };
+		4A9D914A28FFCC47001551A8 /* EmailValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914928FFCC47001551A8 /* EmailValidationState.swift */; };
+		4A9D914C28FFCE17001551A8 /* NicknameValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */; };
+		4A9D914E28FFD2D0001551A8 /* UIImage+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */; };
 		4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */; };
 		4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */; };
 		4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */; };
@@ -89,6 +93,10 @@
 		4A8F89E828F4F91A00ACE0F1 /* ScentsnoteUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsnoteUITests.swift; sourceTree = "<group>"; };
 		4A8F89EA28F4F91A00ACE0F1 /* ScentsnoteUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsnoteUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackBarButtonItem.swift; sourceTree = "<group>"; };
+		4A9D914728FFCA2D001551A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		4A9D914928FFCC47001551A8 /* EmailValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailValidationState.swift; sourceTree = "<group>"; };
+		4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidationState.swift; sourceTree = "<group>"; };
+		4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Custom.swift"; sourceTree = "<group>"; };
 		4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishDelegate.swift; sourceTree = "<group>"; };
 		4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
@@ -302,6 +310,7 @@
 		4AAFE78F28FAA79000EA6FB4 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4AAFE79A28FAA94200EA6FB4 /* Constant */,
 				4AAFE79028FAA79B00EA6FB4 /* Extension */,
 			);
 			path = Util;
@@ -310,10 +319,11 @@
 		4AAFE79028FAA79B00EA6FB4 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				4AAFE79A28FAA94200EA6FB4 /* Constant */,
 				4AAFE7F128FBE32200EA6FB4 /* UIColor+Custom.swift */,
 				4AAFE7F328FBE48F00EA6FB4 /* UIFont+Custom.swift */,
 				4AAFE82628FE368100EA6FB4 /* UIViewController+Extension.swift */,
+				4A9D914728FFCA2D001551A8 /* String+Extension.swift */,
+				4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -351,6 +361,8 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */,
+				4A9D914928FFCC47001551A8 /* EmailValidationState.swift */,
+				4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -700,6 +712,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A9D914A28FFCC47001551A8 /* EmailValidationState.swift in Sources */,
 				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
@@ -709,6 +722,7 @@
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE82B28FE3CB200EA6FB4 /* InputSection.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
+				4A9D914C28FFCE17001551A8 /* NicknameValidationState.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4AAFE82728FE368100EA6FB4 /* UIViewController+Extension.swift in Sources */,
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
@@ -717,6 +731,7 @@
 				4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4AAFE83528FE7CE300EA6FB4 /* SignUpViewModel.swift in Sources */,
+				4A9D914E28FFD2D0001551A8 /* UIImage+Custom.swift in Sources */,
 				4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */,
 				4AAFE7F428FBE48F00EA6FB4 /* UIFont+Custom.swift in Sources */,
 				4AAFE7F028FBDBCB00EA6FB4 /* LoginCoordinator.swift in Sources */,
@@ -728,6 +743,7 @@
 				4AAFE83728FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift in Sources */,
 				4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */,
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
+				4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

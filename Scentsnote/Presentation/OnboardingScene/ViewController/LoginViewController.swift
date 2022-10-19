@@ -26,7 +26,6 @@ class LoginViewController: ViewController {
   private let passwordTextField = UnderLineTextField().then {
     $0.setPlaceholder(string: "최소 4자리 이상 입력해주세요.")
     $0.isSecureTextEntry = true
-    
   }
   
   private let loginButton = UIButton().then {

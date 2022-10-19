@@ -58,24 +58,14 @@ final class LoginViewModel {
   }
   
   func updateValidationState(output: Output) {
-    guard isValidEmail(email: self.email), isValidPassword(password: self.password) else {
+    guard self.email.isValidEmail(), self.password.isValidPassword() else {
       output.doneButtonShouldEnable.accept(false)
       return
     }
     output.doneButtonShouldEnable.accept(true)
   }
   
-  private func isValidEmail(email: String) -> Bool {
-    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    let predicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    return predicate.evaluate(with: email)
-  }
   
-  private func isValidPassword(password: String) -> Bool {
-    let passwordRegEx = "[A-Za-z0-9!_@$%^&+=]{4,}"
-    let predicate = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
-    return predicate.evaluate(with: password)
-  }
 }
 
 

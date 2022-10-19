@@ -20,12 +20,19 @@ final class OnboardingViewModel {
   
   struct Input {
     let loginButtonDidTapEvent: Observable<Void>
+    let signUpButtonDidTapEvent: Observable<Void>
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.runLoginFlow()
+      })
+      .disposed(by: disposeBag)
+    
+    input.signUpButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runSignUpFlow()
       })
       .disposed(by: disposeBag)
   }

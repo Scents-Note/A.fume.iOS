@@ -44,15 +44,6 @@ final class OnboardingViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-//    self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
-//    let backImage = UIImage(named: "btnBack")
-//        let backBarButtonItem = UIBarButtonItem(image: backImage, style: .plain, target: self, action: nil)
-//    //    backBarButtonItem.image = backImage
-//        backBarButtonItem.tintColor = .blackText
-//        backBarButtonItem.title = title
-//
-//        self.navigationItem.backBarButtonItem = backBarButtonItem
-//    self.navigationItem.backBarButtonItem = leftItem
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
     
@@ -89,7 +80,8 @@ extension OnboardingViewController {
   
   private func bindViewModel() {
     let input = OnboardingViewModel.Input(
-      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable()
+      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
+      signUpButtonDidTapEvent: self.signInButton.rx.tap.asObservable()
     )
     self.viewModel?.transform(from: input, disposeBag: self.disposeBag)
   }
