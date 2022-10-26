@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Scentsnote_ScentsnoteUITestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Scentsnote_ScentsnoteUITestsVersionString[];
+FOUNDATION_EXPORT double Pods_ScentsNote_ScentsNoteUITestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_ScentsNote_ScentsNoteUITestsVersionString[];
 
