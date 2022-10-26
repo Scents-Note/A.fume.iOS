@@ -9,6 +9,7 @@ import RxSwift
 import Moya
 
 final class DefaultUserRepository: UserRepository {
+  
   private let userService: UserService
   
   init(userService: UserService){
@@ -17,6 +18,14 @@ final class DefaultUserRepository: UserRepository {
   
   func login(email: String, password: String, completion: @escaping (Result<LoginInfo?, NetworkError>) -> Void) {
     return self.userService.login(email: email, password: password, completion: completion)
+  }
+  
+  func checkDuplicateEmail(email: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
+    return self.userService.checkDuplicateEmail(email: email, completion: completion)
+  }
+  
+  func checkDuplicateNickname(nickname: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
+    return self.userService.checkDuplicateNickname(nickname: nickname, completion: completion)
   }
 }
 

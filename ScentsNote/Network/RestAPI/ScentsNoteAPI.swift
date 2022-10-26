@@ -10,13 +10,15 @@ import Alamofire
 
 enum ScentsNoteAPI {
   case login(email: String, password: String)
+  case checkDuplicateEmail(email: String)
+  case checkDuplicateNickname(nickname: String)
 }
 
 extension ScentsNoteAPI: TargetType {
   public var baseURL: URL {
     var base = Config.Network.baseURL
     switch self {
-    case .login:
+    case .login, .checkDuplicateEmail, .checkDuplicateNickname:
       base += "/user"
     }
     
@@ -30,8 +32,10 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login:
       return "/login"
-    default :
-      return ""
+    case .checkDuplicateEmail:
+      return "/validate/email"
+    case .checkDuplicateNickname:
+      return "/validate/name"
     }
   }
   
@@ -39,12 +43,14 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login:
       return .post
+    case .checkDuplicateEmail, .checkDuplicateNickname:
+      return .get
     }
   }
   
   var task: Moya.Task {
     switch self {
-    case .login:
+    case .login, .checkDuplicateEmail, .checkDuplicateNickname:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     }
   }
@@ -65,12 +71,18 @@ extension ScentsNoteAPI: TargetType {
     case let .login(email, password):
       params["email"] = email
       params["password"] = password
+    case let .checkDuplicateEmail(email):
+      params["email"] = email
+    case let .checkDuplicateNickname(nickname):
+      params["nickname"] = nickname
     }
     return params
   }
   
   private var parameterEncoding: ParameterEncoding {
     switch self {
+    case .checkDuplicateEmail, .checkDuplicateNickname:
+      return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
     default:
       return JSONEncoding.default
     }

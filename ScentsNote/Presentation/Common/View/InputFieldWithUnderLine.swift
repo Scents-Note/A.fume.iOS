@@ -9,14 +9,14 @@ import UIKit
 import SnapKit
 import Then
 
-class UnderLineTextField: UITextField {
+class InputFieldWithUnderLine: UITextField {
   
   private let underLineView = UIView().then {
     $0.backgroundColor = .blackText
   }
   
   override init(frame: CGRect) {
-    super.init(frame: frame)
+    e: frame)
     //underline 추가 및 레이아웃 설정
     self.textColor = .blackText
     addSubview(underLineView)

@@ -10,20 +10,21 @@ import UIKit
 final class DefaultSignUpCoordinator: SignUpCoordinator {
   weak var finishDelegate: CoordinatorFinishDelegate?
   var navigationController: UINavigationController
-  var signUpViewController: SignUpViewController
+  var signUpViewController: SignUpInformationViewController
   var childCoordinators: [Coordinator] = []
   var type: CoordinatorType = .login
   
   init(_ navigationContoller: UINavigationController) {
     self.navigationController = navigationContoller
-    self.signUpViewController = SignUpViewController()
+    self.signUpViewController = SignUpInformationViewController()
   }
   
   func start() {}
   
   func showSignUpViewController() {
-      self.signUpViewController.viewModel = SignUpViewModel(
-          coordinator: self
+      self.signUpViewController.viewModel = SignUpInformationViewModel(
+          coordinator: self,
+          userRepository: DefaultUserRepository(userService: DefaultUserService())
       )
       self.navigationController.pushViewController(self.signUpViewController, animated: true)
   }

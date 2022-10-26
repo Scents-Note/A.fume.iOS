@@ -19,11 +19,8 @@ class LoginViewController: UIViewController {
   // MARK: - View
   private let container = UIView()
   
-  private let emailTextField = UnderLineTextField().then {
-    $0.setPlaceholder(string: "scents@email.com")
-  }
-  
-  private let passwordTextField = UnderLineTextField().then {
+  private let emailTextField = InputField().then { $0.setPlaceholder(string: "scents@email.com") }
+  private let passwordTextField = InputField().then {
     $0.setPlaceholder(string: "최소 4자리 이상 입력해주세요.")
     $0.isSecureTextEntry = true
   }

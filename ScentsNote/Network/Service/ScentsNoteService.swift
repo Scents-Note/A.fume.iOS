@@ -57,6 +57,7 @@ class ScentsNoteService {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             let errorBody = try decoder.decode(ErrorBody.self, from: body)
+            print("User Log: \(errorBody)")
             print("User Log: errorMsg \(errorBody.message ?? "no msg")")
             if let networkError = NetworkError.build(with: statusCode) {
               completion(.failure(networkError))
