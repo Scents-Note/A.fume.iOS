@@ -20,6 +20,10 @@
 		4A9A14DA2908D4AF0067F04D /* DoubleCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14D92908D4AF0067F04D /* DoubleCheckButton.swift */; };
 		4A9A14DC2908D6210067F04D /* InputSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14DB2908D6210067F04D /* InputSection.swift */; };
 		4A9A14DE2908ED560067F04D /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14DD2908ED560067F04D /* InputField.swift */; };
+		4A9A14E2290919290067F04D /* SignUpPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E1290919290067F04D /* SignUpPasswordViewController.swift */; };
+		4A9A14E4290919390067F04D /* SignUpPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E3290919390067F04D /* SignUpPasswordViewModel.swift */; };
+		4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E629091E220067F04D /* SignUpInfo.swift */; };
+		4A9A14E929093B1C0067F04D /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E829093B1C0067F04D /* DoneButton.swift */; };
 		4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */; };
 		4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914728FFCA2D001551A8 /* String+Extension.swift */; };
 		4A9D914A28FFCC47001551A8 /* InputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914928FFCC47001551A8 /* InputState.swift */; };
@@ -111,6 +115,10 @@
 		4A9A14D92908D4AF0067F04D /* DoubleCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleCheckButton.swift; sourceTree = "<group>"; };
 		4A9A14DB2908D6210067F04D /* InputSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSection.swift; sourceTree = "<group>"; };
 		4A9A14DD2908ED560067F04D /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
+		4A9A14E1290919290067F04D /* SignUpPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPasswordViewController.swift; sourceTree = "<group>"; };
+		4A9A14E3290919390067F04D /* SignUpPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPasswordViewModel.swift; sourceTree = "<group>"; };
+		4A9A14E629091E220067F04D /* SignUpInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfo.swift; sourceTree = "<group>"; };
+		4A9A14E829093B1C0067F04D /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
 		4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackBarButtonItem.swift; sourceTree = "<group>"; };
 		4A9D914728FFCA2D001551A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		4A9D914928FFCC47001551A8 /* InputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputState.swift; sourceTree = "<group>"; };
@@ -268,6 +276,7 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE83228FE7CBE00EA6FB4 /* SignUpInformationViewController.swift */,
+				4A9A14E1290919290067F04D /* SignUpPasswordViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -276,8 +285,17 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE83428FE7CE300EA6FB4 /* SignUpInformationViewModel.swift */,
+				4A9A14E3290919390067F04D /* SignUpPasswordViewModel.swift */,
 			);
 			path = SignUp;
+			sourceTree = "<group>";
+		};
+		4A9A14E529091E0F0067F04D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A9A14E629091E220067F04D /* SignUpInfo.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		4A9D914F28FFEC46001551A8 /* Protocol */ = {
@@ -354,6 +372,7 @@
 		4AAFE78328F8E7A400EA6FB4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				4A9A14E529091E0F0067F04D /* Model */,
 				4AB65C9F29022C2500A96CA5 /* Repository */,
 			);
 			path = Domain;
@@ -557,6 +576,7 @@
 				4A9A14D92908D4AF0067F04D /* DoubleCheckButton.swift */,
 				4A9A14DB2908D6210067F04D /* InputSection.swift */,
 				4A9A14DD2908ED560067F04D /* InputField.swift */,
+				4A9A14E829093B1C0067F04D /* DoneButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -878,11 +898,14 @@
 			files = (
 				4A9D914A28FFCC47001551A8 /* InputState.swift in Sources */,
 				4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */,
+				4A9A14E4290919390067F04D /* SignUpPasswordViewModel.swift in Sources */,
 				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
 				4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */,
 				4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */,
+				4A9A14E2290919290067F04D /* SignUpPasswordViewController.swift in Sources */,
+				4A9A14E929093B1C0067F04D /* DoneButton.swift in Sources */,
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
@@ -923,6 +946,7 @@
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
 				4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */,
 				4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */,
+				4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A9D915128FFEC5B001551A8 /* URLSessionNetworkService.swift in Sources */,
 			);

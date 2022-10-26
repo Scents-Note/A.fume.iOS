@@ -9,27 +9,38 @@ import UIKit
 
 final class DefaultSignUpCoordinator: SignUpCoordinator {
   weak var finishDelegate: CoordinatorFinishDelegate?
-  var navigationController: UINavigationController
-  var signUpViewController: SignUpInformationViewController
   var childCoordinators: [Coordinator] = []
+  var userRepository: UserRepository
+  var navigationController: UINavigationController
   var type: CoordinatorType = .login
   
   init(_ navigationContoller: UINavigationController) {
     self.navigationController = navigationContoller
-    self.signUpViewController = SignUpInformationViewController()
+    self.userRepository = DefaultUserRepository(userService: DefaultUserService())
   }
   
   func start() {}
   
-  func showSignUpViewController() {
-      self.signUpViewController.viewModel = SignUpInformationViewModel(
-          coordinator: self,
-          userRepository: DefaultUserRepository(userService: DefaultUserService())
-      )
-      self.navigationController.pushViewController(self.signUpViewController, animated: true)
+  func showSignUpInformationViewController() {
+    let signUpInformationViewController = SignUpInformationViewController()
+    signUpInformationViewController.viewModel = SignUpInformationViewModel(
+      coordinator: self,
+      userRepository: userRepository
+    )
+    self.navigationController.pushViewController(signUpInformationViewController, animated: true)
+  }
+  
+  func showSignUpPasswordViewController(with signUpInfo: SignUpInfo) {
+    let signUpPasswordViewController = SignUpPasswordViewController()
+    signUpPasswordViewController.viewModel = SignUpPasswordViewModel(
+      coordinator: self,
+      userRepository: userRepository,
+      signUpInfo: signUpInfo
+    )
+    self.navigationController.pushViewController(signUpPasswordViewController, animated: true)
   }
   
   func finish() {
-      self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
   }
 }

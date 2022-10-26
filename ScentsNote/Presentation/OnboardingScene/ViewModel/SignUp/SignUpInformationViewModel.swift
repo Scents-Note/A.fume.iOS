@@ -20,15 +20,12 @@ final class SignUpInformationViewModel {
     let emailCheckButtonDidTapEvent: Observable<Void>
     let nicknameTextFieldDidEditEvent: Observable<String>
     let nicknameCheckButtonDidTapEvent: Observable<Void>
-
-//    let nextDidTapEvent: Observable<Void>
+    let nextButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
-    var nextButtonShouldEnable = BehaviorRelay<Bool>(value: false)
     var emailValidationState = BehaviorRelay<InputState>(value: .empty)
     var nicknameValidationState = BehaviorRelay<InputState>(value: .empty)
-    var doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
   }
   
   init(coordinator: SignUpCoordinator?, userRepository: UserRepository) {
@@ -39,6 +36,7 @@ final class SignUpInformationViewModel {
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
     let output = Output()
     input.emailTextFieldDidEditEvent
+      .distinctUntilChanged()
       .subscribe(onNext: { [weak self] string in
         self?.email = string
         self?.updateEmailValidationState(output: output)
@@ -66,6 +64,7 @@ final class SignUpInformationViewModel {
       .disposed(by: disposeBag)
     
     input.nicknameTextFieldDidEditEvent
+      .distinctUntilChanged()
       .subscribe(onNext: { [weak self] string in
         self?.nickname = string
         self?.updateNicknameValidationState(output: output)
@@ -89,6 +88,12 @@ final class SignUpInformationViewModel {
             print("User Log: error \(error)")
           }
         })
+      })
+      .disposed(by: disposeBag)
+    
+    input.nextButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.showSignUpPasswordViewController(with: SignUpInfo(email: self?.email, nickname: self?.nickname))
       })
       .disposed(by: disposeBag)
     

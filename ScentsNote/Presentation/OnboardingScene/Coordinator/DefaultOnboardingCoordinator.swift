@@ -41,16 +41,12 @@ class DefaultOnboardingCoordinator: OnboardingCoordinator {
     let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
     signupCoordinator.finishDelegate = self
     self.childCoordinators.append(signupCoordinator)
-    signupCoordinator.showSignUpViewController()
+    signupCoordinator.showSignUpInformationViewController()
   }
-  
-  
 }
 
 extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {
   func coordinatorDidFinish(childCoordinator: Coordinator) {
-    print("User Log: 12312313")
-
     self.childCoordinators.removeAll()
     self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
   }
