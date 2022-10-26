@@ -25,7 +25,8 @@ final class DefaultLoginCoordinator: LoginCoordinator {
   
   func showLoginViewController() {
       self.loginViewController.viewModel = LoginViewModel(
-          coordinator: self
+          coordinator: self,
+          userRepository: DefaultUserRepository(userService: DefaultUserService())
       )
       self.navigationController.pushViewController(self.loginViewController, animated: true)
   }

@@ -24,10 +24,10 @@
 		4A9D914E28FFD2D0001551A8 /* UIImage+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */; };
 		4A9D915128FFEC5B001551A8 /* URLSessionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915028FFEC5B001551A8 /* URLSessionNetworkService.swift */; };
 		4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915228FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift */; };
-		4A9D915828FFFA55001551A8 /* AuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915728FFFA55001551A8 /* AuthRepository.swift */; };
-		4A9D915A28FFFA5E001551A8 /* DefaultAuthRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915928FFFA5E001551A8 /* DefaultAuthRepository.swift */; };
+		4A9D915828FFFA55001551A8 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915728FFFA55001551A8 /* UserRepository.swift */; };
+		4A9D915A28FFFA5E001551A8 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915928FFFA5E001551A8 /* DefaultUserRepository.swift */; };
 		4A9D915F28FFFBE2001551A8 /* LoginRequestDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915E28FFFBE2001551A8 /* LoginRequestDto.swift */; };
-		4A9D9161290000FD001551A8 /* ScentsNoteApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D9160290000FD001551A8 /* ScentsNoteApi.swift */; };
+		4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D9160290000FD001551A8 /* ScentsNoteAPI.swift */; };
 		4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */; };
 		4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */; };
 		4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */; };
@@ -59,6 +59,16 @@
 		4AAFE83328FE7CBE00EA6FB4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83228FE7CBE00EA6FB4 /* SignUpViewController.swift */; };
 		4AAFE83528FE7CE300EA6FB4 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83428FE7CE300EA6FB4 /* SignUpViewModel.swift */; };
 		4AAFE83728FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83628FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift */; };
+		4AB65C9C29013F4D00A96CA5 /* ScentsNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */; };
+		4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB65C9D2901406400A96CA5 /* ResponseObject.swift */; };
+		4AB759932900F0990086C519 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB759922900F0990086C519 /* Config.swift */; };
+		4AB75996290131200086C519 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB75995290131200086C519 /* UserService.swift */; };
+		4AB7599A290131E80086C519 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB75999290131E80086C519 /* NetworkError.swift */; };
+		4AB7599D290135F20086C519 /* LoginResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7599C290135F20086C519 /* LoginResponseDTO.swift */; };
+		4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A48C290382AA00491246 /* DefaultUserService.swift */; };
+		4AE4A4912904B56000491246 /* Result+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A4902904B56000491246 /* Result+Extension.swift */; };
+		4AE4A4932904D70700491246 /* ErrorBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A4922904D70700491246 /* ErrorBody.swift */; };
+		4AE4A4952905262300491246 /* Single+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A4942905262300491246 /* Single+Extension.swift */; };
 		86FEC2F1709BCB9A42494D27 /* Pods_ScentsNote_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -104,10 +114,10 @@
 		4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Custom.swift"; sourceTree = "<group>"; };
 		4A9D915028FFEC5B001551A8 /* URLSessionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionNetworkService.swift; sourceTree = "<group>"; };
 		4A9D915228FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultURLSessionNetworkService.swift; sourceTree = "<group>"; };
-		4A9D915728FFFA55001551A8 /* AuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRepository.swift; sourceTree = "<group>"; };
-		4A9D915928FFFA5E001551A8 /* DefaultAuthRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAuthRepository.swift; sourceTree = "<group>"; };
+		4A9D915728FFFA55001551A8 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		4A9D915928FFFA5E001551A8 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		4A9D915E28FFFBE2001551A8 /* LoginRequestDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDto.swift; sourceTree = "<group>"; };
-		4A9D9160290000FD001551A8 /* ScentsNoteApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsNoteApi.swift; sourceTree = "<group>"; };
+		4A9D9160290000FD001551A8 /* ScentsNoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsNoteAPI.swift; sourceTree = "<group>"; };
 		4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishDelegate.swift; sourceTree = "<group>"; };
 		4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
@@ -139,6 +149,16 @@
 		4AAFE83228FE7CBE00EA6FB4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		4AAFE83428FE7CE300EA6FB4 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		4AAFE83628FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinatorDidFinishDelegate.swift; sourceTree = "<group>"; };
+		4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsNoteService.swift; sourceTree = "<group>"; };
+		4AB65C9D2901406400A96CA5 /* ResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseObject.swift; sourceTree = "<group>"; };
+		4AB759922900F0990086C519 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		4AB75995290131200086C519 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		4AB75999290131E80086C519 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		4AB7599C290135F20086C519 /* LoginResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponseDTO.swift; sourceTree = "<group>"; };
+		4AE4A48C290382AA00491246 /* DefaultUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserService.swift; sourceTree = "<group>"; };
+		4AE4A4902904B56000491246 /* Result+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Extension.swift"; sourceTree = "<group>"; };
+		4AE4A4922904D70700491246 /* ErrorBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorBody.swift; sourceTree = "<group>"; };
+		4AE4A4942905262300491246 /* Single+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Single+Extension.swift"; sourceTree = "<group>"; };
 		5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7D37C98027E5BF948F7A0652 /* Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote_ScentsNoteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -253,42 +273,27 @@
 		4A9D915428FFFA0E001551A8 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				4A9D915528FFFA1E001551A8 /* Auth */,
+				4A9D915928FFFA5E001551A8 /* DefaultUserRepository.swift */,
 			);
 			path = Repository;
-			sourceTree = "<group>";
-		};
-		4A9D915528FFFA1E001551A8 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				4A9D915628FFFA44001551A8 /* Protocol */,
-				4A9D915928FFFA5E001551A8 /* DefaultAuthRepository.swift */,
-			);
-			path = Auth;
-			sourceTree = "<group>";
-		};
-		4A9D915628FFFA44001551A8 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				4A9D915728FFFA55001551A8 /* AuthRepository.swift */,
-			);
-			path = Protocol;
 			sourceTree = "<group>";
 		};
 		4A9D915B28FFFBAC001551A8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4A9D915C28FFFBBD001551A8 /* Auth */,
+				4AB65C9D2901406400A96CA5 /* ResponseObject.swift */,
+				4AE4A4922904D70700491246 /* ErrorBody.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
 		};
-		4A9D915C28FFFBBD001551A8 /* Auth */ = {
+		4A9D915C28FFFBBD001551A8 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				4AB7599B290135E40086C519 /* Response */,
 				4A9D915D28FFFBC3001551A8 /* Request */,
 			);
-			path = Auth;
+			path = User;
 			sourceTree = "<group>";
 		};
 		4A9D915D28FFFBC3001551A8 /* Request */ = {
@@ -302,9 +307,10 @@
 		4AAFE78028F8E78100EA6FB4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				4AB75998290131D90086C519 /* RestAPI */,
+				4AB75994290131120086C519 /* Service */,
 				4A9D914F28FFEC46001551A8 /* Protocol */,
 				4A9D915228FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift */,
-				4A9D9160290000FD001551A8 /* ScentsNoteApi.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -312,7 +318,7 @@
 		4AAFE78128F8E79400EA6FB4 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				4A9D915B28FFFBAC001551A8 /* Model */,
+				4AE4A4962905312100491246 /* Model */,
 				4A9D915428FFFA0E001551A8 /* Repository */,
 			);
 			path = Data;
@@ -330,6 +336,7 @@
 		4AAFE78328F8E7A400EA6FB4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				4AB65C9F29022C2500A96CA5 /* Repository */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -341,6 +348,7 @@
 				4AAFE78628F8E7EE00EA6FB4 /* Storyboard */,
 				4AAFE78528F8E7C800EA6FB4 /* Asset */,
 				4A8F89D528F4F91A00ACE0F1 /* Info.plist */,
+				4AB759922900F0990086C519 /* Config.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -401,6 +409,8 @@
 				4AAFE82628FE368100EA6FB4 /* UIViewController+Extension.swift */,
 				4A9D914728FFCA2D001551A8 /* String+Extension.swift */,
 				4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */,
+				4AE4A4902904B56000491246 /* Result+Extension.swift */,
+				4AE4A4942905262300491246 /* Single+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -437,6 +447,7 @@
 		4AAFE79A28FAA94200EA6FB4 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
+				4A9D915B28FFFBAC001551A8 /* Model */,
 				4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */,
 				4A9D914928FFCC47001551A8 /* EmailValidationState.swift */,
 				4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */,
@@ -529,6 +540,57 @@
 				4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		4AB65C9F29022C2500A96CA5 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				4A9D915728FFFA55001551A8 /* UserRepository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		4AB75994290131120086C519 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4AB759972901316E0086C519 /* Protocol */,
+				4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */,
+				4AE4A48C290382AA00491246 /* DefaultUserService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		4AB759972901316E0086C519 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				4AB75995290131200086C519 /* UserService.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		4AB75998290131D90086C519 /* RestAPI */ = {
+			isa = PBXGroup;
+			children = (
+				4A9D9160290000FD001551A8 /* ScentsNoteAPI.swift */,
+				4AB75999290131E80086C519 /* NetworkError.swift */,
+			);
+			path = RestAPI;
+			sourceTree = "<group>";
+		};
+		4AB7599B290135E40086C519 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7599C290135F20086C519 /* LoginResponseDTO.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		4AE4A4962905312100491246 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A9D915C28FFFBBD001551A8 /* User */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		607E45E672FB1FF5907CBA7A /* Pods */ = {
@@ -796,6 +858,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A9D914A28FFCC47001551A8 /* EmailValidationState.swift in Sources */,
+				4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */,
 				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
@@ -805,32 +868,41 @@
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE82B28FE3CB200EA6FB4 /* InputSection.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
-				4A9D9161290000FD001551A8 /* ScentsNoteApi.swift in Sources */,
+				4AE4A4952905262300491246 /* Single+Extension.swift in Sources */,
+				4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */,
 				4A9D914C28FFCE17001551A8 /* NicknameValidationState.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4A9D915F28FFFBE2001551A8 /* LoginRequestDto.swift in Sources */,
 				4AAFE82728FE368100EA6FB4 /* UIViewController+Extension.swift in Sources */,
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
 				4AAFE82028FD422800EA6FB4 /* UnderLineTextField.swift in Sources */,
+				4AE4A4912904B56000491246 /* Result+Extension.swift in Sources */,
+				4AB7599A290131E80086C519 /* NetworkError.swift in Sources */,
 				4AAFE82F28FE7C5900EA6FB4 /* SignUpCoordinator.swift in Sources */,
 				4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */,
-				4A9D915A28FFFA5E001551A8 /* DefaultAuthRepository.swift in Sources */,
+				4A9D915A28FFFA5E001551A8 /* DefaultUserRepository.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
-				4A9D915828FFFA55001551A8 /* AuthRepository.swift in Sources */,
+				4A9D915828FFFA55001551A8 /* UserRepository.swift in Sources */,
 				4AAFE83528FE7CE300EA6FB4 /* SignUpViewModel.swift in Sources */,
 				4A9D914E28FFD2D0001551A8 /* UIImage+Custom.swift in Sources */,
 				4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */,
+				4AE4A4932904D70700491246 /* ErrorBody.swift in Sources */,
+				4AB7599D290135F20086C519 /* LoginResponseDTO.swift in Sources */,
 				4AAFE7F428FBE48F00EA6FB4 /* UIFont+Custom.swift in Sources */,
 				4AAFE7F028FBDBCB00EA6FB4 /* LoginCoordinator.swift in Sources */,
 				4AAFE81528FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift in Sources */,
+				4AB65C9C29013F4D00A96CA5 /* ScentsNoteService.swift in Sources */,
 				4AAFE83328FE7CBE00EA6FB4 /* SignUpViewController.swift in Sources */,
 				4A8F89C828F4F91A00ACE0F1 /* AppDelegate.swift in Sources */,
 				4AAFE7E728FBCF0F00EA6FB4 /* OnboardingViewController.swift in Sources */,
 				4AAFE83728FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift in Sources */,
+				4AB759932900F0990086C519 /* Config.swift in Sources */,
 				4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */,
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
 				4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */,
+				4AB75996290131200086C519 /* UserService.swift in Sources */,
 				4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */,
+				4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A9D915128FFEC5B001551A8 /* URLSessionNetworkService.swift in Sources */,
 			);

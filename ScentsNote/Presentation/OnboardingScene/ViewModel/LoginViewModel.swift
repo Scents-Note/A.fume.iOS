@@ -8,16 +8,26 @@
 import Foundation
 import RxSwift
 import RxRelay
+import Moya
+
 
 final class LoginViewModel {
   private weak var coordinator: LoginCoordinator?
+  private let userRepository: UserRepository?
+  private let service = DefaultUserService()
   
   private var email = ""
   private var password = ""
   
+  init(coordinator: LoginCoordinator?, userRepository: UserRepository) {
+    self.coordinator = coordinator
+    self.userRepository = userRepository
+  }
+  
   struct Input {
     let emailTextFieldDidEditEvent: Observable<String>
     let passwordTextFieldDidEditEvent: Observable<String>
+    let loginButtonDidTapEvent: Observable<Void>
     let signupButtonDidTapEvent: Observable<Void>
   }
   
@@ -44,17 +54,26 @@ final class LoginViewModel {
       })
       .disposed(by: disposeBag)
     
+    input.loginButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
+        self.userRepository?.login(email: self.email, password: self.password, completion: { result in
+          result.success { loginInfo in
+            print("User Log: loginInfo \(loginInfo)")
+          }.catch { error in
+            print("User Log: error \(error)")
+          }
+        })
+      })
+      .disposed(by: disposeBag)
+    
     input.signupButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.finish()
       })
       .disposed(by: disposeBag)
-
+    
     return output
-  }
-  
-  init(coordinator: LoginCoordinator?) {
-    self.coordinator = coordinator
   }
   
   func updateValidationState(output: Output) {

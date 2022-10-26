@@ -117,6 +117,7 @@ extension LoginViewController {
     let input = LoginViewModel.Input(
       emailTextFieldDidEditEvent: self.emailTextField.rx.text.orEmpty.asObservable(),
       passwordTextFieldDidEditEvent: self.passwordTextField.rx.text.orEmpty.asObservable(),
+      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
       signupButtonDidTapEvent: self.signUpButton.rx.tap.asObservable()
     )
       

@@ -6,12 +6,14 @@ target 'ScentsNote' do
   use_frameworks!
 
   # Pods for ScentsNote
+
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'RxGesture'
+  pod 'Moya/RxSwift'
+  pod 'Alamofire'
   pod 'SnapKit'
   pod 'Then'
-  pod 'Alamofire'
-  pod 'Moya'
 
   target 'ScentsNoteTests' do
     inherit! :search_paths
