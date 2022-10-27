@@ -140,7 +140,7 @@ extension SignUpInformationViewController {
   private func updateEmailSection(state: InputState) {
     self.emailSection.updateUI(state: state)
     self.emailWarningLabel.text = state.emailDescription
-    self.emailCheckButton.isHidden = !(state == .correctFormat)
+    self.emailCheckButton.isHidden = state != .correctFormat
     if self.isNicknameSectionShown != true, state == .success {
       self.nicknameSection.isHidden = false
       self.isNicknameSectionShown = true
@@ -150,7 +150,7 @@ extension SignUpInformationViewController {
   private func updateNicknameValidationButton(state: InputState) {
     self.nicknameSection.updateUI(state: state)
     self.nicknameWarningLabel.text = state.nicknameDescription
-    self.nicknameCheckButton.isHidden = !(state == .correctFormat)
+    self.nicknameCheckButton.isHidden = state != .correctFormat
   }
   
   private func updateNextButton(enable: Bool) {

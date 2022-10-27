@@ -9,7 +9,6 @@ import Foundation
 
 enum InputState: Equatable {
   case empty
-  case editing
   case wrongFormat
   case correctFormat
   case duplicate

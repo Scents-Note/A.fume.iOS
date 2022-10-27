@@ -24,10 +24,12 @@
 		4A9A14E4290919390067F04D /* SignUpPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E3290919390067F04D /* SignUpPasswordViewModel.swift */; };
 		4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E629091E220067F04D /* SignUpInfo.swift */; };
 		4A9A14E929093B1C0067F04D /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14E829093B1C0067F04D /* DoneButton.swift */; };
+		4A9A14EB2909FDA40067F04D /* SignUpGenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14EA2909FDA40067F04D /* SignUpGenderViewController.swift */; };
+		4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14EC2909FDB00067F04D /* SignUpGenderViewModel.swift */; };
+		4A9A14F0290A10840067F04D /* GenderState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A14EF290A10840067F04D /* GenderState.swift */; };
 		4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */; };
 		4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914728FFCA2D001551A8 /* String+Extension.swift */; };
 		4A9D914A28FFCC47001551A8 /* InputState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914928FFCC47001551A8 /* InputState.swift */; };
-		4A9D914C28FFCE17001551A8 /* NicknameValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */; };
 		4A9D914E28FFD2D0001551A8 /* UIImage+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */; };
 		4A9D915128FFEC5B001551A8 /* URLSessionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915028FFEC5B001551A8 /* URLSessionNetworkService.swift */; };
 		4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915228FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift */; };
@@ -119,10 +121,12 @@
 		4A9A14E3290919390067F04D /* SignUpPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPasswordViewModel.swift; sourceTree = "<group>"; };
 		4A9A14E629091E220067F04D /* SignUpInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInfo.swift; sourceTree = "<group>"; };
 		4A9A14E829093B1C0067F04D /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
+		4A9A14EA2909FDA40067F04D /* SignUpGenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpGenderViewController.swift; sourceTree = "<group>"; };
+		4A9A14EC2909FDB00067F04D /* SignUpGenderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpGenderViewModel.swift; sourceTree = "<group>"; };
+		4A9A14EF290A10840067F04D /* GenderState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderState.swift; sourceTree = "<group>"; };
 		4A9D914528FFA21D001551A8 /* BackBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackBarButtonItem.swift; sourceTree = "<group>"; };
 		4A9D914728FFCA2D001551A8 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		4A9D914928FFCC47001551A8 /* InputState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputState.swift; sourceTree = "<group>"; };
-		4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameValidationState.swift; sourceTree = "<group>"; };
 		4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Custom.swift"; sourceTree = "<group>"; };
 		4A9D915028FFEC5B001551A8 /* URLSessionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionNetworkService.swift; sourceTree = "<group>"; };
 		4A9D915228FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultURLSessionNetworkService.swift; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 			children = (
 				4AAFE83228FE7CBE00EA6FB4 /* SignUpInformationViewController.swift */,
 				4A9A14E1290919290067F04D /* SignUpPasswordViewController.swift */,
+				4A9A14EA2909FDA40067F04D /* SignUpGenderViewController.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -286,6 +291,7 @@
 			children = (
 				4AAFE83428FE7CE300EA6FB4 /* SignUpInformationViewModel.swift */,
 				4A9A14E3290919390067F04D /* SignUpPasswordViewModel.swift */,
+				4A9A14EC2909FDB00067F04D /* SignUpGenderViewModel.swift */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -296,6 +302,15 @@
 				4A9A14E629091E220067F04D /* SignUpInfo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4A9A14EE290A10680067F04D /* State */ = {
+			isa = PBXGroup;
+			children = (
+				4A9D914928FFCC47001551A8 /* InputState.swift */,
+				4A9A14EF290A10840067F04D /* GenderState.swift */,
+			);
+			path = State;
 			sourceTree = "<group>";
 		};
 		4A9D914F28FFEC46001551A8 /* Protocol */ = {
@@ -314,13 +329,13 @@
 			path = Repository;
 			sourceTree = "<group>";
 		};
-		4A9D915B28FFFBAC001551A8 /* Model */ = {
+		4A9D915B28FFFBAC001551A8 /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				4AB65C9D2901406400A96CA5 /* ResponseObject.swift */,
 				4AE4A4922904D70700491246 /* ErrorBody.swift */,
 			);
-			path = Model;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		4A9D915C28FFFBBD001551A8 /* User */ = {
@@ -443,9 +458,9 @@
 			children = (
 				4AAFE7F128FBE32200EA6FB4 /* UIColor+Custom.swift */,
 				4AAFE7F328FBE48F00EA6FB4 /* UIFont+Custom.swift */,
+				4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */,
 				4AAFE82628FE368100EA6FB4 /* UIViewController+Extension.swift */,
 				4A9D914728FFCA2D001551A8 /* String+Extension.swift */,
-				4A9D914D28FFD2D0001551A8 /* UIImage+Custom.swift */,
 				4AE4A4902904B56000491246 /* Result+Extension.swift */,
 				4AE4A4942905262300491246 /* Single+Extension.swift */,
 			);
@@ -484,10 +499,9 @@
 		4AAFE79A28FAA94200EA6FB4 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
-				4A9D915B28FFFBAC001551A8 /* Model */,
+				4A9A14EE290A10680067F04D /* State */,
+				4A9D915B28FFFBAC001551A8 /* Network */,
 				4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */,
-				4A9D914928FFCC47001551A8 /* InputState.swift */,
-				4A9D914B28FFCE17001551A8 /* NicknameValidationState.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -909,10 +923,10 @@
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
+				4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */,
 				4A9A14DE2908ED560067F04D /* InputField.swift in Sources */,
 				4AE4A4952905262300491246 /* Single+Extension.swift in Sources */,
 				4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */,
-				4A9D914C28FFCE17001551A8 /* NicknameValidationState.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4A9D915F28FFFBE2001551A8 /* LoginRequestDTO.swift in Sources */,
 				4A9A14DC2908D6210067F04D /* InputSection.swift in Sources */,
@@ -920,6 +934,7 @@
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
 				4AE4A4912904B56000491246 /* Result+Extension.swift in Sources */,
 				4AB7599A290131E80086C519 /* NetworkError.swift in Sources */,
+				4A9A14EB2909FDA40067F04D /* SignUpGenderViewController.swift in Sources */,
 				4AAFE82F28FE7C5900EA6FB4 /* SignUpCoordinator.swift in Sources */,
 				4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */,
 				4A9D915A28FFFA5E001551A8 /* DefaultUserRepository.swift in Sources */,
@@ -944,6 +959,7 @@
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
 				4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */,
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
+				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,
 				4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */,
 				4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */,
 				4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */,

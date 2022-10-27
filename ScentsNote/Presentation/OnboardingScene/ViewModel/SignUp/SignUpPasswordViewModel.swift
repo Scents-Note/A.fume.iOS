@@ -8,10 +8,10 @@
 import RxSwift
 import RxRelay
 
-class SignUpPasswordViewModel {
+final class SignUpPasswordViewModel {
   private weak var coordinator: SignUpCoordinator?
   private let userRepository: UserRepository
-  private let signUpInfo: SignUpInfo
+  private var signUpInfo: SignUpInfo
   
   private var password = ""
   private var passwordCheck = ""
@@ -19,6 +19,7 @@ class SignUpPasswordViewModel {
   struct Input {
     let passwordTextFieldDidEditEvent: Observable<String>
     let passwordCheckTextFieldDidEditEvent: Observable<String>
+    let nextButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
@@ -47,6 +48,14 @@ class SignUpPasswordViewModel {
       .subscribe(onNext: { [weak self] passwordCheck in
         self?.passwordCheck = passwordCheck
         self?.updatePasswordCheckValidationState(output: output)
+      })
+      .disposed(by: disposeBag)
+    
+    input.nextButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
+        self.signUpInfo.password = self.passwordCheck
+        self.coordinator?.showSignUpGenderViewController(with: self.signUpInfo)
       })
       .disposed(by: disposeBag)
     

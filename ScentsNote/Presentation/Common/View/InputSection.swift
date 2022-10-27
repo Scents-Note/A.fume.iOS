@@ -89,6 +89,6 @@ class InputSection: UIView {
   }
   
   func updateUI(state: InputState) {
-    self.checkImage.isHidden = !(state == .success)
+    self.checkImage.isHidden = state != .success
   }
 }

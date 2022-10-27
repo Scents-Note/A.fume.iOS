@@ -40,6 +40,26 @@ final class DefaultSignUpCoordinator: SignUpCoordinator {
     self.navigationController.pushViewController(signUpPasswordViewController, animated: true)
   }
   
+  func showSignUpGenderViewController(with signUpInfo: SignUpInfo) {
+    let signUpGenderViewController = SignUpGenderViewController()
+    signUpGenderViewController.viewModel = SignUpGenderViewModel(
+      coordinator: self,
+      userRepository: userRepository,
+      signUpInfo: signUpInfo
+    )
+    self.navigationController.pushViewController(signUpGenderViewController, animated: true)
+  }
+  
+  func showSignUpBirthViewController(with signUpInfo: SignUpInfo) {
+    let signUpBirthViewController = SignUpBirthViewController()
+    signUpBirthViewController.viewModel = SignUpBirthViewModel(
+      coordinator: self,
+      userRepository: userRepository,
+      signUpInfo: signUpInfo
+    )
+    self.navigationController.pushViewController(signUpBirthViewController, animated: true)
+  }
+  
   func finish() {
     self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
   }

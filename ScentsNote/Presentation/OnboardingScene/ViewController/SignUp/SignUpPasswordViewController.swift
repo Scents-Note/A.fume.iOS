@@ -25,7 +25,6 @@ final class SignUpPasswordViewController: UIViewController {
   private let passwordWarningLabel = UILabel().then {
     $0.textColor = .brick
     $0.font = .notoSans(type: .regular, size: 12)
-    $0.text = "esfsf"
   }
   private lazy var passwordSection = InputSection(title: "비밀번호를 입력해주세요.", textField: self.passwordTextField, warningLabel: passwordWarningLabel)
   
@@ -57,9 +56,9 @@ extension SignUpPasswordViewController {
     
     self.view.addSubview(self.container)
     self.container.snp.makeConstraints {
-      $0.left.right.equalToSuperview().inset(20)
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
       $0.bottom.equalToSuperview()
+      $0.left.right.equalToSuperview().inset(20)
     }
     
     self.container.addSubview(self.passwordSection)
@@ -91,7 +90,8 @@ extension SignUpPasswordViewController {
   private func bindViewModel() {
     let input = SignUpPasswordViewModel.Input(
       passwordTextFieldDidEditEvent: self.passwordTextField.rx.text.orEmpty.asObservable(),
-      passwordCheckTextFieldDidEditEvent: self.passwordCheckTextField.rx.text.orEmpty.asObservable()
+      passwordCheckTextFieldDidEditEvent: self.passwordCheckTextField.rx.text.orEmpty.asObservable(),
+      nextButtonDidTapEvent: self.nextButton.rx.tap.asObservable()
     )
     
     let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
