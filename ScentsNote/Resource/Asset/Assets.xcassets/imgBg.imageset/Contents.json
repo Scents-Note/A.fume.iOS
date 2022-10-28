@@ -1,19 +1,19 @@
 {
   "images" : [
     {
-      "filename" : "textLogo.png",
       "scale" : "1x",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "imgBg.png"
     },
     {
+      "filename" : "imgBg@2x.png",
       "scale" : "2x",
-      "idiom" : "universal",
-      "filename" : "textLogo@2x.png"
+      "idiom" : "universal"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "textLogo@3x.png"
+      "filename" : "imgBg@3x.png"
     }
   ],
   "info" : {

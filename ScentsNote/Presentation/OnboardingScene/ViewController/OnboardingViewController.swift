@@ -17,9 +17,14 @@ final class OnboardingViewController: UIViewController {
   var viewModel: OnboardingViewModel?
   private let disposeBag = DisposeBag()
   
+  private let backgroundView = UIImageView().then {
+    $0.contentMode = .scaleAspectFill
+    $0.image = .imgBg
+  }
+  
   private let titleView = UIImageView().then {
     $0.contentMode = .scaleAspectFill
-    $0.image = UIImage(named: "signLogo")
+    $0.image = .signLogo
   }
   
   private let loginButton = UIButton().then {
@@ -51,8 +56,12 @@ final class OnboardingViewController: UIViewController {
 
 extension OnboardingViewController {
   private func configureUI() {
-    self.view.backgroundColor = .brown
     self.setBackButton()
+    
+    self.view.addSubview(self.backgroundView)
+    self.backgroundView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
     
     self.view.addSubview(self.titleView)
     self.titleView.snp.makeConstraints {
