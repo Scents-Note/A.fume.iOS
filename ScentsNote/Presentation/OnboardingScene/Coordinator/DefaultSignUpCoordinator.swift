@@ -8,7 +8,9 @@
 import UIKit
 
 final class DefaultSignUpCoordinator: SignUpCoordinator {
+ 
   weak var finishDelegate: CoordinatorFinishDelegate?
+  var delegate: BirthPopupDismissDelegate?
   var childCoordinators: [Coordinator] = []
   var userRepository: UserRepository
   var navigationController: UINavigationController
@@ -58,6 +60,25 @@ final class DefaultSignUpCoordinator: SignUpCoordinator {
       signUpInfo: signUpInfo
     )
     self.navigationController.pushViewController(signUpBirthViewController, animated: true)
+  }
+  
+  func showBirthPopupViewController(with birth: String) {
+    guard let viewController = self.navigationController.viewControllers.last as? SignUpBirthViewController else {
+        return
+    }
+
+    let birthPopupViewController = BirthPopupViewController()
+    birthPopupViewController.delegate = viewController
+    birthPopupViewController.viewModel = BirthPopupViewModel(
+      coordinator: self,
+      birth: birth
+    )
+    birthPopupViewController.modalPresentationStyle = .overFullScreen
+    self.navigationController.present(birthPopupViewController, animated: false, completion: nil)
+  }
+
+  func hideBirthPopupViewController(with birth: String) {
+    self.navigationController.dismiss(animated: false)
   }
   
   func finish() {

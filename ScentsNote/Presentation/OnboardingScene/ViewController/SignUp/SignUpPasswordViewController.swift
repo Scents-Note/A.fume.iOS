@@ -38,7 +38,7 @@ final class SignUpPasswordViewController: UIViewController {
   }
   private lazy var passwordCheckSection = InputSection(title: "비밀번호를 재확인할게요.", textField: self.passwordCheckTextField, warningLabel: passwordCheckWarningLabel)
 
-  private let nextButton = DoneButton(frame: .zero, title: "다음")
+  private let nextButton = NextButton(frame: .zero, title: "다음")
 
   override func viewDidLoad() {
     super.viewDidLoad()

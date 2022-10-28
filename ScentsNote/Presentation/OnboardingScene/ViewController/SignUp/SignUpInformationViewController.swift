@@ -34,7 +34,7 @@ final class SignUpInformationViewController: UIViewController {
   private let nicknameCheckButton = DoubleCheckButton()
   private lazy var nicknameSection = InputSection(title: "사용하실 닉네임을 입력해주세요.", textField: self.nicknameTextField, button: self.nicknameCheckButton, warningLabel: nicknameWarningLabel)
   
-  private let nextButton = DoneButton(frame: .zero, title: "다음")
+  private let nextButton = NextButton(frame: .zero, title: "다음")
   
   override func viewDidLoad() {
     super.viewDidLoad()

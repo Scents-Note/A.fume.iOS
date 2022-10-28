@@ -20,6 +20,10 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.login(email: email, password: password, completion: completion)
   }
   
+  func signUp(signUpInfo: SignUpInfo, completion: @escaping (Result<LoginInfo?, NetworkError>) -> Void) {
+    return self.userService.signUp(signUpInfo: signUpInfo, completion: completion)
+  }
+  
   func checkDuplicateEmail(email: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
     return self.userService.checkDuplicateEmail(email: email, completion: completion)
   }

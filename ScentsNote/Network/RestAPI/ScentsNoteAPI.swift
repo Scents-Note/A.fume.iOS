@@ -10,6 +10,7 @@ import Alamofire
 
 enum ScentsNoteAPI {
   case login(email: String, password: String)
+  case signUp(signUpInfo: SignUpInfo)
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
 }
@@ -18,7 +19,7 @@ extension ScentsNoteAPI: TargetType {
   public var baseURL: URL {
     var base = Config.Network.baseURL
     switch self {
-    case .login, .checkDuplicateEmail, .checkDuplicateNickname:
+    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname:
       base += "/user"
     }
     
@@ -32,6 +33,8 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login:
       return "/login"
+    case .signUp:
+      return "/register"
     case .checkDuplicateEmail:
       return "/validate/email"
     case .checkDuplicateNickname:
@@ -41,7 +44,7 @@ extension ScentsNoteAPI: TargetType {
   
   var method: Moya.Method {
     switch self {
-    case .login:
+    case .login, .signUp:
       return .post
     case .checkDuplicateEmail, .checkDuplicateNickname:
       return .get
@@ -50,7 +53,7 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .checkDuplicateEmail, .checkDuplicateNickname:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     }
   }
@@ -71,6 +74,13 @@ extension ScentsNoteAPI: TargetType {
     case let .login(email, password):
       params["email"] = email
       params["password"] = password
+    case let .signUp(signUpInfo):
+      params["password"] = signUpInfo.password
+      params["email"] = signUpInfo.email
+      params["nickname"] = signUpInfo.nickname
+      params["gender"] = signUpInfo.gender
+      params["birth"] = signUpInfo.birth
+      params["grade"] = signUpInfo.grade
     case let .checkDuplicateEmail(email):
       params["email"] = email
     case let .checkDuplicateNickname(nickname):
@@ -83,7 +93,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .checkDuplicateEmail, .checkDuplicateNickname:
       return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
-    default:
+    case .login, .signUp:
       return JSONEncoding.default
     }
   }

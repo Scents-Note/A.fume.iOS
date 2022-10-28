@@ -9,9 +9,9 @@ import Foundation
 
 struct LoginInfo: Decodable {
   var userIdx: Int
-  var nickname: String
-  var gender: String
-  var birth: Int
+  var nickname: String?
+  var gender: String?
+  var birth: Int?
   var token: String
   var refreshToken: String
 }

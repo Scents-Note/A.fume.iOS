@@ -38,13 +38,19 @@ final class SignUpGenderViewController: UIViewController {
   private let dividerCenter = UIView().then { $0.backgroundColor = .blackText }
   private let dividerBottom = UIView().then { $0.backgroundColor = .blackText }
   
-  private let nextButton = DoneButton(frame: .zero, title: "다음")
+  private let nextButton = NextButton(frame: .zero, title: "다음")
 
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.setNavigationBarHidden(false, animated: animated)
+  }
+  
 }
 
 extension SignUpGenderViewController {
@@ -62,7 +68,7 @@ extension SignUpGenderViewController {
     
     self.container.addSubview(self.titleLabel)
     self.titleLabel.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(20)
+      $0.top.equalToSuperview().offset(32)
       $0.left.equalToSuperview()
     }
     

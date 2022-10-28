@@ -43,6 +43,7 @@ class DefaultOnboardingCoordinator: OnboardingCoordinator {
     self.childCoordinators.append(signupCoordinator)
     signupCoordinator.showSignUpInformationViewController()
   }
+  
 }
 
 extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {

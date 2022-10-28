@@ -13,5 +13,5 @@ struct SignUpInfo: Equatable {
   var nickname: String?
   var gender: String?
   var birth: Int?
-  var grade: String?
+  var grade: String = "USER"
 }

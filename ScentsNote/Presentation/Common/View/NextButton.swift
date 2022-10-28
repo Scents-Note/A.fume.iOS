@@ -2,12 +2,12 @@
 //  DoneButton.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/10/27.
+//  Created by 황득연 on 2022/10/26.
 //
 
 import UIKit
 
-class DoneButton: UIButton {
+class NextButton: UIButton {
   
   required init(frame: CGRect, title: String) {
     super.init(frame: .zero)
@@ -19,10 +19,14 @@ class DoneButton: UIButton {
   }
   
   private func setTitle(title: String) {
-    self.setTitle(title, for: .normal)
+    self.setTitle("다음", for: .normal)
     self.setTitleColor(.white, for: .normal)
     self.titleLabel?.font = .notoSans(type: .bold, size: 15)
+    self.titleEdgeInsets = .init(top: 0, left: 0, bottom: 0, right: 16)
+    self.setImage(.btnNext, for: .normal)
+    self.contentHorizontalAlignment = .right
     self.layer.backgroundColor = UIColor.blackText.cgColor
-    self.contentEdgeInsets = .init(top: 0, left: 0, bottom: 34, right: 0)
+    self.semanticContentAttribute = .forceRightToLeft
+    self.contentEdgeInsets = .init(top: 0, left: 10, bottom: 34, right: 20)
   }
 }
