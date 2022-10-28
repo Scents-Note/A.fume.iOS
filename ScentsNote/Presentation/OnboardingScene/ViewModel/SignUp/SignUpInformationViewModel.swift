@@ -47,17 +47,12 @@ final class SignUpInformationViewModel {
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
         self.userRepository.checkDuplicateEmail(email: self.email, completion: { result in
-          result.success { validation in
-            switch validation {
-            case true:
-              output.emailValidationState.accept(.success)
-            case false:
-              output.emailValidationState.accept(.duplicate)
-            default:
-              break
-            }
+          result.success { _ in
+           output.emailValidationState.accept(.success)
           }.catch { error in
-            print("User Log: error \(self.email)")
+            if error == .duplicate {
+              output.emailValidationState.accept(.duplicate)
+            }
           }
         })
       })
@@ -75,17 +70,12 @@ final class SignUpInformationViewModel {
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
         self.userRepository.checkDuplicateNickname(nickname: self.nickname, completion: { result in
-          result.success { validation in
-            switch validation {
-            case true:
-              output.nicknameValidationState.accept(.success)
-            case false:
-              output.nicknameValidationState.accept(.duplicate)
-            default:
-              break
-            }
+          result.success { _ in
+            output.nicknameValidationState.accept(.success)
           }.catch { error in
-            print("User Log: error \(error)")
+            if error == .duplicate {
+              output.nicknameValidationState.accept(.duplicate)
+            }
           }
         })
       })
