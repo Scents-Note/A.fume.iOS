@@ -19,4 +19,10 @@ extension String {
     let predicate = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
     return predicate.evaluate(with: self)
   }
+  
+  func isValidNickname() -> Bool {
+    let passwordRegEx = "^[ㄱ-ㅎ가-힣a-zA-Z0-9]{1,}$"
+    let predicate = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
+    return predicate.evaluate(with: self)
+  }
 }

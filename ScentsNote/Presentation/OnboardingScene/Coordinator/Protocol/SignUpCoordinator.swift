@@ -8,5 +8,10 @@
 import Foundation
 
 protocol SignUpCoordinator: Coordinator {
-    func showSignUpViewController()
+  func showSignUpInformationViewController()
+  func showSignUpPasswordViewController(with signUpInfo: SignUpInfo)
+  func showSignUpGenderViewController(with signUpInfo: SignUpInfo)
+  func showSignUpBirthViewController(with signUpInfo: SignUpInfo)
+  func showBirthPopupViewController(with birth: String)
+  func hideBirthPopupViewController(with birth: String)
 }

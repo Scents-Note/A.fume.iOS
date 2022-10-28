@@ -1,19 +1,19 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "icCheck.png",
-      "scale" : "1x"
+      "filename" : "btnManActive.png",
+      "scale" : "1x",
+      "idiom" : "universal"
     },
     {
       "scale" : "2x",
-      "filename" : "icCheck@2x.png",
+      "filename" : "btnManActive@2x.png",
       "idiom" : "universal"
     },
     {
       "idiom" : "universal",
-      "filename" : "icCheck@3x.png",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "btnManActive@3x.png"
     }
   ],
   "info" : {

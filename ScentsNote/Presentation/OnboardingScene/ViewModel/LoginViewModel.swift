@@ -13,7 +13,7 @@ import Moya
 
 final class LoginViewModel {
   private weak var coordinator: LoginCoordinator?
-  private let userRepository: UserRepository?
+  private let userRepository: UserRepository
   private let service = DefaultUserService()
   
   private var email = ""
@@ -35,7 +35,6 @@ final class LoginViewModel {
     var emailFieldText = BehaviorRelay<String?>(value: "")
     var passwordFieldText = BehaviorRelay<String?>(value: "")
     var doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
-
   }
 
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -57,7 +56,7 @@ final class LoginViewModel {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository?.login(email: self.email, password: self.password, completion: { result in
+        self.userRepository.login(email: self.email, password: self.password, completion: { result in
           result.success { loginInfo in
             print("User Log: loginInfo \(loginInfo)")
           }.catch { error in
