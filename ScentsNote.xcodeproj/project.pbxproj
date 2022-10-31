@@ -14,6 +14,12 @@
 		4A857435290B5C7800F86C3A /* Birth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857434290B5C7800F86C3A /* Birth.swift */; };
 		4A857437290B63A900F86C3A /* PickerTextFeild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857436290B63A900F86C3A /* PickerTextFeild.swift */; };
 		4A857439290B641F00F86C3A /* DefaultBirthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857438290B641F00F86C3A /* DefaultBirthCoordinator.swift */; };
+		4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85743F290BED4B00F86C3A /* SurveyCoordinator.swift */; };
+		4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857441290BF21500F86C3A /* DefaultSurveyCoordinator.swift */; };
+		4A857444290BF31900F86C3A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857443290BF31900F86C3A /* SurveyViewController.swift */; };
+		4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857445290BF3F300F86C3A /* SurveyViewModel.swift */; };
+		4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857447290BF77900F86C3A /* BaseCoordinator.swift */; };
+		4A85744A290CC72600F86C3A /* CoordinatorFinishOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */; };
 		4A893AD8290A166200CA502B /* SignUpBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893AD7290A166200CA502B /* SignUpBirthViewController.swift */; };
 		4A893ADA290A167100CA502B /* SignUpBirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */; };
 		4A893ADD290A242200CA502B /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893ADC290A242200CA502B /* DoneButton.swift */; };
@@ -50,7 +56,6 @@
 		4AAFE79928FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */; };
 		4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */; };
 		4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */; };
-		4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */; };
 		4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */; };
 		4AAFE7E728FBCF0F00EA6FB4 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E628FBCF0F00EA6FB4 /* OnboardingViewController.swift */; };
 		4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE7E828FBCF2700EA6FB4 /* OnboardingViewModel.swift */; };
@@ -74,7 +79,7 @@
 		4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83028FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift */; };
 		4AAFE83328FE7CBE00EA6FB4 /* SignUpInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83228FE7CBE00EA6FB4 /* SignUpInformationViewController.swift */; };
 		4AAFE83528FE7CE300EA6FB4 /* SignUpInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83428FE7CE300EA6FB4 /* SignUpInformationViewModel.swift */; };
-		4AAFE83728FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83628FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift */; };
+		4AAFE83728FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83628FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift */; };
 		4AB65C9C29013F4D00A96CA5 /* ScentsNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */; };
 		4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB65C9D2901406400A96CA5 /* ResponseObject.swift */; };
 		4AB759932900F0990086C519 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB759922900F0990086C519 /* Config.swift */; };
@@ -116,6 +121,12 @@
 		4A857434290B5C7800F86C3A /* Birth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Birth.swift; sourceTree = "<group>"; };
 		4A857436290B63A900F86C3A /* PickerTextFeild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerTextFeild.swift; sourceTree = "<group>"; };
 		4A857438290B641F00F86C3A /* DefaultBirthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBirthCoordinator.swift; sourceTree = "<group>"; };
+		4A85743F290BED4B00F86C3A /* SurveyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCoordinator.swift; sourceTree = "<group>"; };
+		4A857441290BF21500F86C3A /* DefaultSurveyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSurveyCoordinator.swift; sourceTree = "<group>"; };
+		4A857443290BF31900F86C3A /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
+		4A857445290BF3F300F86C3A /* SurveyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewModel.swift; sourceTree = "<group>"; };
+		4A857447290BF77900F86C3A /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
+		4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishOutput.swift; sourceTree = "<group>"; };
 		4A893AD7290A166200CA502B /* SignUpBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewController.swift; sourceTree = "<group>"; };
 		4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewModel.swift; sourceTree = "<group>"; };
 		4A893ADC290A242200CA502B /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
@@ -156,7 +167,6 @@
 		4AAFE79828FAA8B600EA6FB4 /* CoordinatorFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishDelegate.swift; sourceTree = "<group>"; };
 		4AAFE79B28FAA94E00EA6FB4 /* CoordinatorType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorType.swift; sourceTree = "<group>"; };
 		4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
-		4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFactory.swift; sourceTree = "<group>"; };
 		4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultApplicationCoordinator.swift; sourceTree = "<group>"; };
 		4AAFE7E628FBCF0F00EA6FB4 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		4AAFE7E828FBCF2700EA6FB4 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -180,7 +190,7 @@
 		4AAFE83028FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpCoordinator.swift; sourceTree = "<group>"; };
 		4AAFE83228FE7CBE00EA6FB4 /* SignUpInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInformationViewController.swift; sourceTree = "<group>"; };
 		4AAFE83428FE7CE300EA6FB4 /* SignUpInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInformationViewModel.swift; sourceTree = "<group>"; };
-		4AAFE83628FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinatorDidFinishDelegate.swift; sourceTree = "<group>"; };
+		4AAFE83628FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnSignUpCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsNoteService.swift; sourceTree = "<group>"; };
 		4AB65C9D2901406400A96CA5 /* ResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseObject.swift; sourceTree = "<group>"; };
 		4AB759922900F0990086C519 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -254,6 +264,8 @@
 		4A85743B290BE2FE00F86C3A /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				4A85743E290BED4000F86C3A /* Protocol */,
+				4A857441290BF21500F86C3A /* DefaultSurveyCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -261,6 +273,7 @@
 		4A85743C290BE30400F86C3A /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A857445290BF3F300F86C3A /* SurveyViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -268,8 +281,17 @@
 		4A85743D290BE30C00F86C3A /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4A857443290BF31900F86C3A /* SurveyViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		4A85743E290BED4000F86C3A /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				4A85743F290BED4B00F86C3A /* SurveyCoordinator.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		4A8F89BB28F4F91A00ACE0F1 = {
@@ -534,10 +556,10 @@
 		4AAFE79428FAA82900EA6FB4 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				4AAFE7DA28FB9E8F00EA6FB4 /* Factory */,
 				4AAFE7D128FB974A00EA6FB4 /* Protocol */,
 				4AAFE79728FAA8A100EA6FB4 /* Delegate */,
 				4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */,
+				4A857447290BF77900F86C3A /* BaseCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -566,16 +588,9 @@
 			children = (
 				4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */,
 				4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */,
+				4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */,
 			);
 			path = Protocol;
-			sourceTree = "<group>";
-		};
-		4AAFE7DA28FB9E8F00EA6FB4 /* Factory */ = {
-			isa = PBXGroup;
-			children = (
-				4AAFE7DB28FB9EC000EA6FB4 /* CoordinatorFactory.swift */,
-			);
-			path = Factory;
 			sourceTree = "<group>";
 		};
 		4AAFE7DE28FBC11700EA6FB4 /* OnboardingScene */ = {
@@ -627,7 +642,7 @@
 				4AAFE7EB28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift */,
 				4AAFE7EF28FBDBCB00EA6FB4 /* LoginCoordinator.swift */,
 				4AAFE82E28FE7C5900EA6FB4 /* SignUpCoordinator.swift */,
-				4AAFE83628FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift */,
+				4AAFE83628FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift */,
 				4A857432290AA15A00F86C3A /* BirthPopupDismissDelegate.swift */,
 			);
 			path = Protocol;
@@ -981,6 +996,7 @@
 				4A9A14E2290919290067F04D /* SignUpPasswordViewController.swift in Sources */,
 				4A9A14E929093B1C0067F04D /* NextButton.swift in Sources */,
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
+				4A85744A290CC72600F86C3A /* CoordinatorFinishOutput.swift in Sources */,
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */,
@@ -992,11 +1008,13 @@
 				4A9A14DC2908D6210067F04D /* InputSection.swift in Sources */,
 				4AAFE82728FE368100EA6FB4 /* UIViewController+Extension.swift in Sources */,
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
+				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,
 				4AE4A4912904B56000491246 /* Result+Extension.swift in Sources */,
 				4AB7599A290131E80086C519 /* NetworkError.swift in Sources */,
 				4A9A14EB2909FDA40067F04D /* SignUpGenderViewController.swift in Sources */,
 				4AAFE82F28FE7C5900EA6FB4 /* SignUpCoordinator.swift in Sources */,
 				4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */,
+				4A857444290BF31900F86C3A /* SurveyViewController.swift in Sources */,
 				4A9D915A28FFFA5E001551A8 /* DefaultUserRepository.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4A9D915828FFFA55001551A8 /* UserRepository.swift in Sources */,
@@ -1017,19 +1035,21 @@
 				4A893ADA290A167100CA502B /* SignUpBirthViewModel.swift in Sources */,
 				4A857430290A962300F86C3A /* BirthPopupViewModel.swift in Sources */,
 				4AAFE7E728FBCF0F00EA6FB4 /* OnboardingViewController.swift in Sources */,
-				4AAFE83728FE7EAF00EA6FB4 /* LoginCoordinatorDidFinishDelegate.swift in Sources */,
+				4AAFE83728FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift in Sources */,
 				4AB759932900F0990086C519 /* Config.swift in Sources */,
-				4AAFE7DC28FB9EC000EA6FB4 /* CoordinatorFactory.swift in Sources */,
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
+				4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */,
 				4A893ADF290A832D00CA502B /* BirthPopupViewController.swift in Sources */,
 				4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */,
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
 				4A857435290B5C7800F86C3A /* Birth.swift in Sources */,
+				4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */,
 				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,
 				4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */,
 				4A857439290B641F00F86C3A /* DefaultBirthCoordinator.swift in Sources */,
 				4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */,
 				4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */,
+				4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A857437290B63A900F86C3A /* PickerTextFeild.swift in Sources */,
 				4A9D915128FFEC5B001551A8 /* URLSessionNetworkService.swift in Sources */,

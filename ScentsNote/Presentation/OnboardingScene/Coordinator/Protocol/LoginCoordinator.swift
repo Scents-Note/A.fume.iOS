@@ -7,6 +7,8 @@
 
 import Foundation
 
-protocol LoginCoordinator: Coordinator {
-    func showLoginViewController()
+protocol LoginCoordinator: AnyObject {
+  var finishFlow: (() -> Void)? { get set }
+  var onSignUpFlow: (() -> Void)? { get set }
+  func showLoginViewController()
 }

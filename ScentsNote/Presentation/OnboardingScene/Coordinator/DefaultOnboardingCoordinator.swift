@@ -8,13 +8,14 @@
 import Foundation
 import UIKit
 
-class DefaultOnboardingCoordinator: OnboardingCoordinator {
+class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
   
-  weak var finishDelegate: CoordinatorFinishDelegate?
+  var finishFlow: ((CoordinatorType) -> Void)?
+  var onSignUpFlow: ((CoordinatorType) -> Void)?
+
+//  weak var finishDelegate: CoordinatorFinishDelegate?
   var navigationController: UINavigationController
   var onboardingViewController: OnboardingViewController
-  var childCoordinators = [Coordinator]()
-  var type: CoordinatorType { .onboarding }
   
   required init(_ navigationController: UINavigationController) {
     self.navigationController = navigationController
@@ -22,7 +23,7 @@ class DefaultOnboardingCoordinator: OnboardingCoordinator {
     //    navigationController.setNavigationBarHidden(true, animated: true)
   }
   
-  func start() {
+  override func start() {
     self.onboardingViewController.viewModel = OnboardingViewModel(
       coordinator: self
     )
@@ -31,15 +32,27 @@ class DefaultOnboardingCoordinator: OnboardingCoordinator {
   
   func runLoginFlow() {
     let loginCoordinator = DefaultLoginCoordinator(self.navigationController)
-    loginCoordinator.finishDelegate = self
-    loginCoordinator.loginFinishDelegate = self
-    self.childCoordinators.append(loginCoordinator)
-    loginCoordinator.showLoginViewController()
+    loginCoordinator.finishFlow = { [unowned self, unowned loginCoordinator] in
+      self.removeDependency(loginCoordinator)
+      self.navigationController.viewControllers.removeAll()
+      self.finishFlow?(.main)
+    }
+    loginCoordinator.onSignUpFlow = {
+      self.runSignUpFlow()
+    }
+//    loginCoordinator.finishDelegate = self
+//    loginCoordinator.onSignUpDelegate = self
+    loginCoordinator.start()
+    self.addDependency(loginCoordinator)
   }
   
   func runSignUpFlow() {
     let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
-    signupCoordinator.finishDelegate = self
+//    signupCoordinator.finishDelegate = self
+    signupCoordinator.onSurveyFlow = { [unowned self] in
+      self.navigationController.viewControllers.removeAll()
+      self.finishFlow?(.survey)
+    }
     self.childCoordinators.append(signupCoordinator)
     signupCoordinator.showSignUpInformationViewController()
   }
@@ -48,13 +61,13 @@ class DefaultOnboardingCoordinator: OnboardingCoordinator {
 
 extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {
   func coordinatorDidFinish(childCoordinator: Coordinator) {
-    self.childCoordinators.removeAll()
-    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+    self.removeDependency(childCoordinator)
+//    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
   }
 }
 
-extension DefaultOnboardingCoordinator: LoginCoordinatorDidFinishDelegate {
-  func loginCoordinatorDidFinish() {
+extension DefaultOnboardingCoordinator: OnSignUpCoordinatorDelegate {
+  func onSignUpCoordinator() {
     self.runSignUpFlow()
   }
 }

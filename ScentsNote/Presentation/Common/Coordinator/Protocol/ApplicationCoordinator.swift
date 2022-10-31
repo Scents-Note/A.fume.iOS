@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol ApplicationCoordinator: Coordinator {
+protocol ApplicationCoordinator {
   func runOnboardingFlow()
   
 }

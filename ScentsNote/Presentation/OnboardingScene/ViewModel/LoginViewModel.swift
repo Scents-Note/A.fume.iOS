@@ -14,7 +14,6 @@ import Moya
 final class LoginViewModel {
   private weak var coordinator: LoginCoordinator?
   private let userRepository: UserRepository
-  private let service = DefaultUserService()
   
   private var email = ""
   private var password = ""
@@ -68,7 +67,7 @@ final class LoginViewModel {
     
     input.signupButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.finish()
+        self?.coordinator?.onSignUpFlow?()
       })
       .disposed(by: disposeBag)
     

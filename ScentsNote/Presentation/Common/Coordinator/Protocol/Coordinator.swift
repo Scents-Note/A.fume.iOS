@@ -8,19 +8,27 @@
 import UIKit
 
 protocol Coordinator: AnyObject {
-  var finishDelegate: CoordinatorFinishDelegate? { get set }
-  var navigationController: UINavigationController { get set }
-  var childCoordinators: [Coordinator] { get set }
-  var type: CoordinatorType { get }
-  func start()
-  func finish()
   
-  init(_ navigationController: UINavigationController)
+  func start()
+  func start(type: CoordinatorType?)
+  
 }
 
-extension Coordinator {
-  func finish() {
-    childCoordinators.removeAll()
-    finishDelegate?.coordinatorDidFinish(childCoordinator: self)
-  }
-}
+
+//protocol Coordinator: AnyObject {
+//  var finishDelegate: CoordinatorFinishDelegate? { get set }
+//  var navigationController: UINavigationController { get set }
+//  var childCoordinators: [Coordinator] { get set }
+//  var type: CoordinatorType { get }
+//  func start()
+//  func finish()
+//
+//  init(_ navigationController: UINavigationController)
+//}
+//
+//extension Coordinator {
+//  func finish() {
+//    childCoordinators.removeAll()
+//    finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+//  }
+//}

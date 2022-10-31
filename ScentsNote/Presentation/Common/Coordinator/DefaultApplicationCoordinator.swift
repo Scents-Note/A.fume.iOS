@@ -7,42 +7,62 @@
 
 import UIKit
 
-final class DefaultApplicationCoordinator: ApplicationCoordinator {
+final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinator {
   
-  weak var finishDelegate: CoordinatorFinishDelegate?
+//  weak var finishDelegate: CoordinatorFinishDelegate?
+  
   var navigationController: UINavigationController
-  var childCoordinators = [Coordinator]()
-  var type: CoordinatorType { .app }
   
   required init(_ navigationController: UINavigationController) {
     self.navigationController = navigationController
     navigationController.setNavigationBarHidden(true, animated: true)
   }
   
-  func start() {
+//  override var type: CoordinatorType? { .signUp }
+//  override var type: CoordinatorType? { .app }
+  
+  override func start() {
     self.runOnboardingFlow()
   }
   
   func runOnboardingFlow() {
     let onboardingCoordinator = DefaultOnboardingCoordinator(self.navigationController)
-    onboardingCoordinator.finishDelegate = self
+    onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
+      self.removeDependency(onboardingCoordinator)
+      self.navigationController.viewControllers.removeAll()
+      switch type {
+      case .main:
+        self.runMainFlow()
+      case .survey:
+        self.runSurveyFlow()
+      default:
+        break
+      }
+    }
+    self.addDependency(onboardingCoordinator)
     onboardingCoordinator.start()
-    childCoordinators.append(onboardingCoordinator)
+  }
+  
+  func runMainFlow() {
+    
+  }
+  
+  func runSurveyFlow() {
+    
   }
 }
 
-extension DefaultApplicationCoordinator: CoordinatorFinishDelegate {
-  func coordinatorDidFinish(childCoordinator: Coordinator) {
-    self.childCoordinators = self.childCoordinators.filter({ $0.type != childCoordinator.type })
-    
-    self.navigationController.view.backgroundColor = .systemBackground
-    self.navigationController.viewControllers.removeAll()
-    
-    switch childCoordinator.type {
-    case .onboarding:
-      self.runOnboardingFlow()
-    default:
-      break
-    }
-  }
-}
+//extension DefaultApplicationCoordinator: CoordinatorFinishDelegate {
+//  func coordinatorDidFinish(childCoordinator: Coordinator) {
+//    self.removeDependency(childCoordinator)
+//    self.navigationController.view.backgroundColor = .systemBackground
+//    self.navigationController.viewControllers.removeAll()
+//
+//    switch childCoordinator.type {
+//    case .onboarding:
+//      self.runOnboardingFlow()
+//    default:
+//      break
+//    }
+//  }
+//}

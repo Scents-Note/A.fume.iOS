@@ -7,6 +7,9 @@
 
 enum CoordinatorType {
   case app
+  case main
   case onboarding
   case login
+  case signUp
+  case survey
 }

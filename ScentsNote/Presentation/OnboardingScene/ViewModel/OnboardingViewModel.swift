@@ -11,6 +11,8 @@ import RxSwift
 import RxRelay
 
 final class OnboardingViewModel {
+  
+  
   weak var coordinator: OnboardingCoordinator?
   private let disposeBag = DisposeBag()
   
@@ -26,7 +28,7 @@ final class OnboardingViewModel {
   func transform(from input: Input, disposeBag: DisposeBag) {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.runLoginFlow()
+        self?.coordinator?.runLoginFlow() 
       })
       .disposed(by: disposeBag)
     

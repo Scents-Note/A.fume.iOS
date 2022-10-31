@@ -38,15 +38,15 @@ final class SignUpBirthViewModel {
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.signUpInfo.birth = Int(self.birth.value)
-        print("User Log: signUp \(self.signUpInfo)")
-        self.userRepository.signUp(signUpInfo: self.signUpInfo, completion: { result in
-          result.success { loginInfo in
-            print(loginInfo)
-          }.catch { error in
-            print("User Log: error \(error)")
-          }
-        })
+        self.coordinator?.onSurveyFlow?()
+//        self.signUpInfo.birth = Int(self.birth.value)
+//        print("User Log: signUp \(self.signUpInfo)")
+//        self.userRepository.signUp(signUpInfo: self.signUpInfo, completion: { result in
+//          result.success { loginInfo in
+//          }.catch { error in
+//            print("User Log: error \(error)")
+//          }
+//        })
       })
       .disposed(by: disposeBag)
 

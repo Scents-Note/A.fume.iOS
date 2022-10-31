@@ -7,21 +7,24 @@
 
 import UIKit
 
-final class DefaultSignUpCoordinator: SignUpCoordinator {
- 
-  weak var finishDelegate: CoordinatorFinishDelegate?
-  var delegate: BirthPopupDismissDelegate?
-  var childCoordinators: [Coordinator] = []
+final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
+  
+  var onSurveyFlow: (() -> Void)?
+  
+//  weak var finishDelegate: CoordinatorFinishDelegate?
+//  var delegate: BirthPopupDismissDelegate?
   var userRepository: UserRepository
   var navigationController: UINavigationController
-  var type: CoordinatorType = .login
+//  var type: CoordinatorType? = .signUp
   
   init(_ navigationContoller: UINavigationController) {
     self.navigationController = navigationContoller
     self.userRepository = DefaultUserRepository(userService: DefaultUserService())
   }
   
-  func start() {}
+  override func start() {
+    self.showSignUpInformationViewController()
+  }
   
   func showSignUpInformationViewController() {
     let signUpInformationViewController = SignUpInformationViewController()
@@ -82,6 +85,6 @@ final class DefaultSignUpCoordinator: SignUpCoordinator {
   }
   
   func finish() {
-    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+//    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
   }
 }

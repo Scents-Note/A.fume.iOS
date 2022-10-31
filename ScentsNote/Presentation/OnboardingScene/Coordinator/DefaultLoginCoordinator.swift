@@ -7,21 +7,25 @@
 
 import UIKit
 
-final class DefaultLoginCoordinator: LoginCoordinator {
-  weak var finishDelegate: CoordinatorFinishDelegate?
-  weak var loginFinishDelegate: LoginCoordinatorDidFinishDelegate?
+final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
+  
+  var finishFlow: (() -> Void)?
+  var onSignUpFlow: (() -> Void)?
+
+//  weak var finishDelegate: CoordinatorFinishDelegate?
+//  weak var onSignUpDelegate: OnSignUpCoordinatorDelegate?
 
   var navigationController: UINavigationController
   var loginViewController: LoginViewController
-  var childCoordinators: [Coordinator] = []
-  var type: CoordinatorType = .login
   
   init(_ navigationContoller: UINavigationController) {
     self.navigationController = navigationContoller
     self.loginViewController = LoginViewController()
   }
   
-  func start() {}
+  override func start() {
+    self.showLoginViewController()
+  }
   
   func showLoginViewController() {
       self.loginViewController.viewModel = LoginViewModel(
@@ -32,7 +36,6 @@ final class DefaultLoginCoordinator: LoginCoordinator {
   }
   
   func finish() {
-    print("User Log: finish")
-    self.loginFinishDelegate?.loginCoordinatorDidFinish()
+//    self.onSignUpDelegate?.onSignUpCoordinator()
   }
 }

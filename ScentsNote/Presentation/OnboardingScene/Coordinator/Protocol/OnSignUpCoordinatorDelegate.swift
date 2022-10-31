@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol LoginCoordinatorDidFinishDelegate: AnyObject {
-    func loginCoordinatorDidFinish()
+protocol OnSignUpCoordinatorDelegate: AnyObject {
+    func onSignUpCoordinator()
 }
