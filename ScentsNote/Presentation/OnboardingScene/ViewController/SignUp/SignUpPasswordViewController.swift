@@ -50,7 +50,7 @@ final class SignUpPasswordViewController: UIViewController {
 
 extension SignUpPasswordViewController {
   private func configureUI() {
-    self.view.backgroundColor = .systemBackground
+    self.view.backgroundColor = .white
     self.setBackButton()
     self.setNavigationTitle(title: "회원가입")
     

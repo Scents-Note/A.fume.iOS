@@ -25,7 +25,7 @@ final class BirthPopupViewController: UIViewController {
   }
   
   private let picker = UIPickerView().then {
-    $0.backgroundColor = .systemBackground
+    $0.backgroundColor = .white
   }
   
   private let button = UIButton().then {

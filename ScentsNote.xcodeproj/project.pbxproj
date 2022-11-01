@@ -20,6 +20,13 @@
 		4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857445290BF3F300F86C3A /* SurveyViewModel.swift */; };
 		4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857447290BF77900F86C3A /* BaseCoordinator.swift */; };
 		4A85744A290CC72600F86C3A /* CoordinatorFinishOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */; };
+		4A85744E2910AC8900F86C3A /* SurveySeries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85744D2910AC8900F86C3A /* SurveySeries.swift */; };
+		4A8574502910ADC700F86C3A /* SurveySeriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85744F2910ADC700F86C3A /* SurveySeriesViewController.swift */; };
+		4A8574522910B65F00F86C3A /* SurveySeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574512910B65F00F86C3A /* SurveySeriesViewModel.swift */; };
+		4A8574552910C44700F86C3A /* SurveyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574542910C44700F86C3A /* SurveyScrollView.swift */; };
+		4A8574572910C50200F86C3A /* SurveySeriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574562910C50200F86C3A /* SurveySeriesCollectionViewCell.swift */; };
+		4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574582910CC4600F86C3A /* UIImageView+Load.swift */; };
+		4A85745B2910F5C100F86C3A /* SurveySeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85745A2910F5C100F86C3A /* SurveySeriesView.swift */; };
 		4A893AD8290A166200CA502B /* SignUpBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893AD7290A166200CA502B /* SignUpBirthViewController.swift */; };
 		4A893ADA290A167100CA502B /* SignUpBirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */; };
 		4A893ADD290A242200CA502B /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893ADC290A242200CA502B /* DoneButton.swift */; };
@@ -127,6 +134,13 @@
 		4A857445290BF3F300F86C3A /* SurveyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewModel.swift; sourceTree = "<group>"; };
 		4A857447290BF77900F86C3A /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
 		4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishOutput.swift; sourceTree = "<group>"; };
+		4A85744D2910AC8900F86C3A /* SurveySeries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeries.swift; sourceTree = "<group>"; };
+		4A85744F2910ADC700F86C3A /* SurveySeriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesViewController.swift; sourceTree = "<group>"; };
+		4A8574512910B65F00F86C3A /* SurveySeriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesViewModel.swift; sourceTree = "<group>"; };
+		4A8574542910C44700F86C3A /* SurveyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScrollView.swift; sourceTree = "<group>"; };
+		4A8574562910C50200F86C3A /* SurveySeriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A8574582910CC4600F86C3A /* UIImageView+Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Load.swift"; sourceTree = "<group>"; };
+		4A85745A2910F5C100F86C3A /* SurveySeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesView.swift; sourceTree = "<group>"; };
 		4A893AD7290A166200CA502B /* SignUpBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewController.swift; sourceTree = "<group>"; };
 		4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewModel.swift; sourceTree = "<group>"; };
 		4A893ADC290A242200CA502B /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
@@ -255,6 +269,7 @@
 			isa = PBXGroup;
 			children = (
 				4A85743B290BE2FE00F86C3A /* Coordinator */,
+				4A8574532910C43300F86C3A /* View */,
 				4A85743D290BE30C00F86C3A /* ViewController */,
 				4A85743C290BE30400F86C3A /* ViewModel */,
 			);
@@ -274,6 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				4A857445290BF3F300F86C3A /* SurveyViewModel.swift */,
+				4A8574512910B65F00F86C3A /* SurveySeriesViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -282,6 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				4A857443290BF31900F86C3A /* SurveyViewController.swift */,
+				4A85744F2910ADC700F86C3A /* SurveySeriesViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -292,6 +309,32 @@
 				4A85743F290BED4B00F86C3A /* SurveyCoordinator.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		4A85744B2910AC5000F86C3A /* Survey */ = {
+			isa = PBXGroup;
+			children = (
+				4A85744C2910AC6500F86C3A /* Response */,
+			);
+			path = Survey;
+			sourceTree = "<group>";
+		};
+		4A85744C2910AC6500F86C3A /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				4A85744D2910AC8900F86C3A /* SurveySeries.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		4A8574532910C43300F86C3A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4A8574542910C44700F86C3A /* SurveyScrollView.swift */,
+				4A8574562910C50200F86C3A /* SurveySeriesCollectionViewCell.swift */,
+				4A85745A2910F5C100F86C3A /* SurveySeriesView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		4A8F89BB28F4F91A00ACE0F1 = {
@@ -539,6 +582,7 @@
 				4A9D914728FFCA2D001551A8 /* String+Extension.swift */,
 				4AE4A4902904B56000491246 /* Result+Extension.swift */,
 				4AE4A4942905262300491246 /* Single+Extension.swift */,
+				4A8574582910CC4600F86C3A /* UIImageView+Load.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -715,6 +759,7 @@
 		4AE4A4962905312100491246 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4A85744B2910AC5000F86C3A /* Survey */,
 				4A9D915C28FFFBBD001551A8 /* User */,
 			);
 			path = Model;
@@ -986,6 +1031,8 @@
 			files = (
 				4A9D914A28FFCC47001551A8 /* InputState.swift in Sources */,
 				4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */,
+				4A8574502910ADC700F86C3A /* SurveySeriesViewController.swift in Sources */,
+				4A8574572910C50200F86C3A /* SurveySeriesCollectionViewCell.swift in Sources */,
 				4A9A14E4290919390067F04D /* SignUpPasswordViewModel.swift in Sources */,
 				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
@@ -1002,6 +1049,7 @@
 				4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */,
 				4A9A14DE2908ED560067F04D /* InputField.swift in Sources */,
 				4AE4A4952905262300491246 /* Single+Extension.swift in Sources */,
+				4A8574522910B65F00F86C3A /* SurveySeriesViewModel.swift in Sources */,
 				4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4A9D915F28FFFBE2001551A8 /* LoginRequestDTO.swift in Sources */,
@@ -1040,10 +1088,13 @@
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
 				4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */,
 				4A893ADF290A832D00CA502B /* BirthPopupViewController.swift in Sources */,
+				4A8574552910C44700F86C3A /* SurveyScrollView.swift in Sources */,
+				4A85744E2910AC8900F86C3A /* SurveySeries.swift in Sources */,
 				4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */,
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
 				4A857435290B5C7800F86C3A /* Birth.swift in Sources */,
 				4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */,
+				4A85745B2910F5C100F86C3A /* SurveySeriesView.swift in Sources */,
 				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,
 				4A9D915328FFEC8A001551A8 /* DefaultURLSessionNetworkService.swift in Sources */,
 				4A857439290B641F00F86C3A /* DefaultBirthCoordinator.swift in Sources */,
@@ -1051,6 +1102,7 @@
 				4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */,
 				4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
+				4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */,
 				4A857437290B63A900F86C3A /* PickerTextFeild.swift in Sources */,
 				4A9D915128FFEC5B001551A8 /* URLSessionNetworkService.swift in Sources */,
 			);

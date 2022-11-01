@@ -46,7 +46,7 @@ final class SignUpBirthViewController: UIViewController {
 
 extension SignUpBirthViewController {
   private func configureUI() {
-    self.view.backgroundColor = .systemBackground
+    self.view.backgroundColor = .white
     self.setBackButton()
     
     self.view.addSubview(self.container)

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol SignUpCoordinator: Coordinator {
-  var onSurveyFlow: (() -> Void)? { get set }
+  var finishFlow: (() -> Void)? { get set }
   
   func showSignUpInformationViewController()
   func showSignUpPasswordViewController(with signUpInfo: SignUpInfo)

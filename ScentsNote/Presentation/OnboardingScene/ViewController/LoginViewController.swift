@@ -72,7 +72,7 @@ class LoginViewController: UIViewController {
 extension LoginViewController {
   
   private func configureUI() {
-    self.view.backgroundColor = .systemBackground
+    self.view.backgroundColor = .white
     self.setBackButton()
     self.setNavigationTitle(title: "로그인")
 

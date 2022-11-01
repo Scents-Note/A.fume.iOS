@@ -8,5 +8,8 @@
 import Foundation
 
 protocol SurveyCoordinator: AnyObject {
+  
+  var finishFlow: (() -> Void)? { get set }
+
 //  func runSurveyFlow()
 }

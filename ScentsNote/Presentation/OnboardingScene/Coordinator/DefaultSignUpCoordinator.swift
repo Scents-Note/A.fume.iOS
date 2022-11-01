@@ -9,8 +9,7 @@ import UIKit
 
 final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   
-  var onSurveyFlow: (() -> Void)?
-  
+  var finishFlow: (() -> Void)?
 //  weak var finishDelegate: CoordinatorFinishDelegate?
 //  var delegate: BirthPopupDismissDelegate?
   var userRepository: UserRepository

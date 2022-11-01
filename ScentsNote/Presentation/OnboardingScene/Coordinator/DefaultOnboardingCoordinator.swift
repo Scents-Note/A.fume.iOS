@@ -24,6 +24,10 @@ class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
   }
   
   override func start() {
+    self.showOnboardingViewController()
+  }
+  
+  private func showOnboardingViewController() {
     self.onboardingViewController.viewModel = OnboardingViewModel(
       coordinator: self
     )
@@ -35,6 +39,7 @@ class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
     loginCoordinator.finishFlow = { [unowned self, unowned loginCoordinator] in
       self.removeDependency(loginCoordinator)
       self.navigationController.viewControllers.removeAll()
+      self.navigationController.view.backgroundColor = .white
       self.finishFlow?(.main)
     }
     loginCoordinator.onSignUpFlow = {
@@ -49,12 +54,13 @@ class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
   func runSignUpFlow() {
     let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
 //    signupCoordinator.finishDelegate = self
-    signupCoordinator.onSurveyFlow = { [unowned self] in
+    signupCoordinator.finishFlow = { [unowned self] in
       self.navigationController.viewControllers.removeAll()
+      self.navigationController.view.backgroundColor = .white
       self.finishFlow?(.survey)
     }
     self.childCoordinators.append(signupCoordinator)
-    signupCoordinator.showSignUpInformationViewController()
+    signupCoordinator.start()
   }
   
 }

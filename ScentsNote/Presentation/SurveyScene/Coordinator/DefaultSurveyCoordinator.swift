@@ -9,7 +9,7 @@ import UIKit
 
 final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   
-
+  var finishFlow: (() -> Void)?
 //  weak var finishDelegate: CoordinatorFinishDelegate?
   
   var navigationController: UINavigationController
@@ -20,7 +20,11 @@ final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
     self.surveyViewController = SurveyViewController()
   }
   
-  func showSurvetViewController() {
+  override func start() {
+    self.showSurverViewController()
+  }
+  
+  private func showSurverViewController() {
       self.surveyViewController.viewModel = SurveyViewModel(
           coordinator: self,
           userRepository: DefaultUserRepository(userService: DefaultUserService())
