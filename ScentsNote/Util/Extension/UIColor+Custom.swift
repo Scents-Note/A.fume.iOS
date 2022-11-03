@@ -15,5 +15,6 @@ extension UIColor {
   static var darkGray7d: UIColor { return UIColor(white: 125 / 255, alpha: 1) }
   static var grayCd: UIColor { return UIColor(white: 205 / 255, alpha: 1) }
   static var black1d: UIColor { return UIColor(white: 29 / 255, alpha: 1) }
-  
+  static var lightGray: UIColor { return UIColor(white: 249 / 255, alpha: 1) }
+  static var lightGray2: UIColor { return UIColor(white: 246 / 255, alpha: 1) }
 }

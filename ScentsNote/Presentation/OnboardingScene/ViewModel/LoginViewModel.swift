@@ -57,6 +57,8 @@ final class LoginViewModel {
         guard let self = self else { return }
         self.userRepository.login(email: self.email, password: self.password, completion: { result in
           result.success { loginInfo in
+            guard let loginInfo = loginInfo else { return }
+            self.userRepository.saveLoginInfo(loginInfo: loginInfo)
             print("User Log: loginInfo \(loginInfo)")
           }.catch { error in
             print("User Log: error \(error)")

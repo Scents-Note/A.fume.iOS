@@ -12,8 +12,8 @@ final class SignUpBirthViewModel {
   private weak var coordinator: SignUpCoordinator?
   private let userRepository: UserRepository
   private var signUpInfo: SignUpInfo
+  
   var birth = BehaviorRelay<String>(value: "1990")
-
 
   struct Input {
     let birthButtonDidTapEvent: Observable<Void>

@@ -7,13 +7,21 @@
 
 import Foundation
 
-struct SurveySeriesInfo: Decodable {
+struct SurveyInfo<T: Decodable>: Decodable {
   let count: Int
-  let rows: [SurveySeries]
+  let rows: [T]
 }
 
 struct SurveySeries: Decodable {
   let seriesIdx: Int
   let name: String
   let imageUrl: String
+}
+
+struct SurveyPerfume: Decodable {
+  let perfumeIdx: Int
+  let brandName: String
+  let name: String
+  let imageUrl: String
+  var isLiked: Bool
 }

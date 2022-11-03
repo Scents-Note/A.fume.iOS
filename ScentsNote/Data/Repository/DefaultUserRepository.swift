@@ -31,5 +31,11 @@ final class DefaultUserRepository: UserRepository {
   func checkDuplicateNickname(nickname: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
     return self.userService.checkDuplicateNickname(nickname: nickname, completion: completion)
   }
+  
+  func saveLoginInfo(loginInfo: LoginInfo) {
+    UserDefaults.standard.set(loginInfo.token, forKey: UserDefaultKey.token)
+    UserDefaults.standard.set(loginInfo.nickname, forKey: UserDefaultKey.nickname)
+    UserDefaults.standard.set(true, forKey: UserDefaultKey.isLoggedIn)
+  }
 }
 

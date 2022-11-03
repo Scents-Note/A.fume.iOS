@@ -74,14 +74,5 @@ final class SurveyScrollView: UIScrollView {
     self.surveySeriesView2.reloadData()
 
   }
-  //  private lazy var stationResultCollectionView: UICollectionView = {
-  //      let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
-  //      collectionView.backgroundColor = BBusColor.bbusLightGray
-  //      collectionView.register(SearchResultCollectionViewCell.self, forCellWithReuseIdentifier: SearchResultCollectionViewCell.identifier)
-  //      collectionView.register(SimpleCollectionHeaderView.self,
-  //                              forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-  //                              withReuseIdentifier: SimpleCollectionHeaderView.identifier)
-  //      return collectionView
-  //  }()
 }
 

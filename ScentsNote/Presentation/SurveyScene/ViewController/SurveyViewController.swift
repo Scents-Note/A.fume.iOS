@@ -20,6 +20,8 @@ final class SurveyViewController: UIViewController {
   
   var viewModel: SurveyViewModel?
   private let disposeBag = DisposeBag()
+  
+  var perfumeDatas = [SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true)]
   var datas = [SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222")]
   
   private let titleLabel = UILabel().then {
@@ -35,33 +37,6 @@ final class SurveyViewController: UIViewController {
     $0.numberOfLines = 2
     $0.font = .nanumMyeongjo(type: .regular, size: 15)
   }
-  
-//  private func collectionViewLayout() -> UICollectionViewLayout {
-//    let cellInterval: CGFloat = 1
-//
-//    let layout = UICollectionViewFlowLayout()
-//    layout.scrollDirection = .vertical
-//    layout.sectionInset = UIEdgeInsets(
-//      top: cellInterval,
-//      left: 0,
-//      bottom: cellInterval,
-//      right: 0)
-//    layout.minimumInteritemSpacing = cellInterval
-//    layout.minimumLineSpacing = cellInterval
-//    layout.sectionHeadersPinToVisibleBounds = true
-//    print("두번")
-//    return layout
-//  }
-  
-  var surveySeriesView = SurveySeriesView()
-
-//  private lazy var seriesCollectionView: UICollectionView = {
-//    let collectionView = UICollectionView(frame: CGRect(), collectionViewLayout: self.collectionViewLayout())
-//    collectionView.backgroundColor = .white
-//    collectionView.register(SurveySeriesCollectionViewCell.self, forCellWithReuseIdentifier: SurveySeriesCollectionViewCell.identifier)
-//    print("sefklnsaeifhasioehj")
-//    return collectionView
-//  }()
   
   private let scrollView = SurveyScrollView()
   
@@ -100,14 +75,6 @@ extension SurveyViewController {
       $0.left.equalToSuperview().offset(20)
     }
 
-//    surveySeriesView.delegate = self
-//    surveySeriesView.dataSource = self
-//    self.view.addSubview(self.surveySeriesView)
-//    self.surveySeriesView.snp.makeConstraints {
-//      $0.top.equalTo(self.contentLabel.snp.bottom)
-//      $0.left.right.bottom.equalToSuperview()
-//    }
-    self.scrollView.delegate = self
     self.view.addSubview(self.scrollView)
     self.scrollView.snp.makeConstraints {
       $0.top.equalTo(self.contentLabel.snp.bottom)
@@ -115,10 +82,8 @@ extension SurveyViewController {
     }
   }
   private func configureDelegate() {
-    self.scrollView.configureDelegate(self)
     self.scrollView.delegate = self
-    
-  
+    self.scrollView.configureDelegate(self)
   }
   
   
@@ -126,31 +91,49 @@ extension SurveyViewController {
 
 extension SurveyViewController {
   private func bindViewModel() {
-    
+    let input = SurveyViewModel.Input()
+    let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    self.bindPerfumes(output: output)
+  }
+  
+  private func bindPerfumes(output: SurveyViewModel.Output?) {
+    output?.loadData
+      .asDriver()
+      .drive(onNext: { [weak self] _ in
+        self?.scrollView.reload()
+      })
+      .disposed(by: disposeBag)
   }
 }
 
 extension SurveyViewController: UICollectionViewDataSource {
   
-  func numberOfSections(in collectionView: UICollectionView) -> Int {
-    let regionCount = 1
-    print(datas.count)
-    if collectionView.frame.origin.x == 0 {
-      return self.datas.count == 0 ? 0 : regionCount
-    }
-    else {
-      return self.datas.count == 0 ? 0 : regionCount
-    }
-  }
+//  func numberOfSections(in collectionView: UICollectionView) -> Int {
+//    let regionCount = 1
+//    print(datas.count)
+//    if collectionView.frame.origin.x == 0 {
+//      return self.viewModel?.perfumes.count == 0 ? 0 : regionCount
+//    }
+//    else {
+//      return self.datas.count == 0 ? 0 : regionCount
+//    }
+//  }
+  
+//  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//    if collectionView.frame.origin.x == 0 {
+//      return self.datas.count
+//    } else {
+//      return self.viewModel?.perfumes.count ?? 0
+//    }
+//
+//  }
+  
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if collectionView.frame.origin.x == 0 {
-      print(self.datas.count)
-      return self.datas.count
+      return self.viewModel?.perfumes.count ?? 0
     }
-    else {
-      return self.datas.count
-    }
+    return self.viewModel?.perfumes.count ?? 0
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -159,8 +142,9 @@ extension SurveyViewController: UICollectionViewDataSource {
       return UICollectionViewCell()
       
     }
-    let info = self.datas[indexPath.row]
-    cell.updateUI(seriesInfo: info)
+    let perfume = self.viewModel?.perfumes[indexPath.row]
+//    let perfume = self.perfumeDatas[indexPath.row]
+    cell.updateUI(perfume: perfume)
     print("cell")
     return cell
   }

@@ -9,10 +9,14 @@ import Moya
 import Alamofire
 
 enum ScentsNoteAPI {
+  // MARK: - User
   case login(email: String, password: String)
   case signUp(signUpInfo: SignUpInfo)
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
+  
+  // MARK: - Perfume
+  case fetchPerfumesInSurvey
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -21,6 +25,8 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname:
       base += "/user"
+    case .fetchPerfumesInSurvey:
+      base += "/perfume"
     }
     
     guard let url = URL(string: base) else {
@@ -39,6 +45,8 @@ extension ScentsNoteAPI: TargetType {
       return "/validate/email"
     case .checkDuplicateNickname:
       return "/validate/name"
+    case .fetchPerfumesInSurvey:
+      return "/survey"
     }
   }
   
@@ -46,7 +54,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp:
       return .post
-    case .checkDuplicateEmail, .checkDuplicateNickname:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey:
       return .get
     }
   }
@@ -55,16 +63,21 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
+    case .fetchPerfumesInSurvey:
+      return .requestPlain
     }
   }
   
   var headers: [String: String]? {
-//    if let userToken = Logged.userToken {
-//      return [
-//        "x-access-token": "Bearer " + userToken,
-//        "Content-Type": "application/json"
-//      ]
-//    }
+    //TODO propertyWrapper 사용해볼것
+    if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
+      print("User Log: userToken \(userToken)")
+      return [
+        "x-access-token": "Bearer " + userToken,
+        "Content-Type": "application/json"
+      ]
+    }
+    
     return nil
   }
   
@@ -85,7 +98,10 @@ extension ScentsNoteAPI: TargetType {
       params["email"] = email
     case let .checkDuplicateNickname(nickname):
       params["nickname"] = nickname
+    default:
+      break
     }
+    
     return params
   }
   
@@ -93,7 +109,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .checkDuplicateEmail, .checkDuplicateNickname:
       return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
-    case .login, .signUp:
+    default:
       return JSONEncoding.default
     }
   }
