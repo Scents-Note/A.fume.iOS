@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SurveySeriesView: UICollectionView {
+class SurveyPerfumeView: UICollectionView {
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
     self.configureUI()
@@ -19,11 +19,11 @@ class SurveySeriesView: UICollectionView {
   }
 }
 
-private extension SurveySeriesView {
+private extension SurveyPerfumeView {
   func configureUI() {
     self.collectionViewLayout = self.createCompositionalLayout()
-    self.register(SurveySeriesCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: SurveySeriesCollectionViewCell.self))
-    
+    self.register(SurveyPerfumeCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: SurveyPerfumeCollectionViewCell.self))
+    self.backgroundColor = .lightGray
   }
   
   func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -37,15 +37,12 @@ private extension SurveySeriesView {
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: .init(
         widthDimension: .fractionalWidth(1),
-        heightDimension: .absolute(166)
+        heightDimension: .absolute(SurveyPerfumeCollectionViewCell.height)
       ),
       subitems: [item]
     )
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .none
-    
-//    let config = UICollectionViewCompositionalLayoutConfiguration()
-//    config.scrollDirection = .horizontal
     
     return UICollectionViewCompositionalLayout(section: section)
   }

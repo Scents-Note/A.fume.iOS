@@ -11,4 +11,8 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
   func fetchPerfumesInSurvey(completion: @escaping (Result<SurveyInfo<SurveyPerfume>?, NetworkError>) -> Void) {
     requestObject(.fetchPerfumesInSurvey, completion: completion)
   }
+  
+  func fetchKeywords(completion: @escaping (Result<SurveyInfo<SurveyKeyword>?, NetworkError>) -> Void) {
+    requestObject(.fetchKeywords, completion: completion)
+  }
 }

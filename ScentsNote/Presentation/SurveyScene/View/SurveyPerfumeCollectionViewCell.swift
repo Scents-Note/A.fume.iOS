@@ -9,9 +9,9 @@ import UIKit
 import SnapKit
 import Then
 
-final class SurveySeriesCollectionViewCell: UICollectionViewCell {
+final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
   
-  static let identifier = "SurveySeriesCollectionViewCell"
+  static let identifier = "SurveyPerfumeCollectionViewCell"
   static let height: CGFloat = 188
 
   private let imageBackground = UIView().then {
@@ -49,8 +49,6 @@ final class SurveySeriesCollectionViewCell: UICollectionViewCell {
   }
   
   func configureUI(){
-    self.contentView.backgroundColor = .lightGray
-    
     self.contentView.addSubview(self.imageBackground)
     self.imageBackground.snp.makeConstraints {
       $0.centerX.equalToSuperview()

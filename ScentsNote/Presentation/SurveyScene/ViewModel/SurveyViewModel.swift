@@ -15,6 +15,7 @@ final class SurveyViewModel {
   private let perfumeRepository: PerfumeRepository
   private let disposeBag = DisposeBag()
   var perfumes: [SurveyPerfume] = []
+  var keywords: [SurveyKeyword] = []
   
   struct Input {
     
@@ -34,7 +35,6 @@ final class SurveyViewModel {
     
     self.perfumeRepository.fetchPerfumesInSurvey { result in
       result.success { [weak self] perfumeInfo in
-        print("user log: \(perfumeInfo)")
         guard let perfumeInfo = perfumeInfo else { return }
         self?.perfumes = perfumeInfo.rows
         output.loadData.accept(true)
@@ -42,6 +42,18 @@ final class SurveyViewModel {
         print("User Log: error1 \(error)")
       }
     }
+    
+    self.perfumeRepository.fetchKeywords { result in
+      result.success { [weak self] keywordInfo in
+        guard let keywordInfo = keywordInfo else { return }
+        self?.keywords = keywordInfo.rows
+        output.loadData.accept(true)
+      }.catch { error in
+        print("User Log: error1 \(error)")
+      }
+    }
+    
+    
     return output
     //    self.userRepository.
   }

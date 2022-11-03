@@ -12,10 +12,10 @@ final class SurveyScrollView: UIScrollView {
   
   private var isConfigureUI = false
   private let contentView = UIView()
+  private let surveyPerfumeView = SurveyPerfumeView()
+  private let surveyKeywordView = SurveyKeywordView()
   private let surveySeriesView = SurveySeriesView()
-  private let surveySeriesView2 = SurveySeriesView()
-  private let emptyview1 = UIView()
-  private let emptyview2 = UIView()
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
@@ -28,16 +28,15 @@ final class SurveyScrollView: UIScrollView {
   
   
   private func configureUI() {
-    let twice: CGFloat = 2
     let screenSize = UIScreen.main.bounds
     
-    self.showsVerticalScrollIndicator = false
     self.isPagingEnabled = true
     self.isDirectionalLockEnabled = true
     self.translatesAutoresizingMaskIntoConstraints = false
+    self.showsVerticalScrollIndicator = false
     self.showsHorizontalScrollIndicator = false
 
-    self.contentSize = CGSize(width: screenSize.width * twice, height: 592)
+    self.contentSize = CGSize(width: screenSize.width * 3, height: 592)
 
 //    self.addSubview(self.contentView)
 //    self.contentView.snp.makeConstraints {
@@ -54,25 +53,30 @@ final class SurveyScrollView: UIScrollView {
     
 //    self.contentSize = CGSize(width: screenSize.width * twice, height: screenSize.width)
 
-    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 592)
-    self.surveySeriesView2.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 592)
+    self.surveyPerfumeView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 476)
+    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 476)
+    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 476)
 
+
+    addSubview(surveyPerfumeView)
+    addSubview(surveyKeywordView)
     addSubview(surveySeriesView)
-    addSubview(surveySeriesView2)
+
   }
   
   func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {
+    self.surveyPerfumeView.delegate = delegate
+    self.surveyPerfumeView.dataSource = delegate
+    self.surveyKeywordView.delegate = delegate
+    self.surveyKeywordView.dataSource = delegate
     self.surveySeriesView.delegate = delegate
     self.surveySeriesView.dataSource = delegate
-    self.surveySeriesView2.delegate = delegate
-    self.surveySeriesView2.dataSource = delegate
   }
   
   func reload() {
-    print("reload")
+    self.surveyPerfumeView.reloadData()
+    self.surveyKeywordView.reloadData()
     self.surveySeriesView.reloadData()
-    self.surveySeriesView2.reloadData()
-
   }
 }
 

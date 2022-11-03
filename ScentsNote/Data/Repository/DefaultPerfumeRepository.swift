@@ -18,4 +18,8 @@ final class DefaultPerfumeRepository: PerfumeRepository {
   func fetchPerfumesInSurvey(completion: @escaping (Result<SurveyInfo<SurveyPerfume>?, NetworkError>) -> Void) {
     self.perfumeService.fetchPerfumesInSurvey(completion: completion)
   }
+  
+  func fetchKeywords(completion: @escaping (Result<SurveyInfo<SurveyKeyword>?, NetworkError>) -> Void) {
+    self.perfumeService.fetchKeywords(completion: completion)
+  }
 }

@@ -25,3 +25,8 @@ struct SurveyPerfume: Decodable {
   let imageUrl: String
   var isLiked: Bool
 }
+
+struct SurveyKeyword: Decodable {
+  let keywordIdx: Int
+  let name: String
+}

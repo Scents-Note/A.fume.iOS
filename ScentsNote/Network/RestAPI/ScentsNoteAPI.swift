@@ -17,6 +17,7 @@ enum ScentsNoteAPI {
   
   // MARK: - Perfume
   case fetchPerfumesInSurvey
+  case fetchKeywords
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -27,6 +28,8 @@ extension ScentsNoteAPI: TargetType {
       base += "/user"
     case .fetchPerfumesInSurvey:
       base += "/perfume"
+    default:
+      break
     }
     
     guard let url = URL(string: base) else {
@@ -47,14 +50,17 @@ extension ScentsNoteAPI: TargetType {
       return "/validate/name"
     case .fetchPerfumesInSurvey:
       return "/survey"
+    case .fetchKeywords:
+      return "/keyword"
     }
+
   }
   
   var method: Moya.Method {
     switch self {
     case .login, .signUp:
       return .post
-    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords:
       return .get
     }
   }
@@ -63,13 +69,13 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
-    case .fetchPerfumesInSurvey:
+    case .fetchPerfumesInSurvey, .fetchKeywords:
       return .requestPlain
     }
   }
   
   var headers: [String: String]? {
-    //TODO propertyWrapper 사용해볼것
+    // TODO: propertyWrapper 사용해볼것
     if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
       print("User Log: userToken \(userToken)")
       return [
