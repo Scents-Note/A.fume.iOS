@@ -53,9 +53,9 @@ final class SurveyScrollView: UIScrollView {
     
 //    self.contentSize = CGSize(width: screenSize.width * twice, height: screenSize.width)
 
-    self.surveyPerfumeView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 476)
-    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 476)
-    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 476)
+    self.surveyPerfumeView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 514)
+    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 514)
+    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 514)
 
 
     addSubview(surveyPerfumeView)
@@ -71,6 +71,22 @@ final class SurveyScrollView: UIScrollView {
     self.surveyKeywordView.dataSource = delegate
     self.surveySeriesView.delegate = delegate
     self.surveySeriesView.dataSource = delegate
+  }
+  
+  func updatePage(_ idx: Int) {
+      self.subviews.last?.alpha = 1
+      self.delegate?.scrollViewWillBeginDragging?(self)
+      UIView.animate(withDuration: TimeInterval(0.3), animations: {
+        if idx == 0 {
+          self.setContentOffset(CGPoint.zero, animated: false)
+        } else if idx == 1 {
+          self.setContentOffset(CGPoint(x: self.frame.width, y: 0), animated: false)
+        } else {
+          self.setContentOffset(CGPoint(x: self.frame.width * 2, y: 0), animated: false)
+        }
+      }, completion: {_ in
+          self.delegate?.scrollViewDidEndDecelerating?(self)
+      })
   }
   
   func reload() {

@@ -18,6 +18,7 @@ enum ScentsNoteAPI {
   // MARK: - Perfume
   case fetchPerfumesInSurvey
   case fetchKeywords
+  case fetchSeries
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -52,6 +53,8 @@ extension ScentsNoteAPI: TargetType {
       return "/survey"
     case .fetchKeywords:
       return "/keyword"
+    case .fetchSeries:
+      return "/series"
     }
 
   }
@@ -60,7 +63,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp:
       return .post
-    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries:
       return .get
     }
   }
@@ -69,7 +72,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
-    case .fetchPerfumesInSurvey, .fetchKeywords:
+    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries:
       return .requestPlain
     }
   }

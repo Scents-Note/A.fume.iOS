@@ -36,6 +36,8 @@
 		4A857469291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857468291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift */; };
 		4A85746B291363D200F86C3A /* SurveyKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85746A291363D200F86C3A /* SurveyKeywordView.swift */; };
 		4A85746D2913654400F86C3A /* SurveyKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85746C2913654400F86C3A /* SurveyKeyword.swift */; };
+		4A85746F29136B9400F86C3A /* SurveySeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85746E29136B9400F86C3A /* SurveySeriesView.swift */; };
+		4A85747129136BA100F86C3A /* SurveySeriesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85747029136BA100F86C3A /* SurveySeriesCollectionViewCell.swift */; };
 		4A893AD8290A166200CA502B /* SignUpBirthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893AD7290A166200CA502B /* SignUpBirthViewController.swift */; };
 		4A893ADA290A167100CA502B /* SignUpBirthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */; };
 		4A893ADD290A242200CA502B /* DoneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A893ADC290A242200CA502B /* DoneButton.swift */; };
@@ -159,6 +161,8 @@
 		4A857468291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyKeywordCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A85746A291363D200F86C3A /* SurveyKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyKeywordView.swift; sourceTree = "<group>"; };
 		4A85746C2913654400F86C3A /* SurveyKeyword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyKeyword.swift; sourceTree = "<group>"; };
+		4A85746E29136B9400F86C3A /* SurveySeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesView.swift; sourceTree = "<group>"; };
+		4A85747029136BA100F86C3A /* SurveySeriesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A893AD7290A166200CA502B /* SignUpBirthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewController.swift; sourceTree = "<group>"; };
 		4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewModel.swift; sourceTree = "<group>"; };
 		4A893ADC290A242200CA502B /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
@@ -355,6 +359,8 @@
 				4A85745A2910F5C100F86C3A /* SurveyPerfumeView.swift */,
 				4A857468291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift */,
 				4A85746A291363D200F86C3A /* SurveyKeywordView.swift */,
+				4A85746E29136B9400F86C3A /* SurveySeriesView.swift */,
+				4A85747029136BA100F86C3A /* SurveySeriesCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1076,6 +1082,7 @@
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4A857469291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift in Sources */,
 				4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */,
+				4A85747129136BA100F86C3A /* SurveySeriesCollectionViewCell.swift in Sources */,
 				4A9A14DE2908ED560067F04D /* InputField.swift in Sources */,
 				4AE4A4952905262300491246 /* Single+Extension.swift in Sources */,
 				4A8574522910B65F00F86C3A /* SurveySeriesViewModel.swift in Sources */,
@@ -1083,6 +1090,7 @@
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4A9D915F28FFFBE2001551A8 /* LoginRequestDTO.swift in Sources */,
 				4A9A14DC2908D6210067F04D /* InputSection.swift in Sources */,
+				4A85746F29136B9400F86C3A /* SurveySeriesView.swift in Sources */,
 				4AAFE82728FE368100EA6FB4 /* UIViewController+Extension.swift in Sources */,
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
 				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,

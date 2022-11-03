@@ -20,6 +20,9 @@ final class SurveyViewController: UIViewController {
   
   var viewModel: SurveyViewModel?
   private let disposeBag = DisposeBag()
+  private var direction = 0
+  
+  private var barLeadingAnchor: Constraint?
   
   //  var perfumeDatas = [SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true),SurveyPerfume(perfumeIdx: 1, brandName: "22", name: "412", imageUrl: "", isLiked: true)]
   //  var datas = [SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222"),SurveySeries(seriesIdx: 1, name: "11", imageUrl: "222")]
@@ -38,7 +41,45 @@ final class SurveyViewController: UIViewController {
     $0.font = .nanumMyeongjo(type: .regular, size: 15)
   }
   
+  private lazy var tabStackView = UIStackView().then {
+    $0.alignment = .fill
+    $0.axis = .horizontal
+    $0.distribution = .fillEqually
+    
+    $0.addArrangedSubview(self.perfumeButton)
+    $0.addArrangedSubview(self.keywordButton)
+    $0.addArrangedSubview(self.seriesButton)
+  }
+  
+  private let dividerView = UIView().then {
+    $0.backgroundColor = .grayCd
+  }
+  
+  private let selectedBarView = UIView().then {
+    $0.backgroundColor = .blackText
+  }
+  
+  private let perfumeButton = UIButton().then {
+    $0.setTitle("향수", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
+  }
+  
+  private let keywordButton = UIButton().then {
+    $0.setTitle("키워드", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
+  }
+  
+  private let seriesButton = UIButton().then {
+    $0.setTitle("계열", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
+  }
+  
   private let scrollView = SurveyScrollView()
+  
+  private let doneButton = DoneButton(frame: .zero, title: "다음")
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -75,10 +116,41 @@ extension SurveyViewController {
       $0.left.equalToSuperview().offset(20)
     }
     
+    self.view.addSubview(self.tabStackView)
+    self.tabStackView.snp.makeConstraints {
+      $0.top.equalTo(self.contentLabel.snp.bottom)
+      $0.left.right.equalToSuperview()
+      $0.height.equalTo(48)
+    }
+    
+    self.view.addSubview(self.dividerView)
+    self.dividerView.snp.makeConstraints {
+      $0.top.equalTo(self.tabStackView.snp.bottom)
+      $0.left.right.equalToSuperview()
+      $0.height.equalTo(1)
+    }
+    
+    self.view.addSubview(self.selectedBarView)
+    self.selectedBarView.snp.makeConstraints {
+      barLeadingAnchor = $0.left.equalTo(self.perfumeButton.snp.left).constraint
+      $0.width.equalTo(UIScreen.main.bounds.width / 3)
+      $0.bottom.equalTo(self.dividerView)
+      $0.height.equalTo(4)
+    }
+    barLeadingAnchor?.activate()
+    
+    self.view.addSubview(self.doneButton)
+    self.doneButton.snp.makeConstraints {
+      $0.bottom.equalToSuperview()
+      $0.left.right.equalToSuperview()
+      $0.height.equalTo(86)
+    }
+    
     self.view.addSubview(self.scrollView)
     self.scrollView.snp.makeConstraints {
-      $0.top.equalTo(self.contentLabel.snp.bottom)
-      $0.left.right.bottom.equalToSuperview()
+      $0.top.equalTo(self.dividerView.snp.bottom)
+      $0.bottom.equalTo(self.doneButton.snp.top)
+      $0.left.right.equalToSuperview()
     }
   }
   private func configureDelegate() {
@@ -91,9 +163,24 @@ extension SurveyViewController {
 
 extension SurveyViewController {
   private func bindViewModel() {
-    let input = SurveyViewModel.Input()
+    let input = SurveyViewModel.Input(
+      perfumeButtonDidTapEvent: self.perfumeButton.rx.tap.asObservable(),
+      keywordButtonDidTapEvent: self.keywordButton.rx.tap.asObservable(),
+      seriesButtonDidTapEvent: self.seriesButton.rx.tap.asObservable()
+    )
     let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    self.bindTab(output: output)
     self.bindPerfumes(output: output)
+  }
+  
+  private func bindTab(output: SurveyViewModel.Output?) {
+    self.viewModel?.selectedTab
+      .subscribe(onNext: { [weak self] idx in
+        self?.updateTab(idx)
+        self?.updateTabBar(idx)
+        self?.updatePage(idx)
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindPerfumes(output: SurveyViewModel.Output?) {
@@ -106,37 +193,60 @@ extension SurveyViewController {
   }
 }
 
+extension SurveyViewController {
+  private func updateTab(_ idx: Int) {
+    self.perfumeButton.do {
+      $0.titleLabel?.font = .notoSans(type: idx == 0 ? .bold : .regular, size: 14)
+      $0.setTitleColor(idx == 0 ? .blackText : .darkGray7d, for: .normal)
+    }
+    
+    self.keywordButton.do {
+      $0.titleLabel?.font = .notoSans(type: idx == 1 ? .bold : .regular, size: 14)
+      $0.setTitleColor(idx == 1 ? .blackText : .darkGray7d, for: .normal)
+    }
+    
+    self.seriesButton.do {
+      $0.titleLabel?.font = .notoSans(type: idx == 2 ? .bold : .regular, size: 14)
+      $0.setTitleColor(idx == 2 ? .blackText : .darkGray7d, for: .normal)
+    }
+  }
+  
+  private func updateTabBar(_ idx: Int) {
+    self.barLeadingAnchor?.deactivate()
+    if idx == 0 {
+      self.selectedBarView.snp.makeConstraints {
+        self.barLeadingAnchor = $0.left.equalTo(self.perfumeButton.snp.left).constraint
+      }
+    } else if idx == 1 {
+      self.selectedBarView.snp.makeConstraints {
+        self.barLeadingAnchor = $0.left.equalTo(self.keywordButton.snp.left).constraint
+      }
+    } else {
+      self.selectedBarView.snp.makeConstraints {
+        self.barLeadingAnchor = $0.left.equalTo(self.seriesButton.snp.left).constraint
+      }
+    }
+    self.barLeadingAnchor?.activate()
+//    UIView.animate(withDuration: 0.3) {
+//      self.view.layoutIfNeeded()
+//    }
+  }
+  
+  private func updatePage(_ idx: Int) {
+    self.scrollView.updatePage(idx)
+  }
+}
+
 extension SurveyViewController: UICollectionViewDataSource {
-  
-  //  func numberOfSections(in collectionView: UICollectionView) -> Int {
-  //    let regionCount = 1
-  //    print(datas.count)
-  //    if collectionView.frame.origin.x == 0 {
-  //      return self.viewModel?.perfumes.count == 0 ? 0 : regionCount
-  //    }
-  //    else {
-  //      return self.datas.count == 0 ? 0 : regionCount
-  //    }
-  //  }
-  
-  //  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-  //    if collectionView.frame.origin.x == 0 {
-  //      return self.datas.count
-  //    } else {
-  //      return self.viewModel?.perfumes.count ?? 0
-  //    }
-  //
-  //  }
-  
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if collectionView.frame.origin.x == 0 {
       return self.viewModel?.perfumes.count ?? 0
     } else if collectionView.frame.origin.x == UIScreen.main.bounds.width {
-      print("User Log: keyword \(viewModel?.keywords)")
       return self.viewModel?.keywords.count ?? 0
+    } else {
+      return self.viewModel?.series.count ?? 0
     }
-    return self.viewModel?.perfumes.count ?? 0
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -154,12 +264,15 @@ extension SurveyViewController: UICollectionViewDataSource {
       let keyword = self.viewModel?.keywords[indexPath.row]
       cell.updateUI(keyword: keyword)
       return cell
+    } else {
+      guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SurveySeriesCollectionViewCell.identifier, for: indexPath) as? SurveySeriesCollectionViewCell else {
+        return UICollectionViewCell()
+      }
+      let series = self.viewModel?.series[indexPath.row]
+      cell.updateUI(series: series)
+      return cell
     }
-    
-    
-    return UICollectionViewCell()
   }
-  
 }
 
 extension SurveyViewController: UICollectionViewDelegateFlowLayout {
@@ -170,31 +283,22 @@ extension SurveyViewController: UICollectionViewDelegateFlowLayout {
 }
 
 extension SurveyViewController: UIScrollViewDelegate {
-  func isScrollViewHorizontalDragging() -> Bool {
-    return self.scrollView.contentOffset.x.remainder(dividingBy: self.scrollView.frame.width) == 0
-  }
-  
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    // TODO: Bug Fix
-    guard !self.isScrollViewHorizontalDragging() else { return }
-    //    self.currentSearchType = scrollView.contentOffset.x > scrollView.frame.width / 2 ? SearchType.station : SearchType.bus
-  }
-  
-  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-    guard let scrollView = (scrollView as? SurveyScrollView),
-          let indicator = scrollView.subviews.last?.subviews.first else { return }
-    
-    let twice: CGFloat = 2
-    let indicatorWidthPadding: CGFloat = 5
-    
-    //    scrollView.configureIndicator(true)
-    scrollView.horizontalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: -indicatorWidthPadding, bottom: scrollView.frame.height - (3 * twice), right: -indicatorWidthPadding)
-    indicator.layer.cornerRadius = 0
-//    indicator.backgroundColor = .blue
-  }
-  
+
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    guard let scrollView = (scrollView as? SurveyScrollView) else { return }
-    //    scrollView.configureIndicator(false)
+//    guard !self.isScrollViewHorizontalDragging() else { return }
+    if scrollView.contentOffset.x == 0 {
+      if self.viewModel?.selectedTab.value != 0 {
+        self.viewModel?.updateSelectedTab(0)
+      }
+    } else if scrollView.contentOffset.x == scrollView.frame.width * 2 {
+      if self.viewModel?.selectedTab.value != 2 {
+        self.viewModel?.updateSelectedTab(2)
+      }
+    } else {
+      if self.viewModel?.selectedTab.value != 1 {
+        self.viewModel?.updateSelectedTab(1)
+      }
+    }
   }
 }
+

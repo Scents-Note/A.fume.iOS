@@ -15,8 +15,6 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
   private let keywordLabel = UILabel().then {
     $0.textColor = .grayCd
     $0.font = .notoSans(type: .regular, size: 15)
-//    $0.layer.borderWidth = 1
-//    $0.layer.borderColor = UIColor.grayCd.cgColor
   }
   
   override init(frame: CGRect) {

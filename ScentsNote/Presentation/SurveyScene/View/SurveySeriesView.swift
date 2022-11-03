@@ -2,12 +2,12 @@
 //  SurveySeriesView.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/11/01.
+//  Created by 황득연 on 2022/11/03.
 //
 
 import UIKit
 
-class SurveyPerfumeView: UICollectionView {
+class SurveySeriesView: UICollectionView {
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
     self.configureUI()
@@ -19,10 +19,10 @@ class SurveyPerfumeView: UICollectionView {
   }
 }
 
-private extension SurveyPerfumeView {
+private extension SurveySeriesView {
   func configureUI() {
     self.collectionViewLayout = self.createCompositionalLayout()
-    self.register(SurveyPerfumeCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: SurveyPerfumeCollectionViewCell.self))
+    self.register(SurveySeriesCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: SurveySeriesCollectionViewCell.self))
     self.backgroundColor = .lightGray
   }
   
@@ -37,7 +37,7 @@ private extension SurveyPerfumeView {
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: .init(
         widthDimension: .fractionalWidth(1),
-        heightDimension: .absolute(SurveyPerfumeCollectionViewCell.height)
+        heightDimension: .absolute(SurveySeriesCollectionViewCell.height)
       ),
       subitems: [item]
     )
