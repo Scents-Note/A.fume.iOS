@@ -10,7 +10,6 @@ import UIKit
 final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinator {
   
   //  weak var finishDelegate: CoordinatorFinishDelegate?
-  
   var navigationController: UINavigationController
   
   required init(_ navigationController: UINavigationController) {
@@ -30,7 +29,7 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     let onboardingCoordinator = DefaultOnboardingCoordinator(self.navigationController)
     onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
       self.removeDependency(onboardingCoordinator)
-      self.navigationController.viewControllers.removeAll()
+      self.initialNavigationController()
       switch type {
       case .main:
         self.runMainFlow()
@@ -45,32 +44,28 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   }
   
   func runMainFlow() {
-    
+    let mainCoordinator = DefaultMainCoordinator(self.navigationController)
+    self.addDependency(mainCoordinator)
+    mainCoordinator.start()
   }
   
   func runSurveyFlow() {
     let surveyCoordinator = DefaultSurveyCoordinator(self.navigationController)
     surveyCoordinator.finishFlow = { [unowned self] in
+      self.removeDependency(surveyCoordinator)
+      self.initialNavigationController()
       self.runMainFlow()
     }
     self.addDependency(surveyCoordinator)
     surveyCoordinator.start()
 
   }
-  
+
 }
 
-//extension DefaultApplicationCoordinator: CoordinatorFinishDelegate {
-//  func coordinatorDidFinish(childCoordinator: Coordinator) {
-//    self.removeDependency(childCoordinator)
-//    self.navigationController.view.backgroundColor = .systemBackground
-//    self.navigationController.viewControllers.removeAll()
-//
-//    switch childCoordinator.type {
-//    case .onboarding:
-//      self.runOnboardingFlow()
-//    default:
-//      break
-//    }
-//  }
-//}
+extension DefaultApplicationCoordinator {
+  func initialNavigationController() {
+    self.navigationController.view.backgroundColor = .white
+    self.navigationController.viewControllers.removeAll()
+  }
+}

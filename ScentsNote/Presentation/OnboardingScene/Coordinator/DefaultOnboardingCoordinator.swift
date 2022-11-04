@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
+final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
   
   var finishFlow: ((CoordinatorType) -> Void)?
   var onSignUpFlow: ((CoordinatorType) -> Void)?

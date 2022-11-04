@@ -11,6 +11,7 @@ class BaseCoordinator: Coordinator {
   
   // MARK: - Vars & Lets
   var childCoordinators = [Coordinator]()
+
   // MARK: - Public methods
   
   func addDependency(_ coordinator: Coordinator) {
@@ -30,6 +31,8 @@ class BaseCoordinator: Coordinator {
       }
     }
   }
+  
+  
   
   // MARK: - Coordinator
   func start() {}

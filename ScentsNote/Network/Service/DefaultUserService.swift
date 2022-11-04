@@ -26,6 +26,10 @@ final class DefaultUserService: ScentsNoteService, UserService {
   func checkDuplicateNickname(nickname: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
     requestObject(.checkDuplicateNickname(nickname: nickname), completion: completion)
   }
+  
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int], completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
+    requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList), completion: completion)
+  }
 
 }
 

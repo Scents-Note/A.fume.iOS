@@ -82,8 +82,5 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   func hideBirthPopupViewController(with birth: String) {
     self.navigationController.dismiss(animated: false)
   }
-  
-  func finish() {
-//    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
-  }
+
 }

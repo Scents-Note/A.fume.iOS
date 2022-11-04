@@ -13,6 +13,7 @@ import RxRelay
 final class SurveyViewModel {
   private weak var coordinator: SurveyCoordinator?
   private let perfumeRepository: PerfumeRepository
+  private let userRepository: UserRepository
   private let disposeBag = DisposeBag()
   
   var perfumes: [SurveyPerfume] = []
@@ -33,11 +34,13 @@ final class SurveyViewModel {
     var loadData = BehaviorRelay<Bool>(value: false)
     var hightlightViewTransform = BehaviorRelay<Int>(value: 0)
     var perfumeCellDidTap = PublishRelay<IndexPath>()
+    var exitAlertShown = PublishRelay<Bool>()
   }
   
-  init(coordinator: SurveyCoordinator?, perfumeRepository: PerfumeRepository) {
+  init(coordinator: SurveyCoordinator?, perfumeRepository: PerfumeRepository, userRepository: UserRepository) {
     self.coordinator = coordinator
     self.perfumeRepository = perfumeRepository
+    self.userRepository = userRepository
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -65,14 +68,15 @@ final class SurveyViewModel {
       .disposed(by: disposeBag)
     
     input.backButtonDidTapEvent
-      .subscribe(onNext: { [weak self] in
-        
+      .subscribe(onNext: {
+        output.exitAlertShown.accept(true)
       })
+      .disposed(by: disposeBag)
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         if self?.selectedTab.value == 2 {
-          
+          self?.completeSurveyFlow()
         } else {
           let currentTab = self?.selectedTab.value ?? 0
           self?.selectedTab.accept(currentTab + 1)
@@ -86,7 +90,7 @@ final class SurveyViewModel {
         self?.perfumes = perfumeInfo.rows
         output.loadData.accept(true)
       }.catch { error in
-        print("User Log: error1 \(error)")
+        print("User Log: \(error)")
       }
     }
     
@@ -98,7 +102,7 @@ final class SurveyViewModel {
         })
         output.loadData.accept(true)
       }.catch { error in
-        print("User Log: error1 \(error)")
+        print("User Log: \(error)")
       }
     }
     
@@ -110,7 +114,7 @@ final class SurveyViewModel {
         })
         output.loadData.accept(true)
       }.catch { error in
-        print("User Log: error1 \(error)")
+        print("User Log: \(error)")
       }
     }
         
@@ -119,5 +123,25 @@ final class SurveyViewModel {
   
   func updateSelectedTab(_ idx: Int) {
     self.selectedTab.accept(idx)
+  }
+  
+  func completeSurveyFlow() {
+    let perfumeListLiked = self.perfumes
+      .filter { $0.isLiked }
+      .map { $0.perfumeIdx }
+    let keywordListLiked = self.keywords
+      .filter { $0.isLiked == true }
+      .map { $0.keywordIdx }
+    let seriesListLiked = self.series
+      .filter { $0.isLiked == true }
+      .map { $0.seriesIdx }
+    
+    self.userRepository.registerSurvey(perfumeList: perfumeListLiked, keywordList: keywordListLiked, seriesList: seriesListLiked) { result in
+      result.success { _ in
+        self.coordinator?.finishFlow?()
+      }.catch { error in
+        print("User Log: \(error)")
+      }
+    }
   }
 }

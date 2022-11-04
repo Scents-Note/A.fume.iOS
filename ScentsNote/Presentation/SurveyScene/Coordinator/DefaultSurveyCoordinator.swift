@@ -27,14 +27,10 @@ final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   private func showSurverViewController() {
       self.surveyViewController.viewModel = SurveyViewModel(
           coordinator: self,
-          perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService())
+          perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService()),
+          userRepository: DefaultUserRepository(userService: DefaultUserService())
       )
       self.navigationController.pushViewController(self.surveyViewController, animated: true)
-  }
-  
-
-  func finish() {
-//    self.loginFinishDelegate?.loginCoordinatorDidFinish()
   }
   
 }
