@@ -156,7 +156,7 @@ extension SurveyViewController {
       perfumeButtonDidTapEvent: self.perfumeButton.rx.tap.asObservable(),
       keywordButtonDidTapEvent: self.keywordButton.rx.tap.asObservable(),
       seriesButtonDidTapEvent: self.seriesButton.rx.tap.asObservable(),
-      backButtonDidTapEvent: self.backButton.rx.tap.asObservable(),
+      exitAlertShownEvent: self.backButton.rx.tap.asObservable(),
       doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable()
     )
     let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
@@ -206,7 +206,7 @@ extension SurveyViewController {
     output?.exitAlertShown
       .subscribe(onNext: { [weak self] _ in
         self?.presentAlert(message: "나에게 꼭 맞는 향수를 추천받고 싶다면 설문을 완료해주세요. 그래도 설문을 종료하시겠습니다?", completion: {
-          print("d")
+          self?.viewModel?.exit()
         })
       })
       .disposed(by: disposeBag)

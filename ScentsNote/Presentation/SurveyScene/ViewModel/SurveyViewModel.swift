@@ -26,7 +26,7 @@ final class SurveyViewModel {
     let perfumeButtonDidTapEvent: Observable<Void>
     let keywordButtonDidTapEvent: Observable<Void>
     let seriesButtonDidTapEvent: Observable<Void>
-    let backButtonDidTapEvent: Observable<Void>
+    let exitAlertShownEvent: Observable<Void>
     let doneButtonDidTapEvent: Observable<Void>
   }
   
@@ -67,7 +67,7 @@ final class SurveyViewModel {
       })
       .disposed(by: disposeBag)
     
-    input.backButtonDidTapEvent
+    input.exitAlertShownEvent
       .subscribe(onNext: {
         output.exitAlertShown.accept(true)
       })
@@ -143,5 +143,9 @@ final class SurveyViewModel {
         print("User Log: \(error)")
       }
     }
+  }
+  
+  func exit() {
+    self.coordinator?.finishFlow?()
   }
 }
