@@ -26,3 +26,23 @@ extension UIViewController {
     self.navigationItem.leftItemsSupplementBackButton = true
   }
 }
+
+// MARK: Alert
+extension UIViewController {
+  func presentAlert(
+    title: String? = "",
+    message: String,
+    completion: (() -> Void)?
+  ) {
+    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    let ok = UIAlertAction(title: "종료", style: .default, handler: { _ in
+      completion?()
+      alert.dismiss(animated: true)
+    })
+    let cancel = UIAlertAction(title : "계속 진행", style: .cancel)
+    alert.addAction(ok)
+    alert.addAction(cancel)
+
+    self.present(alert, animated: true)
+  }
+}

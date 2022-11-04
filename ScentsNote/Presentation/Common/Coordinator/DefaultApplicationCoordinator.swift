@@ -7,42 +7,65 @@
 
 import UIKit
 
-final class DefaultApplicationCoordinator: ApplicationCoordinator {
+final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinator {
   
-  weak var finishDelegate: CoordinatorFinishDelegate?
+  //  weak var finishDelegate: CoordinatorFinishDelegate?
   var navigationController: UINavigationController
-  var childCoordinators = [Coordinator]()
-  var type: CoordinatorType { .app }
   
   required init(_ navigationController: UINavigationController) {
     self.navigationController = navigationController
     navigationController.setNavigationBarHidden(true, animated: true)
   }
   
-  func start() {
-    self.runOnboardingFlow()
+  //  override var type: CoordinatorType? { .signUp }
+  //  override var type: CoordinatorType? { .app }
+  
+  override func start() {
+//    self.runOnboardingFlow()
+    self.runSurveyFlow()
   }
   
   func runOnboardingFlow() {
     let onboardingCoordinator = DefaultOnboardingCoordinator(self.navigationController)
-    onboardingCoordinator.finishDelegate = self
+    onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
+      self.removeDependency(onboardingCoordinator)
+      self.initialNavigationController()
+      switch type {
+      case .main:
+        self.runMainFlow()
+      case .survey:
+        self.runSurveyFlow()
+      default:
+        break
+      }
+    }
+    self.addDependency(onboardingCoordinator)
     onboardingCoordinator.start()
-    childCoordinators.append(onboardingCoordinator)
   }
+  
+  func runMainFlow() {
+    let mainCoordinator = DefaultMainCoordinator(self.navigationController)
+    self.addDependency(mainCoordinator)
+    mainCoordinator.start()
+  }
+  
+  func runSurveyFlow() {
+    let surveyCoordinator = DefaultSurveyCoordinator(self.navigationController)
+    surveyCoordinator.finishFlow = { [unowned self] in
+      self.removeDependency(surveyCoordinator)
+      self.initialNavigationController()
+      self.runMainFlow()
+    }
+    self.addDependency(surveyCoordinator)
+    surveyCoordinator.start()
+
+  }
+
 }
 
-extension DefaultApplicationCoordinator: CoordinatorFinishDelegate {
-  func coordinatorDidFinish(childCoordinator: Coordinator) {
-    self.childCoordinators = self.childCoordinators.filter({ $0.type != childCoordinator.type })
-    
-    self.navigationController.view.backgroundColor = .systemBackground
+extension DefaultApplicationCoordinator {
+  func initialNavigationController() {
+    self.navigationController.view.backgroundColor = .white
     self.navigationController.viewControllers.removeAll()
-    
-    switch childCoordinator.type {
-    case .onboarding:
-      self.runOnboardingFlow()
-    default:
-      break
-    }
   }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 final class DefaultBirthCoordinator {
-  weak var loginFinishDelegate: LoginCoordinatorDidFinishDelegate?
+  weak var loginFinishDelegate: OnSignUpCoordinatorDelegate?
 
   func finish() {
 //    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)

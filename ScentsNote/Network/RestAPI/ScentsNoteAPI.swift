@@ -9,18 +9,31 @@ import Moya
 import Alamofire
 
 enum ScentsNoteAPI {
+  // MARK: - User
   case login(email: String, password: String)
   case signUp(signUpInfo: SignUpInfo)
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
+  
+  // MARK: - Perfume
+  case fetchPerfumesInSurvey
+  case fetchKeywords
+  case fetchSeries
+  
+  // MARK: - Survey
+  case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
 }
 
 extension ScentsNoteAPI: TargetType {
   public var baseURL: URL {
     var base = Config.Network.baseURL
     switch self {
-    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname:
+    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
+    case .fetchPerfumesInSurvey:
+      base += "/perfume"
+    default:
+      break
     }
     
     guard let url = URL(string: base) else {
@@ -31,40 +44,57 @@ extension ScentsNoteAPI: TargetType {
   
   var path: String {
     switch self {
+      // MARK: - Login
     case .login:
       return "/login"
+      // MARK: - SignUp
     case .signUp:
       return "/register"
     case .checkDuplicateEmail:
       return "/validate/email"
     case .checkDuplicateNickname:
       return "/validate/name"
+        // MARK: - Perfume
+    case .fetchPerfumesInSurvey:
+      return "/survey"
+    case .fetchKeywords:
+      return "/keyword"
+    case .fetchSeries:
+      return "/series"
+        // MARK: - Survey
+    case .registerSurvey:
+      return "/survey"
     }
+
   }
   
   var method: Moya.Method {
     switch self {
-    case .login, .signUp:
+    case .login, .signUp, .registerSurvey:
       return .post
-    case .checkDuplicateEmail, .checkDuplicateNickname:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries:
       return .get
     }
   }
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
+    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries:
+      return .requestPlain
     }
   }
   
   var headers: [String: String]? {
-//    if let userToken = Logged.userToken {
-//      return [
-//        "x-access-token": "Bearer " + userToken,
-//        "Content-Type": "application/json"
-//      ]
-//    }
+    // TODO: propertyWrapper 사용해볼것
+    if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
+      return [
+        "x-access-token": "Bearer " + userToken,
+        "Content-Type": "application/json"
+      ]
+    }
+    
     return nil
   }
   
@@ -85,7 +115,14 @@ extension ScentsNoteAPI: TargetType {
       params["email"] = email
     case let .checkDuplicateNickname(nickname):
       params["nickname"] = nickname
+    case let .registerSurvey(perfumeList, keywordList, seriesList):
+      params["perfumeList"] = perfumeList
+      params["keywordList"] = keywordList
+      params["seriesList"] = seriesList
+    default:
+      break
     }
+    
     return params
   }
   
@@ -93,7 +130,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .checkDuplicateEmail, .checkDuplicateNickname:
       return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
-    case .login, .signUp:
+    default:
       return JSONEncoding.default
     }
   }
