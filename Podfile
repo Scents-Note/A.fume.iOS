@@ -10,6 +10,8 @@ target 'ScentsNote' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'RxGesture'
+  pod 'RxDataSources', '~> 5.0'
+  pod 'Reusable'
   pod 'Moya/RxSwift'
   pod 'Alamofire'
   pod 'SnapKit'

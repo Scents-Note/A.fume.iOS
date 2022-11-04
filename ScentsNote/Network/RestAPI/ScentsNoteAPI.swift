@@ -80,7 +80,6 @@ extension ScentsNoteAPI: TargetType {
   var headers: [String: String]? {
     // TODO: propertyWrapper 사용해볼것
     if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
-      print("User Log: userToken \(userToken)")
       return [
         "x-access-token": "Bearer " + userToken,
         "Content-Type": "application/json"

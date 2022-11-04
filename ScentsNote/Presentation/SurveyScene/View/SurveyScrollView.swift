@@ -12,9 +12,9 @@ final class SurveyScrollView: UIScrollView {
   
   private var isConfigureUI = false
   private let contentView = UIView()
-  private let surveyPerfumeView = SurveyPerfumeView()
-  private let surveyKeywordView = SurveyKeywordView()
-  private let surveySeriesView = SurveySeriesView()
+  var surveyPerfumeView = SurveyPerfumeView()
+  let surveyKeywordView = SurveyKeywordView()
+  let surveySeriesView = SurveySeriesView()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -36,7 +36,7 @@ final class SurveyScrollView: UIScrollView {
     self.showsVerticalScrollIndicator = false
     self.showsHorizontalScrollIndicator = false
 
-    self.contentSize = CGSize(width: screenSize.width * 3, height: 592)
+    self.contentSize = CGSize(width: screenSize.width * 3, height: 0)
 
 //    self.addSubview(self.contentView)
 //    self.contentView.snp.makeConstraints {
@@ -53,9 +53,9 @@ final class SurveyScrollView: UIScrollView {
     
 //    self.contentSize = CGSize(width: screenSize.width * twice, height: screenSize.width)
 
-    self.surveyPerfumeView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 514)
-    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 514)
-    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 514)
+    self.surveyPerfumeView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 520)
+    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 520)
+    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 520)
 
 
     addSubview(surveyPerfumeView)

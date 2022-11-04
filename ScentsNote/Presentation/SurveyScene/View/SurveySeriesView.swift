@@ -10,6 +10,7 @@ import UIKit
 class SurveySeriesView: UICollectionView {
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
+    self.showsVerticalScrollIndicator = false
     self.configureUI()
   }
   

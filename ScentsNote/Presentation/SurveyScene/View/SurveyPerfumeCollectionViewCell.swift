@@ -8,12 +8,17 @@
 import UIKit
 import SnapKit
 import Then
+import RxSwift
+import RxGesture
 
 final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
   
+  var clickPerfume: (() -> Void)?
+
   static let identifier = "SurveyPerfumeCollectionViewCell"
   static let height: CGFloat = 188
-
+  private let disposeBag = DisposeBag()
+    
   private let imageBackground = UIView().then {
     $0.backgroundColor = .white
     $0.layer.cornerRadius = 50
@@ -23,6 +28,16 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
   
   private let imageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
+  }
+  
+  private let selectedBackground = UIView().then {
+    $0.backgroundColor = .bgSurveySelected
+    $0.layer.cornerRadius = 50
+  }
+  
+  private let heartImageView = UIImageView().then {
+    $0.contentMode = .scaleAspectFill
+    $0.image = .heart
   }
   
   private let brandLabel = UILabel().then {
@@ -41,11 +56,18 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
+    self.bindUI()
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
     self.configureUI()
+    self.bindUI()
+  }
+  
+  override func prepareForReuse() {
+    self.selectedBackground.isHidden = true
+    self.heartImageView.isHidden = true
   }
   
   func configureUI(){
@@ -56,10 +78,23 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
       $0.width.height.equalTo(100)
     }
     
-    self.contentView.addSubview(self.imageView)
+    self.imageBackground.addSubview(self.imageView)
     self.imageView.snp.makeConstraints {
       $0.centerX.centerY.equalTo(self.imageBackground)
       $0.width.height.equalTo(84)
+    }
+    
+    self.imageBackground.addSubview(self.selectedBackground)
+    self.selectedBackground.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalToSuperview()
+      $0.width.height.equalTo(100)
+    }
+    
+    self.imageBackground.addSubview(self.heartImageView)
+    self.heartImageView.snp.makeConstraints {
+      $0.centerX.centerY.equalTo(self.selectedBackground)
+      $0.width.height.equalTo(32)
     }
     
     self.contentView.addSubview(self.brandLabel)
@@ -73,8 +108,8 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
       $0.centerX.equalToSuperview()
       $0.top.equalTo(self.brandLabel.snp.bottom).offset(1)
       $0.left.right.equalToSuperview().inset(10)
-//      $0.bottom.equalToSuperview().offset(-16)
     }
+    
   }
   
   func updateUI(perfume: SurveyPerfume?) {
@@ -82,5 +117,18 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
     self.imageView.load(url: perfume.imageUrl)
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
+    self.selectedBackground.isHidden = !perfume.isLiked
+    self.heartImageView.isHidden = !perfume.isLiked
   }
+  
+  
+  func bindUI() {
+    self.imageBackground.rx.tapGesture()
+      .when(.recognized)
+      .subscribe(onNext: { [weak self] _ in
+        self?.clickPerfume?()
+      })
+      .disposed(by: self.disposeBag)
+  }
+  
 }
