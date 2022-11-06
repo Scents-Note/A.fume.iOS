@@ -13,14 +13,12 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
   var finishFlow: ((CoordinatorType) -> Void)?
   var onSignUpFlow: ((CoordinatorType) -> Void)?
 
-//  weak var finishDelegate: CoordinatorFinishDelegate?
   var navigationController: UINavigationController
   var onboardingViewController: OnboardingViewController
   
   required init(_ navigationController: UINavigationController) {
     self.navigationController = navigationController
     self.onboardingViewController = OnboardingViewController()
-    //    navigationController.setNavigationBarHidden(true, animated: true)
   }
   
   override func start() {
@@ -45,8 +43,7 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
     loginCoordinator.onSignUpFlow = {
       self.runSignUpFlow()
     }
-//    loginCoordinator.finishDelegate = self
-//    loginCoordinator.onSignUpDelegate = self
+
     loginCoordinator.start()
     self.addDependency(loginCoordinator)
   }
@@ -55,8 +52,8 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
     let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
 //    signupCoordinator.finishDelegate = self
     signupCoordinator.finishFlow = { [unowned self] in
-      self.navigationController.viewControllers.removeAll()
-      self.navigationController.view.backgroundColor = .white
+//      self.navigationController.viewControllers.removeAll()
+//      self.navigationController.view.backgroundColor = .white
       self.finishFlow?(.survey)
     }
     self.childCoordinators.append(signupCoordinator)
@@ -65,12 +62,12 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
   
 }
 
-extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {
-  func coordinatorDidFinish(childCoordinator: Coordinator) {
-    self.removeDependency(childCoordinator)
-//    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
-  }
-}
+//extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {
+//  func coordinatorDidFinish(childCoordinator: Coordinator) {
+//    self.removeDependency(childCoordinator)
+////    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
+//  }
+//}
 
 extension DefaultOnboardingCoordinator: OnSignUpCoordinatorDelegate {
   func onSignUpCoordinator() {

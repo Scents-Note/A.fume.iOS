@@ -12,9 +12,6 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   var finishFlow: (() -> Void)?
   var onSignUpFlow: (() -> Void)?
 
-//  weak var finishDelegate: CoordinatorFinishDelegate?
-//  weak var onSignUpDelegate: OnSignUpCoordinatorDelegate?
-
   var navigationController: UINavigationController
   var loginViewController: LoginViewController
   
@@ -35,7 +32,4 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
       self.navigationController.pushViewController(self.loginViewController, animated: true)
   }
   
-  func finish() {
-//    self.onSignUpDelegate?.onSignUpCoordinator()
-  }
 }

@@ -9,7 +9,6 @@ import UIKit
 
 final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinator {
   
-  //  weak var finishDelegate: CoordinatorFinishDelegate?
   var navigationController: UINavigationController
   
   required init(_ navigationController: UINavigationController) {
@@ -17,18 +16,18 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     navigationController.setNavigationBarHidden(true, animated: true)
   }
   
-  //  override var type: CoordinatorType? { .signUp }
-  //  override var type: CoordinatorType? { .app }
-  
   override func start() {
+    self.runMainFlow()
 //    self.runOnboardingFlow()
-    self.runSurveyFlow()
+//    self.runSurveyFlow()
   }
   
   func runOnboardingFlow() {
     let onboardingCoordinator = DefaultOnboardingCoordinator(self.navigationController)
     onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
       self.removeDependency(onboardingCoordinator)
+      self.navigationController.dismiss(animated: true)
+
       self.initialNavigationController()
       switch type {
       case .main:
@@ -53,7 +52,7 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     let surveyCoordinator = DefaultSurveyCoordinator(self.navigationController)
     surveyCoordinator.finishFlow = { [unowned self] in
       self.removeDependency(surveyCoordinator)
-      self.initialNavigationController()
+//      self.initialNavigationController()
       self.runMainFlow()
     }
     self.addDependency(surveyCoordinator)

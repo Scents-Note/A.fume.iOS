@@ -10,7 +10,6 @@ import UIKit
 final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   
   var finishFlow: (() -> Void)?
-//  weak var finishDelegate: CoordinatorFinishDelegate?
   
   var navigationController: UINavigationController
   var surveyViewController: SurveyViewController
@@ -25,13 +24,11 @@ final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   }
   
   private func showSurverViewController() {
-      self.surveyViewController.viewModel = SurveyViewModel(
-          coordinator: self,
-          perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService()),
-          userRepository: DefaultUserRepository(userService: DefaultUserService())
-      )
-      self.navigationController.pushViewController(self.surveyViewController, animated: true)
+    self.surveyViewController.viewModel = SurveyViewModel(
+      coordinator: self,
+      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService()),
+      userRepository: DefaultUserRepository(userService: DefaultUserService())
+    )
+    self.navigationController.setViewControllers([self.surveyViewController], animated: true)
   }
-  
 }
-
