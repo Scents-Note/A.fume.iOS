@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol MainCoordinator {
+protocol MainCoordinator: AnyObject {
 
 }

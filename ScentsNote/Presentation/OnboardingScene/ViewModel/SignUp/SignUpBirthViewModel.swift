@@ -39,10 +39,14 @@ final class SignUpBirthViewModel {
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
         self.coordinator?.finishFlow?()
+
 //        self.signUpInfo.birth = Int(self.birth.value)
 //        print("User Log: signUp \(self.signUpInfo)")
 //        self.userRepository.signUp(signUpInfo: self.signUpInfo, completion: { result in
 //          result.success { loginInfo in
+//            guard let loginInfo = loginInfo else { return }
+//            self.userRepository.saveLoginInfo(loginInfo: loginInfo)
+//            self.coordinator?.finishFlow?()
 //          }.catch { error in
 //            print("User Log: error \(error)")
 //          }

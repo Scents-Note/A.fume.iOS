@@ -10,11 +10,8 @@ import UIKit
 final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   
   var finishFlow: (() -> Void)?
-//  weak var finishDelegate: CoordinatorFinishDelegate?
-//  var delegate: BirthPopupDismissDelegate?
   var userRepository: UserRepository
   var navigationController: UINavigationController
-//  var type: CoordinatorType? = .signUp
   
   init(_ navigationContoller: UINavigationController) {
     self.navigationController = navigationContoller
