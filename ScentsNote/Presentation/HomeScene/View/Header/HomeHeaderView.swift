@@ -39,7 +39,7 @@ final class HomeHeaderView: UICollectionReusableView {
     
     self.addSubview(self.underLineView)
     self.underLineView.snp.makeConstraints {
-      $0.top.equalToSuperview()
+      $0.top.equalToSuperview().offset(32)
       $0.left.equalToSuperview().offset(20)
       $0.width.equalTo(18)
       $0.height.equalTo(1)
