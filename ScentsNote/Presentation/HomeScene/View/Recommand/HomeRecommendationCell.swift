@@ -12,7 +12,7 @@ import Then
 final class HomeRecommendationCell: UICollectionViewCell {
   
   static let width: CGFloat = 262
-  static let height: CGFloat = 315
+  static let height: CGFloat = 297
   
   var keywords = [String]()
   
@@ -30,7 +30,7 @@ final class HomeRecommendationCell: UICollectionViewCell {
     $0.textColor = .black1d
     $0.font = .notoSans(type: .bold, size: 16)
   }
-  
+
   private let perfumeRecommandKeyword = HomeRecommendationKeywordView()
 
   required init?(coder: NSCoder) {
@@ -55,7 +55,6 @@ final class HomeRecommendationCell: UICollectionViewCell {
     self.bgView.snp.makeConstraints {
       $0.top.equalToSuperview().offset(86)
       $0.bottom.left.right.equalToSuperview()
-      $0.width.equalTo(262)
     }
     
     self.contentView.addSubview(self.imageView)
@@ -94,7 +93,6 @@ final class HomeRecommendationCell: UICollectionViewCell {
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
     self.keywords = perfume.keywordList ?? []
-    print("User Log: key \(self.keywords)")
     self.perfumeRecommandKeyword.reloadData()
   }
 }

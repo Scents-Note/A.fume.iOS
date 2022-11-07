@@ -9,7 +9,6 @@ import UIKit
 
 class HomeRecommendationKeywordView: UICollectionView {
   
-  
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
     self.showsVerticalScrollIndicator = false
@@ -26,12 +25,11 @@ extension HomeRecommendationKeywordView {
   func configureUI() {
     self.collectionViewLayout = self.createCompositionalLayout()
     self.register(HomeRecommendationKeywordCell.self)
-//    self.register(HomeRecommendationKeywordCell.self, forCellWithReuseIdentifier: String(describing: HomeRecommendationKeywordCell.self))
     self.backgroundColor = .lightGray
   }
   
   func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(58), heightDimension: .absolute(26))
+    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(HomeRecommendationKeywordCell.width), heightDimension: .absolute(HomeRecommendationKeywordCell.height))
     let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
 
     let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)

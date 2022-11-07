@@ -27,7 +27,11 @@ final class DefaultPerfumeRepository: PerfumeRepository {
     self.perfumeService.fetchSeries(completion: completion)
   }
   
-  func fetchPerfumeForIndividual(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchPerfumeForIndividual(completion: completion)
+  func fetchPerfumesRecommended(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
+    self.perfumeService.fetchPerfumesRecommended(completion: completion)
+  }
+  
+  func fetchPerfumesPopular(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
+    self.perfumeService.fetchPerfumesPopular(completion: completion)
   }
 }

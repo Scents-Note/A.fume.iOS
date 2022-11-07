@@ -16,6 +16,7 @@ protocol PerfumeRepository {
   func fetchSeries(completion: @escaping (Result<ListInfo<SurveySeries>?, NetworkError>) -> Void)
   
   // MARK: - Home
-  func fetchPerfumeForIndividual(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
+  func fetchPerfumesRecommended(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
+  func fetchPerfumesPopular(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
 
 }

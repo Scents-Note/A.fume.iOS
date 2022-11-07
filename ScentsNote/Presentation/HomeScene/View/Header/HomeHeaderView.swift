@@ -18,14 +18,12 @@ final class HomeHeaderView: UICollectionReusableView {
   private let titleLabel = UILabel().then {
     $0.textColor = .blackText
     $0.font = .nanumMyeongjo(type: .extraBold, size: 18)
-    $0.text = "000 님을 위한\n향수 추천"
     $0.numberOfLines = 0
   }
   
   private let contentLabel = UILabel().then {
     $0.textColor = .darkGray7d
     $0.font = .nanumMyeongjo(type: .regular, size: 14)
-    $0.text = "어퓸을 사용할수록\n더 잘 맞는 향수를 보여드려요"
     $0.numberOfLines = 0
   }
   
@@ -49,7 +47,7 @@ final class HomeHeaderView: UICollectionReusableView {
     
     self.addSubview(self.underLineView)
     self.underLineView.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(32)
+      $0.top.equalToSuperview()
       $0.left.equalToSuperview().offset(20)
       $0.width.equalTo(18)
       $0.height.equalTo(1)
@@ -64,8 +62,13 @@ final class HomeHeaderView: UICollectionReusableView {
     self.addSubview(self.contentLabel)
     self.contentLabel.snp.makeConstraints {
       $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
-      $0.bottom.equalToSuperview().offset(-23)
+//      $0.bottom.equalToSuperview().offset(-23)
       $0.left.equalToSuperview().offset(20)
     }
+  }
+  
+  func updateUI(title: String, content: String) {
+    self.titleLabel.text = title
+    self.contentLabel.text = content
   }
 }

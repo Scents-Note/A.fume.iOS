@@ -12,7 +12,8 @@ final class HomeViewModel {
   weak var coordinator: HomeCoordinator?
   var perfumeRepository: PerfumeRepository
   
-  var personalPerfumes = [Perfume]()
+  var perfumesRecommended = [Perfume]()
+  var perfumesPopular = [Perfume]()
   
   init(coordinator: HomeCoordinator, perfumeRepository: PerfumeRepository) {
     self.coordinator = coordinator
@@ -30,11 +31,17 @@ final class HomeViewModel {
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
     let output = Output()
     
-    print("hihi")
-    
-    self.perfumeRepository.fetchPerfumeForIndividual { result in
+    self.perfumeRepository.fetchPerfumesRecommended { result in
       result.success { [weak self] perfumeInfo in
-        self?.personalPerfumes = perfumeInfo?.rows ?? []
+        self?.perfumesRecommended = perfumeInfo?.rows ?? []
+        output.loadData.accept(true)
+      }
+    }
+    
+    self.perfumeRepository.fetchPerfumesPopular { result in
+      result.success { [weak self] perfumeInfo in
+        self?.perfumesPopular = perfumeInfo?.rows ?? []
+        print("User Log: per \(self?.perfumesPopular)")
         output.loadData.accept(true)
       }
     }

@@ -19,7 +19,9 @@ enum ScentsNoteAPI {
   case fetchPerfumesInSurvey
   case fetchKeywords
   case fetchSeries
-  case fetchPerfumesForIndividual
+  case fetchPerfumesRecommended
+  case fetchPerfumesPopular
+
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
@@ -31,7 +33,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesForIndividual:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular:
       base += "/perfume"
     default:
       break
@@ -64,8 +66,10 @@ extension ScentsNoteAPI: TargetType {
       return "/keyword"
     case .fetchSeries:
       return "/series"
-    case .fetchPerfumesForIndividual:
+    case .fetchPerfumesRecommended:
       return "/recommend/personal"
+    case .fetchPerfumesPopular:
+      return "/recommend/common"
       
         // MARK: - Survey
     case .registerSurvey:
@@ -78,7 +82,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .registerSurvey:
       return .post
-    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries, .fetchPerfumesForIndividual:
+    default:
       return .get
     }
   }
@@ -87,7 +91,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
-    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries, .fetchPerfumesForIndividual:
+    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries, .fetchPerfumesRecommended, .fetchPerfumesPopular:
       return .requestPlain
     }
   }

@@ -31,9 +31,9 @@ final class HomeTitleSection: UICollectionViewCell {
     
     self.contentView.addSubview(self.titleLabel)
     self.titleLabel.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(32)
+      $0.top.bottom.equalToSuperview()
       $0.left.equalToSuperview().offset(20)
-      $0.height.equalTo(100)
+//      $0.height.equalTo(100)
     }
   }
 }

@@ -11,11 +11,8 @@ import RxGesture
 
 final class HomeRecommendationKeywordCell: UICollectionViewCell {
   
-  var clickKeyword: (() -> Void)?
-  
-  static let identifier = "PerfumeRecommandKeywordCell"
+  static let width: CGFloat = 58
   static let height: CGFloat = 26
-  let disposeBag = DisposeBag()
   
   private let keywordLabel = UILabel().then {
     $0.textColor = .white
