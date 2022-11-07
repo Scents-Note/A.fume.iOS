@@ -16,7 +16,7 @@ final class SurveyViewModel {
   private let userRepository: UserRepository
   private let disposeBag = DisposeBag()
   
-  var perfumes: [SurveyPerfume] = []
+  var perfumes: [Perfume] = []
   var keywords: [SurveyKeyword] = []
   var series: [SurveySeries] = []
   

@@ -15,15 +15,19 @@ final class DefaultPerfumeRepository: PerfumeRepository {
     self.perfumeService = perfumeService
   }
 
-  func fetchPerfumesInSurvey(completion: @escaping (Result<SurveyInfo<SurveyPerfume>?, NetworkError>) -> Void) {
+  func fetchPerfumesInSurvey(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
     self.perfumeService.fetchPerfumesInSurvey(completion: completion)
   }
   
-  func fetchKeywords(completion: @escaping (Result<SurveyInfo<SurveyKeyword>?, NetworkError>) -> Void) {
+  func fetchKeywords(completion: @escaping (Result<ListInfo<SurveyKeyword>?, NetworkError>) -> Void) {
     self.perfumeService.fetchKeywords(completion: completion)
   }
   
-  func fetchSeries(completion: @escaping (Result<SurveyInfo<SurveySeries>?, NetworkError>) -> Void) {
+  func fetchSeries(completion: @escaping (Result<ListInfo<SurveySeries>?, NetworkError>) -> Void) {
     self.perfumeService.fetchSeries(completion: completion)
+  }
+  
+  func fetchPerfumeForIndividual(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
+    self.perfumeService.fetchPerfumeForIndividual(completion: completion)
   }
 }

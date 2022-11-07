@@ -19,6 +19,7 @@ enum ScentsNoteAPI {
   case fetchPerfumesInSurvey
   case fetchKeywords
   case fetchSeries
+  case fetchPerfumesForIndividual
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
@@ -30,7 +31,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey:
+    case .fetchPerfumesInSurvey, .fetchPerfumesForIndividual:
       base += "/perfume"
     default:
       break
@@ -47,6 +48,7 @@ extension ScentsNoteAPI: TargetType {
       // MARK: - Login
     case .login:
       return "/login"
+      
       // MARK: - SignUp
     case .signUp:
       return "/register"
@@ -54,6 +56,7 @@ extension ScentsNoteAPI: TargetType {
       return "/validate/email"
     case .checkDuplicateNickname:
       return "/validate/name"
+      
         // MARK: - Perfume
     case .fetchPerfumesInSurvey:
       return "/survey"
@@ -61,6 +64,9 @@ extension ScentsNoteAPI: TargetType {
       return "/keyword"
     case .fetchSeries:
       return "/series"
+    case .fetchPerfumesForIndividual:
+      return "/recommend/personal"
+      
         // MARK: - Survey
     case .registerSurvey:
       return "/survey"
@@ -72,7 +78,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .registerSurvey:
       return .post
-    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries, .fetchPerfumesForIndividual:
       return .get
     }
   }
@@ -81,7 +87,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
-    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries:
+    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries, .fetchPerfumesForIndividual:
       return .requestPlain
     }
   }
