@@ -26,15 +26,7 @@ final class HomeHeaderView: UICollectionReusableView {
     $0.font = .nanumMyeongjo(type: .regular, size: 14)
     $0.numberOfLines = 0
   }
-  
-//  private lazy var verticalStackView = UIStackView().then {
-//    $0.axis = .vertical
-//    $0.spacing = 12
-//    $0.addArrangedSubview(self.underLineView)
-//    $0.addArrangedSubview(self.titleLabel)
-//    $0.addArrangedSubview(self.contentLabel)
-//  }
-  
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
@@ -67,8 +59,20 @@ final class HomeHeaderView: UICollectionReusableView {
     }
   }
   
-  func updateUI(title: String, content: String) {
+  func updateUI(title: String, content: String?) {
     self.titleLabel.text = title
+    guard let content = content else {
+      self.titleLabel.snp.makeConstraints{
+        $0.top.equalToSuperview().offset(24)
+      }
+      self.underLineView.isHidden = true
+      self.contentLabel.isHidden = true
+      return
+    }
+    self.titleLabel.snp.makeConstraints{
+      $0.top.equalTo(self.underLineView.snp.bottom).offset(12)
+    }
     self.contentLabel.text = content
+    
   }
 }

@@ -15,24 +15,27 @@ final class HomeViewController: UIViewController {
   private let disposeBag = DisposeBag()
   
   // MARK: - Properties
-  private let sections: [HomeSection] = [.title, .recommendation, .popularity]
+  private let sections: [HomeSection] = [.title, .recommendation, .popularity, .recent]
   
-  private lazy var collectionView = UICollectionView(
-    frame: .zero,
-    collectionViewLayout: UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
-      let section = self.sections[section]
-      switch section {
-      case .title:
-        return self.getHomeTitleSection()
-      case .recommendation:
-        return self.getHomeRecommendationSection()
-      case .popularity:
-        return self.getHomePopularitySection()
-      default:
-        return self.getHomeRecommendationSection()
-      }
+  private lazy var collectionViewLayout = UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
+    let section = self.sections[section]
+    switch section {
+    case .title:
+      return self.getHomeTitleSection()
+    case .recommendation:
+      return self.getHomeRecommendationSection()
+    case .popularity:
+      return self.getHomePopularitySection()
+    case .recent:
+      return self.getHomeRecentSection()
+    default:
+      return self.getHomeRecommendationSection()
     }
-  ).then {
+  }.then {
+    $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
+  }
+  
+  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout).then {
     $0.isScrollEnabled = true
     $0.showsHorizontalScrollIndicator = false
     $0.showsVerticalScrollIndicator = true
@@ -40,11 +43,15 @@ final class HomeViewController: UIViewController {
     $0.backgroundColor = .clear
     $0.clipsToBounds = true
     $0.register(HomeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
+    $0.register(HomeTitleHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     $0.register(HomeTitleSection.self)
     $0.register(HomeRecommendationSection.self)
     $0.register(HomePopularityCell.self)
+    $0.register(HomeRecentCell.self)
     $0.dataSource = self
   }
+  
+  
   
   
   
@@ -82,7 +89,6 @@ extension HomeViewController {
   private func bindPersonalPerfume(output: HomeViewModel.Output?) {
     output?.loadData
       .subscribe(onNext: { [weak self] _ in
-        print("User Log: ue")
         self?.collectionView.reloadData()
       })
       .disposed(by: disposeBag)
@@ -109,7 +115,7 @@ extension HomeViewController {
     
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = NSDirectionalEdgeInsets(top: 32, leading: 0, bottom: 32, trailing: 0)
-
+    
     //    section.orthogonalScrollingBehavior = .continuous
     return section
     
@@ -162,15 +168,17 @@ extension HomeViewController {
   }
   
   private func getHomePopularitySection() -> NSCollectionLayoutSection {
-    // item
+    
     let itemSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1.0),
       heightDimension: .fractionalHeight(1.0)
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    //        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+
+    //    item.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8)
+
     
-    // group
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .absolute(166),
       heightDimension: .estimated(198)
@@ -179,8 +187,6 @@ extension HomeViewController {
       layoutSize: groupSize,
       subitems: [item]
     )
-    group.interItemSpacing = .fixed(8)
-    group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
     
     let headerSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
@@ -192,16 +198,50 @@ extension HomeViewController {
       alignment: .top
     )
     
-    
-    
-    // section
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 23, leading: 0, bottom: 0, trailing: 20)
-    //    section.contentInsetsReference = .layoutMargins
-    //    section.contentInsetsReference = .layoutMargins
-    
+    section.contentInsets = NSDirectionalEdgeInsets(top: 23, leading: 0, bottom: 42, trailing: 20)
     section.boundarySupplementaryItems = [header]
+    
+    return section
+  }
+  
+  private func getHomeRecentSection() -> NSCollectionLayoutSection {
+    
+    let itemSize = NSCollectionLayoutSize(
+      widthDimension: .fractionalWidth(1.0),
+      heightDimension: .fractionalHeight(1.0)
+    )
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+
+    let groupSize = NSCollectionLayoutSize(
+      widthDimension: .absolute(128),
+      heightDimension: .estimated(157)
+    )
+    let group = NSCollectionLayoutGroup.horizontal(
+      layoutSize: groupSize,
+      subitems: [item]
+    )
+    
+    let headerSize = NSCollectionLayoutSize(
+      widthDimension: .fractionalWidth(1),
+      heightDimension: .estimated(44)
+    )
+    let header = NSCollectionLayoutBoundarySupplementaryItem(
+      layoutSize: headerSize,
+      elementKind: UICollectionView.elementKindSectionHeader,
+      alignment: .topLeading
+    )
+    
+    let section = NSCollectionLayoutSection(group: group)
+    section.orthogonalScrollingBehavior = .continuous
+    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 24, trailing: 20)
+    section.boundarySupplementaryItems = [header]
+
+    let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
+    section.decorationItems = [sectionBackground]
+    
     
     return section
   }
@@ -213,12 +253,14 @@ extension HomeViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    if self.sections[section] == .title || self.sections[section] == .recommendation || self.sections[section] == .more {
-      return 1
-    } else if self.sections[section] == .popularity {
+    switch self.sections[section] {
+    case .popularity:
       return viewModel?.perfumesPopular.count ?? 0
+    case .recent:
+      return viewModel?.perfumesRecent.count ?? 0
+    default:
+      return 1
     }
-    return 1
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -235,6 +277,10 @@ extension HomeViewController: UICollectionViewDataSource {
       let cell = collectionView.dequeueReusableCell(HomePopularityCell.self, for: indexPath)
       cell.updateUI(perfume: self.viewModel?.perfumesPopular[indexPath.row])
       return cell
+    case .recent:
+      let cell = collectionView.dequeueReusableCell(HomeRecentCell.self, for: indexPath)
+      cell.updateUI(perfume: self.viewModel?.perfumesRecent[indexPath.row])
+      return cell
     default:
       return UICollectionViewCell()
     }
@@ -250,6 +296,8 @@ extension HomeViewController: UICollectionViewDataSource {
         header.updateUI(title: "000 님을 위한\n향수 추천", content: "어퓸을 사용할수록\n더 잘 맞는 향수를 보여드려요")
       case .popularity:
         header.updateUI(title: "20대 여성이\n많이 찾는 향수", content: "00 님 연령대 분들에게 인기 많은 향수 입니다.")
+      case .recent:
+        header.updateUI(title: "최근 찾아본 향수", content: nil)
       default:
         break
       }

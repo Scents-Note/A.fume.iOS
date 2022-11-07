@@ -27,4 +27,12 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
   func fetchPerfumesPopular(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
     requestObject(.fetchPerfumesPopular, completion: completion)
   }
+  
+  func fetchRecentPerfumes(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
+    requestObject(.fetchRecentPerfumes, completion: completion)
+  }
+  
+  func fetchNewPerfumes(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
+    requestObject(.fetchNewPerfumes, completion: completion)
+  }
 }

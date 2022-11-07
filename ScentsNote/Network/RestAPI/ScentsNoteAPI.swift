@@ -21,6 +21,8 @@ enum ScentsNoteAPI {
   case fetchSeries
   case fetchPerfumesRecommended
   case fetchPerfumesPopular
+  case fetchRecentPerfumes
+  case fetchNewPerfumes
 
   
   // MARK: - Survey
@@ -33,7 +35,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchRecentPerfumes, .fetchNewPerfumes:
       base += "/perfume"
     default:
       break
@@ -70,6 +72,10 @@ extension ScentsNoteAPI: TargetType {
       return "/recommend/personal"
     case .fetchPerfumesPopular:
       return "/recommend/common"
+    case .fetchRecentPerfumes:
+      return "/recent"
+    case .fetchNewPerfumes:
+      return "/new"
       
         // MARK: - Survey
     case .registerSurvey:
@@ -91,7 +97,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
-    case .fetchPerfumesInSurvey, .fetchKeywords, .fetchSeries, .fetchPerfumesRecommended, .fetchPerfumesPopular:
+    default:
       return .requestPlain
     }
   }
@@ -99,6 +105,7 @@ extension ScentsNoteAPI: TargetType {
   var headers: [String: String]? {
     // TODO: propertyWrapper 사용해볼것
     if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
+      print("User Log: userToken \(userToken)")
       return [
         "x-access-token": "Bearer " + userToken,
         "Content-Type": "application/json"

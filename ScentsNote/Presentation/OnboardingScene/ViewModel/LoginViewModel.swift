@@ -60,7 +60,6 @@ final class LoginViewModel {
             guard let loginInfo = loginInfo else { return }
             self.userRepository.saveLoginInfo(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
-            print("User Log: loginInfo \(loginInfo)")
           }.catch { error in
             print("User Log: error \(error)")
           }

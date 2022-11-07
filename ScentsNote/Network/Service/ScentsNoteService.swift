@@ -43,7 +43,6 @@ class ScentsNoteService {
       switch response {
       case let .success(value):
         do {
-          print("User Log: gg")
           let decoder = JSONDecoder()
           let body = try decoder.decode(ResponseObject<T>.self, from: value.data)
           completion(.success(body.data))
