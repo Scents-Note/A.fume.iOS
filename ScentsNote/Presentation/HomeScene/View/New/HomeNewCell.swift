@@ -46,6 +46,12 @@ final class HomeNewCell: UICollectionViewCell {
     fatalError()
   }
   
+  override func prepareForReuse() {
+    self.imageView.image = nil
+    self.brandLabel.text = ""
+    self.nameLabel.text = ""
+  }
+  
   private func configureUI() {
     
     self.contentView.addSubview(self.bgView)

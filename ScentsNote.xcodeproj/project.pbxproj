@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		0E7734A1E5133B76FDDF14FD /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */; };
 		2851444100D02B64E1A0A233 /* Pods_ScentsNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */; };
+		4A0E9B0129190C9C0050E474 /* HomeMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */; };
 		4A80A4E12917EC02009F83B9 /* HomeRecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */; };
 		4A80A4E42918982C009F83B9 /* HomeRecommendationKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */; };
 		4A80A4E7291898E2009F83B9 /* HomeRecommendationKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */; };
-		4A80A4EA2918A8EF009F83B9 /* HomeTitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E92918A8EF009F83B9 /* HomeTitleSection.swift */; };
+		4A80A4EA2918A8EF009F83B9 /* HomeTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E92918A8EF009F83B9 /* HomeTitleCell.swift */; };
 		4A80A4EC2918AB15009F83B9 /* HomeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4EB2918AB15009F83B9 /* HomeSection.swift */; };
 		4A857430290A962300F86C3A /* BirthPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85742F290A962300F86C3A /* BirthPopupViewModel.swift */; };
 		4A857433290AA15A00F86C3A /* BirthPopupDismissDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857432290AA15A00F86C3A /* BirthPopupDismissDelegate.swift */; };
@@ -156,11 +157,12 @@
 		08C74AC5C1D83FD46A833F85 /* Pods-Scentsnote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.debug.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.debug.xcconfig"; sourceTree = "<group>"; };
 		1A82A9EC388AC1FD16853DFC /* Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		21E07E4F3006358C71EFB2FA /* Pods-ScentsNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote/Pods-ScentsNote.release.xcconfig"; sourceTree = "<group>"; };
+		4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMoreCell.swift; sourceTree = "<group>"; };
 		4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationSection.swift; sourceTree = "<group>"; };
 		4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordView.swift; sourceTree = "<group>"; };
 		4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordCell.swift; sourceTree = "<group>"; };
-		4A80A4E92918A8EF009F83B9 /* HomeTitleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTitleSection.swift; sourceTree = "<group>"; };
+		4A80A4E92918A8EF009F83B9 /* HomeTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTitleCell.swift; sourceTree = "<group>"; };
 		4A80A4EB2918AB15009F83B9 /* HomeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSection.swift; sourceTree = "<group>"; };
 		4A85742F290A962300F86C3A /* BirthPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthPopupViewModel.swift; sourceTree = "<group>"; };
 		4A857432290AA15A00F86C3A /* BirthPopupDismissDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthPopupDismissDelegate.swift; sourceTree = "<group>"; };
@@ -347,7 +349,7 @@
 		4A80A4E82918A8E2009F83B9 /* Title */ = {
 			isa = PBXGroup;
 			children = (
-				4A80A4E92918A8EF009F83B9 /* HomeTitleSection.swift */,
+				4A80A4E92918A8EF009F83B9 /* HomeTitleCell.swift */,
 			);
 			path = Title;
 			sourceTree = "<group>";
@@ -704,6 +706,7 @@
 				4AC7F8DE2918C7CF00A8D032 /* Popularity */,
 				4AC7F8E12918DE5F00A8D032 /* Recent */,
 				4AC7F8E9291905B700A8D032 /* New */,
+				4AC7F8EC29190C7300A8D032 /* More */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1033,6 +1036,14 @@
 			path = New;
 			sourceTree = "<group>";
 		};
+		4AC7F8EC29190C7300A8D032 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
 		4AE4A4962905312100491246 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1328,6 +1339,7 @@
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4A857469291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift in Sources */,
+				4A0E9B0129190C9C0050E474 /* HomeMoreCell.swift in Sources */,
 				4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */,
 				4AA281102917BA3900D30A99 /* MyPageViewController.swift in Sources */,
 				4A85747129136BA100F86C3A /* SurveySeriesCollectionViewCell.swift in Sources */,
@@ -1404,7 +1416,7 @@
 				4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */,
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
 				4A857435290B5C7800F86C3A /* Birth.swift in Sources */,
-				4A80A4EA2918A8EF009F83B9 /* HomeTitleSection.swift in Sources */,
+				4A80A4EA2918A8EF009F83B9 /* HomeTitleCell.swift in Sources */,
 				4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */,
 				4A85745B2910F5C100F86C3A /* SurveyPerfumeView.swift in Sources */,
 				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,

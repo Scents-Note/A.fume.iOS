@@ -15,7 +15,7 @@ final class HomeViewController: UIViewController {
   private let disposeBag = DisposeBag()
   
   // MARK: - Properties
-  private let sections: [HomeSection] = [.title, .recommendation, .popularity, .recent, .new]
+  private let sections: [HomeSection] = [.title, .recommendation, .popularity, .recent, .new, .more]
   
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
     let section = self.sections[section]
@@ -30,8 +30,8 @@ final class HomeViewController: UIViewController {
       return self.getHomeRecentSection()
     case .new:
       return self.getHomeNewSection()
-    default:
-      return self.getHomeRecommendationSection()
+    case .more:
+      return self.getHomeMoreSection()
     }
   }.then {
     $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
@@ -45,17 +45,14 @@ final class HomeViewController: UIViewController {
     $0.backgroundColor = .clear
     $0.clipsToBounds = true
     $0.register(HomeHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-    $0.register(HomeTitleSection.self)
+    $0.register(HomeTitleCell.self)
     $0.register(HomeRecommendationSection.self)
     $0.register(HomePopularityCell.self)
     $0.register(HomeRecentCell.self)
     $0.register(HomeNewCell.self)
+    $0.register(HomeMoreCell.self)
     $0.dataSource = self
   }
-  
-  
-  
-  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -72,13 +69,13 @@ final class HomeViewController: UIViewController {
 extension HomeViewController {
   
   private func configureUI() {
+    self.view.backgroundColor = .white
     //    self.collectionView.translatesAutoresizingMaskIntoConstraints = false
     self.view.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.bottom.equalToSuperview()
     }
-    //    self.collectionView.reloadData()
   }
   
   private func bindViewModel() {
@@ -208,11 +205,11 @@ extension HomeViewController {
       heightDimension: .fractionalHeight(1.0)
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
 
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .absolute(128),
-      heightDimension: .estimated(157)
+      heightDimension: .absolute(157)
     )
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: groupSize,
@@ -231,7 +228,7 @@ extension HomeViewController {
     
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 24, trailing: 20)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12, bottom: 24, trailing: 12)
     section.boundarySupplementaryItems = [header]
 
     let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
@@ -248,7 +245,7 @@ extension HomeViewController {
       heightDimension: .fractionalHeight(1.0)
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 7.5, bottom: 0, trailing: 7.5)
 
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
@@ -271,11 +268,32 @@ extension HomeViewController {
     )
     
     let section = NSCollectionLayoutSection(group: group)
-//    section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 24, trailing: 20)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12.5, bottom: 0, trailing: 12.5)
     section.boundarySupplementaryItems = [header]
 
     return section
+  }
+  
+  private func getHomeMoreSection() -> NSCollectionLayoutSection {
+    let itemSize = NSCollectionLayoutSize(
+      widthDimension: .fractionalWidth(1.0),
+      heightDimension: .fractionalHeight(1.0)
+    )
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(
+      widthDimension: .fractionalWidth(1.0),
+      heightDimension: .absolute(48)
+    )
+    let group = NSCollectionLayoutGroup.horizontal(
+      layoutSize: groupSize,
+      subitems: [item]
+    )
+    let section = NSCollectionLayoutSection(group: group)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 48, trailing: 20)
+
+    return section
+    
   }
 }
 
@@ -301,7 +319,7 @@ extension HomeViewController: UICollectionViewDataSource {
     let section = self.sections[indexPath.section]
     switch section {
     case .title:
-      let cell = collectionView.dequeueReusableCell(HomeTitleSection.self, for: indexPath)
+      let cell = collectionView.dequeueReusableCell(HomeTitleCell.self, for: indexPath)
       return cell
     case .recommendation:
       let cell = collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
@@ -319,8 +337,9 @@ extension HomeViewController: UICollectionViewDataSource {
       let cell = collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
       cell.updateUI(perfume: self.viewModel?.perfumesNew[indexPath.row])
       return cell
-    default:
-      return UICollectionViewCell()
+    case .more:
+      let cell = collectionView.dequeueReusableCell(HomeMoreCell.self, for: indexPath)
+      return cell
     }
     
   }
@@ -346,7 +365,4 @@ extension HomeViewController: UICollectionViewDataSource {
       return UICollectionReusableView()
     }
   }
-  //  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-  //    return UIEdgeInsets(top: 25, left: 100, bottom: 0, right: 5)
-  //  }
 }

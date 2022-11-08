@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
-final class HomeTitleSection: UICollectionViewCell {
+final class HomeTitleCell: UICollectionViewCell {
   private let titleLabel = UILabel().then {
     $0.text = "Scents Note"
     $0.textColor = .blackText
@@ -33,7 +33,6 @@ final class HomeTitleSection: UICollectionViewCell {
     self.titleLabel.snp.makeConstraints {
       $0.top.bottom.equalToSuperview()
       $0.left.equalToSuperview().offset(20)
-//      $0.height.equalTo(100)
     }
   }
 }
