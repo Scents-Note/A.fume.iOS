@@ -6,16 +6,22 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
+
 import SnapKit
 import Then
 
 final class HomeNewCell: UICollectionViewCell {
   
+  var clickHeart: (() -> Void)?
+  
   static let width: CGFloat = 146
   static let height: CGFloat = 198
   
   var perfumes = [Perfume]()
-  
+  private let disposeBag = DisposeBag()
+
   private let bgView = UIView().then {
     $0.layer.borderWidth = 1
     $0.layer.borderColor = UIColor.bgTabBar.cgColor
@@ -25,7 +31,7 @@ final class HomeNewCell: UICollectionViewCell {
     $0.contentMode = .scaleAspectFit
   }
   
-  private let heartButton = UIButton()
+  let heartButton = UIButton()
   
   private let brandLabel = UILabel().then {
     $0.textColor = .grayCd
@@ -90,5 +96,13 @@ final class HomeNewCell: UICollectionViewCell {
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
     self.heartButton.setImage(perfume.isLiked == true ? .favoriteActive : .favoriteInactive, for: .normal)
+  }
+  
+  private func bindUI() {
+    self.heartButton.rx.tap
+      .bind { [weak self] in
+        self?.clickHeart?()
+      }
+      .disposed(by: disposeBag)
   }
 }

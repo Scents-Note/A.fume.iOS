@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum HomeSection: Int {
-  case title = 0
-  case recommendation = 1
-  case popularity = 2
-  case recent = 3
-  case new = 4
-  case more = 5
-}
+//enum HomeSection: Int, Hashable, CaseIterable {
+//  case title = 0
+//  case recommendation = 1
+//  case popularity = 2
+//  case recent = 3
+////  case new = 4
+////  case more = 5
+//}

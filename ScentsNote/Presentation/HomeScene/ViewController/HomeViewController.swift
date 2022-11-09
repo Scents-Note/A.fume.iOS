@@ -7,16 +7,31 @@
 
 import UIKit
 import RxSwift
+import RxCocoa
+import RxDataSources
+
 import SnapKit
 import Then
 
+private enum SupplementaryKind {
+    static let header = "header-element-kind"
+    static let footer = "footer-element-kind"
+}
+
+
 final class HomeViewController: UIViewController {
+  
+  let dummy = [Perfume(perfumeIdx: 1, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false), Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false)]
+  
   var viewModel: HomeViewModel?
   private let disposeBag = DisposeBag()
+
   
   // MARK: - Properties
-  private let sections: [HomeSection] = [.title, .recommendation, .popularity, .recent, .new, .more]
+  private let sections: [HomeDataSection.HomeSection] = [.title, .recommendation, .popularity, .recent, .new, .more]
   
+  
+  //  private var collectionView = UICollectionView()
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout { section, env -> NSCollectionLayoutSection? in
     let section = self.sections[section]
     switch section {
@@ -51,26 +66,95 @@ final class HomeViewController: UIViewController {
     $0.register(HomeRecentCell.self)
     $0.register(HomeNewCell.self)
     $0.register(HomeMoreCell.self)
-    $0.dataSource = self
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    
+    self.bind()
+
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
+  
+ 
 }
 
 extension HomeViewController {
   
+  func bind() {
+    let dataSource = RxCollectionViewSectionedReloadDataSource<HomeDataSection.Model>(
+      configureCell: { dataSource, tableView, indexPath, item in
+        switch item {
+        case .title:
+          let cell = self.collectionView.dequeueReusableCell(HomeTitleCell.self, for: indexPath)
+          return cell
+        case .recommendation(let perfumes):
+          let cell = self.collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
+          cell.updateUI(perfumes: perfumes)
+          return cell
+        case .popularity(let perfume):
+          let cell = self.collectionView.dequeueReusableCell(HomePopularityCell.self, for: indexPath)
+          cell.updateUI(perfume: perfume)
+          return cell
+        case .recent(let perfume):
+          let cell = self.collectionView.dequeueReusableCell(HomeRecentCell.self, for: indexPath)
+          cell.updateUI(perfume: perfume)
+          return cell
+        case .new(let perfume):
+          let cell = self.collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
+          cell.updateUI(perfume: perfume)
+          return cell
+        case .more:
+          let cell = self.collectionView.dequeueReusableCell(HomeMoreCell.self, for: indexPath)
+          return cell
+        }
+    })
+    
+    dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) in
+       if kind == UICollectionView.elementKindSectionHeader {
+         let section = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
+         switch self.sections[indexPath.section] {
+         case .recommendation:
+           section.updateUI(title: "000 님을 위한\n향수 추천", content: "어퓸을 사용할수록\n더 잘 맞는 향수를 보여드려요")
+         case .popularity:
+           section.updateUI(title: "20대 여성이\n많이 찾는 향수", content: "00 님 연령대 분들에게 인기 많은 향수 입니다.")
+         case .recent:
+           section.updateUI(title: "최근 찾아본 향수", content: nil)
+         case .new:
+           section.updateUI(title: "새로\n등록된 향수", content: "기대하세요.  새로운 향수가 업데이트 됩니다.")
+         default:
+           break
+         }
+         return section
+    
+       } else {
+         return UICollectionReusableView()
+       }
+    }
+    
+    self.viewModel?.subject
+      .bind(to: self.collectionView.rx.items(dataSource: dataSource))
+      .disposed(by: self.disposeBag)
+
+
+//    dataSource.titleForHeaderInSection = { dataSource, index in
+//      return dataSource.sectionModels[index].header
+//    }
+//
+//    dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
+//      return true
+//    }
+ 
+  }
+  
   private func configureUI() {
     self.view.backgroundColor = .white
-    //    self.collectionView.translatesAutoresizingMaskIntoConstraints = false
     self.view.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -79,18 +163,15 @@ extension HomeViewController {
   }
   
   private func bindViewModel() {
-    let input = HomeViewModel.Input()
+    let input = HomeViewModel.Input(
+    )
     
     let output = viewModel?.transform(from: input, disposeBag: disposeBag)
     self.bindPersonalPerfume(output: output)
   }
   
   private func bindPersonalPerfume(output: HomeViewModel.Output?) {
-    output?.loadData
-      .subscribe(onNext: { [weak self] _ in
-        self?.collectionView.reloadData()
-      })
-      .disposed(by: disposeBag)
+
   }
 }
 
@@ -113,7 +194,7 @@ extension HomeViewController {
     )
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = NSDirectionalEdgeInsets(top: 32, leading: 0, bottom: 0, trailing: 0)
-
+    
     return section
     
   }
@@ -169,8 +250,8 @@ extension HomeViewController {
       heightDimension: .fractionalHeight(1.0)
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
-
+    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+    
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .absolute(166),
       heightDimension: .estimated(198)
@@ -206,7 +287,7 @@ extension HomeViewController {
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-
+    
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .absolute(128),
       heightDimension: .absolute(157)
@@ -230,7 +311,7 @@ extension HomeViewController {
     section.orthogonalScrollingBehavior = .continuous
     section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12, bottom: 24, trailing: 12)
     section.boundarySupplementaryItems = [header]
-
+    
     let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
     section.decorationItems = [sectionBackground]
     
@@ -246,7 +327,7 @@ extension HomeViewController {
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
-
+    
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
       heightDimension: .fractionalHeight(0.3)
@@ -270,7 +351,7 @@ extension HomeViewController {
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 0, trailing: 20)
     section.boundarySupplementaryItems = [header]
-
+    
     return section
   }
   
@@ -291,78 +372,9 @@ extension HomeViewController {
     )
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 48, trailing: 20)
-
+    
     return section
     
   }
 }
 
-extension HomeViewController: UICollectionViewDataSource {
-  func numberOfSections(in collectionView: UICollectionView) -> Int {
-    return sections.count
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    switch self.sections[section] {
-    case .popularity:
-      return self.viewModel?.perfumesPopular.count ?? 0
-    case .recent:
-      return self.viewModel?.perfumesRecent.count ?? 0
-    case .new:
-      return self.viewModel?.perfumesNew.count ?? 0
-    default:
-      return 1
-    }
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let section = self.sections[indexPath.section]
-    switch section {
-    case .title:
-      let cell = collectionView.dequeueReusableCell(HomeTitleCell.self, for: indexPath)
-      return cell
-    case .recommendation:
-      let cell = collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
-      cell.updateUI(perfumes: self.viewModel?.perfumesRecommended)
-      return cell
-    case .popularity:
-      let cell = collectionView.dequeueReusableCell(HomePopularityCell.self, for: indexPath)
-      cell.updateUI(perfume: self.viewModel?.perfumesPopular[indexPath.row])
-      return cell
-    case .recent:
-      let cell = collectionView.dequeueReusableCell(HomeRecentCell.self, for: indexPath)
-      cell.updateUI(perfume: self.viewModel?.perfumesRecent[indexPath.row])
-      return cell
-    case .new:
-      let cell = collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
-      cell.updateUI(perfume: self.viewModel?.perfumesNew[indexPath.row])
-      return cell
-    case .more:
-      let cell = collectionView.dequeueReusableCell(HomeMoreCell.self, for: indexPath)
-      return cell
-    }
-    
-  }
-  
-  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    switch kind {
-    case UICollectionView.elementKindSectionHeader:
-      let header = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
-      switch self.sections[indexPath.section] {
-      case .recommendation:
-        header.updateUI(title: "000 님을 위한\n향수 추천", content: "어퓸을 사용할수록\n더 잘 맞는 향수를 보여드려요")
-      case .popularity:
-        header.updateUI(title: "20대 여성이\n많이 찾는 향수", content: "00 님 연령대 분들에게 인기 많은 향수 입니다.")
-      case .recent:
-        header.updateUI(title: "최근 찾아본 향수", content: nil)
-      case .new:
-        header.updateUI(title: "새로\n등록된 향수", content: "기대하세요.  새로운 향수가 업데이트 됩니다.")
-      default:
-        break
-      }
-      return header
-    default:
-      return UICollectionReusableView()
-    }
-  }
-}

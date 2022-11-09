@@ -10,6 +10,10 @@
 		0E7734A1E5133B76FDDF14FD /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */; };
 		2851444100D02B64E1A0A233 /* Pods_ScentsNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */; };
 		4A0E9B0129190C9C0050E474 /* HomeMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */; };
+		4A155DFA291A1FD00027D26E /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DF9291A1FD00027D26E /* Section.swift */; };
+		4A155DFC291A200B0027D26E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFB291A200B0027D26E /* Item.swift */; };
+		4A155DFE291B76F10027D26E /* SectionTBD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFD291B76F10027D26E /* SectionTBD.swift */; };
+		4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */; };
 		4A80A4E12917EC02009F83B9 /* HomeRecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */; };
 		4A80A4E42918982C009F83B9 /* HomeRecommendationKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */; };
 		4A80A4E7291898E2009F83B9 /* HomeRecommendationKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */; };
@@ -159,6 +163,10 @@
 		21E07E4F3006358C71EFB2FA /* Pods-ScentsNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote/Pods-ScentsNote.release.xcconfig"; sourceTree = "<group>"; };
 		4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMoreCell.swift; sourceTree = "<group>"; };
 		4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A155DF9291A1FD00027D26E /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
+		4A155DFB291A200B0027D26E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		4A155DFD291B76F10027D26E /* SectionTBD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionTBD.swift; sourceTree = "<group>"; };
+		4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Legacy.swift"; sourceTree = "<group>"; };
 		4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationSection.swift; sourceTree = "<group>"; };
 		4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordView.swift; sourceTree = "<group>"; };
 		4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordCell.swift; sourceTree = "<group>"; };
@@ -333,6 +341,13 @@
 				C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A155DF72919DEB60027D26E /* PerfumeScene */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PerfumeScene;
 			sourceTree = "<group>";
 		};
 		4A80A4E5291898B6009F83B9 /* Recommand */ = {
@@ -591,6 +606,7 @@
 			isa = PBXGroup;
 			children = (
 				4AA280F82917B7AA00D30A99 /* HomeViewController.swift */,
+				4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -740,6 +756,7 @@
 		4AAFE78228F8E79B00EA6FB4 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4A155DF72919DEB60027D26E /* PerfumeScene */,
 				4AAFE79328FAA81E00EA6FB4 /* Common */,
 				4AA280EF2917B6C000D30A99 /* HomeScene */,
 				4AA280FC2917B8B000D30A99 /* SearchScene */,
@@ -866,6 +883,9 @@
 				4A857462291129CB00F86C3A /* UserDefaultKey.swift */,
 				4AA280ED2917B0B800D30A99 /* TabBarPage.swift */,
 				4A80A4EB2918AB15009F83B9 /* HomeSection.swift */,
+				4A155DF9291A1FD00027D26E /* Section.swift */,
+				4A155DFB291A200B0027D26E /* Item.swift */,
+				4A155DFD291B76F10027D26E /* SectionTBD.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1326,6 +1346,7 @@
 				4A8574572910C50200F86C3A /* SurveyPerfumeCollectionViewCell.swift in Sources */,
 				4A9A14E4290919390067F04D /* SignUpPasswordViewModel.swift in Sources */,
 				4AA2811C2917C80500D30A99 /* HomeHeaderView.swift in Sources */,
+				4A155DFE291B76F10027D26E /* SectionTBD.swift in Sources */,
 				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
@@ -1336,6 +1357,7 @@
 				4A9A14E929093B1C0067F04D /* NextButton.swift in Sources */,
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
 				4A85744A290CC72600F86C3A /* CoordinatorFinishOutput.swift in Sources */,
+				4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */,
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4A857469291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift in Sources */,
@@ -1360,9 +1382,11 @@
 				4AA281142917BA6200D30A99 /* DefaultMyPageCoordinator.swift in Sources */,
 				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,
 				4A857463291129CB00F86C3A /* UserDefaultKey.swift in Sources */,
+				4A155DFC291A200B0027D26E /* Item.swift in Sources */,
 				4AE4A4912904B56000491246 /* Result+Extension.swift in Sources */,
 				4AB7599A290131E80086C519 /* NetworkError.swift in Sources */,
 				4A9A14EB2909FDA40067F04D /* SignUpGenderViewController.swift in Sources */,
+				4A155DFA291A1FD00027D26E /* Section.swift in Sources */,
 				4AAFE82F28FE7C5900EA6FB4 /* SignUpCoordinator.swift in Sources */,
 				4AAFE81B28FCE7F000EA6FB4 /* BaseNavigationController.swift in Sources */,
 				4A857444290BF31900F86C3A /* SurveyViewController.swift in Sources */,
