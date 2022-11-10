@@ -73,4 +73,42 @@ class ScentsNoteService {
       }
     }
   }
+  
+  func requestObjectRx<T: Decodable>(_ target: ScentsNoteAPI) -> Observable<T?> {
+    return provider.rx.request(target)
+        .asObservable()
+        .map { try JSONDecoder().decode(ResponseObject<T>.self, from: $0.data) }
+        .map { $0.data }
+    }
+    
+  
+}
+
+extension ScentsNoteService {
+  private func handleInternetConnection<T: Any>(error: Error) throws -> Observable<T> {
+    guard
+      let urlError = Self.converToURLError(error),
+      Self.isNotConnection(error: error)
+    else { throw error }
+    throw MyAPIError.internetConnection(urlError)
+  }
+    
+    private func handleTimeOut<T: Any>(error: Error) throws -> Observable<T> {
+      guard
+        let urlError = Self.converToURLError(error),
+        urlError.code == .timedOut
+      else { throw error }
+      throw MyAPIError.requestTimeout(urlError)
+    }
+  
+  private func handleREST<T: Any>(error: Error) throws -> Observable<T> {
+    guard error is MyAPIError else {
+      throw MyAPIError.restError(
+        error,
+        statusCode: (error as? MoyaError)?.response?.statusCode,
+        errorCode: (try? (error as? MoyaError)?.response?.mapJSON() as? [String: Any])?["code"] as? String
+      )
+    }
+    throw error
+  }
 }

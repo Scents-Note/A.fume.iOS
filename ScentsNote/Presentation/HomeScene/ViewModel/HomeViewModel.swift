@@ -11,109 +11,124 @@ import RxRelay
 final class HomeViewModel {
   weak var coordinator: HomeCoordinator?
   var perfumeRepository: PerfumeRepository
-  var dataSource: UICollectionViewDiffableDataSource<Section, Item>! = nil
-  var currentSnapshot: NSDiffableDataSourceSnapshot<Section, Item>! = nil
-  
-  let output = Output()
-  var subject = BehaviorRelay<[HomeDataSection.Model]>(value: [])
-  
-  //  ComplexSection.Model(model: .title, items: [ComplexSection.MyItem.title]), ComplexSection.Model(model: .recommendation, items: [ComplexSection.MyItem.recommendation([])])
-  var perfumesRecommended = [Perfume]()
-  var perfumesPopular = [Perfume]()
-  var perfumesRecent = [Perfume]()
-  var perfumesNew = [Perfume]()
-  
+
   init(coordinator: HomeCoordinator, perfumeRepository: PerfumeRepository) {
     self.coordinator = coordinator
     self.perfumeRepository = perfumeRepository
   }
-  
-  
   
   struct Input {
     
   }
   
   struct Output {
-    let loadData = PublishRelay<Bool>()
-    let perfumes1 = PublishRelay<[Perfume]>()
-    let perfumes2 = PublishRelay<[Perfume]>()
+    var homeDatas = BehaviorRelay<[HomeDataSection.Model]>(value: HomeDataSection.initialSectionDatas)
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
     
-    self.perfumeRepository.fetchPerfumesRecommended { result in
-      result.success { [weak self] perfumeInfo in
-        let myItems3 = HomeDataSection.HomeItem.title
-        let mySectionModel3 = HomeDataSection.Model(model: .title, items: [myItems3])
-        
-        let myItems = HomeDataSection.HomeItem.recommendation(perfumeInfo?.rows ?? [])
-        let mySectionModel = HomeDataSection.Model(model: .recommendation, items: [myItems])
-        print("User Log: 1)")
-        var list = self?.subject.value ?? []
-        list.append(contentsOf: [mySectionModel3, mySectionModel])
-        
-        list.sort { (obj1, obj2) -> Bool in
-          return obj1.model.rawValue < obj2.model.rawValue
-        }
-        
-        self?.subject.accept(list)
-      }
-    }
+    let perfumesRecommended = PublishRelay<[Perfume]>()
+    let perfumesPopular = PublishRelay<[Perfume]>()
+    let perfumesRecent = PublishRelay<[Perfume]>()
+    let perfumesNew = PublishRelay<[Perfume]>()
     
-    self.perfumeRepository.fetchPerfumesPopular { result in
-      result.success { [weak self] perfumeInfo in
-        let myItems = perfumeInfo!.rows.map {HomeDataSection.HomeItem.popularity($0) }
-        let mySectionModel = HomeDataSection.Model(model: .popularity, items: myItems)
-        
-        var list = self?.subject.value ?? []
-        list.append(contentsOf: [mySectionModel])
-        self?.subject.accept(list)
-      }
-    }
-    
-    
-    
-    self.perfumeRepository.fetchRecentPerfumes { result in
-      result.success { [weak self] perfumeInfo in
-        
-        //        self?.perfumesRecent = perfumeInfo?.rows ?? []
-        
-      }
-    }
+    let output = Output()
     
     let dummyList =  [Perfume(perfumeIdx: 1, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false), Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false)]
+
+    // MARK: - Network
+    /// viewController의 DisposeBag을 사용하기 위해 따로 빼지 않고 놨는데 역할 분리가 좀 아쉬운 듯
+    self.perfumeRepository.fetchPerfumesRecommended()
+      .subscribe { listInfo in
+        guard let listInfo = listInfo else { return }
+        perfumesRecommended.accept(listInfo.rows)
+      } onError: { error in
+        print("User Log: error - \(error)")
+      }
+      .disposed(by: disposeBag)
     
-    let myItems = dummyList.map {HomeDataSection.HomeItem.recent($0) }
-    let mySectionModel = HomeDataSection.Model(model: .recent, items: myItems)
+    self.perfumeRepository.fetchPerfumesPopular()
+      .subscribe { listInfo in
+        guard let listInfo = listInfo else { return }
+        perfumesPopular.accept(listInfo.rows)
+      } onError: { error in
+        print("User Log: error - \(error)")
+      }
+      .disposed(by: disposeBag)
     
-    var list = self.subject.value ?? []
-    list.append(contentsOf: [mySectionModel])
-    list.sort { (obj1, obj2) -> Bool in
-      return obj1.model.rawValue < obj2.model.rawValue
-    }
-    self.subject.accept(list)
+    self.perfumeRepository.fetchPerfumesRecommended()
+      .subscribe { listInfo in
+        guard let listInfo = listInfo else { return }
+        perfumesRecent.accept(listInfo.rows)
+      } onError: { error in
+        print("User Log: error - \(error)")
+      }
+      .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchNewPerfumes { result in
-      result.success { [weak self] perfumeInfo in
-        let myItems = perfumeInfo!.rows.map {HomeDataSection.HomeItem.new($0) }
-        let mySectionModel = HomeDataSection.Model(model: .new, items: myItems)
-        
-        let myItems3 = HomeDataSection.HomeItem.more
-        let mySectionModel3 = HomeDataSection.Model(model: .more, items: [myItems3])
-        
-        var list = self?.subject.value ?? []
-        list.append(contentsOf: [mySectionModel, mySectionModel3])
-        self?.subject.accept(list)
-        
+    self.perfumeRepository.fetchNewPerfumes()
+      .subscribe { listInfo in
+        guard let listInfo = listInfo else { return }
+        perfumesNew.accept(listInfo.rows)
+      } onError: { error in
+        print("User Log: error - \(error)")
+      }
+      .disposed(by: disposeBag)
+    
+    // MARK: - Input
+    
+    perfumesRecommended.withLatestFrom(output.homeDatas) { (updated, originals) -> [HomeDataSection.Model] in
+      originals.map {
+        guard $0.model != .recommendation else {
+          let item = HomeDataSection.HomeItem.recommendation(updated)
+          let sectionModel = HomeDataSection.Model(model: .recommendation, items: [item])
+          return sectionModel
+        }
+        return $0
       }
     }
+    .bind(to: output.homeDatas)
+    .disposed(by: disposeBag)
     
-    return self.output
-  }
-  
-  func onClickPerfumeHeartNew(index: Int) {
+    perfumesPopular.withLatestFrom(output.homeDatas) { (updated, originals) -> [HomeDataSection.Model] in
+      originals.map {
+        guard $0.model != .popularity else {
+          let items = updated.map {HomeDataSection.HomeItem.popularity($0) }
+          let sectionModel = HomeDataSection.Model(model: .popularity, items: items)
+          return sectionModel
+        }
+        return $0
+      }
+    }
+    .bind(to: output.homeDatas)
+    .disposed(by: disposeBag)
     
+    perfumesRecent.withLatestFrom(output.homeDatas) { (updated, originals) -> [HomeDataSection.Model] in
+      originals.map {
+        guard $0.model != .recent else {
+          let items = dummyList.map {HomeDataSection.HomeItem.recent($0) }
+          let sectionModel = HomeDataSection.Model(model: .recent, items: items)
+          return sectionModel
+        }
+        return $0
+      }
+    }
+    .bind(to: output.homeDatas)
+    .disposed(by: disposeBag)
+
+    perfumesNew.withLatestFrom(output.homeDatas) { updated, originals in
+      originals.map {
+        guard $0.model != .new else {
+          let items = updated.map {HomeDataSection.HomeItem.new($0) }
+          let sectionModel = HomeDataSection.Model(model: .new, items: items)
+          return sectionModel
+        }
+        return $0
+      }
+    }
+    .bind(to: output.homeDatas)
+    .disposed(by: disposeBag)
+
+    return output
   }
   
 }

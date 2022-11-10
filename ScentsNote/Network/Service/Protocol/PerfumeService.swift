@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 protocol PerfumeService {
   
@@ -15,8 +16,9 @@ protocol PerfumeService {
   func fetchSeries(completion: @escaping (Result<ListInfo<SurveySeries>?, NetworkError>) -> Void)
   
   //Home
-  func fetchPerfumesRecommended(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
-  func fetchPerfumesPopular(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
-  func fetchRecentPerfumes(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
-  func fetchNewPerfumes(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void)
+  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?>
+  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?>
+  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?>
+  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?>
+  
 }

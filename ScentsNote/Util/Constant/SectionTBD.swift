@@ -27,4 +27,13 @@ struct HomeDataSection {
     case new(Perfume)
     case more
   }
+  
+  static var initialSectionDatas: [HomeDataSection.Model] {
+    return [HomeDataSection.Model(model: HomeSection.title, items: [HomeDataSection.HomeItem.title]),
+            HomeDataSection.Model(model: HomeSection.recommendation, items: []),
+            HomeDataSection.Model(model: HomeSection.popularity, items: []),
+            HomeDataSection.Model(model: HomeSection.recent, items: []),
+            HomeDataSection.Model(model: HomeSection.new, items: []),
+            HomeDataSection.Model(model: HomeSection.more, items: [HomeDataSection.HomeItem.more])]
+  }
 }

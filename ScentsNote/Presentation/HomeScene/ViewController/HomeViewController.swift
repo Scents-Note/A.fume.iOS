@@ -21,13 +21,13 @@ private enum SupplementaryKind {
 
 final class HomeViewController: UIViewController {
   
-  let dummy = [Perfume(perfumeIdx: 1, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false), Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false)]
-  
   var viewModel: HomeViewModel?
   private let disposeBag = DisposeBag()
 
   
   // MARK: - Properties
+  
+  var dataSource: RxCollectionViewSectionedReloadDataSource<HomeDataSection.Model>!
   private let sections: [HomeDataSection.HomeSection] = [.title, .recommendation, .popularity, .recent, .new, .more]
   
   
@@ -71,9 +71,8 @@ final class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
+    self.configureCollectionView()
     self.bindViewModel()
-    
-    self.bind()
 
   }
   
@@ -85,10 +84,21 @@ final class HomeViewController: UIViewController {
  
 }
 
+// MARK: Configure UI
 extension HomeViewController {
   
-  func bind() {
-    let dataSource = RxCollectionViewSectionedReloadDataSource<HomeDataSection.Model>(
+  private func configureUI() {
+    self.view.backgroundColor = .white
+    self.view.addSubview(self.collectionView)
+    self.collectionView.snp.makeConstraints {
+      $0.top.equalTo(self.view.safeAreaLayoutGuide)
+      $0.left.right.bottom.equalToSuperview()
+    }
+  }
+  
+  func configureCollectionView() {
+    // TODO: 메모리 Leak 나는지 확인해보기
+    self.dataSource = RxCollectionViewSectionedReloadDataSource<HomeDataSection.Model>(
       configureCell: { dataSource, tableView, indexPath, item in
         switch item {
         case .title:
@@ -116,7 +126,7 @@ extension HomeViewController {
         }
     })
     
-    dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) in
+    self.dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) in
        if kind == UICollectionView.elementKindSectionHeader {
          let section = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
          switch self.sections[indexPath.section] {
@@ -132,249 +142,27 @@ extension HomeViewController {
            break
          }
          return section
-    
        } else {
          return UICollectionReusableView()
        }
     }
-    
-    self.viewModel?.subject
-      .bind(to: self.collectionView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
-
-
-//    dataSource.titleForHeaderInSection = { dataSource, index in
-//      return dataSource.sectionModels[index].header
-//    }
-//
-//    dataSource.canEditRowAtIndexPath = { dataSource, indexPath in
-//      return true
-//    }
- 
   }
   
-  private func configureUI() {
-    self.view.backgroundColor = .white
-    self.view.addSubview(self.collectionView)
-    self.collectionView.snp.makeConstraints {
-      $0.top.equalTo(self.view.safeAreaLayoutGuide)
-      $0.left.right.bottom.equalToSuperview()
-    }
-  }
   
   private func bindViewModel() {
     let input = HomeViewModel.Input(
     )
     
     let output = viewModel?.transform(from: input, disposeBag: disposeBag)
-    self.bindPersonalPerfume(output: output)
+    
+    self.bindSection(output: output)
+    
+    
   }
   
-  private func bindPersonalPerfume(output: HomeViewModel.Output?) {
-
+  private func bindSection(output: HomeViewModel.Output?) {
+    output?.homeDatas
+      .bind(to: self.collectionView.rx.items(dataSource: dataSource))
+      .disposed(by: self.disposeBag)
   }
 }
-
-// MARK: - Section Layout
-extension HomeViewController {
-  private func getHomeTitleSection() -> NSCollectionLayoutSection {
-    let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .fractionalHeight(1.0)
-    )
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    
-    let groupSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .estimated(30)
-    )
-    let group = NSCollectionLayoutGroup.horizontal(
-      layoutSize: groupSize,
-      subitems: [item]
-    )
-    let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 32, leading: 0, bottom: 0, trailing: 0)
-    
-    return section
-    
-  }
-  
-  private func getHomeRecommendationSection() -> NSCollectionLayoutSection {
-    // item
-    let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .fractionalHeight(1.0)
-    )
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    //    item.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8)
-    
-    // group
-    let groupSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(322)
-    )
-    let group = NSCollectionLayoutGroup.horizontal(
-      layoutSize: groupSize,
-      subitems: [item]
-    )
-    //    group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
-    //      leading: .fixed(100),
-    //      top: nil,
-    //      trailing: nil,
-    //      bottom: nil
-    //    )
-    
-    let headerSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(126)
-    )
-    let header = NSCollectionLayoutBoundarySupplementaryItem(
-      layoutSize: headerSize,
-      elementKind: UICollectionView.elementKindSectionHeader,
-      alignment: .top
-    )
-    
-    // section
-    let section = NSCollectionLayoutSection(group: group)
-    section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 23, leading: 0, bottom: 4, trailing: 0)
-    section.boundarySupplementaryItems = [header]
-    
-    return section
-  }
-  
-  private func getHomePopularitySection() -> NSCollectionLayoutSection {
-    
-    let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .fractionalHeight(1.0)
-    )
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
-    
-    let groupSize = NSCollectionLayoutSize(
-      widthDimension: .absolute(166),
-      heightDimension: .estimated(198)
-    )
-    let group = NSCollectionLayoutGroup.horizontal(
-      layoutSize: groupSize,
-      subitems: [item]
-    )
-    
-    let headerSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(110)
-    )
-    let header = NSCollectionLayoutBoundarySupplementaryItem(
-      layoutSize: headerSize,
-      elementKind: UICollectionView.elementKindSectionHeader,
-      alignment: .top
-    )
-    
-    let section = NSCollectionLayoutSection(group: group)
-    section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 23, leading: 0, bottom: 42, trailing: 20)
-    section.boundarySupplementaryItems = [header]
-    
-    return section
-  }
-  
-  private func getHomeRecentSection() -> NSCollectionLayoutSection {
-    
-    let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .fractionalHeight(1.0)
-    )
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-    
-    let groupSize = NSCollectionLayoutSize(
-      widthDimension: .absolute(128),
-      heightDimension: .absolute(157)
-    )
-    let group = NSCollectionLayoutGroup.horizontal(
-      layoutSize: groupSize,
-      subitems: [item]
-    )
-    
-    let headerSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(44)
-    )
-    let header = NSCollectionLayoutBoundarySupplementaryItem(
-      layoutSize: headerSize,
-      elementKind: UICollectionView.elementKindSectionHeader,
-      alignment: .topLeading
-    )
-    
-    let section = NSCollectionLayoutSection(group: group)
-    section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12, bottom: 24, trailing: 12)
-    section.boundarySupplementaryItems = [header]
-    
-    let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
-    section.decorationItems = [sectionBackground]
-    
-    
-    return section
-  }
-  
-  private func getHomeNewSection() -> NSCollectionLayoutSection {
-    
-    let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(0.5),
-      heightDimension: .fractionalHeight(1.0)
-    )
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
-    
-    let groupSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .fractionalHeight(0.3)
-    )
-    let group = NSCollectionLayoutGroup.horizontal(
-      layoutSize: groupSize,
-      subitem: item,
-      count: 2
-    )
-    
-    let headerSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(110)
-    )
-    let header = NSCollectionLayoutBoundarySupplementaryItem(
-      layoutSize: headerSize,
-      elementKind: UICollectionView.elementKindSectionHeader,
-      alignment: .top
-    )
-    
-    let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 0, trailing: 20)
-    section.boundarySupplementaryItems = [header]
-    
-    return section
-  }
-  
-  private func getHomeMoreSection() -> NSCollectionLayoutSection {
-    let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .fractionalHeight(1.0)
-    )
-    let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    
-    let groupSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .absolute(48)
-    )
-    let group = NSCollectionLayoutGroup.horizontal(
-      layoutSize: groupSize,
-      subitems: [item]
-    )
-    let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 48, trailing: 20)
-    
-    return section
-    
-  }
-}
-
