@@ -6,12 +6,11 @@
 //
 
 import UIKit
-import Reusable
 
 class SurveyPerfumeView: UICollectionView {
   
   var clickPerfume: ((IndexPath) -> Void)?
-  var perfumes: [SurveyPerfume] = []
+  var perfumes: [Perfume] = []
 
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
@@ -48,11 +47,10 @@ class SurveyPerfumeView: UICollectionView {
 }
 
 extension SurveyPerfumeView {
-  func setDatas(perfumes: [SurveyPerfume]?) {
+  func setDatas(perfumes: [Perfume]?) {
     guard let perfumes = perfumes else { return }
     self.perfumes = perfumes
     self.reloadData()
-//    print(self.perfumes)
   }
   
   func configureUI() {
@@ -62,16 +60,3 @@ extension SurveyPerfumeView {
     self.backgroundColor = .lightGray
   }
 }
-
-//extension SurveyPerfumeView: UICollectionViewDataSource {
-//  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//    return self.perfumes.count
-//  }
-//  
-//  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SurveyPerfumeCollectionViewCell.identifier, for: indexPath) as! SurveyPerfumeCollectionViewCell
-//    cell.updateUI(perfume: perfumes[indexPath.row])
-//    return cell
-//  }
-//
-//}

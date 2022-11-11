@@ -1,6 +1,7 @@
 PODS:
   - Alamofire (5.6.2)
   - Differentiator (5.0.0)
+  - Kingfisher (7.4.0)
   - Moya/Core (15.0.0):
     - Alamofire (~> 5.0)
   - Moya/RxSwift (15.0.0):
@@ -29,6 +30,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire
+  - Kingfisher
   - Moya/RxSwift
   - Reusable
   - RxCocoa
@@ -42,6 +44,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - Differentiator
+    - Kingfisher
     - Moya
     - Reusable
     - RxCocoa
@@ -55,6 +58,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   Differentiator: e8497ceab83c1b10ca233716d547b9af21b9344d
+  Kingfisher: 596b207973051aae5e4c54a1c1cb39837ea10d36
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   Reusable: 6bae6a5e8aa793c9c441db0213c863a64bce9136
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
@@ -65,6 +69,6 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Then: 844265ae87834bbe1147d91d5d41a404da2ec27d
 
-PODFILE CHECKSUM: ab813e845894a2fef1be6716774294157958cacf
+PODFILE CHECKSUM: 367ec8010db1cdb5c84c42e1e4f411b61cd6a9fa
 
 COCOAPODS: 1.11.3

@@ -17,10 +17,16 @@ extension UIImage {
   // MARK: - Survey
   static let heart = UIImage(named: "favoriteActiveWhiteCopy2")
   
+  // MARK: - Perfume
+  static let favoriteActive = UIImage(named: "favoriteActive")
+  static let favoriteInactive = UIImage(named: "favoriteInactive")
+  
   // MARK: - 공통
   static let btnBack = UIImage(systemName: "btnBack")
   static let btnNext = UIImage(named: "btnNext")
   static let btnClose = UIImage(named: "btnClose")
+  
+  // MARK: - Sign Up
   static let check = UIImage(named: "icCheck")
   static let btnManInactive = UIImage(named: "btnManInactive")
   static let btnWomanInactive = UIImage(named: "btnWomanInactive")

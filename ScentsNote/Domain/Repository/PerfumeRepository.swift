@@ -10,7 +10,15 @@ import RxSwift
 import Moya
 
 protocol PerfumeRepository {
-  func fetchPerfumesInSurvey(completion: @escaping (Result<SurveyInfo<SurveyPerfume>?, NetworkError>) -> Void)
-  func fetchKeywords(completion: @escaping (Result<SurveyInfo<SurveyKeyword>?, NetworkError>) -> Void)
-  func fetchSeries(completion: @escaping (Result<SurveyInfo<SurveySeries>?, NetworkError>) -> Void)
+  // MARK: - Survey
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?>
+  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?>
+  func fetchSeries() -> Observable<ListInfo<SurveySeries>?>
+  
+  // MARK: - Home
+  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?>
+  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?>
+  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?>
+  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?>
+  
 }

@@ -11,7 +11,7 @@ import RxRelay
 final class SignUpInformationViewModel {
   private weak var coordinator: SignUpCoordinator?
   private let userRepository: UserRepository
-
+  
   var email = ""
   var nickname = ""
   
@@ -46,22 +46,21 @@ final class SignUpInformationViewModel {
     input.emailCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository.checkDuplicateEmail(email: self.email, completion: { result in
-          result.success { _ in
-           output.emailValidationState.accept(.success)
-          }.catch { error in
-            if error == .duplicate {
-              output.emailValidationState.accept(.duplicate)
-            }
+        self.userRepository.checkDuplicateEmail(email: self.email)
+          .subscribe{ _ in
+            output.emailValidationState.accept(.success)
+          } onError: { error in
+            Log(error)
+            output.emailValidationState.accept(.duplicate)
           }
-        })
+          .disposed(by: disposeBag)
       })
       .disposed(by: disposeBag)
     
     input.nicknameTextFieldDidEditEvent
       .distinctUntilChanged()
-      .subscribe(onNext: { [weak self] string in
-        self?.nickname = string
+      .subscribe(onNext: { [weak self] nickname in
+        self?.nickname = nickname
         self?.updateNicknameValidationState(output: output)
       })
       .disposed(by: disposeBag)
@@ -69,15 +68,15 @@ final class SignUpInformationViewModel {
     input.nicknameCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository.checkDuplicateNickname(nickname: self.nickname, completion: { result in
-          result.success { _ in
+        self.userRepository.checkDuplicateNickname(nickname: self.nickname)
+          .subscribe { _ in
             output.nicknameValidationState.accept(.success)
-          }.catch { error in
-            if error == .duplicate {
+          } onError: { error in
+//            if error == .duplicate {
               output.nicknameValidationState.accept(.duplicate)
-            }
+//            }
           }
-        })
+          .disposed(by: disposeBag)
       })
       .disposed(by: disposeBag)
     
@@ -113,5 +112,5 @@ final class SignUpInformationViewModel {
     }
     output.nicknameValidationState.accept(.correctFormat)
   }
- 
+  
 }

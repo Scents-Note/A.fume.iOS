@@ -16,24 +16,24 @@ final class DefaultUserRepository: UserRepository {
     self.userService = userService
   }
   
-  func login(email: String, password: String, completion: @escaping (Result<LoginInfo?, NetworkError>) -> Void) {
-    return self.userService.login(email: email, password: password, completion: completion)
+  func login(email: String, password: String) -> Observable<LoginInfo?> {
+    return self.userService.login(email: email, password: password)
   }
   
-  func signUp(signUpInfo: SignUpInfo, completion: @escaping (Result<LoginInfo?, NetworkError>) -> Void) {
-    return self.userService.signUp(signUpInfo: signUpInfo, completion: completion)
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo?> {
+    return self.userService.signUp(signUpInfo: signUpInfo)
   }
   
-  func checkDuplicateEmail(email: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
-    return self.userService.checkDuplicateEmail(email: email, completion: completion)
+  func checkDuplicateEmail(email: String) -> Observable<Bool?> {
+    return self.userService.checkDuplicateEmail(email: email)
   }
   
-  func checkDuplicateNickname(nickname: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
-    return self.userService.checkDuplicateNickname(nickname: nickname, completion: completion)
+  func checkDuplicateNickname(nickname: String) -> Observable<Bool?> {
+    return self.userService.checkDuplicateNickname(nickname: nickname)
   }
   
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int], completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
-    return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList, completion: completion)
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool?> {
+    return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
   
   func saveLoginInfo(loginInfo: LoginInfo) {

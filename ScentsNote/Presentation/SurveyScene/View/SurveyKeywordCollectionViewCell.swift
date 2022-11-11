@@ -18,7 +18,6 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
   let disposeBag = DisposeBag()
   
   private let keywordLabel = UILabel().then {
-//    $0.textColor = .grayCd
     $0.font = .notoSans(type: .regular, size: 15)
   }
   

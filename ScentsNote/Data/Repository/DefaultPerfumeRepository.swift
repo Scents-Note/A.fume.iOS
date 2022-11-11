@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxSwift
 
 final class DefaultPerfumeRepository: PerfumeRepository {
   
@@ -14,16 +15,33 @@ final class DefaultPerfumeRepository: PerfumeRepository {
   init(perfumeService: PerfumeService){
     self.perfumeService = perfumeService
   }
-
-  func fetchPerfumesInSurvey(completion: @escaping (Result<SurveyInfo<SurveyPerfume>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchPerfumesInSurvey(completion: completion)
+  
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?> {
+    self.perfumeService.fetchPerfumesInSurvey()
   }
   
-  func fetchKeywords(completion: @escaping (Result<SurveyInfo<SurveyKeyword>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchKeywords(completion: completion)
+  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?> {
+    self.perfumeService.fetchKeywords()
   }
   
-  func fetchSeries(completion: @escaping (Result<SurveyInfo<SurveySeries>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchSeries(completion: completion)
+  func fetchSeries() -> Observable<ListInfo<SurveySeries>?> {
+    self.perfumeService.fetchSeries()
   }
+  
+  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?> {
+    self.perfumeService.fetchPerfumesRecommended()
+  }
+  
+  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?> {
+    self.perfumeService.fetchPerfumesPopular()
+  }
+  
+  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?> {
+    self.perfumeService.fetchRecentPerfumes()
+  }
+  
+  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?> {
+    self.perfumeService.fetchNewPerfumes()
+  }
+  
 }

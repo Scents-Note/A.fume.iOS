@@ -18,7 +18,8 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   override func start() {
     self.homeViewController.viewModel = HomeViewModel(
-      coordinator: self
+      coordinator: self,
+      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService())
     )
     self.navigationController.pushViewController(self.homeViewController, animated: true)
   }

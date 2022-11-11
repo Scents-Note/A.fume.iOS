@@ -112,7 +112,7 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
     
   }
   
-  func updateUI(perfume: SurveyPerfume?) {
+  func updateUI(perfume: Perfume?) {
     guard let perfume = perfume else { return }
     self.imageView.load(url: perfume.imageUrl)
     self.brandLabel.text = perfume.brandName

@@ -6,17 +6,35 @@
 //
 
 import Foundation
+import RxSwift
 
 final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
-  func fetchPerfumesInSurvey(completion: @escaping (Result<SurveyInfo<SurveyPerfume>?, NetworkError>) -> Void) {
-    requestObject(.fetchPerfumesInSurvey, completion: completion)
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?> {
+    requestObject(.fetchPerfumesInSurvey)
   }
   
-  func fetchKeywords(completion: @escaping (Result<SurveyInfo<SurveyKeyword>?, NetworkError>) -> Void) {
-    requestObject(.fetchKeywords, completion: completion)
+  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?> {
+    requestObject(.fetchKeywords)
   }
   
-  func fetchSeries(completion: @escaping (Result<SurveyInfo<SurveySeries>?, NetworkError>) -> Void) {
-    requestObject(.fetchSeries, completion: completion)
+  func fetchSeries() -> Observable<ListInfo<SurveySeries>?> {
+    requestObject(.fetchSeries)
   }
+  
+  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?> {
+    requestObject(.fetchPerfumesRecommended)
+  }
+  
+  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?> {
+    requestObject(.fetchPerfumesPopular)
+  }
+  
+  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?> {
+    requestObject(.fetchRecentPerfumes)
+  }
+  
+  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?> {
+    requestObject(.fetchNewPerfumes)
+  }
+  
 }
