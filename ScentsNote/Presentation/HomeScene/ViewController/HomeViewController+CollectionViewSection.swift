@@ -135,7 +135,7 @@ extension HomeViewController {
     
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12, bottom: 24, trailing: 12)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12, bottom: 0, trailing: 12)
     section.boundarySupplementaryItems = [header]
     
     
@@ -158,7 +158,7 @@ extension HomeViewController {
 
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(232)
+      heightDimension: .estimated(236)
     )
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: groupSize,

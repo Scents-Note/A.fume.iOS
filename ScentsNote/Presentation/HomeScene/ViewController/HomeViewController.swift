@@ -41,7 +41,6 @@ final class HomeViewController: UIViewController {
     $0.interSectionSpacing = 32
   })
     .then {
-    
     $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
   }
   
@@ -79,8 +78,6 @@ final class HomeViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
-  
- 
 }
 
 // MARK: Configure UI
@@ -150,8 +147,6 @@ extension HomeViewController {
     self.dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) in
       if kind == UICollectionView.elementKindSectionHeader {
         let section = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
-//        let section = self.dataSource.sectionModels[section].model
-
         switch self.dataSource.sectionModels[indexPath.section].model {
         case .recommendation:
           section.updateUI(title: "000 님을 위한\n향수 추천", content: "어퓸을 사용할수록\n더 잘 맞는 향수를 보여드려요")

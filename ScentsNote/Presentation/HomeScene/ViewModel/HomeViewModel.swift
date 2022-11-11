@@ -74,10 +74,9 @@ final class HomeViewModel {
     .disposed(by: disposeBag)
     
     perfumesRecent.withLatestFrom(output.homeDatas) { perfumes, homeDatas in
-      if perfumes.count == 0 {
+      if perfumes.count != 0 {
         let updatedDatas = homeDatas.map {
           guard $0.model != .recent else {
-            Log("hihi")
             let items = perfumes.map {HomeDataSection.HomeItem.recent($0) }
             let sectionModel = HomeDataSection.Model(model: .recent, items: items)
             return sectionModel

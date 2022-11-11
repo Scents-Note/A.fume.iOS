@@ -26,21 +26,6 @@ struct HomeDataSection {
   enum HomeItem: Equatable, Hashable, IdentifiableType {
     var identity: Int {
       hashValue
-//      switch self {
-//
-//      case .title:
-//        return 0.hashValue
-//      case .recommendation:
-//        return 1.hashValue
-//      case .popularity(let perfume):
-//        return perfume.perfumeIdx
-//      case .recent(let perfume):
-//        return perfume.perfumeIdx
-//      case .new(let perfume):
-//        return perfume.perfumeIdx
-//      case .more:
-//        return 5.hashValue
-//      }
     }
     
     case title
