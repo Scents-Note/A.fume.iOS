@@ -14,12 +14,12 @@ final class SignUpBirthViewModel {
   private var signUpInfo: SignUpInfo
   
   var birth = BehaviorRelay<String>(value: "1990")
-
+  
   struct Input {
     let birthButtonDidTapEvent: Observable<Void>
     let doneButtonDidTapEvent: Observable<Void>
   }
-
+  
   
   init(coordinator: SignUpCoordinator?, userRepository: UserRepository, signUpInfo: SignUpInfo) {
     self.coordinator = coordinator
@@ -38,22 +38,20 @@ final class SignUpBirthViewModel {
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.coordinator?.finishFlow?()
-
-//        self.signUpInfo.birth = Int(self.birth.value)
-//        print("User Log: signUp \(self.signUpInfo)")
-//        self.userRepository.signUp(signUpInfo: self.signUpInfo, completion: { result in
-//          result.success { loginInfo in
-//            guard let loginInfo = loginInfo else { return }
-//            self.userRepository.saveLoginInfo(loginInfo: loginInfo)
-//            self.coordinator?.finishFlow?()
-//          }.catch { error in
-//            print("User Log: error \(error)")
-//          }
-//        })
+        self.signUpInfo.birth = Int(self.birth.value)
+        print("User Log: signUp \(self.signUpInfo)")
+        self.userRepository.signUp(signUpInfo: self.signUpInfo)
+          .subscribe { loginInfo in
+            guard let loginInfo = loginInfo else { return }
+            self.userRepository.saveLoginInfo(loginInfo: loginInfo)
+            self.coordinator?.finishFlow?()
+          } onError: { error in
+            print("User Log: error \(error)")
+          }
+          .disposed(by: disposeBag)
       })
       .disposed(by: disposeBag)
-
+    
   }
 }
 

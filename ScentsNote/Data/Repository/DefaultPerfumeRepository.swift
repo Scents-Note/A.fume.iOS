@@ -16,16 +16,16 @@ final class DefaultPerfumeRepository: PerfumeRepository {
     self.perfumeService = perfumeService
   }
   
-  func fetchPerfumesInSurvey(completion: @escaping (Result<ListInfo<Perfume>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchPerfumesInSurvey(completion: completion)
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?> {
+    self.perfumeService.fetchPerfumesInSurvey()
   }
   
-  func fetchKeywords(completion: @escaping (Result<ListInfo<SurveyKeyword>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchKeywords(completion: completion)
+  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?> {
+    self.perfumeService.fetchKeywords()
   }
   
-  func fetchSeries(completion: @escaping (Result<ListInfo<SurveySeries>?, NetworkError>) -> Void) {
-    self.perfumeService.fetchSeries(completion: completion)
+  func fetchSeries() -> Observable<ListInfo<SurveySeries>?> {
+    self.perfumeService.fetchSeries()
   }
   
   func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?> {

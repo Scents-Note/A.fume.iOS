@@ -34,7 +34,7 @@ extension HomeViewController {
     // item
     let itemSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
-      heightDimension: .fractionalHeight(1.0)
+      heightDimension: .estimated(320)
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     //    item.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 8, bottom: 12, trailing: 8)
@@ -42,22 +42,17 @@ extension HomeViewController {
     // group
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(322)
+      heightDimension: .estimated(320)
     )
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: groupSize,
       subitems: [item]
     )
-    //    group.edgeSpacing = NSCollectionLayoutEdgeSpacing(
-    //      leading: .fixed(100),
-    //      top: nil,
-    //      trailing: nil,
-    //      bottom: nil
-    //    )
+    
     
     let headerSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(126)
+      heightDimension: .estimated(90)
     )
     let header = NSCollectionLayoutBoundarySupplementaryItem(
       layoutSize: headerSize,
@@ -91,10 +86,10 @@ extension HomeViewController {
       layoutSize: groupSize,
       subitems: [item]
     )
-    
+
     let headerSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(110)
+      heightDimension: .estimated(88)
     )
     let header = NSCollectionLayoutBoundarySupplementaryItem(
       layoutSize: headerSize,
@@ -104,7 +99,7 @@ extension HomeViewController {
     
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .continuous
-    section.contentInsets = NSDirectionalEdgeInsets(top: 23, leading: 0, bottom: 42, trailing: 20)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 23, leading: 0, bottom: 0, trailing: 20)
     section.boundarySupplementaryItems = [header]
     
     return section
@@ -143,32 +138,34 @@ extension HomeViewController {
     section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 12, bottom: 24, trailing: 12)
     section.boundarySupplementaryItems = [header]
     
+    
     let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
     section.decorationItems = [sectionBackground]
-    
     
     return section
   }
   
   func getHomeNewSection() -> NSCollectionLayoutSection {
     
+    let fraction: CGFloat = 1 / 2
+    
     let itemSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(0.5),
-      heightDimension: .fractionalHeight(1.0)
+      widthDimension: .fractionalWidth(fraction),
+      heightDimension: .fractionalHeight(1)
     )
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
-    
+    item.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 7.5, bottom: 0, trailing: 7.5)
+
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
-      heightDimension: .fractionalHeight(0.3)
+      heightDimension: .estimated(232)
     )
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: groupSize,
-      subitem: item,
-      count: 2
+      subitems: [item]
     )
-    
+    group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12.5, bottom: 0, trailing: 12.5)
+
     let headerSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1),
       heightDimension: .estimated(110)
@@ -178,9 +175,9 @@ extension HomeViewController {
       elementKind: UICollectionView.elementKindSectionHeader,
       alignment: .top
     )
-    
+
     let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 0, bottom: 0, trailing: 20)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 11.5, leading: 0, bottom: 0, trailing: 0)
     section.boundarySupplementaryItems = [header]
     
     return section
@@ -195,14 +192,14 @@ extension HomeViewController {
     
     let groupSize = NSCollectionLayoutSize(
       widthDimension: .fractionalWidth(1.0),
-      heightDimension: .absolute(48)
+      heightDimension: .estimated(48)
     )
     let group = NSCollectionLayoutGroup.horizontal(
       layoutSize: groupSize,
       subitems: [item]
     )
     let section = NSCollectionLayoutSection(group: group)
-    section.contentInsets = NSDirectionalEdgeInsets(top: 15, leading: 20, bottom: 48, trailing: 20)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 48, trailing: 20)
     
     return section
     

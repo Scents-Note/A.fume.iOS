@@ -9,15 +9,15 @@
 import Alamofire
 import Moya
 
-enum MyAPIError: Error {
+enum NetworkError: Error {
   case empty
   case requestTimeout(Error)
   case internetConnection(Error)
-  case restError(Error, statusCode: Int? = nil, errorCode: String? = nil)
+  case restError(statusCode: Int? = nil, description: String? = nil)
   
   var statusCode: Int? {
     switch self {
-    case let .restError(_, statusCode, _):
+    case let .restError(statusCode, _):
       return statusCode
     default:
       return nil
@@ -25,7 +25,7 @@ enum MyAPIError: Error {
   }
   var errorCodes: [String] {
     switch self {
-    case let .restError(_, _, errorCode):
+    case let .restError(_, errorCode):
       return [errorCode].compactMap { $0 }
     default:
       return []
@@ -33,10 +33,10 @@ enum MyAPIError: Error {
   }
   var isNoNetwork: Bool {
     switch self {
-    case let .requestTimeout(error):
+    case let .requestTimeout:
       fallthrough
-    case let .restError(error, _, _):
-      return ScentsNoteService.isNotConnection(error: error) || ScentsNoteService.isLostConnection(error: error)
+    case let .restError(_, _):
+      return true
     case .internetConnection:
       return true
     default:
@@ -48,10 +48,12 @@ enum MyAPIError: Error {
 
 extension ScentsNoteService {
   static func converToURLError(_ error: Error) -> URLError? {
+    Log("\(error)")
     switch error {
     case let MoyaError.underlying(afError as AFError, _):
       fallthrough
     case let afError as AFError:
+      Log("\(error)")
       return afError.underlyingError as? URLError
     case let MoyaError.underlying(urlError as URLError, _):
       fallthrough
@@ -63,10 +65,11 @@ extension ScentsNoteService {
   }
   
  static func isNotConnection(error: Error) -> Bool {
-    Self.converToURLError(error)?.code == .notConnectedToInternet
+   return Self.converToURLError(error)?.code == .notConnectedToInternet
   }
   
   static func isLostConnection(error: Error) -> Bool {
+    Log("\(error)")
     switch error {
     case let AFError.sessionTaskFailed(error: posixError as POSIXError)
       where posixError.code == .ECONNABORTED: // eConnAboarted: Software caused connection abort.
@@ -82,3 +85,23 @@ extension ScentsNoteService {
     return true
   }
 }
+
+//enum NetworkError: Error {
+//  case decodingError
+//  case badRequest
+//  case discorrect
+//  case duplicate
+//}
+//
+//extension NetworkError {
+//  static func build(with statusCode: Int) -> NetworkError? {
+//    switch statusCode {
+//    case 400: return .badRequest
+//    case 401: return .discorrect
+//    case 409: return .duplicate
+//    default: return NetworkError.decodingError
+//    }
+//  }
+//}
+//
+//extension NetworkError: Equatable {}

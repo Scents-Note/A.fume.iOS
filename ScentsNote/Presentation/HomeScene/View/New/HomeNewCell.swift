@@ -19,8 +19,7 @@ final class HomeNewCell: UICollectionViewCell {
   static let width: CGFloat = 146
   static let height: CGFloat = 198
   
-  var perfumes = [Perfume]()
-  private let disposeBag = DisposeBag()
+  var disposeBag = DisposeBag()
 
   private let bgView = UIView().then {
     $0.layer.borderWidth = 1
@@ -52,7 +51,9 @@ final class HomeNewCell: UICollectionViewCell {
     fatalError()
   }
   
+  
   override func prepareForReuse() {
+    disposeBag = DisposeBag()
     self.imageView.image = nil
     self.brandLabel.text = ""
     self.nameLabel.text = ""
@@ -80,7 +81,7 @@ final class HomeNewCell: UICollectionViewCell {
     self.contentView.addSubview(self.brandLabel)
     self.brandLabel.snp.makeConstraints {
       $0.top.equalTo(self.bgView.snp.bottom).offset(10)
-      $0.left.equalToSuperview()
+      $0.left.right.equalToSuperview()
     }
 
     self.contentView.addSubview(self.nameLabel)
@@ -92,17 +93,13 @@ final class HomeNewCell: UICollectionViewCell {
   
   func updateUI(perfume: Perfume?) {
     guard let perfume = perfume else { return }
-    self.imageView.load(url: perfume.imageUrl)
+    self.imageView.kf.setImage(with: URL(string: perfume.imageUrl))
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
     self.heartButton.setImage(perfume.isLiked == true ? .favoriteActive : .favoriteInactive, for: .normal)
   }
   
-  private func bindUI() {
-    self.heartButton.rx.tap
-      .bind { [weak self] in
-        self?.clickHeart?()
-      }
-      .disposed(by: disposeBag)
+  func onHeartClick() -> Observable<Void> {
+    return heartButton.rx.tap.asObservable()
   }
 }

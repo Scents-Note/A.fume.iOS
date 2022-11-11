@@ -8,9 +8,13 @@
 import RxDataSources
 
 struct HomeDataSection {
-  typealias Model = SectionModel<HomeSection, HomeItem>
+  typealias Model = AnimatableSectionModel<HomeSection, HomeItem>
   
-  enum HomeSection: Int, Equatable {
+  enum HomeSection: Int, Equatable, Hashable, IdentifiableType {
+    var identity: Int {
+      hashValue
+    }
+    
     case title = 0
     case recommendation = 1
     case popularity = 2
@@ -19,7 +23,26 @@ struct HomeDataSection {
     case more = 5
   }
   
-  enum HomeItem: Equatable {
+  enum HomeItem: Equatable, Hashable, IdentifiableType {
+    var identity: Int {
+      hashValue
+//      switch self {
+//
+//      case .title:
+//        return 0.hashValue
+//      case .recommendation:
+//        return 1.hashValue
+//      case .popularity(let perfume):
+//        return perfume.perfumeIdx
+//      case .recent(let perfume):
+//        return perfume.perfumeIdx
+//      case .new(let perfume):
+//        return perfume.perfumeIdx
+//      case .more:
+//        return 5.hashValue
+//      }
+    }
+    
     case title
     case recommendation([Perfume])
     case popularity(Perfume)

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -14,7 +16,7 @@ final class HomeRecentCell: UICollectionViewCell {
   static let width: CGFloat = 108
   static let height: CGFloat = 157
   
-  var perfumes = [Perfume]()
+  var disposeBag = DisposeBag()
   
   private let bgView = UIView().then {
     $0.backgroundColor = .white
@@ -44,6 +46,11 @@ final class HomeRecentCell: UICollectionViewCell {
   
   required init?(coder: NSCoder) {
     fatalError()
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    self.imageView.image = nil
   }
   
   private func configureUI() {
@@ -85,5 +92,9 @@ final class HomeRecentCell: UICollectionViewCell {
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
     self.heartButton.setImage(perfume.isLiked == true ? .favoriteActive : .favoriteInactive, for: .normal)
+  }
+  
+  func onHeartClick() -> Observable<Void> {
+    return heartButton.rx.tap.asObservable()
   }
 }

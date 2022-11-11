@@ -11,24 +11,24 @@ import Moya
 
 final class DefaultUserService: ScentsNoteService, UserService {
   
-  func login(email: String, password: String, completion: @escaping (Result<LoginInfo?, NetworkError>) -> Void) {
-    requestObject(.login(email: email, password: password), completion: completion)
+  func login(email: String, password: String) -> Observable<LoginInfo?> {
+    requestObject(.login(email: email, password: password))
   }
   
-  func signUp(signUpInfo: SignUpInfo, completion: @escaping (Result<LoginInfo?, NetworkError>) -> Void) {
-    requestObject(.signUp(signUpInfo: signUpInfo), completion: completion)
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo?> {
+    requestObject(.signUp(signUpInfo: signUpInfo))
   }
   
-  func checkDuplicateEmail(email: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
-    requestObject(.checkDuplicateEmail(email: email), completion: completion)
+  func checkDuplicateEmail(email: String) -> Observable<Bool?> {
+    requestObject(.checkDuplicateEmail(email: email))
   }
   
-  func checkDuplicateNickname(nickname: String, completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
-    requestObject(.checkDuplicateNickname(nickname: nickname), completion: completion)
+  func checkDuplicateNickname(nickname: String) -> Observable<Bool?> {
+    requestObject(.checkDuplicateNickname(nickname: nickname))
   }
   
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int], completion: @escaping (Result<Bool?, NetworkError>) -> Void) {
-    requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList), completion: completion)
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool?> {
+    requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList))
   }
 
 }

@@ -35,7 +35,7 @@ final class LoginViewModel {
     var passwordFieldText = BehaviorRelay<String?>(value: "")
     var doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
   }
-
+  
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
     let output = Output()
     input.emailTextFieldDidEditEvent
@@ -55,15 +55,15 @@ final class LoginViewModel {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository.login(email: self.email, password: self.password, completion: { result in
-          result.success { loginInfo in
+        self.userRepository.login(email: self.email, password: self.password)
+          .subscribe { loginInfo in
             guard let loginInfo = loginInfo else { return }
             self.userRepository.saveLoginInfo(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
-          }.catch { error in
+          } onError: { error in
             print("User Log: error \(error)")
           }
-        })
+          .disposed(by: disposeBag)
       })
       .disposed(by: disposeBag)
     

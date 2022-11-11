@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 import SnapKit
 import Then
 
@@ -13,6 +15,7 @@ final class HomeMoreCell: UICollectionViewCell {
   
   
 //  let moreImage: UIImage = .btnBack?.withRenderingMode(.alwaysTemplate) ?? UIImage()
+  let disposeBag = DisposeBag()
   
   private lazy var moreButton = UIButton().then {
     $0.setTitle("더 보기", for: .normal)
@@ -43,6 +46,10 @@ final class HomeMoreCell: UICollectionViewCell {
     self.moreButton.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
+  }
+  
+  func onMoreClick() -> Observable<Void> {
+    return moreButton.rx.tap.asObservable()
   }
 }
 

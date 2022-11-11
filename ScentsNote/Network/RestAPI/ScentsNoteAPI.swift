@@ -151,9 +151,9 @@ extension ScentsNoteAPI: TargetType {
     }
   }
   
-  public var validationType: ValidationType {
-    return .successCodes
-  }
+//  public var validationType: ValidationType {
+//    return .successCodes
+//  }
   
 }
 

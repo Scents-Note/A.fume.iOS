@@ -39,7 +39,7 @@ final class HomeHeaderView: UICollectionReusableView {
     
     self.addSubview(self.underLineView)
     self.underLineView.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(32)
+      $0.top.equalToSuperview()
       $0.left.equalToSuperview().offset(20)
       $0.width.equalTo(18)
       $0.height.equalTo(1)
@@ -54,8 +54,9 @@ final class HomeHeaderView: UICollectionReusableView {
     self.addSubview(self.contentLabel)
     self.contentLabel.snp.makeConstraints {
       $0.top.equalTo(self.titleLabel.snp.bottom).offset(10)
-//      $0.bottom.equalToSuperview().offset(-23)
       $0.left.equalToSuperview().offset(20)
+      $0.right.equalToSuperview().offset(-20)
+      $0.bottom.equalToSuperview()
     }
   }
   

@@ -16,6 +16,7 @@ target 'ScentsNote' do
   pod 'Alamofire'
   pod 'SnapKit'
   pod 'Then'
+  pod 'Kingfisher'
 
   target 'ScentsNoteTests' do
     inherit! :search_paths

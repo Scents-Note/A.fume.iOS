@@ -84,40 +84,42 @@ final class SurveyViewModel {
       })
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchPerfumesInSurvey { result in
-      result.success { [weak self] perfumeInfo in
+    self.perfumeRepository.fetchPerfumesInSurvey()
+      .subscribe { [weak self] perfumeInfo in
         guard let perfumeInfo = perfumeInfo else { return }
         self?.perfumes = perfumeInfo.rows
         output.loadData.accept(true)
-      }.catch { error in
-        print("User Log: \(error)")
+      } onError: { error in
+        print("User Log: error - \(error)")
       }
-    }
+      .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchKeywords { result in
-      result.success { [weak self] keywordInfo in
+    self.perfumeRepository.fetchKeywords()
+      .subscribe { [weak self] keywordInfo in
         guard let keywordInfo = keywordInfo else { return }
         self?.keywords = keywordInfo.rows.compactMap({
           return SurveyKeyword(keywordIdx: $0.keywordIdx, name: $0.name, isLiked: false)
         })
         output.loadData.accept(true)
-      }.catch { error in
-        print("User Log: \(error)")
+      } onError: { error in
+        print("User Log: error - \(error)")
       }
-    }
+      .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchSeries { result in
-      result.success { [weak self] seriesInfo in
+    self.perfumeRepository.fetchSeries()
+      .subscribe { [weak self] seriesInfo in
         guard let seriesInfo = seriesInfo else { return }
         self?.series = seriesInfo.rows.compactMap({
           return SurveySeries(seriesIdx: $0.seriesIdx, name: $0.name, imageUrl: $0.imageUrl, isLiked: false)
         })
         output.loadData.accept(true)
-      }.catch { error in
-        print("User Log: \(error)")
+      } onError: { error in
+        print("User Log: error - \(error)")
       }
-    }
-        
+      .disposed(by: disposeBag)
+    
+    
+    
     return output
   }
   
@@ -136,14 +138,15 @@ final class SurveyViewModel {
       .filter { $0.isLiked == true }
       .map { $0.seriesIdx }
     
-    self.userRepository.registerSurvey(perfumeList: perfumeListLiked, keywordList: keywordListLiked, seriesList: seriesListLiked) { result in
-      result.success { _ in
-        self.coordinator?.finishFlow?()
-      }.catch { error in
-        print("User Log: \(error)")
+    self.userRepository.registerSurvey(perfumeList: perfumeListLiked, keywordList: keywordListLiked, seriesList: seriesListLiked)
+      .subscribe { [weak self] _ in
+        self?.coordinator?.finishFlow?()
+      } onError: { error in
+        print("User Log: error - \(error)")
       }
-    }
+      .disposed(by: disposeBag)
   }
+  
   
   func exit() {
     self.coordinator?.finishFlow?()

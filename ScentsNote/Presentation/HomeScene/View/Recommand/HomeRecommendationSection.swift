@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import SnapKit
 import Then
 
 final class HomeRecommendationSection: UICollectionViewCell {
@@ -51,7 +52,7 @@ final class HomeRecommendationSection: UICollectionViewCell {
     self.collectionView.translatesAutoresizingMaskIntoConstraints = false
     self.collectionView.snp.makeConstraints {
       $0.top.equalToSuperview()
-//      $0.left.equalToSuperview().offset(120)
+      $0.left.equalToSuperview().offset(120)
       $0.right.equalToSuperview()
       $0.width.equalTo(HomeRecommendationCell.width)
     }
@@ -60,8 +61,8 @@ final class HomeRecommendationSection: UICollectionViewCell {
     self.contentView.addSubview(self.pageControl)
     self.pageControl.snp.makeConstraints {
       $0.top.equalTo(self.collectionView.snp.bottom).offset(4)
-      $0.bottom.equalToSuperview()
       $0.left.equalTo(self.collectionView.snp.left)
+      $0.right.bottom.equalToSuperview()
     }
   }
   
