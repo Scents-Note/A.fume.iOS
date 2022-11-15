@@ -29,7 +29,7 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
     self.onboardingViewController.viewModel = OnboardingViewModel(
       coordinator: self
     )
-    self.navigationController.viewControllers = [self.onboardingViewController]
+    self.navigationController.pushViewController(self.onboardingViewController, animated: true)
   }
   
   func runLoginFlow() {

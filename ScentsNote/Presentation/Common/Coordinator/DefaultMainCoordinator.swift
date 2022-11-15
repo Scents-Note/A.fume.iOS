@@ -10,6 +10,7 @@ import UIKit
 final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   
   var finishFlow: ((CoordinatorType) -> Void)?
+  var onOnboardingFlow: (() -> Void)?
   
   var navigationController: UINavigationController
   var tabBarController: UITabBarController
@@ -67,6 +68,7 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
       searchCoordinator.start()
     case .mypage:
       let myPageCoordinator = DefaultMyPageCoordinator(tabNavigationController)
+      myPageCoordinator.onOnboardingFlow = onOnboardingFlow
       self.addDependency(myPageCoordinator)
       myPageCoordinator.start()
     }

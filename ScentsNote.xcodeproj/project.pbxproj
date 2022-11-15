@@ -11,7 +11,7 @@
 		2851444100D02B64E1A0A233 /* Pods_ScentsNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */; };
 		4A083BE5291BBA9C0026A12C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A083BE4291BBA9C0026A12C /* NetworkError.swift */; };
 		4A083BE7291C93E60026A12C /* HomeViewController+CollectionViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A083BE6291C93E60026A12C /* HomeViewController+CollectionViewSection.swift */; };
-		4A083BE9291CD1700026A12C /* Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A083BE8291CD1700026A12C /* Rx.swift */; };
+		4A083BE9291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A083BE8291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift */; };
 		4A0E9B0129190C9C0050E474 /* HomeMoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */; };
 		4A155DFE291B76F10027D26E /* HomeDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFD291B76F10027D26E /* HomeDataSection.swift */; };
 		4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */; };
@@ -164,7 +164,7 @@
 		21E07E4F3006358C71EFB2FA /* Pods-ScentsNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote/Pods-ScentsNote.release.xcconfig"; sourceTree = "<group>"; };
 		4A083BE4291BBA9C0026A12C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4A083BE6291C93E60026A12C /* HomeViewController+CollectionViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+CollectionViewSection.swift"; sourceTree = "<group>"; };
-		4A083BE8291CD1700026A12C /* Rx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
+		4A083BE8291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionViewSectionedNonAnimatedDataSource.swift; sourceTree = "<group>"; };
 		4A0E9B0029190C9C0050E474 /* HomeMoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMoreCell.swift; sourceTree = "<group>"; };
 		4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A155DFD291B76F10027D26E /* HomeDataSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSection.swift; sourceTree = "<group>"; };
@@ -836,6 +836,7 @@
 				4AAFE79A28FAA94200EA6FB4 /* Constant */,
 				4AAFE79028FAA79B00EA6FB4 /* Extension */,
 				4AF9FBE6291DE82300667BD7 /* Log.swift */,
+				4A083BE8291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -852,7 +853,6 @@
 				4AE4A4942905262300491246 /* Single+Extension.swift */,
 				4A8574582910CC4600F86C3A /* UIImageView+Load.swift */,
 				4AC7F8DA2918B01300A8D032 /* UICollectionView+Extension.swift */,
-				4A083BE8291CD1700026A12C /* Rx.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1352,7 +1352,7 @@
 				4AA280F92917B7AA00D30A99 /* HomeViewController.swift in Sources */,
 				4A85746B291363D200F86C3A /* SurveyKeywordView.swift in Sources */,
 				4A9D914A28FFCC47001551A8 /* InputState.swift in Sources */,
-				4A083BE9291CD1700026A12C /* Rx.swift in Sources */,
+				4A083BE9291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift in Sources */,
 				4AA281162917BB2400D30A99 /* MyPageVIewModel.swift in Sources */,
 				4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */,
 				4A8574572910C50200F86C3A /* SurveyPerfumeCollectionViewCell.swift in Sources */,

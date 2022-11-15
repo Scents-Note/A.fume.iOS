@@ -47,7 +47,7 @@ final class HomeViewController: UIViewController {
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout).then {
     $0.isScrollEnabled = true
     $0.showsHorizontalScrollIndicator = false
-    $0.showsVerticalScrollIndicator = true
+    $0.showsVerticalScrollIndicator = false
     $0.contentInset = .zero
     $0.backgroundColor = .clear
     $0.clipsToBounds = true
@@ -99,7 +99,6 @@ extension HomeViewController {
     
     // TODO: 메모리 Leak 나는지 확인해보기
     self.dataSource = RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>(
-      animationConfiguration: AnimationConfiguration(reloadAnimation: .bottom),
       configureCell: { dataSource, tableView, indexPath, item in
         switch item {
         case .title:

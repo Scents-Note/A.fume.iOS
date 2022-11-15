@@ -23,12 +23,12 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   }
   
   func runOnboardingFlow() {
-    let onboardingCoordinator = DefaultOnboardingCoordinator(self.navigationController)
+    let onboardingCoordinator = DefaultOnboardingCoordinator(navigationController)
     onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
       self.removeDependency(onboardingCoordinator)
       self.navigationController.dismiss(animated: true)
-
-      self.initialNavigationController()
+      
+//      self.initialNavigationController()
       switch type {
       case .main:
         self.runMainFlow()
@@ -44,6 +44,9 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   
   func runMainFlow() {
     let mainCoordinator = DefaultMainCoordinator(self.navigationController)
+    mainCoordinator.onOnboardingFlow = {
+      self.runOnboardingFlow()
+    }
     self.addDependency(mainCoordinator)
     mainCoordinator.start()
   }
