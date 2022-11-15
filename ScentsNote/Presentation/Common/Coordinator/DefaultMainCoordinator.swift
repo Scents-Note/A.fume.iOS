@@ -48,7 +48,7 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   }
   
   private func createTabNavigationController(of page: TabBarPage) -> UINavigationController {
-    let tabNavigationController = UINavigationController()
+    let tabNavigationController = BaseNavigationController()
     
     tabNavigationController.setNavigationBarHidden(false, animated: false)
     tabNavigationController.tabBarItem = self.configureTabBarItem(of: page)

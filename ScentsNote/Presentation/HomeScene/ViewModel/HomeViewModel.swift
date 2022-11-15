@@ -19,6 +19,7 @@ final class HomeViewModel {
   }
   
   struct CellInput {
+    let perfumeCellDidClick: PublishRelay<Perfume>
     let popularPerfumeHeartButtonDidClick: PublishRelay<Perfume>
     let newPerfumeHeartButtonDidClick: PublishRelay<Perfume>
     let recentPerfumeHeartButtonDidClick: PublishRelay<Perfume>
@@ -41,12 +42,70 @@ final class HomeViewModel {
     
     
     let output = Output()
-    
+    self.bindOutput(output: output, perfumesRecommended: perfumesRecommended, perfumesPopular: perfumesPopular, perfumesRecent: perfumesRecent, perfumesNew: perfumesNew, disposeBag: disposeBag)
+
+    // TODO: willAppear로 빼기
     self.fetchDatas(perfumesRecommended: perfumesRecommended, perfumesPopular: perfumesPopular, perfumesRecent: perfumesRecent, perfumesNew: perfumesNew, disposeBag: disposeBag)
     
+    // MARK: - Cell Input
+    cellInput.perfumeCellDidClick
+      .subscribe { [weak self] perfume in
+        self?.coordinator?.runPerfumeFlow(perfumeIdx: perfume.perfumeIdx)
+      }
+      .disposed(by: disposeBag)
+    
+ 
+    cellInput.popularPerfumeHeartButtonDidClick.withLatestFrom(perfumesPopular) { updated, originals in
+      originals.map {
+        guard $0.perfumeIdx != updated.perfumeIdx else {
+          var item = updated
+          item.isLiked.toggle()
+          return item
+        }
+        return $0
+      }
+    }
+    .bind(to: perfumesPopular)
+    .disposed(by: disposeBag)
+    
+    cellInput.recentPerfumeHeartButtonDidClick.withLatestFrom(perfumesRecent) { updated, originals in
+      originals.map {
+        guard $0.perfumeIdx != updated.perfumeIdx else {
+          var item = updated
+          item.isLiked.toggle()
+          return item
+        }
+        return $0
+      }
+    }
+    .bind(to: perfumesRecent)
+    .disposed(by: disposeBag)
+    
+    cellInput.newPerfumeHeartButtonDidClick.withLatestFrom(perfumesNew) { updated, originals in
+      originals.map {
+        guard $0.perfumeIdx != updated.perfumeIdx else {
+          var item = updated
+          item.isLiked.toggle()
+          return item
+        }
+        return $0
+      }
+    }
+    .bind(to: perfumesNew)
+    .disposed(by: disposeBag)
     
     
-    // MARK: - Input
+    
+    return output
+  }
+  
+  private func bindOutput(output: Output,
+                          perfumesRecommended: PublishRelay<[Perfume]>,
+                          perfumesPopular: PublishRelay<[Perfume]>,
+                          perfumesRecent: PublishRelay<[Perfume]>,
+                          perfumesNew: PublishRelay<[Perfume]>,
+                          disposeBag: DisposeBag) {
+    
     perfumesRecommended.withLatestFrom(output.homeDatas) { perfumes, homeDatas in
       homeDatas.map {
         guard $0.model != .recommendation else {
@@ -107,49 +166,7 @@ final class HomeViewModel {
     .disposed(by: disposeBag)
     
     
-    // MARK: - Cell Input
-    cellInput.popularPerfumeHeartButtonDidClick.withLatestFrom(perfumesPopular) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumesPopular)
-    .disposed(by: disposeBag)
     
-    cellInput.recentPerfumeHeartButtonDidClick.withLatestFrom(perfumesRecent) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumesRecent)
-    .disposed(by: disposeBag)
-    
-    cellInput.newPerfumeHeartButtonDidClick.withLatestFrom(perfumesNew) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumesNew)
-    .disposed(by: disposeBag)
-    
-    
-    
-    return output
   }
   
   // MARK: - Network Fetch
@@ -203,9 +220,9 @@ final class HomeViewModel {
     
   }
   
-  func dummy() -> [Perfume] {
-    return [Perfume(perfumeIdx: -1, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false), Perfume(perfumeIdx: -2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -3, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 4, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -5, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -6, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -7, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false)]
-    
-  }
+  //  func dummy() -> [Perfume] {
+  //    return [Perfume(perfumeIdx: -1, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false), Perfume(perfumeIdx: -2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -3, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 4, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -5, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -6, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -7, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false)]
+  //
+  //  }
   
 }

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 import Kingfisher
@@ -97,6 +98,10 @@ final class HomePopularityCell: UICollectionViewCell {
   }
   
   func onHeartClick() -> Observable<Void> {
-    return heartButton.rx.tap.asObservable()
+    return self.heartButton.rx.tap.asObservable()
+  }
+  
+  func onPerfumeClick() -> Observable<UITapGestureRecognizer> {
+    return self.contentView.rx.tapGesture().when(.recognized)
   }
 }

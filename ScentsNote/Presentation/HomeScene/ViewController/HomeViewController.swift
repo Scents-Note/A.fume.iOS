@@ -84,6 +84,8 @@ final class HomeViewController: UIViewController {
 extension HomeViewController {
   
   private func configureUI() {
+    self.setBackButton()
+    
     self.view.backgroundColor = .white
     self.view.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
@@ -93,9 +95,16 @@ extension HomeViewController {
   }
   
   private func configureCollectionView() -> HomeViewModel.CellInput {
-    let perfumePopular = PublishRelay<Perfume>()
-    let perfumeNew = PublishRelay<Perfume>()
-    let perfumeRecent = PublishRelay<Perfume>()
+    
+    // MARK: - Cell Input
+    
+    /// Cell 클릭
+    let perfumeClicked = PublishRelay<Perfume>()
+    
+    /// Cell Heart 클릭
+    let perfumePopularClickedHeart = PublishRelay<Perfume>()
+    let perfumeNewClickedHeart = PublishRelay<Perfume>()
+    let perfumeRecentClickedHeart = PublishRelay<Perfume>()
     
     // TODO: 메모리 Leak 나는지 확인해보기
     self.dataSource = RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>(
@@ -107,28 +116,41 @@ extension HomeViewController {
         case .recommendation(let perfumes):
           let cell = self.collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
           cell.updateUI(perfumes: perfumes)
+          
           return cell
         case .popularity(let perfume):
           let cell = self.collectionView.dequeueReusableCell(HomePopularityCell.self, for: indexPath)
           cell.updateUI(perfume: perfume)
+          cell.onPerfumeClick().subscribe(onNext: { _ in
+            perfumeClicked.accept(perfume)
+          })
+          .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumePopular.accept(perfume)
+            perfumePopularClickedHeart.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
         case .recent(let perfume):
           let cell = self.collectionView.dequeueReusableCell(HomeRecentCell.self, for: indexPath)
           cell.updateUI(perfume: perfume)
+          cell.onPerfumeClick().subscribe(onNext: { _ in
+            perfumeClicked.accept(perfume)
+          })
+          .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeRecent.accept(perfume)
+            perfumeRecentClickedHeart.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
         case .new(let perfume):
           let cell = self.collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
           cell.updateUI(perfume: perfume)
+          cell.onPerfumeClick().subscribe(onNext: { _ in
+            perfumeClicked.accept(perfume)
+          })
+          .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeNew.accept(perfume)
+            perfumeNewClickedHeart.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -165,9 +187,10 @@ extension HomeViewController {
     }
     
     return HomeViewModel.CellInput(
-      popularPerfumeHeartButtonDidClick: perfumePopular,
-      newPerfumeHeartButtonDidClick: perfumeNew,
-      recentPerfumeHeartButtonDidClick: perfumeRecent
+      perfumeCellDidClick: perfumeClicked,
+      popularPerfumeHeartButtonDidClick: perfumePopularClickedHeart,
+      newPerfumeHeartButtonDidClick: perfumeNewClickedHeart,
+      recentPerfumeHeartButtonDidClick: perfumeRecentClickedHeart
     )
   }
 }

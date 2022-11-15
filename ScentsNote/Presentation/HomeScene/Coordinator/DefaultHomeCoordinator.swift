@@ -23,4 +23,14 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     )
     self.navigationController.pushViewController(self.homeViewController, animated: true)
   }
+  
+  func runPerfumeFlow(perfumeIdx: Int) {
+    let perfumeCoordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
+//    perfumeCoordinator.finishFlow = { [unowned self, unowned perfumeCoordinator] in
+//      self.removeDependency(perfumeCoordinator)
+//    }
+
+    perfumeCoordinator.start(perfumeIdx: perfumeIdx)
+    self.addDependency(perfumeCoordinator)
+  }
 }

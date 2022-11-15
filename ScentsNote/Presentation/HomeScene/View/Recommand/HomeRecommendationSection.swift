@@ -69,7 +69,6 @@ final class HomeRecommendationSection: UICollectionViewCell {
   func updateUI(perfumes: [Perfume]?) {
     guard let perfumes = perfumes else { return }
     self.perfumes = perfumes
-    print("User Log: hihi")
     self.pageControl.numberOfPages = perfumes.count
 
     self.setNeedsLayout()
