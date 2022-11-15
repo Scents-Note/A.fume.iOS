@@ -87,6 +87,8 @@ final class HomeRecommendationCell: UICollectionViewCell {
     }
   }
   
+  
+  
   func updateUI(perfume: Perfume?) {
     guard let perfume = perfume else { return }
     self.imageView.load(url: perfume.imageUrl)
@@ -95,6 +97,8 @@ final class HomeRecommendationCell: UICollectionViewCell {
     self.keywords = perfume.keywordList ?? []
     self.perfumeRecommandKeyword.reloadData()
   }
+  
+  
 }
 
 extension HomeRecommendationCell: UICollectionViewDataSource {

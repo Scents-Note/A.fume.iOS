@@ -10,6 +10,7 @@ import UIKit
 final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   
   var finishFlow: ((CoordinatorType) -> Void)?
+  var onOnboardingFlow: (() -> Void)?
   
   var navigationController: UINavigationController
   var tabBarController: UITabBarController
@@ -47,7 +48,7 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   }
   
   private func createTabNavigationController(of page: TabBarPage) -> UINavigationController {
-    let tabNavigationController = UINavigationController()
+    let tabNavigationController = BaseNavigationController()
     
     tabNavigationController.setNavigationBarHidden(false, animated: false)
     tabNavigationController.tabBarItem = self.configureTabBarItem(of: page)
@@ -67,6 +68,7 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
       searchCoordinator.start()
     case .mypage:
       let myPageCoordinator = DefaultMyPageCoordinator(tabNavigationController)
+      myPageCoordinator.onOnboardingFlow = onOnboardingFlow
       self.addDependency(myPageCoordinator)
       myPageCoordinator.start()
     }

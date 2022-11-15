@@ -57,7 +57,7 @@ final class OnboardingViewController: UIViewController {
 extension OnboardingViewController {
   private func configureUI() {
     self.setBackButton()
-    
+    self.view.backgroundColor = .black
     self.view.addSubview(self.backgroundView)
     self.backgroundView.snp.makeConstraints {
       $0.edges.equalToSuperview()

@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxGesture
 import SnapKit
 import Then
 
@@ -93,8 +94,13 @@ final class HomeRecentCell: UICollectionViewCell {
     self.nameLabel.text = perfume.name
     self.heartButton.setImage(perfume.isLiked == true ? .favoriteActive : .favoriteInactive, for: .normal)
   }
+
+  func onPerfumeClick() -> Observable<UITapGestureRecognizer> {
+    return self.contentView.rx.tapGesture().when(.recognized)
+  }
   
   func onHeartClick() -> Observable<Void> {
     return heartButton.rx.tap.asObservable()
   }
+
 }

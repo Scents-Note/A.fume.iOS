@@ -11,6 +11,9 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   var navigationController: UINavigationController
   var myPageViewController: MyPageViewController
   
+  var onOnboardingFlow: (() -> Void)?
+
+
   required init(_ navigationController: UINavigationController) {
     self.navigationController = navigationController
     self.myPageViewController = MyPageViewController()
@@ -22,4 +25,6 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
     )
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
   }
+  
+
 }
