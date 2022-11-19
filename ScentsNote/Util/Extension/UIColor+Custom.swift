@@ -19,4 +19,9 @@ extension UIColor {
   static var lightGray: UIColor { return UIColor(white: 249 / 255, alpha: 1) }
   static var lightGray2: UIColor { return UIColor(white: 246 / 255, alpha: 1) }
   static var bgTabBar: UIColor { return UIColor(white: 240 / 255, alpha: 1) }
+  
+  static var SNLightBeige1: UIColor { return UIColor(red: 200 / 255, green: 187 / 255, blue: 182 / 255, alpha: 1) }
+  static var SNLightBeige2: UIColor { return UIColor(red: 215 / 255, green: 204 / 255, blue: 200 / 255, alpha: 1) }
+  static var SNDarkBeige1: UIColor { return UIColor(red: 161 / 255, green: 136 / 255, blue: 127 / 255, alpha: 1) }
+  static var SNDarkBeige2: UIColor { return UIColor(red: 117 / 255, green: 99 / 255, blue: 93 / 255, alpha: 1) }
 }

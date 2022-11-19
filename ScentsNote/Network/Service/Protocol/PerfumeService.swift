@@ -20,5 +20,5 @@ protocol PerfumeService {
   func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?>
   func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?>
   func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?>
-  
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?>
 }

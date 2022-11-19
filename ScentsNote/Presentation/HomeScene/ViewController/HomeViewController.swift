@@ -97,7 +97,6 @@ extension HomeViewController {
   private func configureCollectionView() -> HomeViewModel.CellInput {
     
     // MARK: - Cell Input
-    
     /// Cell 클릭
     let perfumeClicked = PublishRelay<Perfume>()
     
@@ -116,7 +115,6 @@ extension HomeViewController {
         case .recommendation(let perfumes):
           let cell = self.collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
           cell.updateUI(perfumes: perfumes)
-          
           return cell
         case .popularity(let perfume):
           let cell = self.collectionView.dequeueReusableCell(HomePopularityCell.self, for: indexPath)
@@ -165,7 +163,7 @@ extension HomeViewController {
         }
       })
     
-    self.dataSource.configureSupplementaryView = { (dataSource, collectionView, kind, indexPath) in
+    self.dataSource.configureSupplementaryView = { dataSource, collectionView, kind, indexPath in
       if kind == UICollectionView.elementKindSectionHeader {
         let section = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
         switch self.dataSource.sectionModels[indexPath.section].model {

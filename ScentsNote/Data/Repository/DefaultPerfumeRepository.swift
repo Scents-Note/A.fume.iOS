@@ -44,4 +44,8 @@ final class DefaultPerfumeRepository: PerfumeRepository {
     self.perfumeService.fetchNewPerfumes()
   }
   
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?> {
+    self.perfumeService.fetchPerfumeDetail(perfumeIdx: perfumeIdx)
+  }
+  
 }

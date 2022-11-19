@@ -8,6 +8,8 @@
 import UIKit
 import RxSwift
 import RxGesture
+import SnapKit
+import Then
 
 final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
   
@@ -32,7 +34,7 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
     self.configureUI()
     self.bindUI()
   }
-  
+   
   func configureUI(){
     self.contentView.addSubview(self.keywordLabel)
     self.keywordLabel.snp.makeConstraints {

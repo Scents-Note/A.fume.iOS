@@ -48,12 +48,10 @@ enum NetworkError: Error {
 
 extension ScentsNoteService {
   static func converToURLError(_ error: Error) -> URLError? {
-    Log("\(error)")
     switch error {
     case let MoyaError.underlying(afError as AFError, _):
       fallthrough
     case let afError as AFError:
-      Log("\(error)")
       return afError.underlyingError as? URLError
     case let MoyaError.underlying(urlError as URLError, _):
       fallthrough
@@ -69,7 +67,6 @@ extension ScentsNoteService {
   }
   
   static func isLostConnection(error: Error) -> Bool {
-    Log("\(error)")
     switch error {
     case let AFError.sessionTaskFailed(error: posixError as POSIXError)
       where posixError.code == .ECONNABORTED: // eConnAboarted: Software caused connection abort.

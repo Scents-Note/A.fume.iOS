@@ -51,6 +51,7 @@ final class HomeRecentCell: UICollectionViewCell {
   
   override func prepareForReuse() {
     super.prepareForReuse()
+    disposeBag = DisposeBag()
     self.imageView.image = nil
   }
   

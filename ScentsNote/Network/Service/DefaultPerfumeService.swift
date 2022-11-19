@@ -37,4 +37,8 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchNewPerfumes)
   }
   
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?> {
+    requestObject(.fetchPerfumeDetail(perfumeIdx: perfumeIdx))
+  }
+  
 }

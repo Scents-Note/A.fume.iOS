@@ -145,7 +145,6 @@ final class HomeViewModel {
         return updatedDatas
       } else {
         let updatedDatas = homeDatas.filter { $0.model != .recent}
-        Log(updatedDatas)
         return updatedDatas
       }
     }

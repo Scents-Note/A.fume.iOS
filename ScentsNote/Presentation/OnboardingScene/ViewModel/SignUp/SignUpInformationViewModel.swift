@@ -50,7 +50,6 @@ final class SignUpInformationViewModel {
           .subscribe{ _ in
             output.emailValidationState.accept(.success)
           } onError: { error in
-            Log(error)
             output.emailValidationState.accept(.duplicate)
           }
           .disposed(by: disposeBag)

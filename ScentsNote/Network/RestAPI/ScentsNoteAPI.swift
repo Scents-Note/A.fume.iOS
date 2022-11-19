@@ -23,10 +23,12 @@ enum ScentsNoteAPI {
   case fetchPerfumesPopular
   case fetchRecentPerfumes
   case fetchNewPerfumes
+  case fetchPerfumeDetail(perfumeIdx: Int)
 
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
+  
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -35,7 +37,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchRecentPerfumes, .fetchNewPerfumes:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchRecentPerfumes, .fetchNewPerfumes, .fetchPerfumeDetail:
       base += "/perfume"
     default:
       break
@@ -76,6 +78,8 @@ extension ScentsNoteAPI: TargetType {
       return "/recent"
     case .fetchNewPerfumes:
       return "/new"
+    case .fetchPerfumeDetail(let perfumeIdx):
+      return "\(perfumeIdx)"
       
         // MARK: - Survey
     case .registerSurvey:
@@ -150,11 +154,4 @@ extension ScentsNoteAPI: TargetType {
       return JSONEncoding.default
     }
   }
-  
-//  public var validationType: ValidationType {
-//    return .successCodes
-//  }
-  
 }
-
-//extension ScentsNoteApi

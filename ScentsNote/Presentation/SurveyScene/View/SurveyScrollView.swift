@@ -38,21 +38,6 @@ final class SurveyScrollView: UIScrollView {
 
     self.contentSize = CGSize(width: screenSize.width * 3, height: 0)
 
-//    self.addSubview(self.contentView)
-//    self.contentView.snp.makeConstraints {
-//      $0.edges.equalTo(self.contentLayoutGuide)
-//      $0.width.equalTo(self.frameLayoutGuide).multipliedBy(0.5)
-//    }
-//    print("user log: \(self.inputView)")
-//    let a = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: 592))
-//    a.backgroundColor = .blue
-//    let b = UIView(frame: CGRect(x: screenSize.width, y: 0, width: screenSize.width, height: 592))
-//    b.backgroundColor = .gray
-//    addSubview(a)
-//    addSubview(b)
-    
-//    self.contentSize = CGSize(width: screenSize.width * twice, height: screenSize.width)
-
     self.surveyPerfumeView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: 520)
     self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 520)
     self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 520)
