@@ -18,7 +18,7 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
       return self
     }
     
-    var seasonal: Seasonal?
+    var seasonals: [Seasonal] = []
     
     func makeContentView() -> UIView & UIContentView {
       return PerfumeDetailSeasonalContentView(self)
@@ -26,31 +26,14 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
   }
   
   let disposeBag = DisposeBag()
-  var seasonals = BehaviorRelay<[SeasonalInfo]>(value: [])
+  var seasonals = BehaviorRelay<[Seasonal]>(value: [])
   
   private lazy var seasonalPieChartView = SeasonalPieChartView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-  
-  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.createCompositionalLayout()).then {
+  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.seasonalCompositionalLayout()).then {
     $0.isScrollEnabled = false
     $0.isUserInteractionEnabled = false
-    $0.register(PerfumeDetailKeywordCell.self)
+    $0.register(PerfumeDetailSeasonalCell.self)
   }
-  
-  func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(86), heightDimension: .absolute(42))
-    let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
-    
-    let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
-    let layoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutGroupSize, subitems: [layoutItem])
-    
-    //    layoutGroup.interItemSpacing = .fixed(16)
-    let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-    //    layoutSection.contentInsets = .init(top: 24, leading: 20, bottom: 24, trailing: 20)
-    //    layoutSection.interGroupSpacing = 16
-    
-    return UICollectionViewCompositionalLayout(section: layoutSection)
-  }
-  
   
   var configuration: UIContentConfiguration {
     didSet {
@@ -58,33 +41,16 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
     }
   }
   
-    override var intrinsicContentSize: CGSize {
-      CGSize(width: 0, height: 200)
-    }
-  //
-  //  override func layoutSubviews() {
-  //    super.layoutSubviews()
-  //    self.invalidateIntrinsicContentSize()
-  //  }
-  //  override func (_ view: UIView) {
-  //    super.addSubview(view)
-  ////    collectionView.frame = view.bounds
-  //    let height = collectionView.collectionViewLayout.collectionViewContentSize.height
-  //    Log(height)
-  //
-  //    self.invalidateIntrinsicContentSize()
-  //  }
-  
-  
+  override var intrinsicContentSize: CGSize {
+    CGSize(width: 0, height: 200)
+  }
   
   init(_ configuration: UIContentConfiguration) {
     self.configuration = configuration
     super.init(frame: .zero)
     
-//    presentCircleView()
     self.configureUI()
     self.bindUI()
-    
     //    self.collectionView.sizeToFit()
     //    self.collectionView.systemLayoutSizeFitting(CGSize(width: 0, height: 180))
     //    self.collectionView.
@@ -98,12 +64,10 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
     
-    let seasonals = configuration.seasonal?.toList() ?? []
+    let seasonals = configuration.seasonals
+    let degrees = seasonals.map { CGFloat($0.percent) }.map {$0 * 36 / 10}
     self.seasonals.accept(seasonals)
-//    Log(configuration.seasonal?.toList())
-    //    self.keywords.accept(configuration.keywords)
-    let percents = seasonals.map { $0.percent }
-    self.seasonalPieChartView.drawPieChart(degrees: percents.map { $0 * 36 / 10})
+    self.seasonalPieChartView.drawPieChart(degrees: degrees)
   }
   
   func configureUI() {
@@ -113,22 +77,23 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
       $0.height.width.equalTo(200)
     }
     
-    //    self.addSubview(self.collectionView)
-    //    self.collectionView.snp.makeConstraints {
-    //      $0.edges.equalToSuperview()
-    //    }
+    self.addSubview(self.collectionView)
+    self.collectionView.snp.makeConstraints {
+      $0.right.bottom.equalToSuperview()
+      $0.width.equalTo(100)
+      $0.height.equalTo(100)
+    }
   }
   
   func bindUI() {
-    //    self.keywords
-    //      .bind(to: self.collectionView.rx.items(
-    //        cellIdentifier: "PerfumeDetailKeywordCell", cellType: PerfumeDetailKeywordCell.self
-    //      )) { _, keyword, cell in
-    //        cell.updateUI(keyword: keyword)
-    //      }
-    //      .disposed(by: self.disposeBag)
+    self.seasonals
+      .bind(to: self.collectionView.rx.items(
+        cellIdentifier: "PerfumeDetailSeasonalCell", cellType: PerfumeDetailSeasonalCell.self
+      )) { _, seasonal, cell in
+        cell.updateUI(seasonal: seasonal)
+      }
+      .disposed(by: self.disposeBag)
   }
-  
 }
 
 extension UICollectionViewListCell {

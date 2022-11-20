@@ -19,7 +19,7 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
         return self
     }
     
-    var ingredient: Ingredient?
+    var ingredients: [Ingredient] = []
     
     func makeContentView() -> UIView & UIContentView {
       return PerfumeDetailIngredientContentView(self)
@@ -27,7 +27,7 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
   }
   
   let disposeBag = DisposeBag()
-  var ingredients = BehaviorRelay<[(String, String)]>(value: [])
+  var ingredients = BehaviorRelay<[Ingredient]>(value: [])
   
   
   
@@ -65,8 +65,7 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
   
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
-    let modifiedIngredient = configuration.ingredient?.toList() ?? []
-    self.ingredients.accept(modifiedIngredient)
+    self.ingredients.accept(configuration.ingredients)
   }
   
   func bindUI() {
@@ -74,7 +73,7 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
       .bind(to: self.collectionView.rx.items(
         cellIdentifier: "PerfumeDetailCommonCell", cellType: PerfumeDetailCommonCell.self
       )) { _, ingredient, cell in
-        cell.updateUI(type: ingredient.0, content: ingredient.1)
+        cell.updateUI(type: ingredient.part, content: ingredient.ingredient)
       }
       .disposed(by: self.disposeBag)
   }

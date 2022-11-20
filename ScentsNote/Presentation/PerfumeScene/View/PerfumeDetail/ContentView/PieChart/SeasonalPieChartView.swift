@@ -8,22 +8,11 @@
 import UIKit
 import SnapKit
 
-struct SeasonalInfo {
-  var season: String
-  var percent: CGFloat
-}
-
 class SeasonalPieChartView: UIView {
   
   func drawPieChart(degrees: [CGFloat]) {
-    
     self.drawColor(degrees: degrees)
     self.drawLabel(degrees: degrees)
-    
-    //x degree = x * π / 180 radian
-    
-    
-    
   }
   
   

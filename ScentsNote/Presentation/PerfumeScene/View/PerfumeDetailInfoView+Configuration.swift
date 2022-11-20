@@ -32,9 +32,9 @@ extension PerfumeDetailInfoView {
     return contentConfiguration
   }
   
-  func ingredientConfiguration(for cell: UICollectionViewListCell, with ingredient: Ingredient) -> PerfumeDetailIngredientContentView.Configuration {
+  func ingredientConfiguration(for cell: UICollectionViewListCell, with ingredients: [Ingredient]) -> PerfumeDetailIngredientContentView.Configuration {
     var contentConfiguration = cell.ingredientConfiguration()
-    contentConfiguration.ingredient = ingredient
+    contentConfiguration.ingredients = ingredients
     return contentConfiguration
   }
   
@@ -50,15 +50,15 @@ extension PerfumeDetailInfoView {
     return contentConfiguration
   }
   
-  func seasonalConfiguration(for cell: UICollectionViewListCell, with seasonal: Seasonal) -> PerfumeDetailSeasonalContentView.Configuration {
+  func seasonalConfiguration(for cell: UICollectionViewListCell, with seasonals: [Seasonal]) -> PerfumeDetailSeasonalContentView.Configuration {
     var contentConfiguration = cell.seasonalConfiguration()
-    contentConfiguration.seasonal = seasonal
+    contentConfiguration.seasonals = seasonals
     return contentConfiguration
   }
   
-  func longevityConfiguration(for cell: UICollectionViewListCell, with keywords: [String]) -> PerfumeDetailKeywordsContentView.Configuration {
-    var contentConfiguration = cell.keywordsConfiguration()
-    contentConfiguration.keywords = keywords
+  func longevityConfiguration(for cell: UICollectionViewListCell, with longevities: [Longevity]) -> PerfumeDetailLongevityContentView.Configuration {
+    var contentConfiguration = cell.longevityConfiguration()
+    contentConfiguration.longevities = longevities
     return contentConfiguration
   }
   

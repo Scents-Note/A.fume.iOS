@@ -20,11 +20,9 @@ final class PerfumeDetailScrollView: UIScrollView {
     self.configureUI()
   }
   
-  
   required init?(coder: NSCoder) {
     fatalError()
   }
-  
   
   private func configureUI() {
     let screenWidth = UIScreen.main.bounds.width
