@@ -62,21 +62,21 @@ extension PerfumeDetailInfoView {
     return contentConfiguration
   }
   
-  func sillageConfiguration(for cell: UICollectionViewListCell, with keywords: [String]) -> PerfumeDetailKeywordsContentView.Configuration {
-    var contentConfiguration = cell.keywordsConfiguration()
-    contentConfiguration.keywords = keywords
+  func sillageConfiguration(for cell: UICollectionViewListCell, with sillages: [Sillage]) -> PerfumeDetailSillageContentView.Configuration {
+    var contentConfiguration = cell.sillageConfiguration()
+    contentConfiguration.sillages = sillages
     return contentConfiguration
   }
   
-  func genderConfiguration(for cell: UICollectionViewListCell, with keywords: [String]) -> PerfumeDetailKeywordsContentView.Configuration {
-    var contentConfiguration = cell.keywordsConfiguration()
-    contentConfiguration.keywords = keywords
-    return contentConfiguration
-  }
+//  func genderConfiguration(for cell: UICollectionViewListCell, with keywords: [String]) -> PerfumedetailGenderContentView.Configuration {
+//    var contentConfiguration = cell.keywordsConfiguration()
+//    contentConfiguration.keywords = keywords
+//    return contentConfiguration
+//  }
   
-  func similarityConfiguration(for cell: UICollectionViewListCell, with keywords: [String]) -> PerfumeDetailKeywordsContentView.Configuration {
-    var contentConfiguration = cell.keywordsConfiguration()
-    contentConfiguration.keywords = keywords
+  func similarityConfiguration(for cell: UICollectionViewListCell, with perfumes: [Perfume]) -> PerfumeDetailSimilarityContentView.Configuration {
+    var contentConfiguration = cell.similarityConfiguration()
+    contentConfiguration.perfumes = perfumes
     return contentConfiguration
   }
   

@@ -52,25 +52,22 @@ final class PerfumeDetailLongevityCell: UICollectionViewCell {
     self.barView.snp.makeConstraints {
       $0.bottom.equalTo(self.longevityLabel.snp.top)
       $0.centerX.equalToSuperview()
-//      $0.left.right.equalToSuperview()
       $0.width.equalTo(25)
       $0.height.equalTo(50)
     }
     
     self.contentView.addSubview(self.percentLabel)
     self.percentLabel.snp.makeConstraints {
-//      $0.top.equalToSuperview()
       $0.bottom.equalTo(self.barView.snp.top)
       $0.left.right.equalToSuperview()
-//      $0.width.equalTo(50)
     }
   }
     
   func updateUI(longevity: Longevity) {
     self.percentLabel.text = String(longevity.percent) + "%"
-//    self.barView.snp.updateConstraints {
-//      $0.height.equalTo(longevity.percent * 10)
-//    }
+    self.barView.snp.updateConstraints {
+      $0.height.equalTo(longevity.percent * 2)
+    }
     self.barView.backgroundColor = longevity.isAccent ? .SNDarkBeige1 : .SNLightBeige1
     self.longevityLabel.text = longevity.longevity
     self.durationLabel.text = longevity.duration

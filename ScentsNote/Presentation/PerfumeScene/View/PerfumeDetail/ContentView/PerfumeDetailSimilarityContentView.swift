@@ -1,8 +1,8 @@
 //
-//  PerfumeDetailPriceContentView.swift
+//  PerfumeDetailSimilarityContentView.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/11/18.
+//  Created by 황득연 on 2022/11/20.
 //
 
 import UIKit
@@ -12,27 +12,27 @@ import RxRelay
 import SnapKit
 import Then
 
-class PerfumeDetailPriceContentView: UIView, UIContentView {
+class PerfumeDetailSimilarityContentView: UIView, UIContentView {
   
   struct Configuration: UIContentConfiguration {
     func updated(for state: UIConfigurationState) -> Self {
         return self
     }
     
-    var prices: [String]?
+    var perfumes: [Perfume] = []
     
     func makeContentView() -> UIView & UIContentView {
-      return PerfumeDetailPriceContentView(self)
+      return PerfumeDetailSimilarityContentView(self)
     }
   }
   
   let disposeBag = DisposeBag()
-  var prices = BehaviorRelay<[String]>(value: [])
+  var perfumes = BehaviorRelay<[Perfume]>(value: [])
   
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
     $0.isUserInteractionEnabled = false
     $0.translatesAutoresizingMaskIntoConstraints = false
-    $0.register(PerfumeDetailCommonCell.self)
+    $0.register(HomePopularityCell.self)
   }
   
   var configuration: UIContentConfiguration {
@@ -43,7 +43,7 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
   
   
   override var intrinsicContentSize: CGSize {
-    return CGSize(width: 0, height: prices.value.count * 20)
+    return CGSize(width: 0, height: HomePopularityCell.height)
   }
   
   init(_ configuration: UIContentConfiguration) {
@@ -65,21 +65,19 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
   override func layoutSubviews() {
     invalidateIntrinsicContentSize()
     super.layoutSubviews()
-    self.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
   }
   
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
-    let prices = configuration.prices ?? []
-    self.prices.accept(prices)
+    self.perfumes.accept(configuration.perfumes)
   }
   
   func bindUI() {
-    self.prices
+    self.perfumes
       .bind(to: self.collectionView.rx.items(
-        cellIdentifier: "PerfumeDetailCommonCell", cellType: PerfumeDetailCommonCell.self
-      )) { _, price, cell in
-        cell.updateUI(content: price)
+        cellIdentifier: "HomePopularityCell", cellType: HomePopularityCell.self
+      )) { _, perfume, cell in
+        cell.updateUI(perfume: perfume)
       }
       .disposed(by: self.disposeBag)
   }
@@ -87,7 +85,7 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
 }
 
 extension UICollectionViewListCell {
-  func priceConfiguration() -> PerfumeDetailPriceContentView.Configuration {
-    PerfumeDetailPriceContentView.Configuration()
+  func similarityConfiguration() -> PerfumeDetailSimilarityContentView.Configuration {
+    PerfumeDetailSimilarityContentView.Configuration()
   }
 }

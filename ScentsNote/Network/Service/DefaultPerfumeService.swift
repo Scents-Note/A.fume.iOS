@@ -9,7 +9,10 @@ import Foundation
 import RxSwift
 
 final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
-  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?> {
+  
+  static let shared: DefaultPerfumeService = DefaultPerfumeService()
+
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>?> {
     requestObject(.fetchPerfumesInSurvey)
   }
   
@@ -21,24 +24,28 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchSeries)
   }
   
-  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?> {
+  func fetchPerfumesRecommended() -> Observable<ListInfo<PerfumeResponseDTO>?> {
     requestObject(.fetchPerfumesRecommended)
   }
   
-  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?> {
+  func fetchPerfumesPopular() -> Observable<ListInfo<PerfumeResponseDTO>?> {
     requestObject(.fetchPerfumesPopular)
   }
   
-  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?> {
+  func fetchRecentPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?> {
     requestObject(.fetchRecentPerfumes)
   }
   
-  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?> {
+  func fetchNewPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?> {
     requestObject(.fetchNewPerfumes)
   }
   
-  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?> {
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetailResponseDTO?> {
     requestObject(.fetchPerfumeDetail(perfumeIdx: perfumeIdx))
+  }
+  
+  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<ListInfo<PerfumeResponseDTO>?> {
+    requestObject(.fetchSimilarPerfumes(perfumeIdx: perfumeIdx))
   }
   
 }

@@ -175,27 +175,27 @@ final class HomeViewModel {
                           perfumesNew: PublishRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumesRecommended()
-      .subscribe { listInfo in
-        guard let listInfo = listInfo else { return }
-        perfumesRecommended.accept(listInfo.rows)
+      .subscribe { perfumes in
+        guard let perfumes = perfumes else { return }
+        perfumesRecommended.accept(perfumes)
       } onError: { error in
         print("User Log: error - \(error)")
       }
       .disposed(by: disposeBag)
     
     self.perfumeRepository.fetchPerfumesPopular()
-      .subscribe { listInfo in
-        guard let listInfo = listInfo else { return }
-        perfumesPopular.accept(listInfo.rows)
+      .subscribe { perfumes in
+        guard let perfumes = perfumes else { return }
+        perfumesPopular.accept(perfumes)
       } onError: { error in
         print("User Log: error - \(error)")
       }
       .disposed(by: disposeBag)
     
     self.perfumeRepository.fetchRecentPerfumes()
-      .subscribe { listInfo in
-        guard let listInfo = listInfo else { return }
-        perfumesRecent.accept(listInfo.rows)
+      .subscribe { perfumes in
+        guard let perfumes = perfumes else { return }
+        perfumesRecent.accept(perfumes)
       } onError: { error in
         switch error {
         case let NetworkError.restError(statusCode, description):
@@ -209,9 +209,9 @@ final class HomeViewModel {
       .disposed(by: disposeBag)
     
     self.perfumeRepository.fetchNewPerfumes()
-      .subscribe { listInfo in
-        guard let listInfo = listInfo else { return }
-        perfumesNew.accept(listInfo.rows)
+      .subscribe { perfumes in
+        guard let perfumes = perfumes else { return }
+        perfumesNew.accept(perfumes)
       } onError: { error in
         print("User Log: error - \(error)")
       }

@@ -58,7 +58,7 @@ class PerfumeDetailKeywordsContentView: UIView, UIContentView {
   }
   
   override var intrinsicContentSize: CGSize {
-    CGSize(width: 0, height: 42)
+    CGSize(width: 0, height: 60)
   }
 //
   override func layoutSubviews() {

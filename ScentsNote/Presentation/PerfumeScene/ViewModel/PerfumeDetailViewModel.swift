@@ -29,21 +29,23 @@ final class PerfumeDetailViewModel {
     
     let perfumeDetail = PublishRelay<PerfumeDetail>()
 
-    
+    self.fetchDatas(perfumeDetail: perfumeDetail, disposeBag: disposeBag)
     let output = Output()
-    
     self.bindOutput(output: output, perfumeDetail: perfumeDetail, disposeBag: disposeBag)
     
+    
+    return output
+    
+    
+  }
+  
+  private func fetchDatas(perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumeDetail(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { detail in
         guard let detail = detail else { return }
         perfumeDetail.accept(detail)
       })
       .disposed(by: disposeBag)
-    
-    return output
-    
-    
   }
   
   private func bindOutput(output: Output, perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {

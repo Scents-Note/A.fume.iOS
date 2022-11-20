@@ -1,8 +1,8 @@
 //
-//  PerfumeDetailPriceContentView.swift
+//  PerfumeDetailSillageContentView.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/11/18.
+//  Created by 황득연 on 2022/11/20.
 //
 
 import UIKit
@@ -12,27 +12,27 @@ import RxRelay
 import SnapKit
 import Then
 
-class PerfumeDetailPriceContentView: UIView, UIContentView {
+class PerfumeDetailSillageContentView: UIView, UIContentView {
   
   struct Configuration: UIContentConfiguration {
     func updated(for state: UIConfigurationState) -> Self {
         return self
     }
     
-    var prices: [String]?
+    var sillages: [Sillage] = []
     
     func makeContentView() -> UIView & UIContentView {
-      return PerfumeDetailPriceContentView(self)
+      return PerfumeDetailSillageContentView(self)
     }
   }
   
   let disposeBag = DisposeBag()
-  var prices = BehaviorRelay<[String]>(value: [])
+  var sillages = BehaviorRelay<[Sillage]>(value: [])
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
+  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
     $0.isUserInteractionEnabled = false
     $0.translatesAutoresizingMaskIntoConstraints = false
-    $0.register(PerfumeDetailCommonCell.self)
+    $0.register(PerfumeDetailSillageCell.self)
   }
   
   var configuration: UIContentConfiguration {
@@ -43,7 +43,7 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
   
   
   override var intrinsicContentSize: CGSize {
-    return CGSize(width: 0, height: prices.value.count * 20)
+    return CGSize(width: 0, height: PerfumeDetailSillageCell.height * 3)
   }
   
   init(_ configuration: UIContentConfiguration) {
@@ -65,21 +65,19 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
   override func layoutSubviews() {
     invalidateIntrinsicContentSize()
     super.layoutSubviews()
-    self.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
   }
   
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
-    let prices = configuration.prices ?? []
-    self.prices.accept(prices)
+    self.sillages.accept(configuration.sillages)
   }
   
   func bindUI() {
-    self.prices
+    self.sillages
       .bind(to: self.collectionView.rx.items(
-        cellIdentifier: "PerfumeDetailCommonCell", cellType: PerfumeDetailCommonCell.self
-      )) { _, price, cell in
-        cell.updateUI(content: price)
+        cellIdentifier: "PerfumeDetailSillageCell", cellType: PerfumeDetailSillageCell.self
+      )) { _, sillage, cell in
+        cell.updateUI(sillage: sillage)
       }
       .disposed(by: self.disposeBag)
   }
@@ -87,7 +85,7 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
 }
 
 extension UICollectionViewListCell {
-  func priceConfiguration() -> PerfumeDetailPriceContentView.Configuration {
-    PerfumeDetailPriceContentView.Configuration()
+  func sillageConfiguration() -> PerfumeDetailSillageContentView.Configuration {
+    PerfumeDetailSillageContentView.Configuration()
   }
 }

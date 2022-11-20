@@ -24,7 +24,7 @@ enum ScentsNoteAPI {
   case fetchRecentPerfumes
   case fetchNewPerfumes
   case fetchPerfumeDetail(perfumeIdx: Int)
-
+  case fetchSimilarPerfumes(perfumeIdx: Int)
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
@@ -37,7 +37,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchRecentPerfumes, .fetchNewPerfumes, .fetchPerfumeDetail:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchRecentPerfumes, .fetchNewPerfumes, .fetchPerfumeDetail, .fetchSimilarPerfumes:
       base += "/perfume"
     default:
       break
@@ -80,6 +80,8 @@ extension ScentsNoteAPI: TargetType {
       return "/new"
     case .fetchPerfumeDetail(let perfumeIdx):
       return "\(perfumeIdx)"
+    case .fetchSimilarPerfumes(let perfumeIdx):
+      return "\(perfumeIdx)/similar"
       
         // MARK: - Survey
     case .registerSurvey:
@@ -114,7 +116,6 @@ extension ScentsNoteAPI: TargetType {
         "Content-Type": "application/json"
       ]
     }
-    
     return nil
   }
   
@@ -142,7 +143,6 @@ extension ScentsNoteAPI: TargetType {
     default:
       break
     }
-    
     return params
   }
   

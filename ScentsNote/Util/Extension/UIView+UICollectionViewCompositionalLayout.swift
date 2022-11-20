@@ -41,11 +41,21 @@ extension UIView {
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
-    section.orthogonalScrollingBehavior = .continuous
-    
-//    let config = UICollectionViewCompositionalLayoutConfiguration()
-//    config.scrollDirection = .horizontal
+//    section.orthogonalScrollingBehavior = .continuous
     
     return UICollectionViewCompositionalLayout(section: section)
   }
+  
+  func similarityCompositionalLayout() -> UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(166), heightDimension: .estimated(198))
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    
+    let section = NSCollectionLayoutSection(group: group)
+    section.orthogonalScrollingBehavior = .continuous
+    
+    return UICollectionViewCompositionalLayout(section: section)  }
 }

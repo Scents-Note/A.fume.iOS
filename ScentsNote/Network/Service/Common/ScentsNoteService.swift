@@ -48,9 +48,7 @@ class ScentsNoteService {
       .map { $0.data }
   }
   
-  
 }
-
 
 // MARK: Handle Network Error
 extension ScentsNoteService {

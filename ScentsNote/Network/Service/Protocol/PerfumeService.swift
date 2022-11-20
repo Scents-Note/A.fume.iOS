@@ -11,14 +11,15 @@ import RxSwift
 protocol PerfumeService {
   
   // Survey
-  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?>
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>?>
   func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?>
   func fetchSeries() -> Observable<ListInfo<SurveySeries>?>
   
   //Home
-  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?>
-  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?>
-  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?>
-  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?>
-  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?>
+  func fetchPerfumesRecommended() -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumesPopular() -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchRecentPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchNewPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetailResponseDTO?>
+  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<ListInfo<PerfumeResponseDTO>?>
 }

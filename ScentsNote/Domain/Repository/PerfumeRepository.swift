@@ -11,14 +11,15 @@ import Moya
 
 protocol PerfumeRepository {
   // MARK: - Survey
-  func fetchPerfumesInSurvey() -> Observable<ListInfo<Perfume>?>
+  func fetchPerfumesInSurvey() -> Observable<[Perfume]?>
   func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?>
   func fetchSeries() -> Observable<ListInfo<SurveySeries>?>
   
   // MARK: - Home
-  func fetchPerfumesRecommended() -> Observable<ListInfo<Perfume>?>
-  func fetchPerfumesPopular() -> Observable<ListInfo<Perfume>?>
-  func fetchRecentPerfumes() -> Observable<ListInfo<Perfume>?>
-  func fetchNewPerfumes() -> Observable<ListInfo<Perfume>?>
+  func fetchPerfumesRecommended() -> Observable<[Perfume]?>
+  func fetchPerfumesPopular() -> Observable<[Perfume]?>
+  func fetchRecentPerfumes() -> Observable<[Perfume]?>
+  func fetchNewPerfumes() -> Observable<[Perfume]?>
   func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?>
+  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]?>
 }

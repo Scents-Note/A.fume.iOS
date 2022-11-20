@@ -85,9 +85,9 @@ final class SurveyViewModel {
       .disposed(by: disposeBag)
     
     self.perfumeRepository.fetchPerfumesInSurvey()
-      .subscribe { [weak self] perfumeInfo in
-        guard let perfumeInfo = perfumeInfo else { return }
-        self?.perfumes = perfumeInfo.rows
+      .subscribe { [weak self] perfumes in
+        guard let perfumes = perfumes else { return }
+        self?.perfumes = perfumes
         output.loadData.accept(true)
       } onError: { error in
         print("User Log: error - \(error)")

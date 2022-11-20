@@ -14,13 +14,13 @@ import Then
 
 final class PerfumeDetailViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDetailDataSection.Model>
+  
   enum Section: Int, Equatable, Hashable {
     case title
     case information
   }
   
   var dataSource: DataSource!
-  
   let section: [Section] = [.title, .information]
   
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout (sectionProvider: { section, env -> NSCollectionLayoutSection? in
@@ -47,7 +47,7 @@ final class PerfumeDetailViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.configureTableView()
+    self.configureCollectionView()
     self.configureUI()
     self.bindViewModel()
   }
@@ -61,7 +61,7 @@ final class PerfumeDetailViewController: UIViewController {
 }
 
 extension PerfumeDetailViewController {
-  private func configureTableView() {
+  private func configureCollectionView() {
     self.dataSource = DataSource(
       configureCell: { dataSource, tableView, indexPath, item in
         switch item {
