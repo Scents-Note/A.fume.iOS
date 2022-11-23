@@ -22,7 +22,7 @@ final class PerfumeNewViewModel {
   }
   
   struct Output {
-    let perfumes = BehaviorRelay<[PerfumeNewDataSection.Model]>(value: [])
+    let perfumes = BehaviorRelay<[PerfumeDataSection.Model]>(value: [])
   }
   
   // MARK: - Vars & Lets
@@ -71,8 +71,8 @@ final class PerfumeNewViewModel {
   
   private func bindOutput(output: Output, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
     perfumes.subscribe(onNext: { perfumes in
-      let items = perfumes.map { PerfumeNewDataSection.Item(perfume: $0) }
-      let model = PerfumeNewDataSection.Model(model: "perfumeNew", items: items)
+      let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
+      let model = PerfumeDataSection.Model(model: "perfumeNew", items: items)
       output.perfumes.accept([model])
     })
     .disposed(by: disposeBag)

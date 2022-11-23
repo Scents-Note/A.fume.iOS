@@ -8,5 +8,5 @@
 import Foundation
 
 protocol SearchCoordinator: AnyObject {
-  
+  func runPerfumeDetailFlow(perfumeIdx: Int)
 }

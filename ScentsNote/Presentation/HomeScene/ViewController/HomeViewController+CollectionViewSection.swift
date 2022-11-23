@@ -8,7 +8,7 @@
 import UIKit
 
 extension HomeViewController {
-  func getHomeTitleSection() -> NSCollectionLayoutSection {
+  func titleLayoutSection() -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
@@ -21,7 +21,7 @@ extension HomeViewController {
     return section
   }
   
-  func getHomeRecommendationSection() -> NSCollectionLayoutSection {
+  func recommendationLayoutSection() -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(320))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
@@ -39,7 +39,7 @@ extension HomeViewController {
     return section
   }
   
-  func getHomePopularitySection() -> NSCollectionLayoutSection {
+  func popularityLayoutSection() -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
@@ -58,7 +58,7 @@ extension HomeViewController {
     return section
   }
   
-  func getHomeRecentSection() -> NSCollectionLayoutSection {
+  func recentLayoutSection() -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
@@ -80,7 +80,7 @@ extension HomeViewController {
     return section
   }
   
-  func getHomeNewSection() -> NSCollectionLayoutSection {
+  func newLayoutSection() -> NSCollectionLayoutSection {
     
     let fraction: CGFloat = 1 / 2
     
@@ -102,7 +102,7 @@ extension HomeViewController {
     return section
   }
   
-  func getHomeMoreSection() -> NSCollectionLayoutSection {
+  func moreLayoutSection() -> NSCollectionLayoutSection {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     

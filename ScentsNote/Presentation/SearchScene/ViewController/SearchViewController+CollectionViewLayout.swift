@@ -1,5 +1,5 @@
 //
-//  PerfumeNewViewController+UICollectionViewCompositionalLayout.swift
+//  SearchViewController+CollectionViewLayout.swift
 //  ScentsNote
 //
 //  Created by 황득연 on 2022/11/23.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-extension PerfumeNewViewController {
-  func collectionViewLayout() -> UICollectionViewCompositionalLayout {
+extension SearchViewController {
+  func gridCompositionalLayout() -> UICollectionViewCompositionalLayout {
     let imageHeight = UIScreen.main.bounds.width / 2 - 27.5
     let brandNameOffset: CGFloat = 10
     let brandNameHeight: CGFloat = 18
