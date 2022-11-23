@@ -13,7 +13,7 @@ import SnapKit
 import Then
 
 final class PerfumeNewViewController: UIViewController {
-  typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeNewDataSection.Model>
+  typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDataSection.Model>
   
   // MARK: - Vars & Lets
   var viewModel: PerfumeNewViewModel?
@@ -37,7 +37,7 @@ final class PerfumeNewViewController: UIViewController {
     $0.tintColor = .blackText
   }
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout()).then {
+  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.gridCompositionalLayout()).then {
     $0.showsVerticalScrollIndicator = false
     $0.backgroundColor = .white
     $0.register(PerfumeNewHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
@@ -124,7 +124,7 @@ final class PerfumeNewViewController: UIViewController {
     }
   }
   
-  // MARK: - Binding ViewModel
+  // MARK: - Bind ViewModel
   private func bindViewModel(cellInput: PerfumeNewViewModel.CellInput) {
     let input = PerfumeNewViewModel.Input()
     let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
@@ -135,7 +135,5 @@ final class PerfumeNewViewController: UIViewController {
     output?.perfumes
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
-    
-//    self.collectionView.rx.
   }
 }

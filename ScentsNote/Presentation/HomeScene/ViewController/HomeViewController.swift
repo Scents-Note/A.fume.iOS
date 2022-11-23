@@ -24,17 +24,17 @@ final class HomeViewController: UIViewController {
     let section = self.dataSource.sectionModels[section].model
     switch section {
     case .title:
-      return self.getHomeTitleSection()
+      return self.titleLayoutSection()
     case .recommendation:
-      return self.getHomeRecommendationSection()
+      return self.recommendationLayoutSection()
     case .popularity:
-      return self.getHomePopularitySection()
+      return self.popularityLayoutSection()
     case .recent:
-      return self.getHomeRecentSection()
+      return self.recentLayoutSection()
     case .new:
-      return self.getHomeNewSection()
+      return self.newLayoutSection()
     case .more:
-      return self.getHomeMoreSection()
+      return self.moreLayoutSection()
     }
   }, configuration: UICollectionViewCompositionalLayoutConfiguration().then {
     $0.interSectionSpacing = 32

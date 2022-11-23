@@ -7,7 +7,7 @@
 
 import RxDataSources
 
-struct PerfumeNewDataSection {
+struct PerfumeDataSection {
   typealias Model = AnimatableSectionModel<String, Item>
   
   struct Item: Equatable, Hashable, IdentifiableType {

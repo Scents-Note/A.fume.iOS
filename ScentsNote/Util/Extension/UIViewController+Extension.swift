@@ -31,6 +31,16 @@ extension UIViewController {
     self.navigationItem.leftBarButtonItem = titleButtonItem
     self.navigationItem.leftItemsSupplementBackButton = true
   }
+  
+  func setHomeNavigationTitle(title: String) {
+    let titleLabel = UILabel().then {
+      $0.text = title
+      $0.font = .nanumMyeongjo(type: .extraBold, size: 22)
+    }
+    let titleButtonItem = UIBarButtonItem(customView: titleLabel)
+    self.navigationItem.leftBarButtonItem = titleButtonItem
+    self.navigationItem.leftItemsSupplementBackButton = true
+  }
 }
 
 // MARK: Alert

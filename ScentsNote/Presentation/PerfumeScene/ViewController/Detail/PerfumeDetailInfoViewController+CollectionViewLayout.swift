@@ -1,15 +1,13 @@
 //
-//  UIView+UICollectionViewCompositionalLayout.swift
+//  PerfumeDetailInfoViewController+CollectionViewLayout.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/11/18.
+//  Created by 황득연 on 2022/11/23.
 //
 
 import UIKit
 
 extension UIView {
-  
-  /// PerfumeDetail 노트, 부향률, 가격 cell layout
   func perfumeDetailCommonCompositionalLayout() -> UICollectionViewCompositionalLayout {
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(42))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -18,6 +16,7 @@ extension UIView {
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
     let section = NSCollectionLayoutSection(group: group)
+    
     return UICollectionViewCompositionalLayout(section: section)
   }
   
@@ -41,7 +40,6 @@ extension UIView {
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
-//    section.orthogonalScrollingBehavior = .continuous
     
     return UICollectionViewCompositionalLayout(section: section)
   }

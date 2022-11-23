@@ -8,6 +8,9 @@
 import UIKit
 
 final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
+  
+  var runPerfumeDetailFlow: ((Int) -> Void)?
+  
   var navigationController: UINavigationController
   var searchViewController: SearchViewController
   
@@ -18,8 +21,24 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   
   override func start() {
     self.searchViewController.viewModel = SearchViewModel(
-      coordinator: self
+      coordinator: self,
+      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)
     )
     self.navigationController.pushViewController(self.searchViewController, animated: true)
+  }
+  
+  func runPerfumeDetailFlow(perfumeIdx: Int) {
+    let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
+    coordinator.start(perfumeIdx: perfumeIdx)
+    self.addDependency(coordinator)
+  }
+  
+  func showSearchKeywordController() {
+    let vc = SearchKeywordController()
+    vc.viewModel = SearchKeywordViewModel(
+      coordinator: self,
+      filterRepository: FilterRepository
+    )
+    self.navigationController.pushViewController(vc, animated: true)
   }
 }
