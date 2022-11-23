@@ -8,5 +8,6 @@
 import Foundation
 
 protocol HomeCoordinator: AnyObject {
-  func runPerfumeFlow(perfumeIdx: Int)
+  func runPerfumeDetailFlow(perfumeIdx: Int)
+  func runPerfumeNewFlow()
 }

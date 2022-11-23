@@ -32,12 +32,12 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchPerfumesPopular)
   }
   
-  func fetchRecentPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?> {
-    requestObject(.fetchRecentPerfumes)
+  func fetchPerfumesRecent() -> Observable<ListInfo<PerfumeResponseDTO>?> {
+    requestObject(.fetchPerfumesRecent)
   }
   
-  func fetchNewPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?> {
-    requestObject(.fetchNewPerfumes)
+  func fetchPerfumesNew(size: Int?) -> Observable<ListInfo<PerfumeResponseDTO>?> {
+    requestObject(.fetchPerfumesNew(size: size))
   }
   
   func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetailResponseDTO?> {

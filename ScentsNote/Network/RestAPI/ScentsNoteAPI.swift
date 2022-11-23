@@ -21,8 +21,8 @@ enum ScentsNoteAPI {
   case fetchSeries
   case fetchPerfumesRecommended
   case fetchPerfumesPopular
-  case fetchRecentPerfumes
-  case fetchNewPerfumes
+  case fetchPerfumesRecent
+  case fetchPerfumesNew(size: Int?)
   case fetchPerfumeDetail(perfumeIdx: Int)
   case fetchSimilarPerfumes(perfumeIdx: Int)
   
@@ -37,7 +37,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchRecentPerfumes, .fetchNewPerfumes, .fetchPerfumeDetail, .fetchSimilarPerfumes:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent, .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes:
       base += "/perfume"
     default:
       break
@@ -74,9 +74,9 @@ extension ScentsNoteAPI: TargetType {
       return "/recommend/personal"
     case .fetchPerfumesPopular:
       return "/recommend/common"
-    case .fetchRecentPerfumes:
+    case .fetchPerfumesRecent:
       return "/recent"
-    case .fetchNewPerfumes:
+    case .fetchPerfumesNew:
       return "/new"
     case .fetchPerfumeDetail(let perfumeIdx):
       return "\(perfumeIdx)"
@@ -101,7 +101,7 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchNewPerfumes:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -140,8 +140,9 @@ extension ScentsNoteAPI: TargetType {
       params["perfumeList"] = perfumeList
       params["keywordList"] = keywordList
       params["seriesList"] = seriesList
-    case .fetchNewPerfumes:
-      params["requestSize"] = 10
+    case let .fetchPerfumesNew(size):
+      guard let size = size else { break }
+      params["requestSize"] = size
     default:
       break
     }
@@ -150,7 +151,7 @@ extension ScentsNoteAPI: TargetType {
   
   private var parameterEncoding: ParameterEncoding {
     switch self {
-    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchNewPerfumes:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesNew:
       return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
     default:
       return JSONEncoding.default

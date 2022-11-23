@@ -9,6 +9,12 @@ import UIKit
 import Then
 
 extension UIViewController {
+  func setNavigationBar(title: String? = nil) {
+    self.setBackButton()
+    guard let title = title else { return }
+    self.setNavigationTitle(title: title)
+  }
+  
   func setBackButton() {
     let backImage = UIImage(named: "btnBack")
     let backBarButtonItem = BackBarButtonItem(image: backImage, style: .plain, target: nil, action: nil)

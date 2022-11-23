@@ -19,43 +19,62 @@ final class HomeViewModel {
   }
   
   struct CellInput {
-    let perfumeCellDidClick: PublishRelay<Perfume>
-    let popularPerfumeHeartButtonDidClick: PublishRelay<Perfume>
-    let newPerfumeHeartButtonDidClick: PublishRelay<Perfume>
-    let recentPerfumeHeartButtonDidClick: PublishRelay<Perfume>
-  }
-  
-  struct Input {
-    
+    let perfumeCellDidTapEvent: PublishRelay<Perfume>
+    let popularPerfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
+    let recentPerfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
+    let newPerfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
+    let moreCellDidTapEvent: PublishRelay<Bool>
   }
   
   struct Output {
-    var homeDatas = BehaviorRelay<[HomeDataSection.Model]>(value: HomeDataSection.initialSectionDatas)
+    var homeDatas = BehaviorRelay<[HomeDataSection.Model]>(value: HomeDataSection.default)
   }
   
-  func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
+  func transform(from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
     
+    let output = Output()
     let perfumesRecommended = PublishRelay<[Perfume]>()
     let perfumesPopular = PublishRelay<[Perfume]>()
     let perfumesRecent = PublishRelay<[Perfume]>()
     let perfumesNew = PublishRelay<[Perfume]>()
     
+    self.bindCellInput(cellInput: cellInput,
+                       perfumesRecommended: perfumesRecommended,
+                       perfumesPopular: perfumesPopular,
+                       perfumesRecent: perfumesRecent,
+                       perfumesNew: perfumesNew,
+                       disposeBag: disposeBag)
     
-    let output = Output()
-    self.bindOutput(output: output, perfumesRecommended: perfumesRecommended, perfumesPopular: perfumesPopular, perfumesRecent: perfumesRecent, perfumesNew: perfumesNew, disposeBag: disposeBag)
-
+    self.bindOutput(output: output,
+                    perfumesRecommended: perfumesRecommended,
+                    perfumesPopular: perfumesPopular,
+                    perfumesRecent: perfumesRecent,
+                    perfumesNew: perfumesNew,
+                    disposeBag: disposeBag)
+    
     // TODO: willAppear로 빼기
-    self.fetchDatas(perfumesRecommended: perfumesRecommended, perfumesPopular: perfumesPopular, perfumesRecent: perfumesRecent, perfumesNew: perfumesNew, disposeBag: disposeBag)
+    self.fetchDatas(perfumesRecommended: perfumesRecommended,
+                    perfumesPopular: perfumesPopular,
+                    perfumesRecent: perfumesRecent,
+                    perfumesNew: perfumesNew,
+                    disposeBag: disposeBag)
     
-    // MARK: - Cell Input
-    cellInput.perfumeCellDidClick
+    return output
+  }
+  
+  private func bindCellInput(cellInput: CellInput,
+                             perfumesRecommended: PublishRelay<[Perfume]>,
+                             perfumesPopular: PublishRelay<[Perfume]>,
+                             perfumesRecent: PublishRelay<[Perfume]>,
+                             perfumesNew: PublishRelay<[Perfume]>,
+                             disposeBag: DisposeBag) {
+    cellInput.perfumeCellDidTapEvent
       .subscribe { [weak self] perfume in
-        self?.coordinator?.runPerfumeFlow(perfumeIdx: perfume.perfumeIdx)
+        self?.coordinator?.runPerfumeDetailFlow(perfumeIdx: perfume.perfumeIdx)
       }
       .disposed(by: disposeBag)
     
- 
-    cellInput.popularPerfumeHeartButtonDidClick.withLatestFrom(perfumesPopular) { updated, originals in
+    cellInput.popularPerfumeHeartButtonDidTapEvent.withLatestFrom(perfumesPopular) { updated, originals in
       originals.map {
         guard $0.perfumeIdx != updated.perfumeIdx else {
           var item = updated
@@ -68,7 +87,7 @@ final class HomeViewModel {
     .bind(to: perfumesPopular)
     .disposed(by: disposeBag)
     
-    cellInput.recentPerfumeHeartButtonDidClick.withLatestFrom(perfumesRecent) { updated, originals in
+    cellInput.recentPerfumeHeartButtonDidTapEvent.withLatestFrom(perfumesRecent) { updated, originals in
       originals.map {
         guard $0.perfumeIdx != updated.perfumeIdx else {
           var item = updated
@@ -81,7 +100,7 @@ final class HomeViewModel {
     .bind(to: perfumesRecent)
     .disposed(by: disposeBag)
     
-    cellInput.newPerfumeHeartButtonDidClick.withLatestFrom(perfumesNew) { updated, originals in
+    cellInput.newPerfumeHeartButtonDidTapEvent.withLatestFrom(perfumesNew) { updated, originals in
       originals.map {
         guard $0.perfumeIdx != updated.perfumeIdx else {
           var item = updated
@@ -94,9 +113,11 @@ final class HomeViewModel {
     .bind(to: perfumesNew)
     .disposed(by: disposeBag)
     
-    
-    
-    return output
+    cellInput.moreCellDidTapEvent
+      .subscribe(onNext: { [weak self] _ in
+        self?.coordinator?.runPerfumeNewFlow()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindOutput(output: Output,
@@ -163,9 +184,6 @@ final class HomeViewModel {
     }
     .bind(to: output.homeDatas)
     .disposed(by: disposeBag)
-    
-    
-    
   }
   
   // MARK: - Network Fetch
@@ -192,7 +210,7 @@ final class HomeViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchRecentPerfumes()
+    self.perfumeRepository.fetchPerfumesRecent()
       .subscribe { perfumes in
         guard let perfumes = perfumes else { return }
         perfumesRecent.accept(perfumes)
@@ -208,7 +226,7 @@ final class HomeViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchNewPerfumes()
+    self.perfumeRepository.fetchPerfumesNew(size: 10)
       .subscribe { perfumes in
         guard let perfumes = perfumes else { return }
         perfumesNew.accept(perfumes)

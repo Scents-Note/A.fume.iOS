@@ -8,29 +8,38 @@
 import UIKit
 
 final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
+  
   var navigationController: UINavigationController
-  var homeViewController: HomeViewController
+  var viewController: HomeViewController
   
   required init(_ navigationController: UINavigationController) {
     self.navigationController = navigationController
-    self.homeViewController = HomeViewController()
+    self.viewController = HomeViewController()
   }
   
   override func start() {
-    self.homeViewController.viewModel = HomeViewModel(
+    self.viewController.viewModel = HomeViewModel(
       coordinator: self,
       perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService())
     )
-    self.navigationController.pushViewController(self.homeViewController, animated: true)
+    self.navigationController.pushViewController(self.viewController, animated: true)
   }
   
-  func runPerfumeFlow(perfumeIdx: Int) {
-    let perfumeCoordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
+  func runPerfumeDetailFlow(perfumeIdx: Int) {
+    let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
 //    perfumeCoordinator.finishFlow = { [unowned self, unowned perfumeCoordinator] in
 //      self.removeDependency(perfumeCoordinator)
 //    }
-
-    perfumeCoordinator.start(perfumeIdx: perfumeIdx)
-    self.addDependency(perfumeCoordinator)
+    coordinator.start(perfumeIdx: perfumeIdx)
+    self.addDependency(coordinator)
+  }
+  
+  func runPerfumeNewFlow() {
+    let coordinator = DefaultPerfumeNewCoordinator(self.navigationController)
+    coordinator.runPerfumeDetailFlow = { perfumeIdx in
+      self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
+    }
+    coordinator.start()
+    self.addDependency(coordinator)
   }
 }

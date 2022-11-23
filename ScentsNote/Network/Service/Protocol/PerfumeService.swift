@@ -18,8 +18,8 @@ protocol PerfumeService {
   //Home
   func fetchPerfumesRecommended() -> Observable<ListInfo<PerfumeResponseDTO>?>
   func fetchPerfumesPopular() -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchRecentPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchNewPerfumes() -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumesRecent() -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumesNew(size: Int?) -> Observable<ListInfo<PerfumeResponseDTO>?>
   func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetailResponseDTO?>
   func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<ListInfo<PerfumeResponseDTO>?>
 }

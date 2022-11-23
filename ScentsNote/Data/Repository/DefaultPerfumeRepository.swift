@@ -39,13 +39,13 @@ final class DefaultPerfumeRepository: PerfumeRepository {
       .map { $0?.rows.map { $0.toDomain()} }
   }
   
-  func fetchRecentPerfumes() -> Observable<[Perfume]?> {
-    self.perfumeService.fetchRecentPerfumes()
+  func fetchPerfumesRecent() -> Observable<[Perfume]?> {
+    self.perfumeService.fetchPerfumesRecent()
       .map { $0?.rows.map { $0.toDomain()} }
   }
   
-  func fetchNewPerfumes() -> Observable<[Perfume]?> {
-    self.perfumeService.fetchNewPerfumes()
+  func fetchPerfumesNew(size: Int?) -> Observable<[Perfume]?> {
+    self.perfumeService.fetchPerfumesNew(size: size)
       .map { $0?.rows.map { $0.toDomain()} }
   }
   

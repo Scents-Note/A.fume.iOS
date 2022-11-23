@@ -15,6 +15,7 @@ import Then
 final class HomeNewCell: UICollectionViewCell {
   
   var clickHeart: (() -> Void)?
+  var width = UIScreen.main.bounds.width / 2 - 27.5
   
   static let width: CGFloat = 146
   static let height: CGFloat = 198
@@ -55,8 +56,8 @@ final class HomeNewCell: UICollectionViewCell {
   override func prepareForReuse() {
     disposeBag = DisposeBag()
     self.imageView.image = nil
-    self.brandLabel.text = ""
-    self.nameLabel.text = ""
+    self.brandLabel.text = "1"
+    self.nameLabel.text = "1"
   }
   
   private func configureUI() {
@@ -64,13 +65,13 @@ final class HomeNewCell: UICollectionViewCell {
     self.contentView.addSubview(self.bgView)
     self.bgView.snp.makeConstraints {
       $0.top.left.right.equalToSuperview()
-      $0.height.equalTo(self.snp.width)
+      $0.width.height.equalTo(self.width)
     }
     
-    self.contentView.addSubview(self.imageView)
+    self.bgView.addSubview(self.imageView)
     self.imageView.snp.makeConstraints {
-      $0.centerX.centerY.equalTo(self.bgView)
-      $0.width.height.equalTo(143)
+      $0.centerY.centerX.equalToSuperview()
+      $0.width.height.equalTo(self.width - 16)
     }
     
     self.contentView.addSubview(self.heartButton)
