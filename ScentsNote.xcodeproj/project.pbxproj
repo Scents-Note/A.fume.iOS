@@ -1036,8 +1036,8 @@
 		4AAFE78228F8E79B00EA6FB4 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4A155DF72919DEB60027D26E /* PerfumeScene */,
 				4AAFE79328FAA81E00EA6FB4 /* Common */,
+				4A155DF72919DEB60027D26E /* PerfumeScene */,
 				4AA280EF2917B6C000D30A99 /* HomeScene */,
 				4AA280FC2917B8B000D30A99 /* SearchScene */,
 				4AA2810A2917BA1200D30A99 /* MyPageScene */,

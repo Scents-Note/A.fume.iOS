@@ -101,7 +101,7 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchNewPerfumes:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -140,6 +140,8 @@ extension ScentsNoteAPI: TargetType {
       params["perfumeList"] = perfumeList
       params["keywordList"] = keywordList
       params["seriesList"] = seriesList
+    case .fetchNewPerfumes:
+      params["requestSize"] = 10
     default:
       break
     }
@@ -148,7 +150,7 @@ extension ScentsNoteAPI: TargetType {
   
   private var parameterEncoding: ParameterEncoding {
     switch self {
-    case .checkDuplicateEmail, .checkDuplicateNickname:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchNewPerfumes:
       return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
     default:
       return JSONEncoding.default
