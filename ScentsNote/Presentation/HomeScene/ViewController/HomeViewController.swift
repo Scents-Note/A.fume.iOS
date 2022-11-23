@@ -14,11 +14,10 @@ import SnapKit
 import Then
 
 final class HomeViewController: UIViewController {
-  
+
+  // MARK: - Vars & Lets
   var viewModel: HomeViewModel?
   private let disposeBag = DisposeBag()
-
-  // MARK: - Properties
   var dataSource: RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>!
   
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout (sectionProvider: { section, env -> NSCollectionLayoutSection? in
@@ -60,6 +59,7 @@ final class HomeViewController: UIViewController {
     $0.register(HomeMoreCell.self)
   }
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -77,11 +77,8 @@ final class HomeViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
-}
-
-// MARK: Configure UI
-extension HomeViewController {
   
+  // MARK: Configure UI
   private func configureUI() {
     self.setBackButton()
     
@@ -94,10 +91,10 @@ extension HomeViewController {
   }
   
   private func configureCollectionView() -> HomeViewModel.CellInput {
-    
     // MARK: - Cell Input
     /// Cell 클릭
     let perfumeClicked = PublishRelay<Perfume>()
+    let moreClicked = PublishRelay<Bool>()
     
     /// Cell Heart 클릭
     let perfumePopularClickedHeart = PublishRelay<Perfume>()
@@ -105,8 +102,7 @@ extension HomeViewController {
     let perfumeRecentClickedHeart = PublishRelay<Perfume>()
     
     // TODO: 메모리 Leak 나는지 확인해보기
-    self.dataSource = RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>(
-      configureCell: { dataSource, tableView, indexPath, item in
+    self.dataSource = RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model> { dataSource, tableView, indexPath, item in
         switch item {
         case .title:
           let cell = self.collectionView.dequeueReusableCell(HomeTitleCell.self, for: indexPath)
@@ -154,13 +150,12 @@ extension HomeViewController {
         case .more:
           let cell = self.collectionView.dequeueReusableCell(HomeMoreCell.self, for: indexPath)
           cell.onMoreClick().subscribe(onNext : {
-            Log("onMoreClick")
+            moreClicked.accept(true)
           })
           .disposed(by: cell.disposeBag)
-
           return cell
         }
-      })
+      }
     
     self.dataSource.configureSupplementaryView = { dataSource, collectionView, kind, indexPath in
       if kind == UICollectionView.elementKindSectionHeader {
@@ -184,29 +179,18 @@ extension HomeViewController {
     }
     
     return HomeViewModel.CellInput(
-      perfumeCellDidClick: perfumeClicked,
-      popularPerfumeHeartButtonDidClick: perfumePopularClickedHeart,
-      newPerfumeHeartButtonDidClick: perfumeNewClickedHeart,
-      recentPerfumeHeartButtonDidClick: perfumeRecentClickedHeart
+      perfumeCellDidTapEvent: perfumeClicked,
+      popularPerfumeHeartButtonDidTapEvent: perfumePopularClickedHeart,
+      recentPerfumeHeartButtonDidTapEvent: perfumeRecentClickedHeart,
+      newPerfumeHeartButtonDidTapEvent: perfumeNewClickedHeart,
+      moreCellDidTapEvent: moreClicked
     )
   }
-}
-
-// MARK: - Binding ViewMOdel
-extension HomeViewController{
-  func bindViewModel(cellInput: HomeViewModel.CellInput) {
-    
-    
-    
-    let input = HomeViewModel.Input(
-      
-    )
-    
-    let output = viewModel?.transform(from: input, from: cellInput, disposeBag: disposeBag)
-    
+  
+  // MARK: - Binding ViewMOdel
+  private func bindViewModel(cellInput: HomeViewModel.CellInput) {
+    let output = viewModel?.transform(from: cellInput, disposeBag: disposeBag)
     self.bindSection(output: output)
-    
-    
   }
   
   private func bindSection(output: HomeViewModel.Output?) {

@@ -15,7 +15,11 @@ import Then
 final class PerfumeDetailViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDetailDataSection.Model>
   
-  
+  // MARK: - Vars & Lets
+  var viewModel: PerfumeDetailViewModel?
+  var dataSource: DataSource!
+  let disposeBag = DisposeBag()
+
   // MARK: - UI
   private let mainImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
@@ -51,23 +55,12 @@ final class PerfumeDetailViewController: UIViewController {
   private let noteButton = UIButton().then { $0.setTitle("시향 노트", for: .normal) }
   private lazy var tabView = Tabview(buttons: [self.infoButton, self.noteButton])
   
-  // MARK: - Vars & Lets
-  var viewModel: PerfumeDetailViewModel?
-  var dataSource: DataSource!
-  let disposeBag = DisposeBag()
-
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureCollectionView()
     self.configureUI()
     self.bindViewModel()
-    
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5) {
-//          self.collectionView.layoutIfNeeded()
-//          self.collectionView.reloadData()
-//          Log("reload")
-//    
-//        }
   }
   
   override func viewWillAppear(_ animated: Bool) {

@@ -13,9 +13,7 @@ import Then
 
 final class HomeMoreCell: UICollectionViewCell {
   
-  
-//  let moreImage: UIImage = .btnBack?.withRenderingMode(.alwaysTemplate) ?? UIImage()
-  let disposeBag = DisposeBag()
+  var disposeBag = DisposeBag()
   
   private lazy var moreButton = UIButton().then {
     $0.setTitle("더 보기", for: .normal)
@@ -37,6 +35,10 @@ final class HomeMoreCell: UICollectionViewCell {
   
   required init?(coder: NSCoder) {
     fatalError()
+  }
+  
+  override func prepareForReuse() {
+    disposeBag = DisposeBag()
   }
   
   private func configureUI() {

@@ -18,8 +18,8 @@ protocol PerfumeRepository {
   // MARK: - Home
   func fetchPerfumesRecommended() -> Observable<[Perfume]?>
   func fetchPerfumesPopular() -> Observable<[Perfume]?>
-  func fetchRecentPerfumes() -> Observable<[Perfume]?>
-  func fetchNewPerfumes() -> Observable<[Perfume]?>
+  func fetchPerfumesRecent() -> Observable<[Perfume]?>
+  func fetchPerfumesNew(size: Int?) -> Observable<[Perfume]?>
   func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?>
   func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]?>
 }

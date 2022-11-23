@@ -36,7 +36,7 @@ struct HomeDataSection {
     case more
   }
   
-  static var initialSectionDatas: [HomeDataSection.Model] {
+  static var `default`: [HomeDataSection.Model] {
     return [HomeDataSection.Model(model: HomeSection.title, items: [HomeDataSection.HomeItem.title]),
             HomeDataSection.Model(model: HomeSection.recommendation, items: []),
             HomeDataSection.Model(model: HomeSection.popularity, items: []),
