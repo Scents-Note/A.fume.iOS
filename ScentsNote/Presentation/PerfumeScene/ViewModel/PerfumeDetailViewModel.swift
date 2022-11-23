@@ -12,35 +12,30 @@ final class PerfumeDetailViewModel {
   
   struct Input {}
   struct Output {
-    var models = BehaviorRelay<[PerfumeDetailDataSection.Model]>(value: [])
+    let models = BehaviorRelay<[PerfumeDetailDataSection.Model]>(value: [])
+    let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
   }
   
   private weak var coordinator: PerfumeDetailCoordinator?
-  private var perfumeRepository: PerfumeRepository
   private var perfumeIdx: Int
+  private var fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
   
-  init(coordinator: PerfumeDetailCoordinator, perfumeRepository: PerfumeRepository, perfumeIdx: Int) {
+  init(coordinator: PerfumeDetailCoordinator, fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase, perfumeIdx: Int) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
+    self.fetchPerfumeDetailUseCase = fetchPerfumeDetailUseCase
     self.perfumeIdx = perfumeIdx
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    
     let perfumeDetail = PublishRelay<PerfumeDetail>()
-
-    self.fetchDatas(perfumeDetail: perfumeDetail, disposeBag: disposeBag)
     let output = Output()
     self.bindOutput(output: output, perfumeDetail: perfumeDetail, disposeBag: disposeBag)
-    
-    
+    self.fetchDatas(perfumeDetail: perfumeDetail, disposeBag: disposeBag)
     return output
-    
-    
   }
   
   private func fetchDatas(perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {
-    self.perfumeRepository.fetchPerfumeDetail(perfumeIdx: self.perfumeIdx)
+    self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { detail in
         guard let detail = detail else { return }
         perfumeDetail.accept(detail)
@@ -49,6 +44,10 @@ final class PerfumeDetailViewModel {
   }
   
   private func bindOutput(output: Output, perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {
+    perfumeDetail
+      .bind(to: output.perfumeDetail)
+      .disposed(by: disposeBag)
+    
     perfumeDetail.withLatestFrom(output.models) { detail, models in
       let titleItems = PerfumeDetailDataSection.PerfumeDetailItem.title(detail)
       let titleSection = PerfumeDetailDataSection.Model(model: .title, items: [titleItems])
@@ -58,6 +57,8 @@ final class PerfumeDetailViewModel {
     }
     .bind(to: output.models)
     .disposed(by: disposeBag)
+    
+    
   }
   
 }

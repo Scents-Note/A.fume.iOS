@@ -72,7 +72,6 @@ class PerfumeDetailLongevityContentView: UIView, UIContentView {
   
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
-    Log(configuration.longevities)
     self.longevities.accept(configuration.longevities)
   }
   

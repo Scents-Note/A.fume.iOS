@@ -27,13 +27,14 @@ final class PerfumeDetailScrollView: UIScrollView {
   private func configureUI() {
     let screenWidth = UIScreen.main.bounds.width
     
-    self.isPagingEnabled = true
-    self.isDirectionalLockEnabled = true
+//    self.isPagingEnabled = true
+//    self.isDirectionalLockEnabled = true
     self.translatesAutoresizingMaskIntoConstraints = false
     self.showsVerticalScrollIndicator = false
     self.showsHorizontalScrollIndicator = false
+    self.isScrollEnabled = false
 
-    self.contentSize = CGSize(width: screenWidth * 2, height: 6000)
+    self.contentSize = CGSize(width: screenWidth * 2, height: 4000)
 
     self.perfumeDetailInfoView.frame = CGRect(x: screenWidth * CGFloat(0), y: 0, width: screenWidth, height: 6000)
     self.perfumeDetailReviewView.frame = CGRect(x: screenWidth * CGFloat(1), y: 0, width: screenWidth, height: 6000)
@@ -44,7 +45,7 @@ final class PerfumeDetailScrollView: UIScrollView {
   }
   
   func updateUI(perfumeDetail: PerfumeDetail) {
-    self.perfumeDetailInfoView.updateSnapshot(perfumeDetail: perfumeDetail)
+//    self.perfumeDetailInfoView.updateSnapshot(perfumeDetail: perfumeDetail)
   }
   
 //  func configureDelegate(_ delegate: UICollectionViewDelegate & UICollectionViewDataSource) {

@@ -18,5 +18,5 @@ enum PerfumeDetailInfoSection: Int, Hashable {
   case longevity
   case sillage
   case gender
-  case recommendation
+  case similarity
 }

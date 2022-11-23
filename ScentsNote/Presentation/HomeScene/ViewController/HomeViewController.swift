@@ -58,7 +58,6 @@ final class HomeViewController: UIViewController {
     $0.register(HomeRecentCell.self)
     $0.register(HomeNewCell.self)
     $0.register(HomeMoreCell.self)
-   
   }
   
   override func viewDidLoad() {

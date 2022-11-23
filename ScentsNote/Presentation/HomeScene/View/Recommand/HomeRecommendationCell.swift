@@ -107,7 +107,7 @@ extension HomeRecommendationCell: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PerfumeRecommandKeywordCell", for: indexPath) as! HomeRecommendationKeywordCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeRecommendationKeywordCell", for: indexPath) as! HomeRecommendationKeywordCell
     cell.updateUI(name: self.keywords[indexPath.row])
     return cell
   }

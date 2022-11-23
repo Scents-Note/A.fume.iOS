@@ -55,7 +55,9 @@ extension UIView {
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
-    section.orthogonalScrollingBehavior = .continuous
-    
-    return UICollectionViewCompositionalLayout(section: section)  }
+    section.orthogonalScrollingBehavior = .none
+    let config = UICollectionViewCompositionalLayoutConfiguration()
+    config.scrollDirection = .horizontal
+
+    return UICollectionViewCompositionalLayout(section: section, configuration: config)  }
 }

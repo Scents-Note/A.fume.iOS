@@ -1,13 +1,13 @@
 //
-//  PerfumeDetailInfoView+Configuration.swift
+//  PerfumeDetailInfoViewController+Configuration.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/11/16.
+//  Created by 황득연 on 2022/11/20.
 //
 
 import UIKit
 
-extension PerfumeDetailInfoView {
+extension PerfumeDetailInfoViewController {
   
   func headerConfiguration(for cell: UICollectionViewListCell, with title: String) -> PerfumeDetailHeaderContentView.Configuration {
     var contentConfiguration = cell.headerConfiguration()

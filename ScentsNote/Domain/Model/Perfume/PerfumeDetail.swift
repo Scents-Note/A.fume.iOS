@@ -24,4 +24,5 @@ struct PerfumeDetail: Hashable {
   let noteType: Int
   let ingredients: [Ingredient]
   let reviewIdx: Int
+  var similarPerfumes: [Perfume]? = nil
 }

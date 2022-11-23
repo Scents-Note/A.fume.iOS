@@ -19,7 +19,7 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
         return self
     }
     
-    var perfumes: [Perfume] = []
+    var perfumes: [Perfume]? = []
     
     func makeContentView() -> UIView & UIContentView {
       return PerfumeDetailSimilarityContentView(self)
@@ -29,9 +29,8 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
   let disposeBag = DisposeBag()
   var perfumes = BehaviorRelay<[Perfume]>(value: [])
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
-    $0.isUserInteractionEnabled = false
-    $0.translatesAutoresizingMaskIntoConstraints = false
+  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.similarityCompositionalLayout()).then {
+    $0.showsHorizontalScrollIndicator = false
     $0.register(HomePopularityCell.self)
   }
   
@@ -68,8 +67,8 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
   }
   
   func configure(configuration: UIContentConfiguration) {
-    guard let configuration = configuration as? Configuration else { return }
-    self.perfumes.accept(configuration.perfumes)
+    guard let configuration = configuration as? Configuration, let perfumes = configuration.perfumes else { return }
+    self.perfumes.accept(perfumes)
   }
   
   func bindUI() {
