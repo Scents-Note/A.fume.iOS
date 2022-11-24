@@ -25,6 +25,7 @@ enum ScentsNoteAPI {
   case fetchPerfumesNew(size: Int?)
   case fetchPerfumeDetail(perfumeIdx: Int)
   case fetchSimilarPerfumes(perfumeIdx: Int)
+  case fetchPerfumesSearched(perfumeSearch: PerfumeSearchRequestDTO)
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
@@ -37,7 +38,8 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent, .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
+        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched:
       base += "/perfume"
     default:
       break
@@ -49,6 +51,7 @@ extension ScentsNoteAPI: TargetType {
     return url
   }
   
+  // MARK: - Path
   var path: String {
     switch self {
       // MARK: - Login
@@ -82,6 +85,8 @@ extension ScentsNoteAPI: TargetType {
       return "\(perfumeIdx)"
     case .fetchSimilarPerfumes(let perfumeIdx):
       return "\(perfumeIdx)/similar"
+    case .fetchPerfumesSearched:
+      return "/search"
       
         // MARK: - Survey
     case .registerSurvey:
@@ -101,7 +106,7 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -122,6 +127,7 @@ extension ScentsNoteAPI: TargetType {
   private var bodyParameters: Parameters? {
     var params: Parameters = [:]
     switch self {
+      
     case let .login(email, password):
       params["email"] = email
       params["password"] = password
@@ -143,6 +149,11 @@ extension ScentsNoteAPI: TargetType {
     case let .fetchPerfumesNew(size):
       guard let size = size else { break }
       params["requestSize"] = size
+    case let .fetchPerfumesSearched(perfumeSearch):
+      params["searchText"] = perfumeSearch.searchText
+      params["keywordList"] = perfumeSearch.keywordList
+      params["IngredientList"] = perfumeSearch.ingredientList
+      params["brandList"] = perfumeSearch.brandList
     default:
       break
     }

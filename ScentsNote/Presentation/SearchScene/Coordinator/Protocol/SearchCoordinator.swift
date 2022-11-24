@@ -5,8 +5,9 @@
 //  Created by 황득연 on 2022/11/06.
 //
 
-import Foundation
-
 protocol SearchCoordinator: AnyObject {
   func runPerfumeDetailFlow(perfumeIdx: Int)
+  func runPerfumeKeywordFlow()
+  func runPerfumeResultFlow(perfumeSearch: PerfumeSearch)
+//  func showSearchKeywordController()
 }

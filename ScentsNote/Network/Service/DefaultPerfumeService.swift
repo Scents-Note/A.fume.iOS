@@ -48,4 +48,8 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchSimilarPerfumes(perfumeIdx: perfumeIdx))
   }
   
+  func fetchPerfumeSearched(perfumeSearch: PerfumeSearchRequestDTO) -> Observable<ListInfo<PerfumeResponseDTO>?> {
+    requestObject(.fetchPerfumesSearched(perfumeSearch: perfumeSearch))
+  }
+  
 }

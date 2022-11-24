@@ -21,7 +21,6 @@ final class SearchViewController: UIViewController {
   
   // MARK: - UI
   private lazy var searchButton = UIBarButtonItem(image: .checkmark, style: .plain, target: self, action: nil)
-  
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.gridCompositionalLayout()).then {
     $0.showsVerticalScrollIndicator = false
     $0.backgroundColor = .white
@@ -80,13 +79,14 @@ final class SearchViewController: UIViewController {
   }
   
   func configureNavigation() {
+    self.setBackButton()
     self.setHomeNavigationTitle(title: "검색")
     self.navigationItem.rightBarButtonItem = self.searchButton
   }
   
   // MARK: - Binding ViewModel
   private func bindViewModel(cellInput: SearchViewModel.CellInput) {
-    let input = SearchViewModel.Input()
+    let input = SearchViewModel.Input(searchButtonDidTapEvent: searchButton.rx.tap.asObservable())
     let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
     self.bindPerfumesNew(output: output)
   }

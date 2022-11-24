@@ -13,7 +13,7 @@ final class SearchViewModel {
 
   // MARK: - Input & Output
   struct Input {
-    
+    let searchButtonDidTapEvent: Observable<Void>
   }
   
   struct CellInput {
@@ -48,6 +48,12 @@ final class SearchViewModel {
   }
   
   private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+    input.searchButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runPerfumeKeywordFlow()
+      })
+      .disposed(by: disposeBag)
+    
     cellInput.perfumeDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
         self?.coordinator?.runPerfumeDetailFlow(perfumeIdx: perfume.perfumeIdx)
