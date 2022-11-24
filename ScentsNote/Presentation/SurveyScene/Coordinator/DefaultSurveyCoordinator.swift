@@ -11,12 +11,11 @@ final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   
   var finishFlow: (() -> Void)?
   
-  var navigationController: UINavigationController
   var surveyViewController: SurveyViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.surveyViewController = SurveyViewController()
+    super.init(navigationController)
   }
   
   override func start() {

@@ -9,11 +9,9 @@ import UIKit
 
 final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinator {
   
-  var navigationController: UINavigationController
-  
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
-    navigationController.setNavigationBarHidden(true, animated: true)
+  override init(_ navigationController: UINavigationController) {
+    super.init(navigationController)
+    self.navigationController.setNavigationBarHidden(true, animated: true)
   }
   
   override func start() {

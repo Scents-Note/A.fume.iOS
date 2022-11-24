@@ -10,21 +10,22 @@ import UIKit
 final class DefaultSearchResultCoordinator: BaseCoordinator, SearchResultCoordinator {
 
   var finishFlow: (() -> Void)?
+  var runPerfumeDetailFlow: ((Int) -> Void)?
+  var runSearchKeywordFlow: (() -> Void)?
 
-  var navigationController: UINavigationController
   var searchResultViewController: SearchResultViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.searchResultViewController = SearchResultViewController()
+    super.init(navigationController)
   }
   
-  override func start() {
+  func start(perfumeSearch: PerfumeSearch) {
     self.searchResultViewController.viewModel = SearchResultViewModel(coordinator: self,
-                                                                        perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
+                                                                      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
+                                                                      perfumeSearch: perfumeSearch)
     
 //    self.searchResultViewController.hidesBottomBarWhenPushed = false
     self.navigationController.pushViewController(self.searchResultViewController, animated: true)
   }
-  
 }

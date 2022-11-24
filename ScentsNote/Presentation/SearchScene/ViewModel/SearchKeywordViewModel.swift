@@ -16,17 +16,19 @@ final class SearchKeywordViewModel {
   }
   
   struct Output {
-    let finish = BehaviorRelay<Bool>(value: false)
+    let finish = BehaviorRelay<CoordinatorType>(value: .search)
   }
   
   // MARK: - Vars & Lets
   weak var coordinator: SearchKeywordCoordinator?
   var perfumeRepository: PerfumeRepository
+  let from: CoordinatorType
   
   // MARK: - Life Cycle
-  init(coordinator: SearchKeywordCoordinator, perfumeRepository: PerfumeRepository) {
+  init(coordinator: SearchKeywordCoordinator, perfumeRepository: PerfumeRepository, from: CoordinatorType) {
     self.coordinator = coordinator
     self.perfumeRepository = perfumeRepository
+    self.from = from
   }
   
   
@@ -43,9 +45,10 @@ final class SearchKeywordViewModel {
     
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
         let perfumeSearch = PerfumeSearch(searchWord: searchWord)
-        output.finish.accept(true)
-        self?.coordinator?.finishFlow?(perfumeSearch)
+        if self.from == .search { output.finish.accept(self.from) }
+        self.coordinator?.finishFlow?(perfumeSearch)
       })
       .disposed(by: disposeBag)
     

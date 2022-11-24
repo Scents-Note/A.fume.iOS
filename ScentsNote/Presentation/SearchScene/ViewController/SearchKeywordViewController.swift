@@ -42,7 +42,6 @@ final class SearchKeywordViewController: UIViewController {
     self.hidesBottomBarWhenPushed = false
   }
   
-  
   // MARK: - Configure UI
   private func configureUI() {
     self.configureNavigation()
@@ -75,12 +74,12 @@ final class SearchKeywordViewController: UIViewController {
       .asDriver()
       .skip(1)
       .drive(onNext: { [weak self] _ in
-        self?.popup()
+        self?.popViewController(from: .search)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func popup() {
+  private func popViewController(from: CoordinatorType) {
     self.navigationController?.hidesBottomBarWhenPushed = false
     DispatchQueue.main.async {
       if let idx = self.navigationController?.viewControllers.firstIndex(where: { $0 === self }) {

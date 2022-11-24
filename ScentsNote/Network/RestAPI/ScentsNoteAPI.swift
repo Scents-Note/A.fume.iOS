@@ -97,7 +97,7 @@ extension ScentsNoteAPI: TargetType {
   
   var method: Moya.Method {
     switch self {
-    case .login, .signUp, .registerSurvey:
+    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched:
       return .post
     default:
       return .get
@@ -152,8 +152,9 @@ extension ScentsNoteAPI: TargetType {
     case let .fetchPerfumesSearched(perfumeSearch):
       params["searchText"] = perfumeSearch.searchText
       params["keywordList"] = perfumeSearch.keywordList
-      params["IngredientList"] = perfumeSearch.ingredientList
+      params["ingredientList"] = perfumeSearch.ingredientList
       params["brandList"] = perfumeSearch.brandList
+      Log(params)
     default:
       break
     }

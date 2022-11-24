@@ -10,13 +10,12 @@ import UIKit
 final class DefaultPerfumeNewCoordinator: BaseCoordinator, PerfumeNewCoordinator {
   
   var runPerfumeDetailFlow: ((Int) -> Void)?
-  
-  var navigationController: UINavigationController
+
   var perfumeNewViewController: PerfumeNewViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.perfumeNewViewController = PerfumeNewViewController()
+    super.init(navigationController)
   }
   
   override func start() {

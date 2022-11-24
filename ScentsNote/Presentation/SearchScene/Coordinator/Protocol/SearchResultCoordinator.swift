@@ -6,5 +6,7 @@
 //
 
 protocol SearchResultCoordinator: AnyObject {
+  var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
+  var runSearchKeywordFlow: (() -> Void)? { get set }
   var finishFlow: (() -> Void)? { get set }
 }

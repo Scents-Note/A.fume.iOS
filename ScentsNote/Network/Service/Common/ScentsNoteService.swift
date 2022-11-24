@@ -72,6 +72,7 @@ extension ScentsNoteService {
     guard error is NetworkError else {
       let statusCode = (error as? MoyaError)?.response?.statusCode
       let description = (try? (error as? MoyaError)?.response?.mapJSON() as? [String: Any])?.first?.value as? String
+      Log((error as? MoyaError)?.response)
       throw NetworkError.restError(statusCode: statusCode, description: description)
     }
     throw error

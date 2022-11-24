@@ -12,13 +12,11 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   var finishFlow: ((CoordinatorType) -> Void)?
   var onOnboardingFlow: (() -> Void)?
   
-  var navigationController: UINavigationController
   var tabBarController: UITabBarController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.tabBarController = UITabBarController()
-//    navigationController.setNavigationBarHidden(true, animated: true)
+    super.init(navigationController)
   }
   
   override func start() {

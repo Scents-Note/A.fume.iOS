@@ -24,5 +24,5 @@ protocol PerfumeRepository {
   func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]?>
   
   // MARK: - Search
-  func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]?>
 }

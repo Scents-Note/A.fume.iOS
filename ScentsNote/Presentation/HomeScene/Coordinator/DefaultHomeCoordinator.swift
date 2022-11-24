@@ -9,12 +9,11 @@ import UIKit
 
 final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
-  var navigationController: UINavigationController
   var viewController: HomeViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.viewController = HomeViewController()
+    super.init(navigationController)
   }
   
   override func start() {

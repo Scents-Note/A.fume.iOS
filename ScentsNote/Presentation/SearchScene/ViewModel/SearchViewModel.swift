@@ -50,7 +50,7 @@ final class SearchViewModel {
   private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.runPerfumeKeywordFlow()
+        self?.coordinator?.runSearchKeywordFlow(from: .search)
       })
       .disposed(by: disposeBag)
     

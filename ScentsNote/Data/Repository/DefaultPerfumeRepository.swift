@@ -59,9 +59,10 @@ final class DefaultPerfumeRepository: PerfumeRepository {
       .map { $0?.rows.map { $0.toDomain()} }
   }
   
-  func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<ListInfo<PerfumeResponseDTO>?> {
+  func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]?> {
     let dto = perfumeSearch.toEntity()
     return self.perfumeService.fetchPerfumeSearched(perfumeSearch: dto)
+      .map { $0?.rows.map { $0.toDomain()} }
   }
   
 }
