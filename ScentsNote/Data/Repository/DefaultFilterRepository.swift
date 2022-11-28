@@ -15,8 +15,13 @@ final class DefaultFilterRepository: FilterRepository {
     self.filterService = filterService
   }
   
-  func fetchSeriesForFilter() -> Observable<[FilterSeries]?> {
+  func fetchSeriesForFilter() -> Observable<[FilterSeries]> {
     self.filterService.fetchSeriesForFilter()
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0.rows.map { $0.toDomain()} }
+  }
+  
+  func fetchBrandsForFilter() -> Observable<[FilterBrandInfo]> {
+    self.filterService.fetchBrandsForFilter()
+      .map { $0.map { $0.toDomain() }}
   }
 }

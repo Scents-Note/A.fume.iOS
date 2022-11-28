@@ -37,7 +37,6 @@ final class PerfumeDetailViewModel {
   private func fetchDatas(perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {
     self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { detail in
-        guard let detail = detail else { return }
         perfumeDetail.accept(detail)
       })
       .disposed(by: disposeBag)

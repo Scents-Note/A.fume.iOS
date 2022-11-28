@@ -13,18 +13,19 @@ import Then
 import RxDataSources
 
 final class FilterBrandView: UIView {
-  typealias InitialDataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
-  typealias BrandDataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
+//  typealias InitialDataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
+//  typealias BrandDataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
+  
   
   // MARK: - Vars & Lets
   var viewModel: SearchFilterViewModel
   let disposeBag = DisposeBag()
-  var initialDataSource: InitialDataSource!
-  var brandDataSource: BrandDataSource!
+//  var initialDataSource: InitialDataSource!
+//  var brandDataSource: BrandDataSource!
   
   // MARK: - UI
-  private lazy var initialCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.filterKeywordLayout).then {
-    $0.register(FilterSeriesCell.self)
+  private lazy var initialCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.brandInitialLayout).then {
+    $0.register(FilterBrandInitialCell.self)
   }
   
   private let notyView = UIView().then { $0.backgroundColor = .lightGray2 }
@@ -34,9 +35,8 @@ final class FilterBrandView: UIView {
     $0.font = .notoSans(type: .regular, size: 12)
   }
   
-  private lazy var brandCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.filterKeywordLayout).then {
-    $0.register(FilterSeriesHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
-    $0.register(FilterSeriesCell.self)
+  private lazy var brandCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.filterBrandLayout).then {
+    $0.register(FilterBrandCell.self)
   }
   
   // MARK: - Life Cycle
@@ -53,7 +53,6 @@ final class FilterBrandView: UIView {
   
   // MARK: - Configure UI
   private func configureUI() {
-    self.configureCollectionView()
     
     self.initialCollectionView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.initialCollectionView)
@@ -62,14 +61,14 @@ final class FilterBrandView: UIView {
       $0.left.right.equalToSuperview()
       $0.height.equalTo(36)
     }
-    
+
     self.addSubview(self.notyView)
     self.notyView.snp.makeConstraints {
-      $0.top.equalTo(self.brandCollectionView.snp.bottom)
+      $0.top.equalTo(self.initialCollectionView.snp.bottom)
       $0.left.right.equalToSuperview()
       $0.height.equalTo(36)
     }
-    
+
     self.notyView.addSubview(self.notyLabel)
     self.notyLabel.snp.makeConstraints {
       $0.centerY.centerX.equalToSuperview()
@@ -83,35 +82,30 @@ final class FilterBrandView: UIView {
     }
   }
   
-  private func configureCollectionView() {
-    
-    self.initialDataSource = InitialDataSource { dataSource, collectionView, indexPath, item in
-      let cell = collectionView.dequeueReusableCell(FilterSeriesCell.self, for: indexPath)
-      cell.updateUI(ingredient: item.ingredient)
-      cell.clickSeries()
-        .subscribe(onNext: {_ in
-          self.viewModel.clickSeries(section: indexPath.section, ingredient: item.ingredient)
-        })
-        .disposed(by: cell.disposeBag)
-      return cell
-    }
-    
-    self.brandDataSource = BrandDataSource { dataSource, collectionView, indexPath, item in
-      let cell = collectionView.dequeueReusableCell(FilterSeriesCell.self, for: indexPath)
-      cell.updateUI(ingredient: item.ingredient)
-      cell.clickSeries()
-        .subscribe(onNext: {_ in
-          self.viewModel.clickSeries(section: indexPath.section, ingredient: item.ingredient)
-        })
-        .disposed(by: cell.disposeBag)
-      return cell
-    }
-  }
-  
   // MARK: - Bind ViewModel
   func bindViewModel() {
-    self.viewModel.output.series
-      .bind(to: self.initialCollectionView.rx.items(dataSource: initialDataSource))
+    self.initialCollectionView.rx.itemSelected.map { $0.item }
+      .subscribe(onNext: { [weak self] pos in
+        self?.viewModel.clickBrandInitial(pos: pos)
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.brandCollectionView.rx.itemSelected.map { $0.item }
+      .subscribe(onNext: { [weak self] pos in
+        self?.viewModel.clickBrand(pos: pos)
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.viewModel.brandInitials
+      .bind(to: self.initialCollectionView.rx.items(cellIdentifier: "FilterBrandInitialCell", cellType: FilterBrandInitialCell.self)) { index, initial, cell in
+        cell.updateUI(initial: initial.text, isSelected: initial.isSelected)
+      }
+      .disposed(by: self.disposeBag)
+    
+    self.viewModel.brands
+      .bind(to: self.brandCollectionView.rx.items(cellIdentifier: "FilterBrandCell", cellType: FilterBrandCell.self)) { index, brand, cell in
+        cell.updateUI(brand: brand)
+      }
       .disposed(by: self.disposeBag)
   }
 }

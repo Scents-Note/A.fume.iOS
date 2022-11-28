@@ -12,9 +12,11 @@ final class DefaultFilterService: ScentsNoteService, FilterService {
   
   static let shared: DefaultFilterService = DefaultFilterService()
 
-  func fetchSeriesForFilter() -> Observable<ListInfo<FilterSeriesResponseDTO>?> {
+  func fetchSeriesForFilter() -> Observable<ListInfo<FilterSeriesResponseDTO>> {
     requestObject(.fetchSeriesForFilter)
   }
   
-  
+  func fetchBrandsForFilter() -> Observable<[FilterBrandInfoResponseDTO]> {
+    requestObject(.fetchBrandForFilter)
+  }
 }

@@ -12,7 +12,7 @@ final class FilterScrollView: UIScrollView {
   
   let viewModel: SearchFilterViewModel
   lazy var seriesView = FilterSeriesView(viewModel: self.viewModel)
-//  var brandView = SurveyPerfumeView()
+  lazy var brandView = FilterBrandView(viewModel: self.viewModel)
 //  let keywordView = SurveyKeywordView()
 
   init(viewModel: SearchFilterViewModel) {
@@ -27,28 +27,30 @@ final class FilterScrollView: UIScrollView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    Log(self.frame.height)
     let screenSize = UIScreen.main.bounds
 
     self.seriesView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: self.frame.height)
+    self.brandView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: self.frame.height)
+    
+    
   }
   
   private func configureUI() {
     let screenSize = UIScreen.main.bounds
- 
     self.isPagingEnabled = true
     self.isDirectionalLockEnabled = true
     self.showsVerticalScrollIndicator = false
     self.showsHorizontalScrollIndicator = false
 
-    self.contentSize = CGSize(width: screenSize.width * 1, height: 0)
+    self.contentSize = CGSize(width: screenSize.width * 2, height: 0)
     
+//    self.setContentOffset(CGPoint(x: self.frame.width, y: 0), animated: false)
 //    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 520)
 //    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 520)
 
 
-    addSubview(seriesView)
-//    addSubview(surveyKeywordView)
+    self.addSubview(self.seriesView)
+    self.addSubview(self.brandView)
 //    addSubview(surveySeriesView)
 
   }

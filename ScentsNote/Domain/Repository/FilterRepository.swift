@@ -9,6 +9,7 @@ import RxSwift
 
 protocol FilterRepository {
   
-  func fetchSeriesForFilter() -> Observable<[FilterSeries]?>
+  func fetchSeriesForFilter() -> Observable<[FilterSeries]>
+  func fetchBrandsForFilter() -> Observable<[FilterBrandInfo]>
   
 }

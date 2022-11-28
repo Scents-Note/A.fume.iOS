@@ -7,7 +7,6 @@
 
 import UIKit
 import RxSwift
-import RxRelay
 import RxGesture
 import SnapKit
 import Then
@@ -16,7 +15,7 @@ final class FilterBrandInitialCell: UICollectionViewCell {
   
   var disposeBag = DisposeBag()
   
-  private let initialLabel = UILabel()
+  private let initialLabel = UILabel().then { $0.textAlignment = .center}
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -34,29 +33,17 @@ final class FilterBrandInitialCell: UICollectionViewCell {
   }
   
   func configureUI(){
-    self.contentView.translatesAutoresizingMaskIntoConstraints = false
-    
     self.contentView.addSubview(self.initialLabel)
-    self.initialLabel.translatesAutoresizingMaskIntoConstraints = false
     self.initialLabel.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
   }
-//  
-//  func updateUI(ingredient: FilterIngredient) {
-//    self.keywordLabel.text = "#"+ingredient.name
-//    if ingredient.isSelected == true {
-//      self.containerView.backgroundColor = .bgSurveySelected
-//      self.keywordLabel.textColor = .white
-//      self.containerView.layer.borderWidth = 0
-//    } else {
-//      self.containerView.backgroundColor = .white
-//      self.keywordLabel.textColor = .grayCd
-//      self.containerView.layer.borderWidth = 1
-//      self.containerView.layer.borderColor = UIColor.grayCd.cgColor
-//    }
-//  }
-//  
+  func updateUI(initial: String, isSelected: Bool) {
+    self.initialLabel.text = initial
+    self.initialLabel.textColor = isSelected ? .blackText : .grayCd
+    self.initialLabel.font = .notoSans(type: isSelected ? .bold : .regular, size: 15)
+  }
+  
   func clickSeries() -> Observable<UITapGestureRecognizer> {
     self.rx.tapGesture().when(.recognized).asObservable()
   }

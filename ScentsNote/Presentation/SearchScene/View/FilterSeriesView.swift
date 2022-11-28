@@ -100,7 +100,7 @@ final class FilterSeriesView: UIView {
   
   // MARK: - Bind ViewModel
   func bindViewModel() {
-    self.viewModel.output.series
+    self.viewModel.seriesDataSource
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
   }

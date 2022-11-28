@@ -19,10 +19,12 @@ final class DefaultSearchFilterCoordinator: BaseCoordinator, SearchFilterCoordin
   }
   
   override func start(from: CoordinatorType) {
-    self.searchFilterViewController.viewModel = SearchFilterViewModel(coordinator: self,
-                                                                      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
-                                                                      filterRepository: DefaultFilterRepository(filterService: DefaultFilterService.shared),
-                                                                      from: from)
+    self.searchFilterViewController.viewModel = SearchFilterViewModel(
+      coordinator: self,
+      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
+      filterRepository: DefaultFilterRepository(filterService: DefaultFilterService.shared),
+      fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase(filterRepository: DefaultFilterRepository(filterService: DefaultFilterService.shared)),
+      from: from)
     
     self.searchFilterViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.searchFilterViewController, animated: true)

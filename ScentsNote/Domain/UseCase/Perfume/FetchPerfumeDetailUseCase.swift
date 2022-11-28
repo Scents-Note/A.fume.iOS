@@ -16,7 +16,7 @@ final class FetchPerfumeDetailUseCase {
     self.perfumeRepository = perfumeRepository
   }
   
-  func execute(perfumeIdx: Int) -> Observable<PerfumeDetail?>{
+  func execute(perfumeIdx: Int) -> Observable<PerfumeDetail>{
     return Observable.create { observer in
       Observable.zip(self.perfumeRepository.fetchPerfumeDetail(perfumeIdx: perfumeIdx), self.perfumeRepository.fetchSimliarPerfumes(perfumeIdx: perfumeIdx))
         .subscribe(onNext: { perfumeDetail, similarPerfumes in
@@ -27,8 +27,5 @@ final class FetchPerfumeDetailUseCase {
         .disposed(by: self.disposeBag)
       return Disposables.create()
     }
-    
-    
-    
   }
 }

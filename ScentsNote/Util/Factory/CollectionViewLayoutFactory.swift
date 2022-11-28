@@ -33,7 +33,6 @@ struct CollectionViewLayoutFactory {
     group.interItemSpacing = .fixed(16)
     
     let section = NSCollectionLayoutSection(group: group)
-//    section.contentInsets = .init(top: 16, leading: 0, bottom: 16, trailing: 0)
     section.interGroupSpacing = -16
     
     let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52))
@@ -46,5 +45,34 @@ struct CollectionViewLayoutFactory {
     return UICollectionViewCompositionalLayout(section: section).then {
       $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
     }
+  }
+  
+  static var brandInitialLayout: UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(53), heightDimension: .absolute(36))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(53), heightDimension: itemSize.heightDimension)
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    
+    let section = NSCollectionLayoutSection(group: group)
+    let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
+    section.decorationItems = [sectionBackground]
+    section.orthogonalScrollingBehavior = .continuous
+    
+    return UICollectionViewCompositionalLayout(section: section).then {
+      $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
+    }
+  }
+  
+  static var filterBrandLayout: UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(52))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    
+    let section = NSCollectionLayoutSection(group: group)
+    
+    return UICollectionViewCompositionalLayout(section: section)
   }
 }
