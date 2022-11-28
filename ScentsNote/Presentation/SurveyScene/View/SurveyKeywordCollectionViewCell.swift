@@ -56,8 +56,24 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
       self.layer.borderWidth = 1
       self.layer.borderColor = UIColor.grayCd.cgColor
     }
-
   }
+  
+  func updateUI(ingredient: FilterIngredient) {
+//    guard let keyword = keyword else { return }
+    self.keywordLabel.text = "#"+ingredient.name
+    if ingredient.isSelected == true {
+      self.backgroundColor = .bgSurveySelected
+      self.keywordLabel.textColor = .white
+      self.layer.borderWidth = 0
+    } else {
+      self.backgroundColor = .white
+      self.keywordLabel.textColor = .grayCd
+      self.layer.borderWidth = 1
+      self.layer.borderColor = UIColor.grayCd.cgColor
+    }
+  }
+  
+  
   
   func bindUI() {
     self.rx.tapGesture()

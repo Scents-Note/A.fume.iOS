@@ -5,7 +5,6 @@
 //  Created by 황득연 on 2022/11/01.
 //
 
-import Foundation
 import RxSwift
 
 final class DefaultPerfumeRepository: PerfumeRepository {
@@ -56,13 +55,13 @@ final class DefaultPerfumeRepository: PerfumeRepository {
   
   func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]?> {
     self.perfumeService.fetchSimliarPerfumes(perfumeIdx: perfumeIdx)
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0?.rows.map { $0.toDomain() } }
   }
   
   func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]?> {
     let dto = perfumeSearch.toEntity()
     return self.perfumeService.fetchPerfumeSearched(perfumeSearch: dto)
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0?.rows.map { $0.toDomain() } }
   }
   
 }

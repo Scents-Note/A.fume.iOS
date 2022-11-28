@@ -27,5 +27,4 @@ final class DefaultSearchKeywordCoordinator: BaseCoordinator, SearchKeywordCoord
     self.searchKeywordViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.searchKeywordViewController, animated: true)
   }
-  
 }

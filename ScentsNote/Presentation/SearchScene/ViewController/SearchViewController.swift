@@ -27,6 +27,14 @@ final class SearchViewController: UIViewController {
     $0.register(HomeNewCell.self)
   }
   
+  private let filterButton = UIButton().then {
+    $0.setTitle("필터", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .medium, size: 16)
+    $0.layer.cornerRadius = 21
+    $0.layer.backgroundColor = UIColor.black.cgColor
+  }
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,6 +58,14 @@ final class SearchViewController: UIViewController {
     self.collectionView.snp.makeConstraints {
       $0.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.equalToSuperview()
+    }
+    
+    self.view.addSubview(self.filterButton)
+    self.filterButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-24)
+      $0.width.equalTo(95)
+      $0.height.equalTo(42)
     }
   }
   
@@ -80,13 +96,14 @@ final class SearchViewController: UIViewController {
   
   func configureNavigation() {
     self.setBackButton()
-    self.setHomeNavigationTitle(title: "검색")
+    self.setNavigationTitle(title: "검색")
     self.navigationItem.rightBarButtonItem = self.searchButton
   }
   
   // MARK: - Binding ViewModel
   private func bindViewModel(cellInput: SearchViewModel.CellInput) {
-    let input = SearchViewModel.Input(searchButtonDidTapEvent: searchButton.rx.tap.asObservable())
+    let input = SearchViewModel.Input(searchButtonDidTapEvent: self.searchButton.rx.tap.asObservable(),
+                                      filterButtonDidTapEvent: self.filterButton.rx.tap.asObservable())
     let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
     self.bindPerfumesNew(output: output)
   }

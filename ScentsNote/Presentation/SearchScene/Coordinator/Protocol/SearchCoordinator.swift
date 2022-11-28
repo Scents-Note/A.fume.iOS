@@ -9,5 +9,5 @@ protocol SearchCoordinator: AnyObject {
   func runPerfumeDetailFlow(perfumeIdx: Int)
   func runSearchKeywordFlow(from: CoordinatorType)
   func runSearchResultFlow(perfumeSearch: PerfumeSearch)
-//  func showSearchKeywordController()
+  func runSearchFilterFlow(from: CoordinatorType)
 }

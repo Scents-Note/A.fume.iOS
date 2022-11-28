@@ -8,9 +8,9 @@
 import RxDataSources
 
 struct PerfumeDetailDataSection {
-  typealias Model = AnimatableSectionModel<PerfumeDetailSection, PerfumeDetailItem>
+  typealias Model = AnimatableSectionModel<Section, Item>
   
-  enum PerfumeDetailSection: Int, Equatable, Hashable, IdentifiableType {
+  enum Section: Int, Equatable, Hashable, IdentifiableType {
     var identity: Int {
       hashValue
     }
@@ -19,7 +19,7 @@ struct PerfumeDetailDataSection {
     case content = 1
   }
   
-  enum PerfumeDetailItem: Equatable, Hashable, IdentifiableType {
+  enum Item: Equatable, Hashable, IdentifiableType {
     var identity: Int {
       hashValue
     }

@@ -30,6 +30,9 @@ enum ScentsNoteAPI {
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
   
+  // MARK: - Filter
+  case fetchSeriesForFilter
+  case fetchBrandForFilter
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -41,6 +44,8 @@ extension ScentsNoteAPI: TargetType {
     case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
         .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched:
       base += "/perfume"
+    case .fetchSeriesForFilter, .fetchBrandForFilter:
+      base += "/filter"
     default:
       break
     }
@@ -91,6 +96,12 @@ extension ScentsNoteAPI: TargetType {
         // MARK: - Survey
     case .registerSurvey:
       return "/survey"
+      
+        // MARK: - Filter
+    case .fetchSeriesForFilter:
+      return "/series"
+    case .fetchBrandForFilter:
+      return "/brand"
     }
 
   }
@@ -116,10 +127,11 @@ extension ScentsNoteAPI: TargetType {
   var headers: [String: String]? {
     // TODO: propertyWrapper 사용해볼것
     if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
-      return [
-        "x-access-token": "Bearer " + userToken,
-        "Content-Type": "application/json"
-      ]
+//      return [
+//        "x-access-token": "Bearer " + userToken,
+//        "Content-Type": "application/json"
+//      ]
+      return nil
     }
     return nil
   }
@@ -127,7 +139,6 @@ extension ScentsNoteAPI: TargetType {
   private var bodyParameters: Parameters? {
     var params: Parameters = [:]
     switch self {
-      
     case let .login(email, password):
       params["email"] = email
       params["password"] = password

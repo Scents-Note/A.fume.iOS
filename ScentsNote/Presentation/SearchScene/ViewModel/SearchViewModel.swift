@@ -5,7 +5,6 @@
 //  Created by 황득연 on 2022/11/06.
 //
 
-import Foundation
 import RxSwift
 import RxRelay
 
@@ -14,6 +13,7 @@ final class SearchViewModel {
   // MARK: - Input & Output
   struct Input {
     let searchButtonDidTapEvent: Observable<Void>
+    let filterButtonDidTapEvent: Observable<Void>
   }
   
   struct CellInput {
@@ -51,6 +51,12 @@ final class SearchViewModel {
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.runSearchKeywordFlow(from: .search)
+      })
+      .disposed(by: disposeBag)
+    
+    input.filterButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runSearchFilterFlow(from: .search)
       })
       .disposed(by: disposeBag)
     

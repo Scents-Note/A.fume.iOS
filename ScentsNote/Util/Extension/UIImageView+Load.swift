@@ -7,7 +7,6 @@
 import UIKit
 
 extension UIImageView {
-  
  
   func load(url: String) {
     guard let url = URL(string: url) else { return }

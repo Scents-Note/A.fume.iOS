@@ -49,9 +49,9 @@ final class PerfumeDetailViewModel {
       .disposed(by: disposeBag)
     
     perfumeDetail.withLatestFrom(output.models) { detail, models in
-      let titleItems = PerfumeDetailDataSection.PerfumeDetailItem.title(detail)
+      let titleItems = PerfumeDetailDataSection.Item.title(detail)
       let titleSection = PerfumeDetailDataSection.Model(model: .title, items: [titleItems])
-      let contentItems = PerfumeDetailDataSection.PerfumeDetailItem.content(detail)
+      let contentItems = PerfumeDetailDataSection.Item.content(detail)
       let contentSection = PerfumeDetailDataSection.Model(model: .content, items: [contentItems])
       return [titleSection, contentSection]
     }

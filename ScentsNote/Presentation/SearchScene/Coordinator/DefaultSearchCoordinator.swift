@@ -50,6 +50,25 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
     self.addDependency(coordinator)
   }
   
+  func runSearchFilterFlow(from: CoordinatorType) {
+    let coordinator = DefaultSearchFilterCoordinator(self.navigationController)
+    coordinator.finishFlow = { [weak self, unowned coordinator] perfumeSearch in
+      switch from {
+      case .search:
+        self?.runSearchResultFlow(perfumeSearch: perfumeSearch)
+      case .searchResult:
+        self?.navigationController.popViewController(animated: true)
+        let vc = self?.findViewController(SearchResultViewController.self) as! SearchResultViewController
+        vc.viewModel?.updateSearchWords(perfumeSearch: perfumeSearch)
+      default:
+        break
+      }
+      self?.removeDependency(coordinator)
+    }
+    coordinator.start(from: from)
+    self.addDependency(coordinator)
+  }
+  
   func runSearchResultFlow(perfumeSearch: PerfumeSearch) {
     let coordinator = DefaultSearchResultCoordinator(self.navigationController)
     coordinator.runPerfumeDetailFlow = { [weak self] perfumeIdx in
@@ -67,10 +86,5 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   
   
   
-//  func showSearchKeywordController() {
-//    let vc = SearchKeywordViewController()
-//    vc.viewModel = SearchKeywordViewModel(coordinator: self, perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
-//    vc.hidesBottomBarWhenPushed = true
-//    self.navigationController.pushViewController(vc, animated: true)
-//  }
+  
 }
