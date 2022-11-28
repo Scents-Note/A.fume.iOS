@@ -14,6 +14,6 @@ struct KeywordDataSection {
     var identity: Int {
       self.keyword.idx
     }
-    var keyword: Keyword
+    var keyword: SearchKeyword
   }
 }

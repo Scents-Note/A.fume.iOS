@@ -9,15 +9,11 @@ import Foundation
 import RxSwift
 
 final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
-  
+
   static let shared: DefaultPerfumeService = DefaultPerfumeService()
 
   func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>> {
     requestObject(.fetchPerfumesInSurvey)
-  }
-  
-  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>> {
-    requestObject(.fetchKeywords)
   }
   
   func fetchSeries() -> Observable<ListInfo<SurveySeries>> {

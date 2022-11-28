@@ -26,16 +26,24 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
-    self.bindUI()
+//    self.bindUI()
   }
   
   required init?(coder: NSCoder) {
     super.init(coder: coder)
-    self.configureUI()
-    self.bindUI()
+    fatalError("init(coder:) has not been implemented")
   }
+  
+//  override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//      let attr = super.preferredLayoutAttributesFitting(layoutAttributes)
+//      var frame = attr.frame
+//      frame.size.width = layoutAttributes.size.width //Key here
+//      attr.frame = frame
+//      return attr
+//  }
    
   func configureUI(){
+    self.contentView.translatesAutoresizingMaskIntoConstraints = false
     self.contentView.addSubview(self.keywordLabel)
     self.keywordLabel.snp.makeConstraints {
       $0.top.bottom.equalToSuperview()
@@ -43,10 +51,10 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
     }
   }
     
-  func updateUI(keyword: SurveyKeyword?) {
+  func updateUI(keyword: Keyword?) {
     guard let keyword = keyword else { return }
     self.keywordLabel.text = "#"+keyword.name
-    if keyword.isLiked == true {
+    if keyword.isSelected == true {
       self.backgroundColor = .bgSurveySelected
       self.keywordLabel.textColor = .white
       self.layer.borderWidth = 0

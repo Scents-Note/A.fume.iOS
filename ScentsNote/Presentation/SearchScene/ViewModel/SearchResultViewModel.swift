@@ -15,7 +15,7 @@ final class SearchResultViewModel {
   }
   
   struct CellInput {
-    let keywordDeleteDidTapEvent: PublishRelay<Keyword>
+    let keywordDeleteDidTapEvent: PublishRelay<SearchKeyword>
     let perfumeDidTapEvent: PublishRelay<Perfume>
     let perfumeHeartDidTapEvent: PublishRelay<Perfume>
   }
@@ -43,7 +43,7 @@ final class SearchResultViewModel {
   // MARK: - Binding
   func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
     let output = Output()
-    let keywords = PublishRelay<[Keyword]>()
+    let keywords = PublishRelay<[SearchKeyword]>()
     let perfumes = PublishRelay<[Perfume]>()
 //    let perfumeSearch = PublishRelay<PerfumeSearch>()
     
@@ -112,7 +112,7 @@ final class SearchResultViewModel {
   }
   
   private func bindOutput(output: Output,
-                          keywords: PublishRelay<[Keyword]>,
+                          keywords: PublishRelay<[SearchKeyword]>,
                           perfumes: PublishRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
     keywords.subscribe(onNext: { keywords in
@@ -134,7 +134,7 @@ final class SearchResultViewModel {
     
   }
   
-  private func bindNetwork(keywords: PublishRelay<[Keyword]>,
+  private func bindNetwork(keywords: PublishRelay<[SearchKeyword]>,
                            perfumes: PublishRelay<[Perfume]>,
                            disposeBag: DisposeBag) {
     

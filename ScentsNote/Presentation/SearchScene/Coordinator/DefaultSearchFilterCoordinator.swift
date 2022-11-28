@@ -23,6 +23,7 @@ final class DefaultSearchFilterCoordinator: BaseCoordinator, SearchFilterCoordin
       coordinator: self,
       perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
       filterRepository: DefaultFilterRepository(filterService: DefaultFilterService.shared),
+      keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared),
       fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase(filterRepository: DefaultFilterRepository(filterService: DefaultFilterService.shared)),
       from: from)
     

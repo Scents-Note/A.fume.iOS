@@ -12,7 +12,6 @@ import Moya
 protocol PerfumeRepository {
   // MARK: - Survey
   func fetchPerfumesInSurvey() -> Observable<[Perfume]>
-  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>>
   func fetchSeries() -> Observable<ListInfo<SurveySeries>>
   
   // MARK: - Home

@@ -13,12 +13,12 @@ import Then
 import RxDataSources
 
 final class FilterSeriesView: UIView {
-  typealias DataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
+  typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<FilterSeriesDataSection.Model>
   
   // MARK: - Vars & Lets
   var viewModel: SearchFilterViewModel
   let disposeBag = DisposeBag()
-  var dataSource: DataSource!
+  private var dataSource: DataSource!
   
   let series = BehaviorRelay<[FilterIngredient]>(value: [])
   
@@ -64,7 +64,7 @@ final class FilterSeriesView: UIView {
       $0.centerY.centerX.equalToSuperview()
     }
     
-    self.collectionView.translatesAutoresizingMaskIntoConstraints = false
+//    self.collectionView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.top.equalTo(self.notyView.snp.bottom)

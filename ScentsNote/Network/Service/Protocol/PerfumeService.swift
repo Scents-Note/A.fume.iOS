@@ -11,7 +11,6 @@ protocol PerfumeService {
   
   // Survey
   func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>>
-  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>>
   func fetchSeries() -> Observable<ListInfo<SurveySeries>>
   
   //Home

@@ -13,15 +13,10 @@ import Then
 import RxDataSources
 
 final class FilterBrandView: UIView {
-//  typealias InitialDataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
-//  typealias BrandDataSource = RxCollectionViewSectionedReloadDataSource<FilterSeriesDataSection.Model>
-  
   
   // MARK: - Vars & Lets
   var viewModel: SearchFilterViewModel
   let disposeBag = DisposeBag()
-//  var initialDataSource: InitialDataSource!
-//  var brandDataSource: BrandDataSource!
   
   // MARK: - UI
   private lazy var initialCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.brandInitialLayout).then {

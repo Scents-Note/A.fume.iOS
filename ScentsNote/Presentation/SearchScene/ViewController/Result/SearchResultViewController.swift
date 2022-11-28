@@ -110,7 +110,7 @@ final class SearchResultViewController: UIViewController {
   }
   
   private func configureCollectionView() -> SearchResultViewModel.CellInput {
-    let keywordDeleted = PublishRelay<Keyword>()
+    let keywordDeleted = PublishRelay<SearchKeyword>()
     let perfumeClicked = PublishRelay<Perfume>()
     let perfumeHeartClicked = PublishRelay<Perfume>()
     

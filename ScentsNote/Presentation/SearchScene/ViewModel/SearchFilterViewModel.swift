@@ -21,13 +21,14 @@ final class SearchFilterViewModel {
   
   // MARK: - Vars & Lets
   weak var coordinator: SearchFilterCoordinator?
-  let perfumeRepository: PerfumeRepository
-  let filterRepostiroy: FilterRepository
-  let fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase
-  let from: CoordinatorType
+  private let perfumeRepository: PerfumeRepository
+  private let filterRepostiroy: FilterRepository
+  private let keywordRepository: KeywordRepository
+  private let fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase
+  private let from: CoordinatorType
   
   /// Series
-  let seriesDataSource = BehaviorRelay<[FilterSeriesDataSection.Model]>(value: FilterSeriesDataSection.default)
+  let seriesDataSource = BehaviorRelay<[FilterSeriesDataSection.Model]>(value: [])
   let series = BehaviorRelay<[FilterSeries]>(value: [])
   let seriesState = BehaviorRelay<Set<Int>>(value: Set())
   /// Brand
@@ -35,17 +36,22 @@ final class SearchFilterViewModel {
   let brandInitials = BehaviorRelay<[FilterBrandInitial]>(value: [])
   let brandInitialSelected = BehaviorRelay<Int>(value: 1)
   let brands = BehaviorRelay<[FilterBrand]>(value: [])
+  /// Keyword
+  let keywordDataSource = BehaviorRelay<[FilterKeywordDataSection.Model]>(value: [])
+  let keywords = BehaviorRelay<[Keyword]>(value: [])
   
   
   // MARK: - Life Cycle
   init(coordinator: SearchFilterCoordinator,
        perfumeRepository: PerfumeRepository,
        filterRepository: FilterRepository,
+       keywordRepository: KeywordRepository,
        fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase,
        from: CoordinatorType) {
     self.coordinator = coordinator
     self.perfumeRepository = perfumeRepository
     self.filterRepostiroy = filterRepository
+    self.keywordRepository = keywordRepository
     self.fetchFilterBrandInitialUseCase = fetchFilterBrandInitialUseCase
     self.from = from
   }
@@ -69,6 +75,7 @@ final class SearchFilterViewModel {
   private func bindOutput(disposeBag: DisposeBag) {
     self.bindSeries(disposeBag: disposeBag)
     self.bindBrands(disposeBag: disposeBag)
+    self.bindKeywords(disposeBag: disposeBag)
   }
   
   private func bindSeries(disposeBag: DisposeBag) {
@@ -87,6 +94,7 @@ final class SearchFilterViewModel {
   private func bindBrands(disposeBag: DisposeBag) {
     Observable.zip(self.brandInitialSelected, self.brandInitialSelected.skip(1))
       .subscribe(onNext: { [weak self] previous, current in
+        guard previous != current else { return }
         self?.updateBrandInitials(previous: previous, current: current)
         self?.updateBrands(current: current)
       })
@@ -105,6 +113,16 @@ final class SearchFilterViewModel {
     .disposed(by: disposeBag)
   }
   
+  private func bindKeywords(disposeBag: DisposeBag) {
+    self.keywords.withLatestFrom(self.keywordDataSource) { updated, originals in
+      let items = updated.map { FilterKeywordDataSection.Item(keyword: $0) }
+      let sectionModel = FilterKeywordDataSection.Model(model: "keyword", items: items)
+      return [sectionModel]
+    }
+    .bind(to: self.keywordDataSource)
+    .disposed(by: disposeBag)
+  }
+  
   // MARK: - Network
   private func fetchDatas(disposeBag: DisposeBag) {
     /// Series
@@ -118,16 +136,22 @@ final class SearchFilterViewModel {
       .disposed(by: disposeBag)
     
     /// Brand
-    self.fetchFilterBrandInitialUseCase.execute()
-      .subscribe(onNext: { [weak self] initials in
-        self?.brandInitials.accept(initials)
-//        self?.brandInitialSelected.accept(0)
-      })
-      .disposed(by: disposeBag)
-    
     self.filterRepostiroy.fetchBrandsForFilter()
       .subscribe(onNext: { [weak self] brandInfos in
         self?.brandInfos = brandInfos
+      })
+      .disposed(by: disposeBag)
+    
+    self.fetchFilterBrandInitialUseCase.execute()
+      .subscribe(onNext: { [weak self] initials in
+        self?.brandInitials.accept(initials)
+        self?.brandInitialSelected.accept(0)
+      })
+      .disposed(by: disposeBag)
+    
+    self.keywordRepository.fetchKeywords()
+      .subscribe(onNext: { [weak self] keywords in
+        self?.keywords.accept(keywords)
       })
       .disposed(by: disposeBag)
   }
@@ -147,6 +171,20 @@ final class SearchFilterViewModel {
     self.updateSeries(section: section, ingredient: ingredient)
   }
   
+  
+  func clickBrandInitial(pos: Int) {
+    self.brandInitialSelected.accept(pos)
+  }
+  
+  func clickBrand(pos: Int) {
+    self.updateBrandData(pos: pos)
+  }
+  
+  func clickKeyword(pos: Int) {
+    self.updateKeywords(pos: pos)
+  }
+  
+  // MARK: - Update Data
   func updateSeries(section: Int, ingredient: FilterIngredient) {
     let updated = self.series.value.enumerated().compactMap { idx, series in
       guard idx != section else {
@@ -190,16 +228,9 @@ final class SearchFilterViewModel {
     }
   }
   
-  func clickBrandInitial(pos: Int) {
-    self.brandInitialSelected.accept(pos)
-  }
-  
-  func clickBrand(pos: Int) {
-    self.updateBrandData(pos: pos)
-  }
-  
   private func updateBrandData(pos: Int) {
-    var updatedBrandInfo = self.brandInfos[self.brandInitialSelected.value].brands[pos]
+    let initialPos = self.brandInitialSelected.value
+    var updatedBrandInfo = self.brandInfos[initialPos].brands[pos]
     updatedBrandInfo.isSelected = !updatedBrandInfo.isSelected
     
     let updatedBrands = self.brands.value.enumerated().map { idx, brand in
@@ -208,6 +239,21 @@ final class SearchFilterViewModel {
       }
       return brand
     }
+    
+    self.brandInfos[initialPos].brands[pos] = updatedBrandInfo
     self.brands.accept(updatedBrands)
   }
+  
+  private func updateKeywords(pos: Int) {
+    Log(pos)
+    let updated = self.keywords.value.enumerated().map { idx, keyword in
+      guard idx != pos else {
+        return Keyword(idx: keyword.idx, name: keyword.name, isSelected: !keyword.isSelected)
+      }
+      return keyword
+    }
+    self.keywords.accept(updated)
+  }
+  
+  
 }

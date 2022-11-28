@@ -70,7 +70,7 @@ final class KeywordCell: UICollectionViewCell {
     }
   }
     
-  func updateUI(keyword: Keyword) {
+  func updateUI(keyword: SearchKeyword) {
     self.keywordLabel.text = keyword.name
   }
   

@@ -276,7 +276,7 @@ extension SurveyViewController: UICollectionViewDataSource {
       let keyword = self.viewModel?.keywords[indexPath.row]
       cell.updateUI(keyword: keyword)
       cell.clickKeyword = {
-        self.viewModel?.keywords[indexPath.row].isLiked!.toggle()
+        self.viewModel?.keywords[indexPath.row].isSelected.toggle()
         self.surveyScrollView.surveyKeywordView.reloadItems(at: [indexPath])
       }
       return cell

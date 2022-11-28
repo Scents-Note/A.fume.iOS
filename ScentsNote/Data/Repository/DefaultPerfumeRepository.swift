@@ -20,10 +20,6 @@ final class DefaultPerfumeRepository: PerfumeRepository {
       .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>> {
-    self.perfumeService.fetchKeywords()
-  }
-  
   func fetchSeries() -> Observable<ListInfo<SurveySeries>> {
     self.perfumeService.fetchSeries()
   }

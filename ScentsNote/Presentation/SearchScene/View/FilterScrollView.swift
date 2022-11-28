@@ -10,10 +10,10 @@ import SnapKit
 
 final class FilterScrollView: UIScrollView {
   
-  let viewModel: SearchFilterViewModel
-  lazy var seriesView = FilterSeriesView(viewModel: self.viewModel)
-  lazy var brandView = FilterBrandView(viewModel: self.viewModel)
-//  let keywordView = SurveyKeywordView()
+  private let viewModel: SearchFilterViewModel
+  private lazy var seriesView = FilterSeriesView(viewModel: self.viewModel)
+  private lazy var brandView = FilterBrandView(viewModel: self.viewModel)
+  private lazy var keywordView = FilterKeywordView(viewModel: self.viewModel)
 
   init(viewModel: SearchFilterViewModel) {
     self.viewModel = viewModel
@@ -27,31 +27,24 @@ final class FilterScrollView: UIScrollView {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    let screenSize = UIScreen.main.bounds
+    let width = self.frame.width
+    let height = self.frame.height
 
-    self.seriesView.frame = CGRect(x: screenSize.width * CGFloat(0), y: 0, width: screenSize.width, height: self.frame.height)
-    self.brandView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: self.frame.height)
-    
-    
+    self.contentSize = CGSize(width: width * CGFloat(3), height: 0)
+    self.seriesView.frame = CGRect(x: width * CGFloat(0), y: 0, width: width, height: height)
+    self.brandView.frame = CGRect(x: width * CGFloat(1), y: 0, width: width, height: height)
+    self.keywordView.frame = CGRect(x: width * CGFloat(2), y: 0, width: width, height: height)
   }
   
   private func configureUI() {
-    let screenSize = UIScreen.main.bounds
     self.isPagingEnabled = true
-    self.isDirectionalLockEnabled = true
-    self.showsVerticalScrollIndicator = false
-    self.showsHorizontalScrollIndicator = false
-
-    self.contentSize = CGSize(width: screenSize.width * 2, height: 0)
-    
-//    self.setContentOffset(CGPoint(x: self.frame.width, y: 0), animated: false)
-//    self.surveyKeywordView.frame = CGRect(x: screenSize.width * CGFloat(1), y: 0, width: screenSize.width, height: 520)
-//    self.surveySeriesView.frame = CGRect(x: screenSize.width * CGFloat(2), y: 0, width: screenSize.width, height: 520)
-
+//    self.isDirectionalLockEnabled = true
+//    self.showsVerticalScrollIndicator = false
+//    self.showsHorizontalScrollIndicator = false
 
     self.addSubview(self.seriesView)
     self.addSubview(self.brandView)
-//    addSubview(surveySeriesView)
+    self.addSubview(self.keywordView)
 
   }
 

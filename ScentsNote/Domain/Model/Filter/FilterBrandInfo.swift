@@ -9,5 +9,5 @@ import Foundation
 
 struct FilterBrandInfo {
   let initial: String
-  let brands: [FilterBrand]
+  var brands: [FilterBrand]
 }

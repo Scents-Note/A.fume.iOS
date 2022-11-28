@@ -9,14 +9,14 @@ import Foundation
 
 struct PerfumeSearch {
   var searchWord: String? = nil
-  var keywords: [Keyword] = []
-  var ingredients: [Keyword] = []
-  var brands: [Keyword] = []
+  var keywords: [SearchKeyword] = []
+  var ingredients: [SearchKeyword] = []
+  var brands: [SearchKeyword] = []
   
   static let `default` = PerfumeSearch()
 }
 
-struct Keyword: Hashable {
+struct SearchKeyword: Hashable {
   let idx: Int
   let name: String
   let category: SearchCategory
@@ -37,10 +37,10 @@ extension PerfumeSearch {
                             brandList: self.brands.map { $0.idx })
   }
   
-  func toKeywordList() -> [Keyword] {
-    var list: [Keyword] = []
+  func toKeywordList() -> [SearchKeyword] {
+    var list: [SearchKeyword] = []
     if searchWord != nil {
-      list += [Keyword(idx: -1, name: self.searchWord!, category: .searchWord)]
+      list += [SearchKeyword(idx: -1, name: self.searchWord!, category: .searchWord)]
     } else {
       list += keywords
       list += ingredients
