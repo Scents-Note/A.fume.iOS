@@ -57,7 +57,6 @@ final class LoginViewModel {
         guard let self = self else { return }
         self.userRepository.login(email: self.email, password: self.password)
           .subscribe { loginInfo in
-            guard let loginInfo = loginInfo else { return }
             self.userRepository.saveLoginInfo(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
           } onError: { error in

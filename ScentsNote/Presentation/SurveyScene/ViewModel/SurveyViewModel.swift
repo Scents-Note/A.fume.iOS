@@ -86,7 +86,6 @@ final class SurveyViewModel {
     
     self.perfumeRepository.fetchPerfumesInSurvey()
       .subscribe { [weak self] perfumes in
-        guard let perfumes = perfumes else { return }
         self?.perfumes = perfumes
         output.loadData.accept(true)
       } onError: { error in
@@ -96,7 +95,6 @@ final class SurveyViewModel {
     
     self.perfumeRepository.fetchKeywords()
       .subscribe { [weak self] keywordInfo in
-        guard let keywordInfo = keywordInfo else { return }
         self?.keywords = keywordInfo.rows.compactMap({
           return SurveyKeyword(keywordIdx: $0.keywordIdx, name: $0.name, isLiked: false)
         })
@@ -108,7 +106,6 @@ final class SurveyViewModel {
     
     self.perfumeRepository.fetchSeries()
       .subscribe { [weak self] seriesInfo in
-        guard let seriesInfo = seriesInfo else { return }
         self?.series = seriesInfo.rows.compactMap({
           return SurveySeries(seriesIdx: $0.seriesIdx, name: $0.name, imageUrl: $0.imageUrl, isLiked: false)
         })

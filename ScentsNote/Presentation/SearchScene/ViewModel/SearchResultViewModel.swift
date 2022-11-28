@@ -154,7 +154,6 @@ final class SearchResultViewModel {
     self.perfumeRepository.fetchPerfumeSearched(perfumeSearch: perfumeSearch)
       .subscribe(onNext: { perfumesFetched in
         Log(perfumesFetched)
-        guard let perfumesFetched = perfumesFetched else { return }
         perfumes.accept(perfumesFetched)
       }, onError: { error in
         Log(error)

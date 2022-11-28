@@ -16,23 +16,23 @@ final class DefaultUserRepository: UserRepository {
     self.userService = userService
   }
   
-  func login(email: String, password: String) -> Observable<LoginInfo?> {
+  func login(email: String, password: String) -> Observable<LoginInfo> {
     return self.userService.login(email: email, password: password)
   }
   
-  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo?> {
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
     return self.userService.signUp(signUpInfo: signUpInfo)
   }
   
-  func checkDuplicateEmail(email: String) -> Observable<Bool?> {
+  func checkDuplicateEmail(email: String) -> Observable<Bool> {
     return self.userService.checkDuplicateEmail(email: email)
   }
   
-  func checkDuplicateNickname(nickname: String) -> Observable<Bool?> {
+  func checkDuplicateNickname(nickname: String) -> Observable<Bool> {
     return self.userService.checkDuplicateNickname(nickname: nickname)
   }
   
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool?> {
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool> {
     return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
   

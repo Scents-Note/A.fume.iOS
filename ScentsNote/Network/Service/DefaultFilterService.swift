@@ -15,4 +15,6 @@ final class DefaultFilterService: ScentsNoteService, FilterService {
   func fetchSeriesForFilter() -> Observable<ListInfo<FilterSeriesResponseDTO>?> {
     requestObject(.fetchSeriesForFilter)
   }
+  
+  
 }

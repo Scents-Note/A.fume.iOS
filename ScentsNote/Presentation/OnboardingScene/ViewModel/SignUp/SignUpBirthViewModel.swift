@@ -42,7 +42,6 @@ final class SignUpBirthViewModel {
         print("User Log: signUp \(self.signUpInfo)")
         self.userRepository.signUp(signUpInfo: self.signUpInfo)
           .subscribe { loginInfo in
-            guard let loginInfo = loginInfo else { return }
             self.userRepository.saveLoginInfo(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
           } onError: { error in

@@ -93,7 +93,6 @@ final class SearchViewModel {
   private func fetchDatas(perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumesNew(size: nil)
       .subscribe { perfumesFetched in
-        guard let perfumesFetched = perfumesFetched else { return }
         perfumes.accept(perfumesFetched)
       } onError: { error in
         Log(error)

@@ -35,9 +35,7 @@ fileprivate class DefaultAlamofireManager: Alamofire.Session {
 
 class ScentsNoteService {
   
-  static let `default` = ScentsNoteService()
-  
-  func requestObject<T: Decodable>(_ target: ScentsNoteAPI) -> Observable<T?> {
+  func requestObject<T: Decodable>(_ target: ScentsNoteAPI) -> Observable<T> {
     return provider.rx.request(target)
       .asObservable()
       .filterSuccessfulStatusCodes()
@@ -45,9 +43,8 @@ class ScentsNoteService {
         .catch(self.handleTimeOut)
         .catch(self.handleREST)
         .map { try JSONDecoder().decode(ResponseObject<T>.self, from: $0.data) }
-      .map { $0.data }
+      .compactMap { $0.data }
   }
-  
 }
 
 // MARK: Handle Network Error
@@ -78,41 +75,3 @@ extension ScentsNoteService {
     throw error
   }
 }
-
-
-/// Regacy Code
-//func requestObject<T: Decodable>(_ target: ScentsNoteAPI, completion: @escaping (Result<T?, NetworkError>) -> Void) {
-//  provider.request(target) { response in
-//    switch response {
-//    case let .success(value):
-//      do {
-//        let decoder = JSONDecoder()
-//        let body = try decoder.decode(ResponseObject<T>.self, from: value.data)
-//        completion(.success(body.data))
-//      } catch {
-//        print(error.localizedDescription)
-//        completion(.failure(.decodingError))
-//      }
-//    case let .failure(error):
-//      if let body = error.response?.data,
-//         let statusCode = error.response?.statusCode {
-//        do {
-//          let decoder = JSONDecoder()
-//          decoder.keyDecodingStrategy = .convertFromSnakeCase
-//          let errorBody = try decoder.decode(ErrorBody.self, from: body)
-//          print("User Log: \(statusCode)")
-//          print("User Log: errorMsg \(errorBody.message ?? "no msg")")
-//          if let networkError = NetworkError.build(with: statusCode) {
-//            completion(.failure(networkError))
-//          } else {
-//            completion(.failure(.decodingError))
-//          }
-//        } catch {
-//          completion(.failure(.decodingError))
-//        }
-//      } else {
-//        completion(.failure(.decodingError))
-//      }
-//    }
-//  }
-//}

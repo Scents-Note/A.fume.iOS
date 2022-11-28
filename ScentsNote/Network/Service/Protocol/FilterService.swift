@@ -10,5 +10,6 @@ import RxSwift
 protocol FilterService {
   
   func fetchSeriesForFilter() -> Observable<ListInfo<FilterSeriesResponseDTO>?>
+//  func fetchBrandsForFilter() -> Observable<ListInfo<FilterBrandsResponseDTO>?>
   
 }

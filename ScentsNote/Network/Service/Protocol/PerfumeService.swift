@@ -10,18 +10,18 @@ import RxSwift
 protocol PerfumeService {
   
   // Survey
-  func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?>
-  func fetchSeries() -> Observable<ListInfo<SurveySeries>?>
+  func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>>
+  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>>
+  func fetchSeries() -> Observable<ListInfo<SurveySeries>>
   
   //Home
-  func fetchPerfumesRecommended() -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchPerfumesPopular() -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchPerfumesRecent() -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchPerfumesNew(size: Int?) -> Observable<ListInfo<PerfumeResponseDTO>?>
-  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetailResponseDTO?>
-  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumesRecommended() -> Observable<ListInfo<PerfumeResponseDTO>>
+  func fetchPerfumesPopular() -> Observable<ListInfo<PerfumeResponseDTO>>
+  func fetchPerfumesRecent() -> Observable<ListInfo<PerfumeResponseDTO>>
+  func fetchPerfumesNew(size: Int?) -> Observable<ListInfo<PerfumeResponseDTO>>
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetailResponseDTO>
+  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<ListInfo<PerfumeResponseDTO>>
   
   //Search
-  func fetchPerfumeSearched(perfumeSearch: PerfumeSearchRequestDTO) -> Observable<ListInfo<PerfumeResponseDTO>?>
+  func fetchPerfumeSearched(perfumeSearch: PerfumeSearchRequestDTO) -> Observable<ListInfo<PerfumeResponseDTO>>
 }

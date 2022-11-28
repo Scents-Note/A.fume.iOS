@@ -92,8 +92,8 @@ final class SearchFilterViewModel {
       .disposed(by: disposeBag)
     
     /// Brand
-    self.filterRepostiroy.fetchBrandForFilter()
-    
+//    self.filterRepostiroy.fetchBrandForFilter()
+      
   }
   
   func clickSeriesMoreButton(section: Int) {

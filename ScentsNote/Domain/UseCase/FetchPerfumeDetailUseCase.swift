@@ -21,7 +21,7 @@ final class FetchPerfumeDetailUseCase {
       Observable.zip(self.perfumeRepository.fetchPerfumeDetail(perfumeIdx: perfumeIdx), self.perfumeRepository.fetchSimliarPerfumes(perfumeIdx: perfumeIdx))
         .subscribe(onNext: { perfumeDetail, similarPerfumes in
           var detail = perfumeDetail
-          detail?.similarPerfumes = similarPerfumes
+          detail.similarPerfumes = similarPerfumes
           observer.onNext(detail)
         })
         .disposed(by: self.disposeBag)

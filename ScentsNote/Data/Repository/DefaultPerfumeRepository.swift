@@ -15,53 +15,53 @@ final class DefaultPerfumeRepository: PerfumeRepository {
     self.perfumeService = perfumeService
   }
   
-  func fetchPerfumesInSurvey() -> Observable<[Perfume]?> {
+  func fetchPerfumesInSurvey() -> Observable<[Perfume]> {
     self.perfumeService.fetchPerfumesInSurvey()
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>?> {
+  func fetchKeywords() -> Observable<ListInfo<SurveyKeyword>> {
     self.perfumeService.fetchKeywords()
   }
   
-  func fetchSeries() -> Observable<ListInfo<SurveySeries>?> {
+  func fetchSeries() -> Observable<ListInfo<SurveySeries>> {
     self.perfumeService.fetchSeries()
   }
   
-  func fetchPerfumesRecommended() -> Observable<[Perfume]?> {
+  func fetchPerfumesRecommended() -> Observable<[Perfume]> {
     self.perfumeService.fetchPerfumesRecommended()
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchPerfumesPopular() -> Observable<[Perfume]?> {
+  func fetchPerfumesPopular() -> Observable<[Perfume]> {
     self.perfumeService.fetchPerfumesPopular()
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchPerfumesRecent() -> Observable<[Perfume]?> {
+  func fetchPerfumesRecent() -> Observable<[Perfume]> {
     self.perfumeService.fetchPerfumesRecent()
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchPerfumesNew(size: Int?) -> Observable<[Perfume]?> {
+  func fetchPerfumesNew(size: Int?) -> Observable<[Perfume]> {
     self.perfumeService.fetchPerfumesNew(size: size)
-      .map { $0?.rows.map { $0.toDomain()} }
+      .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail?> {
+  func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail> {
     self.perfumeService.fetchPerfumeDetail(perfumeIdx: perfumeIdx)
-      .map { $0?.toDomain() }
+      .map { $0.toDomain() }
   }
   
-  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]?> {
+  func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]> {
     self.perfumeService.fetchSimliarPerfumes(perfumeIdx: perfumeIdx)
-      .map { $0?.rows.map { $0.toDomain() } }
+      .map { $0.rows.map { $0.toDomain() } }
   }
   
-  func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]?> {
+  func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]> {
     let dto = perfumeSearch.toEntity()
     return self.perfumeService.fetchPerfumeSearched(perfumeSearch: dto)
-      .map { $0?.rows.map { $0.toDomain() } }
+      .map { $0.rows.map { $0.toDomain() } }
   }
   
 }

@@ -81,7 +81,6 @@ final class PerfumeNewViewModel {
   private func fetchDatas(perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumesNew(size: nil)
       .subscribe(onNext: { data in
-        guard let data = data else { return }
         perfumes.accept(data)
       })
       .disposed(by: disposeBag)
