@@ -12,6 +12,7 @@ final class SearchResultViewModel {
   // MARK: - Input & Output
   struct Input {
     let searchButtonDidTapEvent: Observable<Void>
+    let filterButtonDidTapEvent: Observable<Void>
   }
   
   struct CellInput {
@@ -74,14 +75,34 @@ final class SearchResultViewModel {
       })
       .disposed(by: disposeBag)
     
+    input.filterButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runSearchFilterFlow?()
+      })
+      .disposed(by: disposeBag)
+    
     cellInput.keywordDeleteDidTapEvent.withLatestFrom(perfumeSearch) { updated, originals in
       switch updated.category {
       case .searchWord:
         var updates = originals
         updates.searchWord = nil
         return updates
-      default:
-        return originals
+      case .ingredient:
+        var updates = originals
+        let updatedIngredients = originals.ingredients.filter { $0.idx != updated.idx }
+        Log(updatedIngredients)
+        updates.ingredients = updatedIngredients
+        return updates
+      case .brand:
+        var updates = originals
+        let updatedIngredients = originals.brands.filter { $0.idx != updated.idx }
+        updates.brands = updatedIngredients
+        return updates
+      case .keyword:
+        var updates = originals
+        let updatedIngredients = originals.keywords.filter { $0.idx != updated.idx }
+        updates.keywords = updatedIngredients
+        return updates
       }
     }
     .bind(to: perfumeSearch)
@@ -125,7 +146,10 @@ final class SearchResultViewModel {
     perfumes.subscribe(onNext: { perfumes in
       if perfumes.count == 0 {
         output.hideEmptyView.accept(false)
+      } else {
+        output.hideEmptyView.accept(true)
       }
+      Log(perfumes)
       let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
       let model = PerfumeDataSection.Model(model: "perfume", items: items)
       output.perfumes.accept([model])
@@ -140,20 +164,17 @@ final class SearchResultViewModel {
     
     perfumeSearch
       .subscribe(onNext: { [weak self] data in
-        Log(data)
         keywords.accept(data.toKeywordList())
         self?.fetchPerfumes(perfumeSearch: data, perfumes: perfumes, disposeBag: disposeBag)
       })
       .disposed(by: disposeBag)
-    
-//    perfumeSearch.accept(self.perfumeSearch)
-    
   }
   
-  private func fetchPerfumes(perfumeSearch: PerfumeSearch, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+  private func fetchPerfumes(perfumeSearch: PerfumeSearch,
+                             perfumes: PublishRelay<[Perfume]>,
+                             disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumeSearched(perfumeSearch: perfumeSearch)
       .subscribe(onNext: { perfumesFetched in
-        Log(perfumesFetched)
         perfumes.accept(perfumesFetched)
       }, onError: { error in
         Log(error)
@@ -164,6 +185,4 @@ final class SearchResultViewModel {
   func updateSearchWords(perfumeSearch: PerfumeSearch) {
     self.perfumeSearch.accept(perfumeSearch)
   }
-  
-  
 }

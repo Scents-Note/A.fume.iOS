@@ -32,6 +32,7 @@ final class FilterBrandCell: UICollectionViewCell {
   override func prepareForReuse() {
     super.prepareForReuse()
     self.disposeBag = DisposeBag()
+    self.checkButton.setImage(nil, for: .normal)
   }
   
   func configureUI(){
@@ -59,7 +60,4 @@ final class FilterBrandCell: UICollectionViewCell {
     self.checkButton.setImage(brand.isSelected ? .checkmark : .btnNext, for: .normal)
   }
   
-//  func clickSeries() -> Observable<UITapGestureRecognizer> {
-//    self.rx.tapGesture().when(.recognized).asObservable()
-//  }
 }

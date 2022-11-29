@@ -53,17 +53,21 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   func runSearchFilterFlow(from: CoordinatorType) {
     let coordinator = DefaultSearchFilterCoordinator(self.navigationController)
     coordinator.finishFlow = { [weak self, unowned coordinator] perfumeSearch in
+      self?.removeDependency(coordinator)
+      self?.navigationController.dismiss(animated: true)
+      guard let perfumeSearch = perfumeSearch else {
+        return
+      }
       switch from {
       case .search:
         self?.runSearchResultFlow(perfumeSearch: perfumeSearch)
       case .searchResult:
-        self?.navigationController.popViewController(animated: true)
+//        self?.navigationController.dismiss(animated: true)
         let vc = self?.findViewController(SearchResultViewController.self) as! SearchResultViewController
         vc.viewModel?.updateSearchWords(perfumeSearch: perfumeSearch)
       default:
         break
       }
-      self?.removeDependency(coordinator)
     }
     coordinator.start(from: from)
     self.addDependency(coordinator)
@@ -76,6 +80,9 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
     }
     coordinator.runSearchKeywordFlow = { [weak self] in
       self?.runSearchKeywordFlow(from: .searchResult)
+    }
+    coordinator.runSearchFilterFlow = { [weak self] in
+      self?.runSearchFilterFlow(from: .searchResult)
     }
     coordinator.finishFlow = {
       

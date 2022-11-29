@@ -18,7 +18,17 @@ final class SearchFilterViewController: UIViewController {
   let disposeBag = DisposeBag()
 
   // MARK: - UI
+  private let navigationView = UIView().then { $0.backgroundColor = .white }
+  private let titleLabel = UILabel().then {
+    $0.text = "필터"
+    $0.textColor = .blackText
+    $0.font = .nanumMyeongjo(type: .extraBold, size: 22)
+  }
+  
+  private let closeButton = UIButton().then { $0.setImage(.btnClose, for: .normal) }
+  
   private lazy var tabCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.tabCompositionalLayout()).then {
+    $0.isScrollEnabled = false
     $0.backgroundColor = .white
     $0.register(TabCell.self)
   }
@@ -43,11 +53,29 @@ final class SearchFilterViewController: UIViewController {
   // MARK: - Configure UI
   private func configureUI() {
     self.view.backgroundColor = .white
-    self.configureNavigation()
+    
+    self.view.addSubview(self.navigationView)
+    self.navigationView.snp.makeConstraints {
+      $0.top.equalTo(self.view.safeAreaLayoutGuide)
+      $0.left.right.equalToSuperview()
+      $0.height.equalTo(56)
+    }
+    
+    self.navigationView.addSubview(self.titleLabel)
+    self.titleLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.left.equalToSuperview().offset(16)
+    }
+    
+    self.navigationView.addSubview(self.closeButton)
+    self.closeButton.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.right.equalToSuperview().offset(-16)
+    }
     
     self.view.addSubview(self.tabCollectionView)
     self.tabCollectionView.snp.makeConstraints {
-      $0.top.equalTo(self.view.safeAreaLayoutGuide)
+      $0.top.equalTo(self.navigationView.snp.bottom).offset(12)
       $0.left.right.equalToSuperview()
       $0.height.equalTo(48)
     }
@@ -82,14 +110,12 @@ final class SearchFilterViewController: UIViewController {
     
   }
   
-  private func configureNavigation() {
-    self.setBackButton()
-    self.setHomeNavigationTitle(title: "필터")
-  }
-  
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = SearchFilterViewModel.Input()
+    let input = SearchFilterViewModel.Input(
+      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
+      closeButtonDidTapEvent: self.closeButton.rx.tap.asObservable()
+    )
     let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
     self.bindTab(output: output)
     self.bindDoneButton(output: output)

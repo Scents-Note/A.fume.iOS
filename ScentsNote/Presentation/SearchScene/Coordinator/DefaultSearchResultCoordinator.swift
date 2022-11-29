@@ -12,6 +12,7 @@ final class DefaultSearchResultCoordinator: BaseCoordinator, SearchResultCoordin
   var finishFlow: (() -> Void)?
   var runPerfumeDetailFlow: ((Int) -> Void)?
   var runSearchKeywordFlow: (() -> Void)?
+  var runSearchFilterFlow: (() -> Void)?
 
   var searchResultViewController: SearchResultViewController
   

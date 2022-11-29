@@ -9,7 +9,7 @@ import UIKit
 
 final class DefaultSearchFilterCoordinator: BaseCoordinator, SearchFilterCoordinator {
   
-  var finishFlow: ((PerfumeSearch) -> Void)?
+  var finishFlow: ((PerfumeSearch?) -> Void)?
   
   var searchFilterViewController: SearchFilterViewController
   
@@ -27,7 +27,8 @@ final class DefaultSearchFilterCoordinator: BaseCoordinator, SearchFilterCoordin
       fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase(filterRepository: DefaultFilterRepository(filterService: DefaultFilterService.shared)),
       from: from)
     
-    self.searchFilterViewController.hidesBottomBarWhenPushed = true
-    self.navigationController.pushViewController(self.searchFilterViewController, animated: true)
+//    self.searchFilterViewController.hidesBottomBarWhenPushed = true
+    self.navigationController.present(self.searchFilterViewController, animated: true)
+//    self.navigationController.pushViewController(self.searchFilterViewController, animated: true)
   }
 }

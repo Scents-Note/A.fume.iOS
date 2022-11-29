@@ -85,7 +85,6 @@ final class FilterKeywordView: UIView {
   func bindViewModel() {
     self.collectionView.rx.itemSelected.map { $0.item }
       .subscribe(onNext: { [weak self] pos in
-        Log(pos)
         self?.viewModel.clickKeyword(pos: pos)
       })
       .disposed(by: self.disposeBag)

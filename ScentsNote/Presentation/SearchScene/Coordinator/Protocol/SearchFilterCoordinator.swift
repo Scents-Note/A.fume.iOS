@@ -6,5 +6,5 @@
 //
 
 protocol SearchFilterCoordinator: AnyObject {
-  var finishFlow: ((PerfumeSearch) -> Void)? { get set }
+  var finishFlow: ((PerfumeSearch?) -> Void)? { get set }
 }

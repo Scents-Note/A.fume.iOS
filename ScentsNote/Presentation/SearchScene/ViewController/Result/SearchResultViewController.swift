@@ -56,6 +56,15 @@ final class SearchResultViewController: UIViewController {
     $0.layer.cornerRadius = 2
     $0.layer.borderColor = UIColor.blackText.cgColor
   }
+  
+  private let filterButton = UIButton().then {
+    $0.setTitle("필터", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .medium, size: 16)
+    $0.layer.cornerRadius = 21
+    $0.layer.backgroundColor = UIColor.black.cgColor
+  }
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -99,6 +108,14 @@ final class SearchResultViewController: UIViewController {
     
     self.reportButton.snp.makeConstraints {
       $0.left.right.equalToSuperview().inset(26)
+    }
+    
+    self.view.addSubview(self.filterButton)
+    self.filterButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-24)
+      $0.width.equalTo(95)
+      $0.height.equalTo(42)
     }
   }
   
@@ -148,7 +165,9 @@ final class SearchResultViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel(cellInput: SearchResultViewModel.CellInput) {
-    let input = SearchResultViewModel.Input(searchButtonDidTapEvent: searchButton.rx.tap.asObservable())
+    let input = SearchResultViewModel.Input(
+      searchButtonDidTapEvent: searchButton.rx.tap.asObservable(),
+      filterButtonDidTapEvent: self.filterButton.rx.tap.asObservable())
     let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
     self.bindKeywords(output: output)
     self.bindPerfumes(output: output)
@@ -168,7 +187,7 @@ final class SearchResultViewController: UIViewController {
       .observe(on: MainScheduler.instance)
       .bind(to: self.perfumeCollectionView.rx.items(dataSource: perfumeDataSource))
       .disposed(by: self.disposeBag)
-    
+
     output?.hideEmptyView
       .subscribe(onNext: { [weak self] isHidden in
         self?.updateEmptyView(isHidden: isHidden)

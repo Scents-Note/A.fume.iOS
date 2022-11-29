@@ -14,6 +14,8 @@ final class SearchFilterViewModel {
   
   // MARK: - Input & Output
   struct Input {
+    let doneButtonDidTapEvent: Observable<Void>
+    let closeButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
@@ -35,17 +37,17 @@ final class SearchFilterViewModel {
   let seriesDataSource = BehaviorRelay<[FilterSeriesDataSection.Model]>(value: [])
   let series = BehaviorRelay<[FilterSeries]>(value: [])
   let seriesState = BehaviorRelay<Set<Int>>(value: Set())
-  let seriesSelected = BehaviorRelay<Set<Int>>(value: Set())
+  let seriesSelected = BehaviorRelay<[SearchKeyword]>(value: [])
   /// Brand
   var brandInfos: [FilterBrandInfo] = []
   let brandInitials = BehaviorRelay<[FilterBrandInitial]>(value: [])
   let brandInitialSelected = BehaviorRelay<Int>(value: 1)
   let brands = BehaviorRelay<[FilterBrand]>(value: [])
-  let brandsSelected = BehaviorRelay<Set<Int>>(value: Set())
+  let brandsSelected = BehaviorRelay<[SearchKeyword]>(value: [])
   /// Keyword
   let keywordDataSource = BehaviorRelay<[FilterKeywordDataSection.Model]>(value: [])
   let keywords = BehaviorRelay<[Keyword]>(value: [])
-  let keywordsSelected = BehaviorRelay<Set<Int>>(value: Set())
+  let keywordsSelected = BehaviorRelay<[SearchKeyword]>(value: [])
   
   // MARK: - Life Cycle
   init(coordinator: SearchFilterCoordinator,
@@ -75,7 +77,20 @@ final class SearchFilterViewModel {
   }
   
   private func bindInput(input: Input, disposeBag: DisposeBag) {
+    input.doneButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
+        let searchKeywords = self.createSearchKeywords()
+        Log(searchKeywords)
+        self.coordinator?.finishFlow?(searchKeywords)
+      })
+      .disposed(by: disposeBag)
     
+    input.closeButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.finishFlow?(nil)
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindOutput(output: Output, disposeBag: DisposeBag) {
@@ -241,12 +256,12 @@ final class SearchFilterViewModel {
           guard $0.idx != ingredient.idx else {
             var selected = self.seriesSelected.value
             if ingredient.isSelected {
-              selected.remove(ingredient.idx)
+              selected = selected.filter { $0.idx != ingredient.idx }
             } else {
-              if self.seriesSelected.value.count > 4 {
+              if selected.count > 4 {
                 return $0
               } else {
-                selected.insert(ingredient.idx)
+                selected += [SearchKeyword(idx: ingredient.idx, name: ingredient.name, category: .ingredient)]
               }
             }
             self.seriesSelected.accept(selected)
@@ -297,12 +312,12 @@ final class SearchFilterViewModel {
       guard idx != pos else {
         var selected = self.brandsSelected.value
         if brand.isSelected {
-          selected.remove(brand.idx)
+          selected = selected.filter { $0.idx != brand.idx }
         } else {
-          if self.brandsSelected.value.count > 4 {
+          if selected.count > 4 {
             return brand
           } else {
-            selected.insert(brand.idx)
+            selected += [SearchKeyword(idx: brand.idx, name: brand.name, category: .brand)]
           }
         }
         self.brandsSelected.accept(selected)
@@ -317,21 +332,19 @@ final class SearchFilterViewModel {
   }
   
   private func updateKeywords(pos: Int) {
-    Log(pos)
     let updated = self.keywords.value.enumerated().map { idx, keyword in
       guard idx != pos else {
         var selected = self.keywordsSelected.value
         if keyword.isSelected {
-          selected.remove(keyword.idx)
+          selected = selected.filter { $0.idx != keyword.idx }
         } else {
-          if self.keywordsSelected.value.count > 4 {
+          if selected.count > 4 {
             return keyword
           } else {
-            selected.insert(keyword.idx)
+            selected += [SearchKeyword(idx: keyword.idx, name: keyword.name, category: .brand)]
           }
         }
         self.keywordsSelected.accept(selected)
-        
         return Keyword(idx: keyword.idx, name: keyword.name, isSelected: !keyword.isSelected)
       }
       return keyword
@@ -339,4 +352,9 @@ final class SearchFilterViewModel {
     self.keywords.accept(updated)
   }
   
+  private func createSearchKeywords() -> PerfumeSearch {
+    PerfumeSearch(ingredients: self.seriesSelected.value,
+                  brands: self.brandsSelected.value,
+                  keywords: self.keywordsSelected.value)
+  }
 }

@@ -9,9 +9,9 @@ import Foundation
 
 struct PerfumeSearch {
   var searchWord: String? = nil
-  var keywords: [SearchKeyword] = []
   var ingredients: [SearchKeyword] = []
   var brands: [SearchKeyword] = []
+  var keywords: [SearchKeyword] = []
   
   static let `default` = PerfumeSearch()
 }
