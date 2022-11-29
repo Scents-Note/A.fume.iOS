@@ -25,10 +25,14 @@ enum ScentsNoteAPI {
   case fetchPerfumesNew(size: Int?)
   case fetchPerfumeDetail(perfumeIdx: Int)
   case fetchSimilarPerfumes(perfumeIdx: Int)
+  case fetchPerfumesSearched(perfumeSearch: PerfumeSearchRequestDTO)
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
   
+  // MARK: - Filter
+  case fetchSeriesForFilter
+  case fetchBrandForFilter
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -37,8 +41,11 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
-    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent, .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes:
+    case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
+        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched:
       base += "/perfume"
+    case .fetchSeriesForFilter, .fetchBrandForFilter:
+      base += "/filter"
     default:
       break
     }
@@ -49,6 +56,7 @@ extension ScentsNoteAPI: TargetType {
     return url
   }
   
+  // MARK: - Path
   var path: String {
     switch self {
       // MARK: - Login
@@ -82,17 +90,25 @@ extension ScentsNoteAPI: TargetType {
       return "\(perfumeIdx)"
     case .fetchSimilarPerfumes(let perfumeIdx):
       return "\(perfumeIdx)/similar"
+    case .fetchPerfumesSearched:
+      return "/search"
       
         // MARK: - Survey
     case .registerSurvey:
       return "/survey"
+      
+        // MARK: - Filter
+    case .fetchSeriesForFilter:
+      return "/series"
+    case .fetchBrandForFilter:
+      return "/brand"
     }
 
   }
   
   var method: Moya.Method {
     switch self {
-    case .login, .signUp, .registerSurvey:
+    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched:
       return .post
     default:
       return .get
@@ -101,7 +117,7 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -115,6 +131,7 @@ extension ScentsNoteAPI: TargetType {
         "x-access-token": "Bearer " + userToken,
         "Content-Type": "application/json"
       ]
+      return nil
     }
     return nil
   }
@@ -143,6 +160,12 @@ extension ScentsNoteAPI: TargetType {
     case let .fetchPerfumesNew(size):
       guard let size = size else { break }
       params["requestSize"] = size
+    case let .fetchPerfumesSearched(perfumeSearch):
+      params["searchText"] = perfumeSearch.searchText
+      params["keywordList"] = perfumeSearch.keywordList
+      params["ingredientList"] = perfumeSearch.ingredientList
+      params["brandList"] = perfumeSearch.brandList
+      Log(params)
     default:
       break
     }

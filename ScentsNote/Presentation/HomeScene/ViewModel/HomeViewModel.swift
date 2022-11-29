@@ -194,7 +194,6 @@ final class HomeViewModel {
                           disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumesRecommended()
       .subscribe { perfumes in
-        guard let perfumes = perfumes else { return }
         perfumesRecommended.accept(perfumes)
       } onError: { error in
         print("User Log: error - \(error)")
@@ -203,7 +202,6 @@ final class HomeViewModel {
     
     self.perfumeRepository.fetchPerfumesPopular()
       .subscribe { perfumes in
-        guard let perfumes = perfumes else { return }
         perfumesPopular.accept(perfumes)
       } onError: { error in
         print("User Log: error - \(error)")
@@ -212,7 +210,6 @@ final class HomeViewModel {
     
     self.perfumeRepository.fetchPerfumesRecent()
       .subscribe { perfumes in
-        guard let perfumes = perfumes else { return }
         perfumesRecent.accept(perfumes)
       } onError: { error in
         switch error {
@@ -228,7 +225,6 @@ final class HomeViewModel {
     
     self.perfumeRepository.fetchPerfumesNew(size: 10)
       .subscribe { perfumes in
-        guard let perfumes = perfumes else { return }
         perfumesNew.accept(perfumes)
       } onError: { error in
         print("User Log: error - \(error)")

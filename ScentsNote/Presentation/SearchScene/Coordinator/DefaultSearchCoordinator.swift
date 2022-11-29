@@ -8,15 +8,13 @@
 import UIKit
 
 final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
-  
   var runPerfumeDetailFlow: ((Int) -> Void)?
   
-  var navigationController: UINavigationController
   var searchViewController: SearchViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.searchViewController = SearchViewController()
+    super.init(navigationController)
   }
   
   override func start() {
@@ -33,12 +31,67 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
     self.addDependency(coordinator)
   }
   
-  func showSearchKeywordController() {
-    let vc = SearchKeywordController()
-    vc.viewModel = SearchKeywordViewModel(
-      coordinator: self,
-      filterRepository: FilterRepository
-    )
-    self.navigationController.pushViewController(vc, animated: true)
+  func runSearchKeywordFlow(from: CoordinatorType) {
+    let coordinator = DefaultSearchKeywordCoordinator(self.navigationController)
+    coordinator.finishFlow = { [weak self, unowned coordinator] perfumeSearch in
+      switch from {
+      case .search:
+        self?.runSearchResultFlow(perfumeSearch: perfumeSearch)
+      case .searchResult:
+        self?.navigationController.popViewController(animated: true)
+        let vc = self?.findViewController(SearchResultViewController.self) as! SearchResultViewController
+        vc.viewModel?.updateSearchWords(perfumeSearch: perfumeSearch)
+      default:
+        break
+      }
+      self?.removeDependency(coordinator)
+    }
+    coordinator.start(from: from)
+    self.addDependency(coordinator)
   }
+  
+  func runSearchFilterFlow(from: CoordinatorType) {
+    let coordinator = DefaultSearchFilterCoordinator(self.navigationController)
+    coordinator.finishFlow = { [weak self, unowned coordinator] perfumeSearch in
+      self?.removeDependency(coordinator)
+      self?.navigationController.dismiss(animated: true)
+      guard let perfumeSearch = perfumeSearch else {
+        return
+      }
+      switch from {
+      case .search:
+        self?.runSearchResultFlow(perfumeSearch: perfumeSearch)
+      case .searchResult:
+//        self?.navigationController.dismiss(animated: true)
+        let vc = self?.findViewController(SearchResultViewController.self) as! SearchResultViewController
+        vc.viewModel?.updateSearchWords(perfumeSearch: perfumeSearch)
+      default:
+        break
+      }
+    }
+    coordinator.start(from: from)
+    self.addDependency(coordinator)
+  }
+  
+  func runSearchResultFlow(perfumeSearch: PerfumeSearch) {
+    let coordinator = DefaultSearchResultCoordinator(self.navigationController)
+    coordinator.runPerfumeDetailFlow = { [weak self] perfumeIdx in
+      self?.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
+    }
+    coordinator.runSearchKeywordFlow = { [weak self] in
+      self?.runSearchKeywordFlow(from: .searchResult)
+    }
+    coordinator.runSearchFilterFlow = { [weak self] in
+      self?.runSearchFilterFlow(from: .searchResult)
+    }
+    coordinator.finishFlow = {
+      
+    }
+    coordinator.start(perfumeSearch: perfumeSearch)
+    self.addDependency(coordinator)
+  }
+  
+  
+  
+  
 }

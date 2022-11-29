@@ -11,12 +11,11 @@ final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   
   var finishFlow: (() -> Void)?
   
-  var navigationController: UINavigationController
   var surveyViewController: SurveyViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.surveyViewController = SurveyViewController()
+    super.init(navigationController)
   }
   
   override func start() {
@@ -26,8 +25,9 @@ final class DefaultSurveyCoordinator: BaseCoordinator, SurveyCoordinator{
   private func showSurverViewController() {
     self.surveyViewController.viewModel = SurveyViewModel(
       coordinator: self,
-      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService()),
-      userRepository: DefaultUserRepository(userService: DefaultUserService())
+      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
+      userRepository: DefaultUserRepository(userService: DefaultUserService.shared),
+      keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)
     )
     self.navigationController.setViewControllers([self.surveyViewController], animated: true)
   }

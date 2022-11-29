@@ -13,23 +13,23 @@ final class DefaultUserService: ScentsNoteService, UserService {
   
   static let shared: DefaultUserService = DefaultUserService()
   
-  func login(email: String, password: String) -> Observable<LoginInfo?> {
+  func login(email: String, password: String) -> Observable<LoginInfo> {
     requestObject(.login(email: email, password: password))
   }
   
-  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo?> {
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
     requestObject(.signUp(signUpInfo: signUpInfo))
   }
   
-  func checkDuplicateEmail(email: String) -> Observable<Bool?> {
+  func checkDuplicateEmail(email: String) -> Observable<Bool> {
     requestObject(.checkDuplicateEmail(email: email))
   }
   
-  func checkDuplicateNickname(nickname: String) -> Observable<Bool?> {
+  func checkDuplicateNickname(nickname: String) -> Observable<Bool> {
     requestObject(.checkDuplicateNickname(nickname: nickname))
   }
   
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool?> {
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool> {
     requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList))
   }
 

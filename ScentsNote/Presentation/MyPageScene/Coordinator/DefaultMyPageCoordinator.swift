@@ -8,15 +8,13 @@
 import UIKit
 
 final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
-  var navigationController: UINavigationController
-  var myPageViewController: MyPageViewController
   
   var onOnboardingFlow: (() -> Void)?
 
-
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  var myPageViewController: MyPageViewController
+  override init(_ navigationController: UINavigationController) {
     self.myPageViewController = MyPageViewController()
+    super.init(navigationController)
   }
   
   override func start() {

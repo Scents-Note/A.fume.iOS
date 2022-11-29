@@ -14,10 +14,11 @@ final class SurveyViewModel {
   private weak var coordinator: SurveyCoordinator?
   private let perfumeRepository: PerfumeRepository
   private let userRepository: UserRepository
+  private let keywordRepository: KeywordRepository
   private let disposeBag = DisposeBag()
   
   var perfumes: [Perfume] = []
-  var keywords: [SurveyKeyword] = []
+  var keywords: [Keyword] = []
   var series: [SurveySeries] = []
   
   var selectedTab = BehaviorRelay<Int>(value: 0)
@@ -37,10 +38,11 @@ final class SurveyViewModel {
     var exitAlertShown = PublishRelay<Bool>()
   }
   
-  init(coordinator: SurveyCoordinator?, perfumeRepository: PerfumeRepository, userRepository: UserRepository) {
+  init(coordinator: SurveyCoordinator?, perfumeRepository: PerfumeRepository, userRepository: UserRepository, keywordRepository: KeywordRepository) {
     self.coordinator = coordinator
     self.perfumeRepository = perfumeRepository
     self.userRepository = userRepository
+    self.keywordRepository = keywordRepository
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -86,7 +88,6 @@ final class SurveyViewModel {
     
     self.perfumeRepository.fetchPerfumesInSurvey()
       .subscribe { [weak self] perfumes in
-        guard let perfumes = perfumes else { return }
         self?.perfumes = perfumes
         output.loadData.accept(true)
       } onError: { error in
@@ -94,11 +95,10 @@ final class SurveyViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchKeywords()
+    self.keywordRepository.fetchKeywords()
       .subscribe { [weak self] keywordInfo in
-        guard let keywordInfo = keywordInfo else { return }
-        self?.keywords = keywordInfo.rows.compactMap({
-          return SurveyKeyword(keywordIdx: $0.keywordIdx, name: $0.name, isLiked: false)
+        self?.keywords = keywordInfo.compactMap({
+          return Keyword(idx: $0.idx, name: $0.name, isSelected: false)
         })
         output.loadData.accept(true)
       } onError: { error in
@@ -108,7 +108,6 @@ final class SurveyViewModel {
     
     self.perfumeRepository.fetchSeries()
       .subscribe { [weak self] seriesInfo in
-        guard let seriesInfo = seriesInfo else { return }
         self?.series = seriesInfo.rows.compactMap({
           return SurveySeries(seriesIdx: $0.seriesIdx, name: $0.name, imageUrl: $0.imageUrl, isLiked: false)
         })
@@ -132,8 +131,8 @@ final class SurveyViewModel {
       .filter { $0.isLiked }
       .map { $0.perfumeIdx }
     let keywordListLiked = self.keywords
-      .filter { $0.isLiked == true }
-      .map { $0.keywordIdx }
+      .filter { $0.isSelected == true }
+      .map { $0.idx }
     let seriesListLiked = self.series
       .filter { $0.isLiked == true }
       .map { $0.seriesIdx }

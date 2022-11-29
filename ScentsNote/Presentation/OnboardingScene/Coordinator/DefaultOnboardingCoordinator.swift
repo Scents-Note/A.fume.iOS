@@ -13,12 +13,11 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
   var finishFlow: ((CoordinatorType) -> Void)?
   var onSignUpFlow: ((CoordinatorType) -> Void)?
 
-  var navigationController: UINavigationController
   var onboardingViewController: OnboardingViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.onboardingViewController = OnboardingViewController()
+    super.init(navigationController)
   }
   
   override func start() {

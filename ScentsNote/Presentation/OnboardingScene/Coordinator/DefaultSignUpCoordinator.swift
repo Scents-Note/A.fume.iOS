@@ -11,11 +11,10 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   
   var finishFlow: (() -> Void)?
   var userRepository: UserRepository
-  var navigationController: UINavigationController
   
-  init(_ navigationContoller: UINavigationController) {
-    self.navigationController = navigationContoller
+  override init(_ navigationController: UINavigationController) {
     self.userRepository = DefaultUserRepository(userService: DefaultUserService())
+    super.init(navigationController)
   }
   
   override func start() {

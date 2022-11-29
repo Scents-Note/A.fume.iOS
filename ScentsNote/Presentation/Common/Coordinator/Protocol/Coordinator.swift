@@ -10,7 +10,7 @@ import UIKit
 protocol Coordinator: AnyObject {
   
   func start()
-  func start(type: CoordinatorType?)
+  func start(from: CoordinatorType)
   
 }
 

@@ -25,4 +25,8 @@ class DoneButton: UIButton {
     self.layer.backgroundColor = UIColor.blackText.cgColor
     self.contentEdgeInsets = .init(top: 0, left: 0, bottom: 34, right: 0)
   }
+  
+  func updateTitle(title: String) {
+    self.setTitle(title, for: .normal)
+  }
 }

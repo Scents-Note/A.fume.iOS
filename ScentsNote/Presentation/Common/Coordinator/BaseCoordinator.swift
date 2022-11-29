@@ -9,7 +9,12 @@ import UIKit
 
 class BaseCoordinator: Coordinator {
   
+  init(_ navigationController: UINavigationController) {
+    self.navigationController = navigationController
+  }
+  
   // MARK: - Vars & Lets
+  var navigationController: UINavigationController
   var childCoordinators = [Coordinator]()
 
   // MARK: - Public methods
@@ -32,11 +37,20 @@ class BaseCoordinator: Coordinator {
     }
   }
   
+  func findViewController<T: UIViewController>(_ viewController: T.Type) -> UIViewController? {
+    for element in navigationController.viewControllers {
+      if type(of: element) == viewController {
+        return element
+      }
+    }
+    return nil
+  }
+  
   
   
   // MARK: - Coordinator
   func start() {}
-  func start(type: CoordinatorType? = nil) {}
+  func start(from: CoordinatorType) {}
   
 }
 

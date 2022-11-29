@@ -8,12 +8,11 @@
 import UIKit
 
 final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoordinator {
-  var navigationController: UINavigationController
   var perfumeDetailViewController: PerfumeDetailViewController
   
-  required init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
+  override init(_ navigationController: UINavigationController) {
     self.perfumeDetailViewController = PerfumeDetailViewController()
+    super.init(navigationController)
   }
   
   func start(perfumeIdx: Int) {

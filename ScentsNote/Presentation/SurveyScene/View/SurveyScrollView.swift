@@ -10,8 +10,6 @@ import SnapKit
 
 final class SurveyScrollView: UIScrollView {
   
-  private var isConfigureUI = false
-  private let contentView = UIView()
   var surveyPerfumeView = SurveyPerfumeView()
   let surveyKeywordView = SurveyKeywordView()
   let surveySeriesView = SurveySeriesView()

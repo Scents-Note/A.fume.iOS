@@ -5,7 +5,6 @@
 //  Created by 황득연 on 2022/11/06.
 //
 
-import Foundation
 import RxSwift
 import RxRelay
 
@@ -13,7 +12,8 @@ final class SearchViewModel {
 
   // MARK: - Input & Output
   struct Input {
-    
+    let searchButtonDidTapEvent: Observable<Void>
+    let filterButtonDidTapEvent: Observable<Void>
   }
   
   struct CellInput {
@@ -48,6 +48,18 @@ final class SearchViewModel {
   }
   
   private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+    input.searchButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runSearchKeywordFlow(from: .search)
+      })
+      .disposed(by: disposeBag)
+    
+    input.filterButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runSearchFilterFlow(from: .search)
+      })
+      .disposed(by: disposeBag)
+    
     cellInput.perfumeDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
         self?.coordinator?.runPerfumeDetailFlow(perfumeIdx: perfume.perfumeIdx)
@@ -81,7 +93,6 @@ final class SearchViewModel {
   private func fetchDatas(perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
     self.perfumeRepository.fetchPerfumesNew(size: nil)
       .subscribe { perfumesFetched in
-        guard let perfumesFetched = perfumesFetched else { return }
         perfumes.accept(perfumesFetched)
       } onError: { error in
         Log(error)
