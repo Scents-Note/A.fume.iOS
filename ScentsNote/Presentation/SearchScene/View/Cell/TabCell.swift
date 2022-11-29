@@ -62,6 +62,7 @@ final class TabCell: UICollectionViewCell {
     
   func updateUI(searchTab: SearchTab) {
     self.nameLabel.text = searchTab.name
+    self.countLabel.isHidden = searchTab.count == 0
     self.countLabel.text = String(searchTab.count)
   }
   
