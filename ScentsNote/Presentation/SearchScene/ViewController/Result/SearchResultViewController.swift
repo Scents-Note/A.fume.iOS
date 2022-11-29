@@ -95,7 +95,7 @@ final class SearchResultViewController: UIViewController {
     
     self.view.addSubview(self.perfumeCollectionView)
     self.perfumeCollectionView.snp.makeConstraints {
-      $0.top.equalTo(self.keywordCollectionView.snp.bottom)
+      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(56)
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.equalToSuperview()
     }
@@ -175,10 +175,14 @@ final class SearchResultViewController: UIViewController {
   
   private func bindKeywords(output: SearchResultViewModel.Output?) {
     output?.keywords
-//      .observe(on: MainScheduler.instance)
-    // FIXME: 계속 estimate width 로 나와버림. 시점에 맞게 애초에 reload를 하는데 왜 문제가 생기는가?
-      .delay(.milliseconds(10), scheduler: MainScheduler.instance)
       .bind(to: self.keywordCollectionView.rx.items(dataSource: keywordDataSource))
+      .disposed(by: self.disposeBag)
+    
+    output?.hideKeywordView
+      .asDriver()
+      .drive(onNext: { [weak self] isHidden in
+        self?.updateKeywordView(isHidden: isHidden)
+      })
       .disposed(by: self.disposeBag)
   }
   
@@ -189,10 +193,18 @@ final class SearchResultViewController: UIViewController {
       .disposed(by: self.disposeBag)
 
     output?.hideEmptyView
-      .subscribe(onNext: { [weak self] isHidden in
+      .asDriver()
+      .drive(onNext: { [weak self] isHidden in
         self?.updateEmptyView(isHidden: isHidden)
       })
       .disposed(by: self.disposeBag)
+  }
+  
+  private func updateKeywordView(isHidden: Bool) {
+    self.keywordCollectionView.isHidden = isHidden
+    self.perfumeCollectionView.snp.updateConstraints {
+      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(isHidden ? 0 : 56)
+    }
   }
   
   private func updateEmptyView(isHidden: Bool) {

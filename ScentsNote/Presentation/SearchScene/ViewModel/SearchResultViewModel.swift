@@ -24,6 +24,7 @@ final class SearchResultViewModel {
   struct Output {
     let keywords = BehaviorRelay<[KeywordDataSection.Model]>(value: [])
     let perfumes = BehaviorRelay<[PerfumeDataSection.Model]>(value: [])
+    let hideKeywordView = BehaviorRelay<Bool>(value: true)
     let hideEmptyView = BehaviorRelay<Bool>(value: true)
   }
   
@@ -90,26 +91,24 @@ final class SearchResultViewModel {
       case .ingredient:
         var updates = originals
         let updatedIngredients = originals.ingredients.filter { $0.idx != updated.idx }
-        Log(updatedIngredients)
         updates.ingredients = updatedIngredients
         return updates
       case .brand:
         var updates = originals
-        let updatedIngredients = originals.brands.filter { $0.idx != updated.idx }
-        updates.brands = updatedIngredients
+        let updatedBrands = originals.brands.filter { $0.idx != updated.idx }
+        updates.brands = updatedBrands
         return updates
       case .keyword:
         var updates = originals
-        let updatedIngredients = originals.keywords.filter { $0.idx != updated.idx }
-        updates.keywords = updatedIngredients
+        Log(updated)
+        let updatedKeywords = originals.keywords.filter { $0.idx != updated.idx }
+        Log(updatedKeywords)
+        updates.keywords = updatedKeywords
         return updates
       }
     }
     .bind(to: perfumeSearch)
     .disposed(by: disposeBag)
-    
-    //    cellInput.keywordDeleteDidTapEvent.withLatestFrom(<#T##second: ObservableConvertibleType##ObservableConvertibleType#>)
-    //      .subscribe(onNext: {})
     
     cellInput.perfumeDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
@@ -139,6 +138,7 @@ final class SearchResultViewModel {
     keywords.subscribe(onNext: { keywords in
       let items = keywords.map { KeywordDataSection.Item(keyword: $0) }
       let model = KeywordDataSection.Model(model: "keyword", items: items)
+      output.hideKeywordView.accept(items.count == 0)
       output.keywords.accept([model])
     })
     .disposed(by: disposeBag)
@@ -149,7 +149,6 @@ final class SearchResultViewModel {
       } else {
         output.hideEmptyView.accept(true)
       }
-      Log(perfumes)
       let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
       let model = PerfumeDataSection.Model(model: "perfume", items: items)
       output.perfumes.accept([model])

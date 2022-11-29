@@ -43,6 +43,8 @@ final class SearchFilterViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    self.configureDelegate()
+    
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -113,6 +115,7 @@ final class SearchFilterViewController: UIViewController {
   // MARK: - Bind ViewModel
   private func bindViewModel() {
     let input = SearchFilterViewModel.Input(
+      tabDidTapEvent: self.tabCollectionView.rx.itemSelected.map { $0.item },
       doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
       closeButtonDidTapEvent: self.closeButton.rx.tap.asObservable()
     )
@@ -130,11 +133,18 @@ final class SearchFilterViewController: UIViewController {
       }
       .disposed(by: self.disposeBag)
     
-    self.viewModel?.selectedTab
+    output?.selectedTab
       .subscribe(onNext: { [weak self] idx in
         self?.updatePage(idx)
-//        self?.updatePage(idx)
-//        self?.updateButton(idx)
+      })
+      .disposed(by: disposeBag)
+
+    output?.hightlightViewTransform
+      .subscribe(onNext: {  [weak self] idx in
+        UIView.animate(withDuration: 0.3) {
+          self?.highlightView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * CGFloat(idx) / 3, y: 0)
+          self?.highlightView.layoutIfNeeded()
+        }
       })
       .disposed(by: disposeBag)
   }
@@ -162,4 +172,31 @@ final class SearchFilterViewController: UIViewController {
     self.doneButton.updateTitle(title: title)
   }
   
+  private func configureDelegate() {
+    self.filterScrollView.delegate = self
+  }
+}
+
+extension SearchFilterViewController: UIScrollViewDelegate {
+  
+  func isScrollViewHorizontalDragging() -> Bool {
+    return self.filterScrollView.contentOffset.x.remainder(dividingBy: self.filterScrollView.frame.width) == 0
+  }
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    guard let scrollView = (scrollView as? FilterScrollView) else { return }
+    
+    UIView.animate(withDuration: 0.1) { [weak self] in
+      self?.highlightView.transform = CGAffineTransform(translationX: scrollView.contentOffset.x / 3, y: 0)
+      self?.highlightView.layoutIfNeeded()
+    }
+    
+  }
+  
+  func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    guard let _ = (scrollView as? FilterScrollView) else { return }
+    
+    let index = Int(targetContentOffset.pointee.x / self.tabCollectionView.frame.width)
+    self.viewModel?.selectedTab.accept(index)
+  }
 }

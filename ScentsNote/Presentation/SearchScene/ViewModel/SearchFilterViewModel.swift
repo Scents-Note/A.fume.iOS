@@ -14,11 +14,14 @@ final class SearchFilterViewModel {
   
   // MARK: - Input & Output
   struct Input {
+    let tabDidTapEvent: Observable<Int>
     let doneButtonDidTapEvent: Observable<Void>
     let closeButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
+    let selectedTab = BehaviorRelay<Int>(value: 0)
+    var hightlightViewTransform = BehaviorRelay<Int>(value: 0)
     let tabs = BehaviorRelay<[SearchTab]>(value: SearchTab.default)
     let selectedCount = BehaviorRelay<Int>(value: 0)
   }
@@ -31,19 +34,22 @@ final class SearchFilterViewModel {
   private let fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase
   private let from: CoordinatorType
   
-  /// Search Keyword
-//  let searchKeywords = BehaviorRelay<PerfumeSearch>(value: [])
+  /// Tab
+  var selectedTab = BehaviorRelay<Int>(value: 0)
+  
   /// Series
   let seriesDataSource = BehaviorRelay<[FilterSeriesDataSection.Model]>(value: [])
   let series = BehaviorRelay<[FilterSeries]>(value: [])
   let seriesState = BehaviorRelay<Set<Int>>(value: Set())
   let seriesSelected = BehaviorRelay<[SearchKeyword]>(value: [])
+  
   /// Brand
   var brandInfos: [FilterBrandInfo] = []
   let brandInitials = BehaviorRelay<[FilterBrandInitial]>(value: [])
   let brandInitialSelected = BehaviorRelay<Int>(value: 1)
   let brands = BehaviorRelay<[FilterBrand]>(value: [])
   let brandsSelected = BehaviorRelay<[SearchKeyword]>(value: [])
+  
   /// Keyword
   let keywordDataSource = BehaviorRelay<[FilterKeywordDataSection.Model]>(value: [])
   let keywords = BehaviorRelay<[Keyword]>(value: [])
@@ -64,7 +70,6 @@ final class SearchFilterViewModel {
     self.from = from
   }
   
-  var selectedTab = BehaviorRelay<Int>(value: 0)
   var output = Output()
   
   // MARK: - Binding
@@ -77,11 +82,16 @@ final class SearchFilterViewModel {
   }
   
   private func bindInput(input: Input, disposeBag: DisposeBag) {
+    input.tabDidTapEvent
+      .subscribe(onNext: { idx in
+        self.selectedTab.accept(idx)
+      })
+      .disposed(by: disposeBag)
+    
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
         let searchKeywords = self.createSearchKeywords()
-        Log(searchKeywords)
         self.coordinator?.finishFlow?(searchKeywords)
       })
       .disposed(by: disposeBag)
@@ -94,10 +104,20 @@ final class SearchFilterViewModel {
   }
   
   private func bindOutput(output: Output, disposeBag: DisposeBag) {
+    self.bindTab(output: output, disposeBag: disposeBag )
     self.bindSeries(output: output, disposeBag: disposeBag)
     self.bindBrands(disposeBag: disposeBag)
     self.bindKeywords(disposeBag: disposeBag)
     self.bindDoneButton(output: output, disposeBag: disposeBag)
+  }
+  
+  private func bindTab(output: Output, disposeBag: DisposeBag) {
+    self.selectedTab
+      .subscribe(onNext: { idx in
+        output.selectedTab.accept(idx)
+        output.hightlightViewTransform.accept(idx)
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindSeries(output: Output, disposeBag: DisposeBag) {
@@ -133,7 +153,7 @@ final class SearchFilterViewModel {
       })
       .disposed(by: disposeBag)
     
-
+    
     Observable.combineLatest(self.series, self.seriesState).withLatestFrom(self.seriesDataSource) { updated, originals in
       let series = updated.0
       let state = updated.1
@@ -341,7 +361,7 @@ final class SearchFilterViewModel {
           if selected.count > 4 {
             return keyword
           } else {
-            selected += [SearchKeyword(idx: keyword.idx, name: keyword.name, category: .brand)]
+            selected += [SearchKeyword(idx: keyword.idx, name: keyword.name, category: .keyword)]
           }
         }
         self.keywordsSelected.accept(selected)
