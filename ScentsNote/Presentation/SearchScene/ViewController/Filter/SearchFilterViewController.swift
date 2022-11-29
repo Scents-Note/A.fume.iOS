@@ -26,6 +26,7 @@ final class SearchFilterViewController: UIViewController {
   private let dividerView = UIView().then { $0.backgroundColor = .grayCd }
   private let highlightView = UIView().then { $0.backgroundColor = .black }
   private lazy var filterScrollView = FilterScrollView(viewModel: self.viewModel)
+  private let doneButton = DoneButton(frame: .zero, title: "적용")
 
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -66,11 +67,19 @@ final class SearchFilterViewController: UIViewController {
       $0.width.equalTo(UIScreen.main.bounds.width / 3)
     }
     
+    self.view.addSubview(self.doneButton)
+    self.doneButton.snp.makeConstraints {
+      $0.bottom.left.right.equalToSuperview()
+      $0.height.equalTo(86)
+    }
+    
     self.view.addSubview(self.filterScrollView)
     self.filterScrollView.snp.makeConstraints {
       $0.top.equalTo(self.tabCollectionView.snp.bottom)
-      $0.bottom.left.right.equalToSuperview()
+      $0.bottom.equalTo(self.doneButton.snp.top)
+      $0.left.right.equalToSuperview()
     }
+    
   }
   
   private func configureNavigation() {
@@ -83,7 +92,7 @@ final class SearchFilterViewController: UIViewController {
     let input = SearchFilterViewModel.Input()
     let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
     self.bindTab(output: output)
-//    self.bindSeries(output: output)
+    self.bindDoneButton(output: output)
   }
   
   private func bindTab(output: SearchFilterViewModel.Output?) {
@@ -104,8 +113,27 @@ final class SearchFilterViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
+  private func bindDoneButton(output: SearchFilterViewModel.Output?) {
+    output?.selectedCount
+      .asDriver()
+      .drive(onNext: { [weak self] count in
+        self?.updateDoneButton(count: count)
+      })
+      .disposed(by: self.disposeBag)
+  }
+  
   private func updatePage(_ idx: Int) {
     self.filterScrollView.updatePage(idx)
+  }
+  
+  private func updateDoneButton(count: Int) {
+    var title = ""
+    if count == 0 {
+      title = "적용"
+    } else {
+      title = "적용(\(count))"
+    }
+    self.doneButton.updateTitle(title: title)
   }
   
 }

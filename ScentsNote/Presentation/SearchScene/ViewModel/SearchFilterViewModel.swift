@@ -18,6 +18,7 @@ final class SearchFilterViewModel {
   
   struct Output {
     let tabs = BehaviorRelay<[SearchTab]>(value: SearchTab.default)
+    let selectedCount = BehaviorRelay<Int>(value: 0)
   }
   
   // MARK: - Vars & Lets
@@ -81,6 +82,7 @@ final class SearchFilterViewModel {
     self.bindSeries(output: output, disposeBag: disposeBag)
     self.bindBrands(disposeBag: disposeBag)
     self.bindKeywords(disposeBag: disposeBag)
+    self.bindDoneButton(output: output, disposeBag: disposeBag)
   }
   
   private func bindSeries(output: Output, disposeBag: DisposeBag) {
@@ -159,6 +161,15 @@ final class SearchFilterViewModel {
     }
     .bind(to: output.tabs)
     .disposed(by: disposeBag)
+  }
+  
+  private func bindDoneButton(output: Output, disposeBag: DisposeBag) {
+    Observable.combineLatest(self.seriesSelected, self.brandsSelected, self.keywordsSelected)
+      .subscribe(onNext: { series, brands, keywords in
+        let count = series.count + brands.count + keywords.count
+        output.selectedCount.accept(count)
+      })
+      .disposed(by: disposeBag)
   }
   
   // MARK: - Network
