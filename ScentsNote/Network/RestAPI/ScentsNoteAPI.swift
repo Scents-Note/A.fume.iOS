@@ -33,6 +33,10 @@ enum ScentsNoteAPI {
   // MARK: - Filter
   case fetchSeriesForFilter
   case fetchBrandForFilter
+  
+  // MARK: - Review
+  case fetchReviews(perfumeIdx: Int)
+
 }
 
 extension ScentsNoteAPI: TargetType {
@@ -42,7 +46,7 @@ extension ScentsNoteAPI: TargetType {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
     case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
-        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched:
+        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviews:
       base += "/perfume"
     case .fetchSeriesForFilter, .fetchBrandForFilter:
       base += "/filter"
@@ -59,11 +63,11 @@ extension ScentsNoteAPI: TargetType {
   // MARK: - Path
   var path: String {
     switch self {
-      // MARK: - Login
+    // MARK: - Login
     case .login:
       return "/login"
       
-      // MARK: - SignUp
+    // MARK: - SignUp
     case .signUp:
       return "/register"
     case .checkDuplicateEmail:
@@ -71,7 +75,7 @@ extension ScentsNoteAPI: TargetType {
     case .checkDuplicateNickname:
       return "/validate/name"
       
-        // MARK: - Perfume
+    // MARK: - Perfume
     case .fetchPerfumesInSurvey:
       return "/survey"
     case .fetchKeywords:
@@ -93,17 +97,20 @@ extension ScentsNoteAPI: TargetType {
     case .fetchPerfumesSearched:
       return "/search"
       
-        // MARK: - Survey
+    // MARK: - Survey
     case .registerSurvey:
       return "/survey"
       
-        // MARK: - Filter
+    // MARK: - Filter
     case .fetchSeriesForFilter:
       return "/series"
     case .fetchBrandForFilter:
       return "/brand"
+      
+    // MARK: - Review
+    case .fetchReviews(let perfumeIdx):
+      return "\(perfumeIdx)/review"
     }
-
   }
   
   var method: Moya.Method {
@@ -131,7 +138,6 @@ extension ScentsNoteAPI: TargetType {
         "x-access-token": "Bearer " + userToken,
         "Content-Type": "application/json"
       ]
-      return nil
     }
     return nil
   }

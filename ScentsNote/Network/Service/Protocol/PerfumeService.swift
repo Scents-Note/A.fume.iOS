@@ -23,4 +23,7 @@ protocol PerfumeService {
   
   //Search
   func fetchPerfumeSearched(perfumeSearch: PerfumeSearchRequestDTO) -> Observable<ListInfo<PerfumeResponseDTO>>
+  
+  //Review
+  func fetchReviews(perfumeIdx: Int) -> Observable<[ReviewResponseDTO]>
 }

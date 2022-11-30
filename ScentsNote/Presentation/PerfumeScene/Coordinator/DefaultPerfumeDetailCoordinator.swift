@@ -19,6 +19,7 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
     self.perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
       coordinator: self,
       fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
+      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
       perfumeIdx: perfumeIdx
     )
     perfumeDetailViewController.hidesBottomBarWhenPushed = true

@@ -48,4 +48,8 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchPerfumesSearched(perfumeSearch: perfumeSearch))
   }
   
+  func fetchReviews(perfumeIdx: Int) -> Observable<[ReviewResponseDTO]> {
+    requestObject(.fetchReviews(perfumeIdx: perfumeIdx))
+  }
+  
 }

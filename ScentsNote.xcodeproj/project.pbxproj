@@ -75,6 +75,11 @@
 		4A4F6A0A2934C7F5006BBF0B /* KeywordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A092934C7F5006BBF0B /* KeywordService.swift */; };
 		4A4F6A0C2934C815006BBF0B /* DefaultKeywordService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A0B2934C815006BBF0B /* DefaultKeywordService.swift */; };
 		4A4F6A0E2934DEB5006BBF0B /* FilterKeywordDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A0D2934DEB5006BBF0B /* FilterKeywordDataSection.swift */; };
+		4A4F6A102935DF82006BBF0B /* PerfumeDetailReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A0F2935DF82006BBF0B /* PerfumeDetailReviewViewController.swift */; };
+		4A4F6A122935E099006BBF0B /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A112935E099006BBF0B /* ReviewCell.swift */; };
+		4A4F6A152935F3DA006BBF0B /* ReviewResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A142935F3DA006BBF0B /* ReviewResponseDTO.swift */; };
+		4A4F6A172935F46B006BBF0B /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A162935F46B006BBF0B /* Review.swift */; };
+		4A4F6A192935F698006BBF0B /* PerfumeDetailReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A182935F698006BBF0B /* PerfumeDetailReviewViewModel.swift */; };
 		4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */; };
 		4A5A94E52929E9A600B4197D /* PerfumeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */; };
 		4A5A94E72929E9FC00B4197D /* GenderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */; };
@@ -335,6 +340,11 @@
 		4A4F6A092934C7F5006BBF0B /* KeywordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordService.swift; sourceTree = "<group>"; };
 		4A4F6A0B2934C815006BBF0B /* DefaultKeywordService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultKeywordService.swift; sourceTree = "<group>"; };
 		4A4F6A0D2934DEB5006BBF0B /* FilterKeywordDataSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterKeywordDataSection.swift; sourceTree = "<group>"; };
+		4A4F6A0F2935DF82006BBF0B /* PerfumeDetailReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailReviewViewController.swift; sourceTree = "<group>"; };
+		4A4F6A112935E099006BBF0B /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
+		4A4F6A142935F3DA006BBF0B /* ReviewResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewResponseDTO.swift; sourceTree = "<group>"; };
+		4A4F6A162935F46B006BBF0B /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		4A4F6A182935F698006BBF0B /* PerfumeDetailReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailReviewViewModel.swift; sourceTree = "<group>"; };
 		4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumeDetailUseCase.swift; sourceTree = "<group>"; };
 		4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetail.swift; sourceTree = "<group>"; };
 		4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderResponseDTO.swift; sourceTree = "<group>"; };
@@ -621,6 +631,7 @@
 		4A3B04242925028B004F155D /* ContentView */ = {
 			isa = PBXGroup;
 			children = (
+				4A4F6A132935E876006BBF0B /* Section */,
 				4A4DF5E82928B6350066792D /* PieChart */,
 				4A4C986429277637004851DB /* Cell */,
 				4A4C986029276771004851DB /* PerfumeDetailHeaderContentView.swift */,
@@ -662,9 +673,6 @@
 			isa = PBXGroup;
 			children = (
 				4A3B04242925028B004F155D /* ContentView */,
-				4A4C985029273A53004851DB /* PerfumeDetailTitleCell.swift */,
-				4A4C985229273C64004851DB /* PerfumeDetailContentCell.swift */,
-				4A4C985E29276572004851DB /* PerfumeDetailHeaderView.swift */,
 			);
 			path = PerfumeDetail;
 			sourceTree = "<group>";
@@ -687,6 +695,7 @@
 				4A4DF5ED2929008A0066792D /* PerfumeDetailSeasonalCell.swift */,
 				4A4DF5FB292910B10066792D /* PerfumeDetailLongevityCell.swift */,
 				4A4DF6082929BD7F0066792D /* PerfumeDetailSillageCell.swift */,
+				4A4F6A112935E099006BBF0B /* ReviewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -710,6 +719,7 @@
 				4A5A94E82929EA5100B4197D /* Gender.swift */,
 				4A5A94EA2929F1F200B4197D /* Perfume.swift */,
 				4A6F989D292EF5A50085EBE7 /* PerfumeKeyword.swift */,
+				4A4F6A162935F46B006BBF0B /* Review.swift */,
 			);
 			path = Perfume;
 			sourceTree = "<group>";
@@ -746,6 +756,16 @@
 			path = Keyword;
 			sourceTree = "<group>";
 		};
+		4A4F6A132935E876006BBF0B /* Section */ = {
+			isa = PBXGroup;
+			children = (
+				4A4C985029273A53004851DB /* PerfumeDetailTitleCell.swift */,
+				4A4C985229273C64004851DB /* PerfumeDetailContentCell.swift */,
+				4A4C985E29276572004851DB /* PerfumeDetailHeaderView.swift */,
+			);
+			path = Section;
+			sourceTree = "<group>";
+		};
 		4A5A94E02929E52D00B4197D /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
@@ -763,6 +783,7 @@
 				4A5A94EC292A351F00B4197D /* PerfumeDetailInfoViewController.swift */,
 				4A5A94EE292A37BA00B4197D /* PerfumeDetailInfoViewController+Configuration.swift */,
 				4A6F988C292E0C030085EBE7 /* PerfumeDetailInfoViewController+CollectionViewLayout.swift */,
+				4A4F6A0F2935DF82006BBF0B /* PerfumeDetailReviewViewController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -771,6 +792,7 @@
 			isa = PBXGroup;
 			children = (
 				4A3B041629239387004F155D /* PerfumeDetailViewModel.swift */,
+				4A4F6A182935F698006BBF0B /* PerfumeDetailReviewViewModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -818,6 +840,7 @@
 				4A4DF5FD2929B62E0066792D /* SillageResponseDTO.swift */,
 				4A4DF6022929B7A30066792D /* IngredientResponseDTO.swift */,
 				4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */,
+				4A4F6A142935F3DA006BBF0B /* ReviewResponseDTO.swift */,
 			);
 			path = Response;
 			sourceTree = "<group>";
@@ -2038,6 +2061,7 @@
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
 				4AA281142917BA6200D30A99 /* DefaultMyPageCoordinator.swift in Sources */,
 				4A4F69FC29349F2E006BBF0B /* FilterBrandCell.swift in Sources */,
+				4A4F6A152935F3DA006BBF0B /* ReviewResponseDTO.swift in Sources */,
 				4A6F98A4292F09BD0085EBE7 /* SearchResultCoordinator.swift in Sources */,
 				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,
 				4A6F9879292DB8830085EBE7 /* DefaultPerfumeNewCoordinator.swift in Sources */,
@@ -2080,6 +2104,7 @@
 				4AB7599D290135F20086C519 /* LoginInfo.swift in Sources */,
 				4AA281242917D84E00D30A99 /* PerfumeResponseDTO.swift in Sources */,
 				4A6F98CF29305AC30085EBE7 /* FilterRepository.swift in Sources */,
+				4A4F6A122935E099006BBF0B /* ReviewCell.swift in Sources */,
 				4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */,
 				4A4DF60B2929CEB80066792D /* PerfumeDetailSimilarityContentView.swift in Sources */,
 				4A5A94ED292A351F00B4197D /* PerfumeDetailInfoViewController.swift in Sources */,
@@ -2127,6 +2152,7 @@
 				4A6F98AD292F2A7D0085EBE7 /* SearchResultViewController+CollectionViewLayout.swift in Sources */,
 				4A3B0426292502D1004F155D /* PerfumeDetailFooterContentView.swift in Sources */,
 				4A4DF5FE2929B62E0066792D /* SillageResponseDTO.swift in Sources */,
+				4A4F6A102935DF82006BBF0B /* PerfumeDetailReviewViewController.swift in Sources */,
 				4AAFE83728FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift in Sources */,
 				4A6F98F02931D9270085EBE7 /* FilterSeriesHeaderView.swift in Sources */,
 				4A3B04192923A5EA004F155D /* PerfumeDetailResponseDTO.swift in Sources */,
@@ -2147,6 +2173,7 @@
 				4A4DF6092929BD7F0066792D /* PerfumeDetailSillageCell.swift in Sources */,
 				4A3B0413292392C1004F155D /* DefaultPerfumeDetailCoordinator.swift in Sources */,
 				4A9D914828FFCA2D001551A8 /* String+Extension.swift in Sources */,
+				4A4F6A172935F46B006BBF0B /* Review.swift in Sources */,
 				4A3B041D29246FDA004F155D /* PerfumeDetailInfoView.swift in Sources */,
 				4A80A4E42918982C009F83B9 /* HomeRecommendationKeywordView.swift in Sources */,
 				4AA280FB2917B7B200D30A99 /* HomeViewModel.swift in Sources */,
@@ -2157,6 +2184,7 @@
 				4A6F9886292DD2B50085EBE7 /* PerfuemNewDataSection.swift in Sources */,
 				4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */,
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
+				4A4F6A192935F698006BBF0B /* PerfumeDetailReviewViewModel.swift in Sources */,
 				4A857435290B5C7800F86C3A /* Birth.swift in Sources */,
 				4A3B04232924EADC004F155D /* PerfumeDetailInfoView+Configuration.swift in Sources */,
 				4A80A4EA2918A8EF009F83B9 /* HomeTitleCell.swift in Sources */,

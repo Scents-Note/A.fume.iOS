@@ -24,4 +24,7 @@ protocol PerfumeRepository {
   
   // MARK: - Search
   func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]>
+  
+  // MARK: - Review
+  func fetchReviews(perfumeIdx: Int) -> Observable<[Review]> 
 }

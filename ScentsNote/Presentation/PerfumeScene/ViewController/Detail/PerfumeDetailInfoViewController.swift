@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 
+// Reative말고 Snapshot 사용해보기
 final class PerfumeDetailInfoViewController: UIViewController {
   private typealias DataSource = UICollectionViewDiffableDataSource<PerfumeDetailInfoSection, PerfumeDetailInfoItem>
   private typealias Snapshot = NSDiffableDataSourceSnapshot<PerfumeDetailInfoSection, PerfumeDetailInfoItem>
@@ -17,6 +18,7 @@ final class PerfumeDetailInfoViewController: UIViewController {
   private var datasource: DataSource!
   var onUpdateHeight: ((CGFloat) -> Void)?
   var height: CGFloat = 0
+  var isLoaded = false
   
   // MARK: - UI
   lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout()).then {
@@ -28,6 +30,11 @@ final class PerfumeDetailInfoViewController: UIViewController {
     super.viewDidLoad()
     self.configureCollectionView()
     self.configureUI()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.updateViewHeight()
   }
   
   // MARK: - Configure
@@ -46,6 +53,7 @@ final class PerfumeDetailInfoViewController: UIViewController {
   }
   
   func updateSnapshot(perfumeDetail: PerfumeDetail) {
+    guard !isLoaded else { return }
     var snapshot = Snapshot()
     snapshot.appendSections([.story, .keyword, .ingredient, .abundance, .price, .seasonal, .longevity, .sillage, .similarity])
     snapshot.appendItems([.header("조향 스토리"), .story(perfumeDetail.story), .footer("story")], toSection: .story)
@@ -59,6 +67,7 @@ final class PerfumeDetailInfoViewController: UIViewController {
     snapshot.appendItems([.header("지금 보는 향수와 비슷해요."), .similarity(perfumeDetail.similarPerfumes)])
     datasource.apply(snapshot) { [weak self] in
       self?.updateViewHeight()
+      self?.isLoaded = true
     }
   }
   
@@ -100,10 +109,11 @@ final class PerfumeDetailInfoViewController: UIViewController {
   }
   
   private func updateViewHeight() {
-    if self.height != self.collectionView.contentSize.height {
-      self.height = self.collectionView.contentSize.height
-      self.onUpdateHeight?(self.collectionView.contentSize.height)
-    }
+    self.onUpdateHeight?(self.collectionView.contentSize.height)
+
+//    if self.height != self.collectionView.contentSize.height {
+//      self.height = self.collectionView.contentSize.height
+//    }
   }
 }
 

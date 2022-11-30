@@ -49,12 +49,6 @@ final class PerfumeDetailViewController: UIViewController {
       $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
     }
   
-  private let scrollView = UIScrollView()
-  private let infoButton = UIButton().then { $0.setTitle("향수 정보", for: .normal) }
-  private let nameLabel = UILabel()
-  private let noteButton = UIButton().then { $0.setTitle("시향 노트", for: .normal) }
-  private lazy var tabView = Tabview(buttons: [self.infoButton, self.noteButton])
-  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -82,6 +76,7 @@ extension PerfumeDetailViewController {
         case .content(let perfumeDetail):
           let cell = self.collectionView.dequeueReusableCell(PerfumeDetailContentCell.self, for: indexPath)
           cell.updateUI(perfuemDetail: perfumeDetail)
+          cell.setViewModel(viewModel: self.viewModel)
           cell.onUpdateHeight = { [weak self] in
             self?.reload()
           }

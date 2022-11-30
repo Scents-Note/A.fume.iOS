@@ -12,8 +12,17 @@ import Then
 final class PerfumeDetailContentCell: UICollectionViewCell {
   
   // MARK: - UI
-  private let infoButton = UIButton().then { $0.setTitle("향수 정보", for: .normal) }
-  private let noteButton = UIButton().then { $0.setTitle("시향 노트", for: .normal) }
+  private let infoButton = UIButton().then {
+    $0.setTitle("향수 정보", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .bold, size: 18)
+  }
+  private let noteButton = UIButton().then {
+    $0.setTitle("시향 노트", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
+  }
+  
   private lazy var tabView = Tabview(buttons: [self.infoButton, self.noteButton])
   
   lazy var pageViewController: UIPageViewController = {
@@ -30,6 +39,7 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
     super.init(frame: frame)
     self.setViewControllersInPageVC()
     self.configureUI()
+    self.configureDelegate()
   }
   
   required init?(coder: NSCoder) {
@@ -39,11 +49,19 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   private func setViewControllersInPageVC() {
     let infoVC = PerfumeDetailInfoViewController()
     infoVC.onUpdateHeight = { [weak self] height in
+      Log(height)
       self?.updateHeight(height: height)
     }
     infoVC.collectionView.delegate = self
+    
+    let reviewVC = PerfumeDetailReviewViewController()
+    reviewVC.onUpdateHeight = { [weak self] height in
+      Log(height)
+      self?.updateHeight(height: height)
+    }
+    
+    dataSourceVC += [infoVC, reviewVC]
     pageViewController.setViewControllers([infoVC], direction: .forward, animated: true, completion: nil)
-    dataSourceVC += [infoVC]
   }
   
   private func configureUI() {
@@ -63,18 +81,23 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
     }
   }
   
-  func updateUI(perfuemDetail: PerfumeDetail) {
-    (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).updateSnapshot(perfumeDetail: perfuemDetail)
-  }
-  
-  private func setupDelegate() {
+  private func configureDelegate() {
     pageViewController.delegate = self
     pageViewController.dataSource = self
+  }
+  
+  func setViewModel(viewModel: PerfumeDetailViewModel?){
+    (self.dataSourceVC[1] as! PerfumeDetailReviewViewController).setViewModel(viewModel: viewModel)
+  }
+  
+  func updateUI(perfuemDetail: PerfumeDetail) {
+    (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).updateSnapshot(perfumeDetail: perfuemDetail)
   }
   
   private func updateHeight(height: CGFloat) {
     DispatchQueue.main.async {
       self.pageViewController.view.snp.updateConstraints {
+        Log(height)
         $0.height.equalTo(height)
       }
       self.onUpdateHeight?()
@@ -114,13 +137,8 @@ extension PerfumeDetailContentCell: UIScrollViewDelegate, UICollectionViewDelega
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     // 1: determining whether scrollview is scrolling up or down
     //    let parentScrollView = self.scrollView
-    let scroll = (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).collectionView
-    Log(scroll.contentSize.height )
-    self.pageViewController.view.snp.updateConstraints {
-      $0.height.equalTo(1207)
-      self.layoutIfNeeded()
-      self.setNeedsLayout()
-    }
+//    let scroll = (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).collectionView
+
     //    Log(childScrollView.contentSize.height)
 //    if size != scroll.contentSize.height {
 //      self.pageViewController.view.snp.updateConstraints {
