@@ -10,39 +10,65 @@ import RxRelay
 
 final class PerfumeDetailViewModel {
   
-  struct Input {}
+  struct Input {
+    let tabButtonTapEvent = PublishRelay<Int>()
+  }
+  
   struct Output {
     let models = BehaviorRelay<[PerfumeDetailDataSection.Model]>(value: [])
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
+    let reviews = BehaviorRelay<[Review]>(value: [])
+    let pageViewPosition = BehaviorRelay<Int>(value: 0)
   }
   
+  let input = Input()
+  let output = Output()
   private weak var coordinator: PerfumeDetailCoordinator?
-  private var perfumeIdx: Int
-  private var fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
+  private let perfumeIdx: Int
+  private let fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
+  private let perfumeRepository: PerfumeRepository
   
-  init(coordinator: PerfumeDetailCoordinator, fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase, perfumeIdx: Int) {
+  init(coordinator: PerfumeDetailCoordinator,
+       fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase,
+       perfumeRepository: PerfumeRepository,
+       perfumeIdx: Int) {
     self.coordinator = coordinator
     self.fetchPerfumeDetailUseCase = fetchPerfumeDetailUseCase
+    self.perfumeRepository = perfumeRepository
     self.perfumeIdx = perfumeIdx
+    
   }
   
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
+  func transform(disposeBag: DisposeBag) {
     let perfumeDetail = PublishRelay<PerfumeDetail>()
-    let output = Output()
-    self.bindOutput(output: output, perfumeDetail: perfumeDetail, disposeBag: disposeBag)
-    self.fetchDatas(perfumeDetail: perfumeDetail, disposeBag: disposeBag)
-    return output
+    let reviews = PublishRelay<[Review]>()
+    let pageViewPosition = PublishRelay<Int>()
+    
+    self.bindInput(input: self.input, pageViewPosition: pageViewPosition, disposeBag: disposeBag)
+    self.bindOutput(output: self.output, pageViewPosition: pageViewPosition, perfumeDetail: perfumeDetail, reviews: reviews, disposeBag: disposeBag)
+    self.fetchDatas(perfumeDetail: perfumeDetail, reviews: reviews, disposeBag: disposeBag)
   }
   
-  private func fetchDatas(perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {
-    self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
-      .subscribe(onNext: { detail in
-        perfumeDetail.accept(detail)
+  private func bindInput(input: Input,
+                         pageViewPosition: PublishRelay<Int>,
+                         disposeBag: DisposeBag) {
+    input.tabButtonTapEvent
+      .subscribe(onNext: { idx in
+        pageViewPosition.accept(idx)
       })
       .disposed(by: disposeBag)
   }
   
-  private func bindOutput(output: Output, perfumeDetail: PublishRelay<PerfumeDetail>, disposeBag: DisposeBag) {
+  private func bindOutput(output: Output,
+                          pageViewPosition: PublishRelay<Int>,
+                          perfumeDetail: PublishRelay<PerfumeDetail>,
+                          reviews: PublishRelay<[Review]>,
+                          disposeBag: DisposeBag) {
+    
+    pageViewPosition
+      .bind(to: output.pageViewPosition)
+      .disposed(by: disposeBag)
+
     perfumeDetail
       .bind(to: output.perfumeDetail)
       .disposed(by: disposeBag)
@@ -57,7 +83,27 @@ final class PerfumeDetailViewModel {
     .bind(to: output.models)
     .disposed(by: disposeBag)
     
+    reviews
+      .bind(to: output.reviews)
+      .disposed(by: disposeBag)
     
+  }
+  
+  private func fetchDatas(perfumeDetail: PublishRelay<PerfumeDetail>, reviews: PublishRelay<[Review]>, disposeBag: DisposeBag) {
+    self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
+      .subscribe(onNext: { detail in
+        perfumeDetail.accept(detail)
+      })
+      .disposed(by: disposeBag)
+    
+    self.perfumeRepository.fetchReviews(perfumeIdx: self.perfumeIdx)
+      .subscribe(onNext: { result in
+        reviews.accept(result)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: disposeBag)
+
   }
   
 }

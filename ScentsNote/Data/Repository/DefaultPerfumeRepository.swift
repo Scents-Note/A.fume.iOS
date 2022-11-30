@@ -60,4 +60,8 @@ final class DefaultPerfumeRepository: PerfumeRepository {
       .map { $0.rows.map { $0.toDomain() } }
   }
   
+  func fetchReviews(perfumeIdx: Int) -> Observable<[Review]> {
+    self.perfumeService.fetchReviews(perfumeIdx: perfumeIdx)
+      .map { $0.map { $0.toDomain() } }
+  }
 }
