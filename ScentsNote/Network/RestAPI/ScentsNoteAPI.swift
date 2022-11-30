@@ -26,6 +26,7 @@ enum ScentsNoteAPI {
   case fetchPerfumeDetail(perfumeIdx: Int)
   case fetchSimilarPerfumes(perfumeIdx: Int)
   case fetchPerfumesSearched(perfumeSearch: PerfumeSearchRequestDTO)
+  case updatePerfumeLike(perfumeIdx: Int)
   
   // MARK: - Survey
   case registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int])
@@ -46,7 +47,8 @@ extension ScentsNoteAPI: TargetType {
     case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
       base += "/user"
     case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
-        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviews:
+        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviews,
+        .updatePerfumeLike:
       base += "/perfume"
     case .fetchSeriesForFilter, .fetchBrandForFilter:
       base += "/filter"
@@ -96,6 +98,8 @@ extension ScentsNoteAPI: TargetType {
       return "\(perfumeIdx)/similar"
     case .fetchPerfumesSearched:
       return "/search"
+    case .updatePerfumeLike(let perfumeIdx):
+      return "\(perfumeIdx)/like"
       
     // MARK: - Survey
     case .registerSurvey:
@@ -115,7 +119,7 @@ extension ScentsNoteAPI: TargetType {
   
   var method: Moya.Method {
     switch self {
-    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched:
+    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike:
       return .post
     default:
       return .get

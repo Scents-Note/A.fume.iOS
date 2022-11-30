@@ -52,4 +52,8 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchReviews(perfumeIdx: perfumeIdx))
   }
   
+  func updatePerfumeLike(perfumeIdx: Int) -> Observable<Bool> {
+    requestObject(.updatePerfumeLike(perfumeIdx: perfumeIdx))
+  }
+  
 }

@@ -10,6 +10,19 @@ import RxRelay
 import Moya
 
 final class HomeViewModel {
+  
+  // MARK: - Input & Output
+  struct CellInput {
+    let perfumeCellDidTapEvent: PublishRelay<Perfume>
+    let perfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
+    let moreCellDidTapEvent: PublishRelay<Bool>
+  }
+  
+  struct Output {
+    var homeDatas = BehaviorRelay<[HomeDataSection.Model]>(value: HomeDataSection.default)
+  }
+  
+  // MARK: - Vars & Lets
   weak var coordinator: HomeCoordinator?
   var perfumeRepository: PerfumeRepository
   
@@ -18,25 +31,13 @@ final class HomeViewModel {
     self.perfumeRepository = perfumeRepository
   }
   
-  struct CellInput {
-    let perfumeCellDidTapEvent: PublishRelay<Perfume>
-    let popularPerfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
-    let recentPerfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
-    let newPerfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
-    let moreCellDidTapEvent: PublishRelay<Bool>
-  }
-  
-  struct Output {
-    var homeDatas = BehaviorRelay<[HomeDataSection.Model]>(value: HomeDataSection.default)
-  }
-  
+  // MARK: - TransForm
   func transform(from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
-    
     let output = Output()
-    let perfumesRecommended = PublishRelay<[Perfume]>()
-    let perfumesPopular = PublishRelay<[Perfume]>()
-    let perfumesRecent = PublishRelay<[Perfume]>()
-    let perfumesNew = PublishRelay<[Perfume]>()
+    let perfumesRecommended = BehaviorRelay<[Perfume]>(value: [])
+    let perfumesPopular = BehaviorRelay<[Perfume]>(value: [])
+    let perfumesRecent = BehaviorRelay<[Perfume]>(value: [])
+    let perfumesNew = BehaviorRelay<[Perfume]>(value: [])
     
     self.bindCellInput(cellInput: cellInput,
                        perfumesRecommended: perfumesRecommended,
@@ -63,55 +64,31 @@ final class HomeViewModel {
   }
   
   private func bindCellInput(cellInput: CellInput,
-                             perfumesRecommended: PublishRelay<[Perfume]>,
-                             perfumesPopular: PublishRelay<[Perfume]>,
-                             perfumesRecent: PublishRelay<[Perfume]>,
-                             perfumesNew: PublishRelay<[Perfume]>,
+                             perfumesRecommended: BehaviorRelay<[Perfume]>,
+                             perfumesPopular: BehaviorRelay<[Perfume]>,
+                             perfumesRecent: BehaviorRelay<[Perfume]>,
+                             perfumesNew: BehaviorRelay<[Perfume]>,
                              disposeBag: DisposeBag) {
     cellInput.perfumeCellDidTapEvent
       .subscribe { [weak self] perfume in
         self?.coordinator?.runPerfumeDetailFlow(perfumeIdx: perfume.perfumeIdx)
       }
       .disposed(by: disposeBag)
-    
-    cellInput.popularPerfumeHeartButtonDidTapEvent.withLatestFrom(perfumesPopular) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
+
+    cellInput.perfumeHeartButtonDidTapEvent
+      .subscribe(onNext: { [weak self] perfume in
+        self?.perfumeRepository.updatePerfumeLike(perfumeIdx: perfume.perfumeIdx)
+          .subscribe(onNext: { [weak self] _ in
+            self?.updatePerfumeLike(perfumeIdx: perfume.perfumeIdx,
+                                    perfumesPopular: perfumesPopular,
+                                    perfumesRecent: perfumesRecent,
+                                    perfumesNew: perfumesNew)
+          })
+          .disposed(by: disposeBag)
+      }) { error in
+        Log(error)
       }
-    }
-    .bind(to: perfumesPopular)
-    .disposed(by: disposeBag)
-    
-    cellInput.recentPerfumeHeartButtonDidTapEvent.withLatestFrom(perfumesRecent) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumesRecent)
-    .disposed(by: disposeBag)
-    
-    cellInput.newPerfumeHeartButtonDidTapEvent.withLatestFrom(perfumesNew) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumesNew)
-    .disposed(by: disposeBag)
+      .disposed(by: disposeBag)
     
     cellInput.moreCellDidTapEvent
       .subscribe(onNext: { [weak self] _ in
@@ -121,13 +98,14 @@ final class HomeViewModel {
   }
   
   private func bindOutput(output: Output,
-                          perfumesRecommended: PublishRelay<[Perfume]>,
-                          perfumesPopular: PublishRelay<[Perfume]>,
-                          perfumesRecent: PublishRelay<[Perfume]>,
-                          perfumesNew: PublishRelay<[Perfume]>,
+                          perfumesRecommended: BehaviorRelay<[Perfume]>,
+                          perfumesPopular: BehaviorRelay<[Perfume]>,
+                          perfumesRecent: BehaviorRelay<[Perfume]>,
+                          perfumesNew: BehaviorRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
     
-    perfumesRecommended.withLatestFrom(output.homeDatas) { perfumes, homeDatas in
+    /// 초기값 [] 이 들어가므로 1번 skip
+    perfumesRecommended.skip(1).withLatestFrom(output.homeDatas) { perfumes, homeDatas in
       homeDatas.map {
         guard $0.model != .recommendation else {
           let item = HomeDataSection.HomeItem.recommendation(perfumes)
@@ -140,7 +118,7 @@ final class HomeViewModel {
     .bind(to: output.homeDatas)
     .disposed(by: disposeBag)
     
-    perfumesPopular.withLatestFrom(output.homeDatas) { perfumes, homeDatas in
+    perfumesPopular.skip(1).withLatestFrom(output.homeDatas) { perfumes, homeDatas in
       homeDatas.map {
         guard $0.model != .popularity else {
           let items = perfumes.map {HomeDataSection.HomeItem.popularity($0) }
@@ -153,7 +131,7 @@ final class HomeViewModel {
     .bind(to: output.homeDatas)
     .disposed(by: disposeBag)
     
-    perfumesRecent.withLatestFrom(output.homeDatas) { perfumes, homeDatas in
+    perfumesRecent.skip(1).withLatestFrom(output.homeDatas){ perfumes, homeDatas in
       if perfumes.count != 0 {
         let updatedDatas = homeDatas.map {
           guard $0.model != .recent else {
@@ -164,7 +142,7 @@ final class HomeViewModel {
           return $0
         }
         return updatedDatas
-      } else {
+      } else { /// Recent 가 없거나 로그인이 안될 때 Cell을 없애주기 위함
         let updatedDatas = homeDatas.filter { $0.model != .recent}
         return updatedDatas
       }
@@ -172,7 +150,7 @@ final class HomeViewModel {
     .bind(to: output.homeDatas)
     .disposed(by: disposeBag)
     
-    perfumesNew.withLatestFrom(output.homeDatas) { updated, originals in
+    perfumesNew.skip(1).withLatestFrom(output.homeDatas) { updated, originals in
       originals.map {
         guard $0.model != .new else {
           let items = updated.map {HomeDataSection.HomeItem.new($0) }
@@ -187,16 +165,17 @@ final class HomeViewModel {
   }
   
   // MARK: - Network Fetch
-  private func fetchDatas(perfumesRecommended: PublishRelay<[Perfume]>,
-                          perfumesPopular: PublishRelay<[Perfume]>,
-                          perfumesRecent: PublishRelay<[Perfume]>,
-                          perfumesNew: PublishRelay<[Perfume]>,
+  private func fetchDatas(perfumesRecommended: BehaviorRelay<[Perfume]>,
+                          perfumesPopular: BehaviorRelay<[Perfume]>,
+                          perfumesRecent: BehaviorRelay<[Perfume]>,
+                          perfumesNew: BehaviorRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
+    
     self.perfumeRepository.fetchPerfumesRecommended()
       .subscribe { perfumes in
         perfumesRecommended.accept(perfumes)
       } onError: { error in
-        print("User Log: error - \(error)")
+        Log(error)
       }
       .disposed(by: disposeBag)
     
@@ -204,7 +183,7 @@ final class HomeViewModel {
       .subscribe { perfumes in
         perfumesPopular.accept(perfumes)
       } onError: { error in
-        print("User Log: error - \(error)")
+        Log(error)
       }
       .disposed(by: disposeBag)
     
@@ -212,14 +191,7 @@ final class HomeViewModel {
       .subscribe { perfumes in
         perfumesRecent.accept(perfumes)
       } onError: { error in
-        switch error {
-        case let NetworkError.restError(statusCode, description):
-          perfumesRecent.accept([])
-          Log("\(statusCode!) & \(description!)")
-        default:
-          break
-        }
-        
+        Log(error)
       }
       .disposed(by: disposeBag)
     
@@ -227,15 +199,35 @@ final class HomeViewModel {
       .subscribe { perfumes in
         perfumesNew.accept(perfumes)
       } onError: { error in
-        print("User Log: error - \(error)")
+        Log(error)
       }
       .disposed(by: disposeBag)
     
   }
+  // MARK: - Action
+  private func updatePerfumeLike(perfumeIdx: Int,
+                                 perfumesPopular: BehaviorRelay<[Perfume]>,
+                                 perfumesRecent: BehaviorRelay<[Perfume]>,
+                                 perfumesNew: BehaviorRelay<[Perfume]>) {
+    
+    let updatedPerfumesPopular = togglePerfumeLike(perfumeIdx: perfumeIdx, originals: perfumesPopular.value)
+    let updatedPerfumesRecent = togglePerfumeLike(perfumeIdx: perfumeIdx, originals: perfumesRecent.value)
+    let updatedPerfumesNew = togglePerfumeLike(perfumeIdx: perfumeIdx, originals: perfumesNew.value)
+    
+    perfumesPopular.accept(updatedPerfumesPopular)
+    perfumesRecent.accept(updatedPerfumesRecent)
+    perfumesNew.accept(updatedPerfumesNew)
+  }
   
-  //  func dummy() -> [Perfume] {
-  //    return [Perfume(perfumeIdx: -1, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false), Perfume(perfumeIdx: -2, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -3, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: 4, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -5, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -6, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false),Perfume(perfumeIdx: -7, brandName: "조말론 런던", name: "잉글리쉬 오크 앤 레드커런트 코롱", imageUrl: "https://afume.s3.ap-northeast-2.amazonaws.com/perfume/8/1.jpg", keywordList: nil, isLiked: false)]
-  //
-  //  }
+  private func togglePerfumeLike(perfumeIdx: Int, originals perfumes: [Perfume]) -> [Perfume] {
+    perfumes.map {
+      guard $0.perfumeIdx != perfumeIdx else {
+        var updatePerfume = $0
+        updatePerfume.isLiked = !updatePerfume.isLiked
+        return updatePerfume
+      }
+      return $0
+    }
+  }
   
 }

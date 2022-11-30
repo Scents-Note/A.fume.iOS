@@ -9,6 +9,9 @@ import RxSwift
 
 protocol PerfumeService {
   
+  // Common
+  func updatePerfumeLike(perfumeIdx: Int) -> Observable<Bool>
+  
   // Survey
   func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>>
   func fetchSeries() -> Observable<ListInfo<SurveySeries>>
