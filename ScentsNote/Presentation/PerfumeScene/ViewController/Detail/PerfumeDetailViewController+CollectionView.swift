@@ -14,15 +14,8 @@ extension PerfumeDetailViewController {
     
     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(532))
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-    
-    let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(110))
-    let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
-                                                             elementKind: UICollectionView.elementKindSectionHeader,
-                                                             alignment: .top)
-    
+
     let section = NSCollectionLayoutSection(group: group)
-    section.boundarySupplementaryItems = [header]
-    
     return section
   }
   
@@ -32,14 +25,19 @@ extension PerfumeDetailViewController {
 
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: itemSize, subitems: [item])
 //    group.interItemSpacing = .fixed(8)
+    
+    let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(48))
+    let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                             elementKind: UICollectionView.elementKindSectionHeader,
+                                                             alignment: .top)
+    
+    header.pinToVisibleBounds = true
 
 //    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(1000))
 //    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize,subitems: [item])
     let section = NSCollectionLayoutSection(group: group)
-//    section.orthogonalScrollingBehavior = .groupPaging
-//    section.interGroupSpacing = 8
+    section.boundarySupplementaryItems = [header]
     section.orthogonalScrollingBehavior = .groupPaging
-
     return section
   }
   

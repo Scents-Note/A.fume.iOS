@@ -13,15 +13,16 @@ import SnapKit
 import Then
 
 final class PerfumeDetailReviewViewController: UIViewController {
-  // MARK: - Vars & Lets
-  private var viewModel: PerfumeDetailViewModel?
-  private let disposeBag = DisposeBag()
+  
+  // MARK: - Output
   var onUpdateHeight: ((CGFloat) -> Void)?
-  var height: CGFloat = 0
+  var reviews: BehaviorRelay<[Review]>?
   
+  // MARK: - Vars & Lets
+  var viewModel: PerfumeDetailViewModel?
+  private let disposeBag = DisposeBag()
   var isLoaded = false
-
-  
+  var height: CGFloat = 0
   
   // MARK: - UI
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewLayout).then {
@@ -41,10 +42,6 @@ final class PerfumeDetailReviewViewController: UIViewController {
     self.updateViewHeight()
   }
   
-  func setViewModel(viewModel: PerfumeDetailViewModel?) {
-    self.viewModel = viewModel
-  }
-  
   // MARK: - Configure UI
   private func configureUI() {
     self.view.addSubview(self.collectionView)
@@ -55,21 +52,24 @@ final class PerfumeDetailReviewViewController: UIViewController {
 
   private func bindViewModel() {
     rx.methodInvoked(#selector(viewWillLayoutSubviews))
-      .skip(1)
-      .take(1)
+      .take(2)
       .subscribe(onNext: { [weak self] _ in
         self?.isLoaded = true
         self?.updateViewHeight()
       })
       .disposed(by: self.disposeBag)
     
-    self.viewModel?.output.reviews
+    self.reviews?
       .bind(to: self.collectionView.rx.items(
         cellIdentifier: "ReviewCell", cellType: ReviewCell.self
       )) { _, review, cell in
         cell.updateUI(review: review)
       }
       .disposed(by: self.disposeBag)
+  }
+  
+  func bindOutput(reviews: BehaviorRelay<[Review]>?) {
+    self.reviews = reviews
   }
   
   private func updateViewHeight() {

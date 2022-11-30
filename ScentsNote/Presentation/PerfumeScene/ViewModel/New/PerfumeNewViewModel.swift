@@ -57,7 +57,6 @@ final class PerfumeNewViewModel {
     cellInput.perfumeHeartDidTapEvent.withLatestFrom(perfumes) { updated, originals in
       originals.map {
         guard $0.perfumeIdx != updated.perfumeIdx else {
-          Log($0.perfumeIdx)
           var item = updated
           item.isLiked.toggle()
           return item

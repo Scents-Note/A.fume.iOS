@@ -8,17 +8,21 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
+import RxRelay
 import SnapKit
 import Then
 
 final class PerfumeDetailViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDetailDataSection.Model>
   
+  var updatePageView: ((Int, Int) -> Void)?
   // MARK: - Vars & Lets
   var viewModel: PerfumeDetailViewModel?
   var dataSource: DataSource!
   let disposeBag = DisposeBag()
+  
+  // MARK: - Input
+  private let pageViewState = BehaviorRelay<Int>(value: 0)
 
   // MARK: - UI
   private let mainImageView = UIImageView().then {
@@ -30,6 +34,7 @@ final class PerfumeDetailViewController: UIViewController {
   }
   
   private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout).then {
+    $0.register(PerfumeDetailTabCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     $0.register(PerfumeDetailTitleCell.self)
     $0.register(PerfumeDetailContentCell.self)
   }
@@ -76,11 +81,31 @@ extension PerfumeDetailViewController {
         case .content(let perfumeDetail):
           let cell = self.collectionView.dequeueReusableCell(PerfumeDetailContentCell.self, for: indexPath)
           cell.updateUI(perfuemDetail: perfumeDetail)
-          cell.setViewModel(viewModel: self.viewModel)
           cell.onUpdateHeight = { [weak self] in
             self?.reload()
           }
+          cell.updateUI(reviews: self.viewModel?.output.reviews)
+          self.updatePageView = { oldValue, newValue in
+            cell.updatePageView(oldValue: oldValue, newValue: newValue)
+          }
           return cell
+        }
+      }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+        if kind == UICollectionView.elementKindSectionHeader {
+          let section = collectionView.dequeueReusableHeaderView(PerfumeDetailTabCell.self, for: indexPath)
+          section.clickInfoButton()
+            .subscribe(onNext: { [weak self] in
+              self?.viewModel?.input.tabButtonTapEvent.accept(0)
+            })
+            .disposed(by: section.disposeBag)
+          section.clickReviewButton()
+            .subscribe(onNext: { [weak self] in
+              self?.viewModel?.input.tabButtonTapEvent.accept(1)
+            })
+            .disposed(by: section.disposeBag)
+          return section
+        } else {
+          return UICollectionReusableView()
         }
       })
   }
@@ -95,13 +120,23 @@ extension PerfumeDetailViewController {
   }
   
   private func bindViewModel() {
-    let input = PerfumeDetailViewModel.Input(
-      
-    )
+    self.viewModel?.transform(disposeBag: disposeBag)
+    let output = self.viewModel?.output
+    self.bindContent(output: output)
     
-    let output = viewModel?.transform(from: input, disposeBag: disposeBag)
-    output?.models
+  }
+  
+  private func bindContent(output: PerfumeDetailViewModel.Output?) {
+    guard let output = output else { return }
+    
+    output.models
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
+      .disposed(by: self.disposeBag)
+    
+    Observable.zip(output.pageViewPosition, output.pageViewPosition.skip(1))
+      .subscribe(onNext: { [weak self] oldValue, newValue in
+        self?.updatePageView?(oldValue, newValue)
+      })
       .disposed(by: self.disposeBag)
   }
   

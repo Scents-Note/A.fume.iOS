@@ -80,6 +80,7 @@
 		4A4F6A152935F3DA006BBF0B /* ReviewResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A142935F3DA006BBF0B /* ReviewResponseDTO.swift */; };
 		4A4F6A172935F46B006BBF0B /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A162935F46B006BBF0B /* Review.swift */; };
 		4A4F6A192935F698006BBF0B /* PerfumeDetailReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A182935F698006BBF0B /* PerfumeDetailReviewViewModel.swift */; };
+		4A4F6A1B2936EAE0006BBF0B /* PerfumeDetailTabCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A1A2936EAE0006BBF0B /* PerfumeDetailTabCell.swift */; };
 		4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */; };
 		4A5A94E52929E9A600B4197D /* PerfumeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */; };
 		4A5A94E72929E9FC00B4197D /* GenderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */; };
@@ -345,6 +346,7 @@
 		4A4F6A142935F3DA006BBF0B /* ReviewResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewResponseDTO.swift; sourceTree = "<group>"; };
 		4A4F6A162935F46B006BBF0B /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		4A4F6A182935F698006BBF0B /* PerfumeDetailReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailReviewViewModel.swift; sourceTree = "<group>"; };
+		4A4F6A1A2936EAE0006BBF0B /* PerfumeDetailTabCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailTabCell.swift; sourceTree = "<group>"; };
 		4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumeDetailUseCase.swift; sourceTree = "<group>"; };
 		4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetail.swift; sourceTree = "<group>"; };
 		4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderResponseDTO.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 				4A4DF5FB292910B10066792D /* PerfumeDetailLongevityCell.swift */,
 				4A4DF6082929BD7F0066792D /* PerfumeDetailSillageCell.swift */,
 				4A4F6A112935E099006BBF0B /* ReviewCell.swift */,
+				4A4F6A1A2936EAE0006BBF0B /* PerfumeDetailTabCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1997,6 +2000,7 @@
 				4A4C986329277008004851DB /* PerfumeDetailStoryContentView.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A4C985129273A53004851DB /* PerfumeDetailTitleCell.swift in Sources */,
+				4A4F6A1B2936EAE0006BBF0B /* PerfumeDetailTabCell.swift in Sources */,
 				4A6F9875292C5D800085EBE7 /* TabView.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
 				4A6F9889292DD5020085EBE7 /* PerfumeNewHeaderView.swift in Sources */,
