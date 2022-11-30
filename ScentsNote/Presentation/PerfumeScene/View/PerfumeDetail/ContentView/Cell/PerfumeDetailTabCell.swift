@@ -25,7 +25,11 @@ final class PerfumeDetailTabCell: UICollectionViewCell {
     $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
   }
   
-  private lazy var tabView = Tabview(buttons: [self.infoButton, self.noteButton])
+  private let highlightView = UIView().then {
+    $0.backgroundColor = .black
+  }
+  
+  private lazy var tabView = Tabview(buttons: [self.infoButton, self.noteButton], highlight: self.highlightView)
   
   override init(frame: CGRect) {
     super.init(frame: frame)

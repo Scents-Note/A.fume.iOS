@@ -21,5 +21,12 @@ protocol UserRepository {
   
   // MARK: - Survey
   func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool>
+
+  // MARK: - My Page
+  func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]>
+
+  func fetchUserIdx() -> Int?
+  func fetchUserToken() -> String?
+
 }
 

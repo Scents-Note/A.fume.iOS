@@ -9,31 +9,71 @@ import RxSwift
 import RxRelay
 
 final class MyPageViewModel {
-  let disposeBag = DisposeBag()
-  private weak var coordinator: MyPageCoordinator?
-
   
   struct Input {
-    let loginButtonDidTapEvent: Observable<Void>
+    var loginButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
-    var selectedTab = BehaviorRelay<Int>(value: 0)
+    let selectedTab = BehaviorRelay<Int>(value: 0)
+    let perfumesLiked = PublishRelay<[PerfumeLiked]>()
   }
   
-  init(coordinator: MyPageCoordinator) {
+  // MARK: - Vars & Lets
+  private weak var coordinator: MyPageCoordinator?
+  private let fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase
+  let input = Input()
+  let output = Output()
+  
+  init(coordinator: MyPageCoordinator, fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase) {
     self.coordinator = coordinator
+    self.fetchPerfumesLikedUseCase = fetchPerfumesLikedUseCase
   }
   
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(disposeBag: DisposeBag){
+    let perfumesLiked = PublishRelay<[PerfumeLiked]>()
     
-    input.loginButtonDidTapEvent
+    self.bindInput(disposeBag: disposeBag)
+    self.bindOutput(output: output,
+                    perfumesLiked: perfumesLiked,
+                    disposeBag: disposeBag)
+    self.fetchDatas(perfumesLiked: perfumesLiked,
+                    disposeBag: disposeBag)
+  }
+  
+  private func bindInput(disposeBag: DisposeBag) {
+    self.input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.onOnboardingFlow?()
       })
-      .disposed(by: self.disposeBag)
-    
-    return output
+      .disposed(by: disposeBag)
   }
+  
+  private func bindOutput(output: Output,
+                          perfumesLiked: PublishRelay<[PerfumeLiked]>,
+                          disposeBag: DisposeBag) {
+    perfumesLiked
+      .subscribe(onNext: { perfumes in
+        Log(perfumes)
+        output.perfumesLiked.accept(perfumes)
+      })
+      .disposed(by: disposeBag)
+    
+  }
+  
+  private func fetchDatas(perfumesLiked: PublishRelay<[PerfumeLiked]>,
+                          disposeBag: DisposeBag) {
+    self.fetchPerfumesLikedUseCase.execute()
+      .subscribe(onNext: { perfumes in
+        Log(perfumes)
+
+        perfumesLiked.accept(perfumes)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: disposeBag)
+    
+  }
+  
+  
 }

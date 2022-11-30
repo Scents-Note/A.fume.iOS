@@ -14,6 +14,7 @@ enum ScentsNoteAPI {
   case signUp(signUpInfo: SignUpInfo)
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
+  case fetchPerfumesLiked(uesrIdx: Int)
   
   // MARK: - Perfume
   case fetchPerfumesInSurvey
@@ -44,7 +45,7 @@ extension ScentsNoteAPI: TargetType {
   public var baseURL: URL {
     var base = Config.Network.baseURL
     switch self {
-    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey:
+    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesLiked:
       base += "/user"
     case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
         .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviews,
@@ -114,7 +115,12 @@ extension ScentsNoteAPI: TargetType {
     // MARK: - Review
     case .fetchReviews(let perfumeIdx):
       return "\(perfumeIdx)/review"
+      
+    case .fetchPerfumesLiked(let userIdx):
+      return "\(userIdx)/perfume/liked"
     }
+    
+    // MARK: - User
   }
   
   var method: Moya.Method {

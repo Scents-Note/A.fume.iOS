@@ -1,21 +1,21 @@
 //
-//  FilterScrollView.swift
+//  MyPageScrollView.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/11/25.
+//  Created by 황득연 on 2022/11/30.
 //
+
 import UIKit
 import SnapKit
 import RxRelay
 
-final class FilterScrollView: UIScrollView {
+final class MyPageScrollView: UIScrollView {
   
-  private let viewModel: SearchFilterViewModel
-  private lazy var seriesView = FilterSeriesView(viewModel: self.viewModel)
-  private lazy var brandView = FilterBrandView(viewModel: self.viewModel)
-  private lazy var keywordView = FilterKeywordView(viewModel: self.viewModel)
+  private let viewModel: MyPageViewModel
+//  private lazy var myPerfumeView = MyPagePerfumeView(viewModel: self.viewModel)
+  private lazy var myWishView = MyPageWishView(viewModel: self.viewModel)
 
-  init(viewModel: SearchFilterViewModel) {
+  init(viewModel: MyPageViewModel) {
     self.viewModel = viewModel
     super.init(frame: .zero)
     self.configureUI()
@@ -30,19 +30,16 @@ final class FilterScrollView: UIScrollView {
     let width = self.frame.width
     let height = self.frame.height
 
-    self.contentSize = CGSize(width: width * CGFloat(3), height: 0)
-    self.seriesView.frame = CGRect(x: width * CGFloat(0), y: 0, width: width, height: height)
-    self.brandView.frame = CGRect(x: width * CGFloat(1), y: 0, width: width, height: height)
-    self.keywordView.frame = CGRect(x: width * CGFloat(2), y: 0, width: width, height: height)
+    self.contentSize = CGSize(width: width * CGFloat(2), height: 0)
+//    self.myPerfumeView.frame = CGRect(x: width * CGFloat(0), y: 0, width: width, height: height)
+    self.myWishView.frame = CGRect(x: width * CGFloat(1), y: 0, width: width, height: height)
   }
   
   private func configureUI() {
     self.isPagingEnabled = true
 
-    self.addSubview(self.seriesView)
-    self.addSubview(self.brandView)
-    self.addSubview(self.keywordView)
-
+//    self.addSubview(self.myPerfumeView)
+    self.addSubview(self.myWishView)
   }
 
   

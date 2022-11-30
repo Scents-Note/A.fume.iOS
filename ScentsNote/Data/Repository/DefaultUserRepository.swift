@@ -36,10 +36,24 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
   
+  func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]> {
+    return self.userService.fetchPerfumesLiked(userIdx: userIdx)
+      .map { $0.rows.map { $0.toDomain() } }
+  }
+  
   func saveLoginInfo(loginInfo: LoginInfo) {
     UserDefaults.standard.set(loginInfo.token, forKey: UserDefaultKey.token)
     UserDefaults.standard.set(loginInfo.nickname, forKey: UserDefaultKey.nickname)
+    UserDefaults.standard.set(loginInfo.userIdx, forKey: UserDefaultKey.userIdx)
     UserDefaults.standard.set(true, forKey: UserDefaultKey.isLoggedIn)
+  }
+  
+  func fetchUserIdx() -> Int? {
+    return UserDefaults.standard.integer(forKey: UserDefaultKey.userIdx)
+  }
+  
+  func fetchUserToken() -> String? {
+    return UserDefaults.standard.string(forKey: UserDefaultKey.token)
   }
 }
 

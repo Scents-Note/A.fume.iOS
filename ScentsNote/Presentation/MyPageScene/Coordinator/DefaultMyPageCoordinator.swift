@@ -19,7 +19,8 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   
   override func start() {
     self.myPageViewController.viewModel = MyPageViewModel(
-      coordinator: self
+      coordinator: self,
+      fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared))
     )
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
   }
