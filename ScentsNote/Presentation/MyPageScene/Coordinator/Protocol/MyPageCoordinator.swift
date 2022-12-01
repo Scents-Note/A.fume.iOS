@@ -11,5 +11,8 @@ protocol MyPageCoordinator: AnyObject {
 
   var onOnboardingFlow: (() -> Void)? { get set }
 
+  func showMyPageMenuViewController()
+//  func showEditInformationViewController()
+//  func 
 }
 

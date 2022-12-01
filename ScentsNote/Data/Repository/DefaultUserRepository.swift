@@ -49,11 +49,15 @@ final class DefaultUserRepository: UserRepository {
   }
   
   func fetchUserIdx() -> Int? {
-    return UserDefaults.standard.integer(forKey: UserDefaultKey.userIdx)
+    UserDefaults.standard.integer(forKey: UserDefaultKey.userIdx)
   }
   
   func fetchUserToken() -> String? {
-    return UserDefaults.standard.string(forKey: UserDefaultKey.token)
+    UserDefaults.standard.string(forKey: UserDefaultKey.token)
+  }
+  
+  func fetchLoginState() -> Bool? {
+    UserDefaults.standard.bool(forKey: UserDefaultKey.isLoggedIn)
   }
 }
 

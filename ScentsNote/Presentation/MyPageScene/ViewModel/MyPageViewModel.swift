@@ -1,5 +1,5 @@
 //
-//  MyPageVIewModel.swift
+//  MyPageViewModel.swift
 //  ScentsNote
 //
 //  Created by 황득연 on 2022/11/06.
@@ -11,7 +11,8 @@ import RxRelay
 final class MyPageViewModel {
   
   struct Input {
-    var loginButtonDidTapEvent = PublishRelay<Void>()
+    let loginButtonDidTapEvent = PublishRelay<Void>()
+    let menuButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
@@ -47,6 +48,12 @@ final class MyPageViewModel {
         self?.coordinator?.onOnboardingFlow?()
       })
       .disposed(by: disposeBag)
+    
+    self.input.menuButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.showMyPageMenuViewController()
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindOutput(output: Output,
@@ -54,7 +61,6 @@ final class MyPageViewModel {
                           disposeBag: DisposeBag) {
     perfumesLiked
       .subscribe(onNext: { perfumes in
-        Log(perfumes)
         output.perfumesLiked.accept(perfumes)
       })
       .disposed(by: disposeBag)

@@ -27,6 +27,7 @@ protocol UserRepository {
 
   func fetchUserIdx() -> Int?
   func fetchUserToken() -> String?
+  func fetchLoginState() -> Bool?
 
 }
 

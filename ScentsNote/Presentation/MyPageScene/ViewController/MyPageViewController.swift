@@ -35,6 +35,7 @@ final class MyPageViewController: UIViewController {
     $0.backgroundColor = .blackText
   }
   
+  private lazy var menuButton = UIBarButtonItem(image: .checkmark, style: .plain, target: self, action: nil)
   private lazy var tabView = Tabview(buttons: [self.myPerfumeButton, self.wishListButton], highlight: self.highlightView)
   private lazy var scrollView = MyPageScrollView(viewModel: self.viewModel)
   
@@ -44,6 +45,7 @@ final class MyPageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.configureNavigation()
     self.configureUI()
     self.configureDelegate()
     self.bindViewModel()
@@ -52,12 +54,17 @@ final class MyPageViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    self.view.backgroundColor = .white
+    
+  }
+  
+  func configureNavigation() {
     self.setBackButton()
     self.setNavigationTitle(title: "마이")
+    self.navigationItem.rightBarButtonItem = self.menuButton
   }
   
   func configureUI() {
+    self.view.backgroundColor = .white
     self.view.addSubview(self.tabView)
     self.tabView.snp.makeConstraints {
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -92,14 +99,20 @@ final class MyPageViewController: UIViewController {
     var input = self.viewModel.input
     let output = self.viewModel.output
     
-    self.bindInput(input: input)
+    self.bindUI(input: input)
     self.bindTab(output: output)
   }
   
-  private func bindInput(input: MyPageViewModel.Input) {
+  private func bindUI(input: MyPageViewModel.Input) {
     self.loginButton.rx.tap.asObservable()
       .subscribe(onNext: {
         input.loginButtonDidTapEvent.accept(())
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.menuButton.rx.tap.asObservable()
+      .subscribe(onNext: {
+        input.menuButtonDidTapEvent.accept(())
       })
       .disposed(by: self.disposeBag)
   }

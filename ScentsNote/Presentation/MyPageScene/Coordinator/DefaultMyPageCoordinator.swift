@@ -25,5 +25,17 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
   }
   
+  func showMyPageMenuViewController() {
+    let vc = MyPageMenuViewController()
+    vc.viewModel = MyPageMenuViewModel(
+      coordinator: self,
+      userRepository: DefaultUserRepository(userService: DefaultUserService.shared)
+    )
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+    
+  }
+  
 
 }

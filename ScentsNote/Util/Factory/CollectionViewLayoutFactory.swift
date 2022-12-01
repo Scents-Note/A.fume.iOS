@@ -101,4 +101,16 @@ struct CollectionViewLayoutFactory {
     
     return UICollectionViewCompositionalLayout(section: section)
   }
+  
+  static var menuLayout: UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .estimated(56))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    
+    let section = NSCollectionLayoutSection(group: group)
+    
+    return UICollectionViewCompositionalLayout(section: section)
+  }
 }
