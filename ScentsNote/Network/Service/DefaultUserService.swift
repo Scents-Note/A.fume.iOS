@@ -34,7 +34,11 @@ final class DefaultUserService: ScentsNoteService, UserService {
   }
   
   func fetchPerfumesLiked(userIdx: Int) -> Observable<ListInfo<PerfumeLikedResponseDTO>> {
-    requestObject(.fetchPerfumesLiked(uesrIdx: userIdx))
+    requestObject(.fetchPerfumesLiked(userIdx: userIdx))
+  }
+  
+  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO> {
+    requestObject(.updateUserInfo(userIdx: userIdx, userInfo: userInfo))
   }
 
 }

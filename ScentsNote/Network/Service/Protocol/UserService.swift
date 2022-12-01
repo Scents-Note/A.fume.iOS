@@ -23,5 +23,5 @@ protocol UserService {
   
   // MARK: - My Page
   func fetchPerfumesLiked(userIdx: Int) -> Observable<ListInfo<PerfumeLikedResponseDTO>>
-  
+  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO>
 }

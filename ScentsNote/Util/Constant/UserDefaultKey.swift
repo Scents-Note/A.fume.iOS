@@ -10,5 +10,7 @@ enum UserDefaultKey {
   static let token = "token"
   static let nickname = "nickname"
   static let userIdx = "userIdx"
+  static let gender = "gender"
+  static let birth = "birth"
   static let isLoggedIn = "isLoggedIn"
 }

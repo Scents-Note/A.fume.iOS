@@ -14,7 +14,8 @@ enum ScentsNoteAPI {
   case signUp(signUpInfo: SignUpInfo)
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
-  case fetchPerfumesLiked(uesrIdx: Int)
+  case fetchPerfumesLiked(userIdx: Int)
+  case updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO)
   
   // MARK: - Perfume
   case fetchPerfumesInSurvey
@@ -45,7 +46,7 @@ extension ScentsNoteAPI: TargetType {
   public var baseURL: URL {
     var base = Config.Network.baseURL
     switch self {
-    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesLiked:
+    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesLiked, .updateUserInfo:
       base += "/user"
     case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
         .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviews,
@@ -66,11 +67,11 @@ extension ScentsNoteAPI: TargetType {
   // MARK: - Path
   var path: String {
     switch self {
-    // MARK: - Login
+      // MARK: - Login
     case .login:
       return "/login"
       
-    // MARK: - SignUp
+      // MARK: - SignUp
     case .signUp:
       return "/register"
     case .checkDuplicateEmail:
@@ -78,7 +79,7 @@ extension ScentsNoteAPI: TargetType {
     case .checkDuplicateNickname:
       return "/validate/name"
       
-    // MARK: - Perfume
+      // MARK: - Perfume
     case .fetchPerfumesInSurvey:
       return "/survey"
     case .fetchKeywords:
@@ -102,31 +103,34 @@ extension ScentsNoteAPI: TargetType {
     case .updatePerfumeLike(let perfumeIdx):
       return "\(perfumeIdx)/like"
       
-    // MARK: - Survey
+      // MARK: - Survey
     case .registerSurvey:
       return "/survey"
       
-    // MARK: - Filter
+      // MARK: - Filter
     case .fetchSeriesForFilter:
       return "/series"
     case .fetchBrandForFilter:
       return "/brand"
       
-    // MARK: - Review
+      // MARK: - Review
     case .fetchReviews(let perfumeIdx):
       return "\(perfumeIdx)/review"
       
+      // MARK: - User
     case .fetchPerfumesLiked(let userIdx):
       return "\(userIdx)/perfume/liked"
+    case .updateUserInfo(let userIdx, _):
+      return "\(userIdx)"
     }
-    
-    // MARK: - User
   }
   
   var method: Moya.Method {
     switch self {
     case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike:
       return .post
+    case .updateUserInfo:
+      return .put
     default:
       return .get
     }
@@ -134,7 +138,7 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched, .updateUserInfo:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -181,7 +185,11 @@ extension ScentsNoteAPI: TargetType {
       params["keywordList"] = perfumeSearch.keywordList
       params["ingredientList"] = perfumeSearch.ingredientList
       params["brandList"] = perfumeSearch.brandList
-      Log(params)
+    case let .updateUserInfo(_, userInfo):
+      params["nickname"] = userInfo.nickname
+      params["gender"] = userInfo.gender
+      params["birth"] = userInfo.birth
+      params["grade"] = "USER"
     default:
       break
     }

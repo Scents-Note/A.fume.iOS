@@ -44,15 +44,8 @@ final class MyPageMenuViewModel {
   
   private func bindInput(input: Input, disposeBag: DisposeBag) {
     input.menuCellDidTapEvent
-      .subscribe(onNext: { idx in
-        switch self.menus[idx] {
-        case .updateInfo:
-        case .changePW:
-        case .report:
-        case .inquire:
-        case .logout:
-        case .login:
-        }
+      .subscribe(onNext: { [weak self] idx in
+        self?.performAction(idx: idx)
       })
       .disposed(by: disposeBag)
   }
@@ -67,5 +60,24 @@ final class MyPageMenuViewModel {
     let isLoggedIn = self.userRepository.fetchLoginState()
     self.menus = isLoggedIn == true ? Menu.loggedIn : Menu.loggedOut
     menus.accept(self.menus.map { $0.description} )
+  }
+  
+  private func performAction(idx: Int) {
+    self.coordinator?.hideMyPageMenuViewController()
+    switch self.menus[idx] {
+    case .editInfo:
+      self.coordinator?.runEditInfoFlow()
+    case .changePW:
+      self.coordinator?.showChangePasswordViewController()
+    case .report:
+      self.coordinator?.showWebViewController()
+    case .inquire:
+      self.coordinator?.showWebViewController()
+    case .logout:
+      break
+    case .login:
+      self.coordinator?.onOnboardingFlow?()
+    }
+    
   }
 }

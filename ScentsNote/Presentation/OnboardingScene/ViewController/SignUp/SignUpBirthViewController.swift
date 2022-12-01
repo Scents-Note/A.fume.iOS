@@ -29,7 +29,7 @@ final class SignUpBirthViewController: UIViewController {
     $0.backgroundColor = .pointBeige
   }
   
-  private let doneButton = DoneButton(frame: .zero, title: "가입 완료")
+  private let doneButton = DoneButton(title: "가입 완료")
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -98,8 +98,8 @@ extension SignUpBirthViewController {
 }
 
 extension SignUpBirthViewController: BirthPopupDismissDelegate {
-  func birthPopupDismiss(with title: String) {
-    self.birthButton.setTitle(title, for: .normal)
-    self.viewModel?.birth.accept(title)    
+  func birthPopupDismiss(with birth: Int) {
+    self.birthButton.setTitle(String(birth), for: .normal)
+    self.viewModel?.birth.accept(birth)    
   }
 }

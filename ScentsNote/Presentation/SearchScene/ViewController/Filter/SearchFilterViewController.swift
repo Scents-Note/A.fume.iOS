@@ -36,7 +36,7 @@ final class SearchFilterViewController: UIViewController {
   private let dividerView = UIView().then { $0.backgroundColor = .grayCd }
   private let highlightView = UIView().then { $0.backgroundColor = .black }
   private lazy var filterScrollView = FilterScrollView(viewModel: self.viewModel)
-  private let doneButton = DoneButton(frame: .zero, title: "적용")
+  private let doneButton = DoneButton(title: "적용")
 
   // MARK: - Life Cycle
   override func viewDidLoad() {

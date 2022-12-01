@@ -24,10 +24,14 @@ protocol UserRepository {
 
   // MARK: - My Page
   func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]>
+  func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo> 
 
   func fetchUserIdx() -> Int?
   func fetchUserToken() -> String?
   func fetchLoginState() -> Bool?
-
+  func fetchUserGender() -> String?
+  func fetchUserNickname() -> String?
+  func fetchUserBirth() -> Int?
+  func saveUserInfo(userInfo: UserInfo)
 }
 

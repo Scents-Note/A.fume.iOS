@@ -49,10 +49,7 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
   
   func runSignUpFlow() {
     let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
-//    signupCoordinator.finishDelegate = self
     signupCoordinator.finishFlow = { [unowned self] in
-//      self.navigationController.viewControllers.removeAll()
-//      self.navigationController.view.backgroundColor = .white
       self.finishFlow?(.survey)
     }
     self.childCoordinators.append(signupCoordinator)
@@ -60,13 +57,6 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
   }
   
 }
-
-//extension DefaultOnboardingCoordinator: CoordinatorFinishDelegate {
-//  func coordinatorDidFinish(childCoordinator: Coordinator) {
-//    self.removeDependency(childCoordinator)
-////    self.finishDelegate?.coordinatorDidFinish(childCoordinator: self)
-//  }
-//}
 
 extension DefaultOnboardingCoordinator: OnSignUpCoordinatorDelegate {
   func onSignUpCoordinator() {

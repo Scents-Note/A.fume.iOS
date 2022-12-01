@@ -9,10 +9,8 @@ import RxSwift
 import RxRelay
 
 final class BirthPopupViewModel {
-  private weak var coordinator: SignUpCoordinator?
-  var dismissDelegate: BirthPopupDismissDelegate?
-  var birth : String
   
+  // MARK: - Input & Output
   struct Input {
     let pickerSelectedRow: Observable<Int>
     let doneButtonDidTapEvent: Observable<Void>
@@ -24,9 +22,24 @@ final class BirthPopupViewModel {
     var birth = BehaviorRelay<Int?>(value: nil)
   }
   
-  init(coordinator: SignUpCoordinator?, birth: String) {
-    self.coordinator = coordinator
-    self.birth = birth
+  // MARK: - Vars & Lets
+  private weak var signCoordinator: SignUpCoordinator?
+  private weak var editInfoCoordinator: EditInfoCoordinator?
+  var dismissDelegate: BirthPopupDismissDelegate?
+  var birth : String
+  var from: CoordinatorType
+  
+  // MARK: - Life Cycle
+  init(signCoordinator: SignUpCoordinator?, birth: Int, from: CoordinatorType) {
+    self.signCoordinator = signCoordinator
+    self.birth = String(birth)
+    self.from = from
+  }
+  
+  init(editInfoCoordinator: EditInfoCoordinator?, birth: Int, from: CoordinatorType) {
+    self.editInfoCoordinator = editInfoCoordinator
+    self.birth = String(birth)
+    self.from = from
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -40,8 +53,14 @@ final class BirthPopupViewModel {
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         output.doneButtonDidTap.accept(true)
-        self?.coordinator?.hideBirthPopupViewController(with: "")
-        //        self?.dismissDelegate?.birthPopupDismiss(with: "")
+        switch self?.from {
+        case .signUp:
+          self?.signCoordinator?.hideBirthPopupViewController()
+        case .myPage:
+          self?.editInfoCoordinator?.hideBirthPopupViewController()
+        default:
+          break
+        }
       })
       .disposed(by: disposeBag)
     

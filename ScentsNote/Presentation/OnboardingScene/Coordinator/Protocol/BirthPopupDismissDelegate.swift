@@ -8,5 +8,5 @@
 import Foundation
 
 protocol BirthPopupDismissDelegate: AnyObject {
-  func birthPopupDismiss(with: String)
+  func birthPopupDismiss(with: Int)
 }

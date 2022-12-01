@@ -6,19 +6,19 @@
 //
 
 enum Menu: Int, Equatable {
-  case updateInfo
+  case editInfo
   case changePW
   case report
   case inquire
   case logout
   case login
   
-  static let loggedIn: [Menu] = [.updateInfo, .changePW, .report, .inquire, .logout]
+  static let loggedIn: [Menu] = [.editInfo, .changePW, .report, .inquire, .logout]
   static let loggedOut: [Menu] = [.login]
   
   var description: String {
     switch self {
-    case .updateInfo:
+    case .editInfo:
       return "내정보 수정"
     case .changePW:
       return "비밀번호 변경"

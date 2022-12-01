@@ -14,7 +14,6 @@ import Then
 
 final class MyPageViewController: UIViewController {
   
-  
   // MARK: - UI
   private let myPerfumeButton = UIButton().then {
     $0.setTitle("마이 퍼퓸", for: .normal)
@@ -96,7 +95,7 @@ final class MyPageViewController: UIViewController {
   
   private func bindViewModel() {
     self.viewModel.transform(disposeBag: self.disposeBag)
-    var input = self.viewModel.input
+    let input = self.viewModel.input
     let output = self.viewModel.output
     
     self.bindUI(input: input)

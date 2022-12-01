@@ -9,7 +9,7 @@ import UIKit
 
 class DoneButton: UIButton {
   
-  required init(frame: CGRect, title: String) {
+  required init(title: String) {
     super.init(frame: .zero)
     self.setTitle(title: title)
   }

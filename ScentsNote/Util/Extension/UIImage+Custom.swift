@@ -32,4 +32,6 @@ extension UIImage {
   static let btnWomanInactive = UIImage(named: "btnWomanInactive")
   static let btnManActive = UIImage(named: "btnManActive")
   static let btnWomanActive = UIImage(named: "btnWomanActive")
+  
+  static let searchInactive = UIImage(named: "searchInactive")
 }

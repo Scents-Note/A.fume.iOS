@@ -10,7 +10,7 @@ import UIKit
 final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   
   var onOnboardingFlow: (() -> Void)?
-
+  
   var myPageViewController: MyPageViewController
   override init(_ navigationController: UINavigationController) {
     self.myPageViewController = MyPageViewController()
@@ -34,8 +34,31 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
     vc.modalTransitionStyle = .crossDissolve
     vc.modalPresentationStyle = .overCurrentContext
     self.navigationController.present(vc, animated: false)
+  }
+  
+  func runEditInfoFlow() {
+    let coordinator = DefaultEditInfoCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    
+    coordinator.start()
+    self.addDependency(coordinator)
+  }
+  
+  func showChangePasswordViewController() {
     
   }
   
-
+  func showWebViewController() {
+    
+  }
+  
+  func hideMyPageMenuViewController() {
+    self.navigationController.dismiss(animated: false)
+  }
+  
+  
+  
 }

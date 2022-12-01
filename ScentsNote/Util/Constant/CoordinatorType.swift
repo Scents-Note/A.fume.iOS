@@ -17,4 +17,5 @@ enum CoordinatorType: Equatable {
   case search
   case searchKeyword
   case searchResult
+  case myPage
 }

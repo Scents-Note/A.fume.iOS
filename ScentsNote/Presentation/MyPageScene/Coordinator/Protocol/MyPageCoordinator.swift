@@ -5,14 +5,13 @@
 //  Created by 황득연 on 2022/11/06.
 //
 
-import UIKit
-
 protocol MyPageCoordinator: AnyObject {
 
   var onOnboardingFlow: (() -> Void)? { get set }
-
+  func runEditInfoFlow()
   func showMyPageMenuViewController()
-//  func showEditInformationViewController()
-//  func 
+  func showChangePasswordViewController()
+  func showWebViewController()
+  func hideMyPageMenuViewController()
 }
 
