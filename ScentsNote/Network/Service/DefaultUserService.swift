@@ -32,6 +32,18 @@ final class DefaultUserService: ScentsNoteService, UserService {
   func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool> {
     requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList))
   }
+  
+  func fetchPerfumesLiked(userIdx: Int) -> Observable<ListInfo<PerfumeLikedResponseDTO>> {
+    requestObject(.fetchPerfumesLiked(userIdx: userIdx))
+  }
+  
+  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO> {
+    requestObject(.updateUserInfo(userIdx: userIdx, userInfo: userInfo))
+  }
+  
+  func changePassword(password: PasswordRequestDTO) -> Observable<String> {
+    requestPlainObject(.changePassword(password: password))
+  }
 
 }
 

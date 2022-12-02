@@ -7,13 +7,16 @@
 
 import RxSwift
 import Moya
+import Then
 
 final class DefaultUserRepository: UserRepository {
   
   private let userService: UserService
+  private let userDefaultsPersitenceService: UserDefaultsPersitenceService
   
-  init(userService: UserService){
+  init(userService: UserService, userDefaultsPersitenceService: UserDefaultsPersitenceService){
     self.userService = userService
+    self.userDefaultsPersitenceService = userDefaultsPersitenceService
   }
   
   func login(email: String, password: String) -> Observable<LoginInfo> {
@@ -36,10 +39,49 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
   
+  func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]> {
+    return self.userService.fetchPerfumesLiked(userIdx: userIdx)
+      .map { $0.rows.map { $0.toDomain() } }
+  }
+  
+  func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo> {
+    let responseDto = userInfo.toEntity()
+    return self.userService.updateUserInfo(userIdx: userIdx, userInfo: responseDto)
+      .map { $0.toDomain() }
+  }
+  
+  func changePassword(password: Password) -> Observable<String> {
+    let responseDto = password.toEntity()
+    return self.userService.changePassword(password: responseDto)
+  }
+  
   func saveLoginInfo(loginInfo: LoginInfo) {
-    UserDefaults.standard.set(loginInfo.token, forKey: UserDefaultKey.token)
-    UserDefaults.standard.set(loginInfo.nickname, forKey: UserDefaultKey.nickname)
-    UserDefaults.standard.set(true, forKey: UserDefaultKey.isLoggedIn)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.token, value: loginInfo.token)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.refreshToken, value: loginInfo.refreshToken)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.userIdx, value: loginInfo.userIdx)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.nickname, value: loginInfo.nickname)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.gender, value: loginInfo.gender)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.birth, value: loginInfo.birth)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.isLoggedIn, value: true)
+  }
+  
+  func set(key: String, value: Any?) {
+      UserDefaults.standard.set(value, forKey: key)
+  }
+  
+  func fetchUserDefaults<T>(key: String) -> T? {
+    let value: T? = self.userDefaultsPersitenceService.get(key: key)
+    return value
+  }
+  
+  func saveUserInfo(userInfo: UserInfo) {
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.nickname, value: userInfo.nickname)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.gender, value: userInfo.gender)
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.birth, value: userInfo.birth)
+  }
+  
+  func savePassword(password: String) {
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.password, value: password)
   }
 }
 

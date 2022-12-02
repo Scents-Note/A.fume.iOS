@@ -14,6 +14,6 @@ protocol SignUpCoordinator: Coordinator {
   func showSignUpPasswordViewController(with signUpInfo: SignUpInfo)
   func showSignUpGenderViewController(with signUpInfo: SignUpInfo)
   func showSignUpBirthViewController(with signUpInfo: SignUpInfo)
-  func showBirthPopupViewController(with birth: String)
-  func hideBirthPopupViewController(with birth: String)
+  func showBirthPopupViewController(with birth: Int)
+  func hideBirthPopupViewController()
 }

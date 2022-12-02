@@ -51,8 +51,8 @@ final class SearchViewController: UIViewController {
   
   // MARK: - Configure UI
   private func configureUI() {
-    self.view.backgroundColor = .white
     self.configureNavigation()
+    self.view.backgroundColor = .white
     
     self.view.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {

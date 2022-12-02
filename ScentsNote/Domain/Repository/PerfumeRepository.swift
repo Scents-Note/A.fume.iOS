@@ -10,6 +10,10 @@ import RxSwift
 import Moya
 
 protocol PerfumeRepository {
+  
+  // MARK: - Common
+  func updatePerfumeLike(perfumeIdx: Int) -> Observable<Bool>
+  
   // MARK: - Survey
   func fetchPerfumesInSurvey() -> Observable<[Perfume]>
   func fetchSeries() -> Observable<ListInfo<SurveySeries>>

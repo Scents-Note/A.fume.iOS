@@ -11,7 +11,7 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   
   var finishFlow: (() -> Void)?
   var onSignUpFlow: (() -> Void)?
-
+  
   var loginViewController: LoginViewController
   
   override init(_ navigationController: UINavigationController) {
@@ -24,11 +24,12 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   }
   
   func showLoginViewController() {
-      self.loginViewController.viewModel = LoginViewModel(
-          coordinator: self,
-          userRepository: DefaultUserRepository(userService: DefaultUserService())
-      )
-      self.navigationController.pushViewController(self.loginViewController, animated: true)
+    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
+                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
+    self.loginViewController.viewModel = LoginViewModel(coordinator: self,
+                                                        userRepository: userRepository)
+    
+    self.navigationController.pushViewController(self.loginViewController, animated: true)
   }
   
 }

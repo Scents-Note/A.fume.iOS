@@ -13,7 +13,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   var userRepository: UserRepository
   
   override init(_ navigationController: UINavigationController) {
-    self.userRepository = DefaultUserRepository(userService: DefaultUserService())
+    self.userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
+                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     super.init(navigationController)
   }
   
@@ -60,22 +61,22 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     self.navigationController.pushViewController(signUpBirthViewController, animated: true)
   }
   
-  func showBirthPopupViewController(with birth: String) {
+  func showBirthPopupViewController(with birth: Int) {
     guard let viewController = self.navigationController.viewControllers.last as? SignUpBirthViewController else {
         return
     }
 
     let birthPopupViewController = BirthPopupViewController()
     birthPopupViewController.delegate = viewController
-    birthPopupViewController.viewModel = BirthPopupViewModel(
-      coordinator: self,
-      birth: birth
-    )
+    birthPopupViewController.viewModel = BirthPopupViewModel(signCoordinator: self,
+                                                             birth: birth,
+                                                             from: .signUp)
+    
     birthPopupViewController.modalPresentationStyle = .overFullScreen
     self.navigationController.present(birthPopupViewController, animated: false, completion: nil)
   }
 
-  func hideBirthPopupViewController(with birth: String) {
+  func hideBirthPopupViewController() {
     self.navigationController.dismiss(animated: false)
   }
 

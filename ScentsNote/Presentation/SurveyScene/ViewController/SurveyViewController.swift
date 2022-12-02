@@ -73,7 +73,7 @@ final class SurveyViewController: UIViewController {
   
   private let surveyScrollView = SurveyScrollView()
   private let backButton = UIBarButtonItem(image: .btnClose, style: .plain, target: .none, action: .none)
-  private let doneButton = DoneButton(frame: .zero, title: "다음")
+  private let doneButton = DoneButton(title: "다음")
   
   override func viewDidLoad() {
     super.viewDidLoad()

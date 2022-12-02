@@ -29,8 +29,6 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
   let disposeBag = DisposeBag()
   var ingredients = BehaviorRelay<[Ingredient]>(value: [])
   
-  
-  
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
     $0.register(PerfumeDetailCommonCell.self)
   }

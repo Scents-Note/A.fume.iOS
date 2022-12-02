@@ -18,8 +18,9 @@ final class HomeViewController: UIViewController {
   // MARK: - Vars & Lets
   var viewModel: HomeViewModel?
   private let disposeBag = DisposeBag()
-  var dataSource: RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>!
+  private var dataSource: RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>!
   
+  // TODO: collectionViewLayout 팩토리로 빼버리기
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout (sectionProvider: { section, env -> NSCollectionLayoutSection? in
     let section = self.dataSource.sectionModels[section].model
     switch section {
@@ -97,9 +98,7 @@ final class HomeViewController: UIViewController {
     let moreClicked = PublishRelay<Bool>()
     
     /// Cell Heart 클릭
-    let perfumePopularClickedHeart = PublishRelay<Perfume>()
-    let perfumeNewClickedHeart = PublishRelay<Perfume>()
-    let perfumeRecentClickedHeart = PublishRelay<Perfume>()
+    let perfumeHeartClicked = PublishRelay<Perfume>()
     
     // TODO: 메모리 Leak 나는지 확인해보기
     self.dataSource = RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model> { dataSource, tableView, indexPath, item in
@@ -119,7 +118,7 @@ final class HomeViewController: UIViewController {
           })
           .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumePopularClickedHeart.accept(perfume)
+            perfumeHeartClicked.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -131,7 +130,7 @@ final class HomeViewController: UIViewController {
           })
           .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeRecentClickedHeart.accept(perfume)
+            perfumeHeartClicked.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -143,7 +142,7 @@ final class HomeViewController: UIViewController {
           })
           .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeNewClickedHeart.accept(perfume)
+            perfumeHeartClicked.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -180,9 +179,7 @@ final class HomeViewController: UIViewController {
     
     return HomeViewModel.CellInput(
       perfumeCellDidTapEvent: perfumeClicked,
-      popularPerfumeHeartButtonDidTapEvent: perfumePopularClickedHeart,
-      recentPerfumeHeartButtonDidTapEvent: perfumeRecentClickedHeart,
-      newPerfumeHeartButtonDidTapEvent: perfumeNewClickedHeart,
+      perfumeHeartButtonDidTapEvent: perfumeHeartClicked,
       moreCellDidTapEvent: moreClicked
     )
   }

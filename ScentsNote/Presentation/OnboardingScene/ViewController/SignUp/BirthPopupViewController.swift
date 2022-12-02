@@ -118,7 +118,7 @@ extension BirthPopupViewController {
     output?.doneButtonDidTap
       .asDriver(onErrorJustReturn: false)
       .drive(onNext: { [weak self] _ in
-        self?.delegate?.birthPopupDismiss(with: String(output?.birth.value ?? 1990))
+        self?.delegate?.birthPopupDismiss(with: output?.birth.value ?? 1990)
       })
       .disposed(by: disposeBag)
   }

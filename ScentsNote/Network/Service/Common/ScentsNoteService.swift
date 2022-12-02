@@ -12,26 +12,28 @@ import Moya
 import Alamofire
 import Foundation
 
+
+// TODO: 토큰관련 인터셉터 구현
 fileprivate let provider: MoyaProvider<ScentsNoteAPI> = {
-  let provider = MoyaProvider<ScentsNoteAPI>(endpointClosure: endpointClosure, session: DefaultAlamofireManager.shared)
+  let provider = MoyaProvider<ScentsNoteAPI>()
   return provider
 }()
 
-fileprivate let endpointClosure = { (target: ScentsNoteAPI) -> Endpoint in
-  let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-  var endpoint: Endpoint = Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
-  return endpoint
-}
-
-fileprivate class DefaultAlamofireManager: Alamofire.Session {
-  static let shared: DefaultAlamofireManager = {
-    let configuration = URLSessionConfiguration.default
-    configuration.timeoutIntervalForRequest = 10
-    configuration.timeoutIntervalForResource = 10
-    configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-    return DefaultAlamofireManager(configuration: configuration)
-  }()
-}
+//fileprivate let endpointClosure = { (target: ScentsNoteAPI) -> Endpoint in
+//  let url = target.baseURL.appendingPathComponent(target.path).absoluteString
+//  var endpoint: Endpoint = Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
+//  return endpoint
+//}
+//
+//fileprivate class DefaultAlamofireManager: Alamofire.Session {
+//  static let shared: DefaultAlamofireManager = {
+//    let configuration = URLSessionConfiguration.default
+//    configuration.timeoutIntervalForRequest = 10
+//    configuration.timeoutIntervalForResource = 10
+//    configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
+//    return DefaultAlamofireManager(configuration: configuration)
+//  }()
+//}
 
 class ScentsNoteService {
   
@@ -44,6 +46,18 @@ class ScentsNoteService {
         .catch(self.handleREST)
         .map { try JSONDecoder().decode(ResponseObject<T>.self, from: $0.data) }
       .compactMap { $0.data }
+  }
+  
+  func requestPlainObject(_ target: ScentsNoteAPI) -> Observable<String> {
+    return provider.rx.request(target)
+      .asObservable()
+      .filterSuccessfulStatusCodes()
+      .catch(self.handleInternetConnection)
+        .catch(self.handleTimeOut)
+        .catch(self.handleREST)
+        .map { try JSONDecoder().decode(ResponsePlainObject.self, from: $0.data) }
+      .compactMap { $0.message }
+
   }
 }
 

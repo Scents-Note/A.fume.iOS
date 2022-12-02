@@ -12,6 +12,7 @@ enum InputState: Equatable {
   case wrongFormat
   case correctFormat
   case duplicate
+  case notCorrect
   case success
   
   var emailDescription: String {
@@ -40,6 +41,10 @@ enum InputState: Equatable {
     switch self {
     case .wrongFormat:
       return "4자리 이상 입력해주세요."
+    case .notCorrect:
+      return "비밀번호를 다시 입력해주세요."
+    case .duplicate:
+      return "최근 사용한 비밀번호입니다.\n다른 비밀번호를 입력해주세요"
     default:
       return ""
     }

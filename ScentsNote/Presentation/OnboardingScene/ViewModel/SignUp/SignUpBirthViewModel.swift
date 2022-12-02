@@ -13,7 +13,7 @@ final class SignUpBirthViewModel {
   private let userRepository: UserRepository
   private var signUpInfo: SignUpInfo
   
-  var birth = BehaviorRelay<String>(value: "1990")
+  var birth = BehaviorRelay<Int>(value: 1990)
   
   struct Input {
     let birthButtonDidTapEvent: Observable<Void>
@@ -31,21 +31,20 @@ final class SignUpBirthViewModel {
     
     input.birthButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.showBirthPopupViewController(with: self?.birth.value ?? "1990")
+        self?.coordinator?.showBirthPopupViewController(with: self?.birth.value ?? 1990)
       })
       .disposed(by: disposeBag)
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.signUpInfo.birth = Int(self.birth.value)
-        print("User Log: signUp \(self.signUpInfo)")
+        self.signUpInfo.birth = self.birth.value
         self.userRepository.signUp(signUpInfo: self.signUpInfo)
           .subscribe { loginInfo in
             self.userRepository.saveLoginInfo(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
           } onError: { error in
-            print("User Log: error \(error)")
+            Log(error)
           }
           .disposed(by: disposeBag)
       })

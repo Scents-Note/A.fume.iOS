@@ -21,4 +21,8 @@ protocol UserService {
   // MARK: - Survey
   func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool>
   
+  // MARK: - My Page
+  func fetchPerfumesLiked(userIdx: Int) -> Observable<ListInfo<PerfumeLikedResponseDTO>>
+  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO>
+  func changePassword(password: PasswordRequestDTO) -> Observable<String>
 }

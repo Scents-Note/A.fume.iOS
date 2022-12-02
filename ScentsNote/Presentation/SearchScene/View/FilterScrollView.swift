@@ -4,9 +4,9 @@
 //
 //  Created by 황득연 on 2022/11/25.
 //
-import RxRelay
 import UIKit
 import SnapKit
+import RxRelay
 
 final class FilterScrollView: UIScrollView {
   
@@ -38,9 +38,6 @@ final class FilterScrollView: UIScrollView {
   
   private func configureUI() {
     self.isPagingEnabled = true
-//    self.isDirectionalLockEnabled = true
-//    self.showsVerticalScrollIndicator = false
-//    self.showsHorizontalScrollIndicator = false
 
     self.addSubview(self.seriesView)
     self.addSubview(self.brandView)
