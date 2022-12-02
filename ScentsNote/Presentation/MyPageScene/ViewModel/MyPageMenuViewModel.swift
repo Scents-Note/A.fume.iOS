@@ -70,9 +70,9 @@ final class MyPageMenuViewModel {
     case .changePW:
       self.coordinator?.runChangePasswordFlow()
     case .report:
-      self.coordinator?.showWebViewController()
+      self.coordinator?.runWebFlow(with: WebURL.reportPerfumeOrBrand)
     case .inquire:
-      self.coordinator?.showWebViewController()
+      self.coordinator?.runWebFlow(with: WebURL.inquire)
     case .logout:
       break
     case .login:

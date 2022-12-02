@@ -9,5 +9,7 @@ import UIKit
 
 protocol ApplicationCoordinator {
   func runOnboardingFlow()
+  func runMainFlow()
+  func runSurveyFlow()
   
 }

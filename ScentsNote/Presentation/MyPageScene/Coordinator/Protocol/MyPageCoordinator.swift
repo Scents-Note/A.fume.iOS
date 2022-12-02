@@ -10,7 +10,7 @@ protocol MyPageCoordinator: AnyObject {
   var onOnboardingFlow: (() -> Void)? { get set }
   func runEditInfoFlow()
   func runChangePasswordFlow()
-  func showWebViewController()
+  func runWebFlow(with url: String)
   func showMyPageMenuViewController()
   func hideMyPageMenuViewController()
 }

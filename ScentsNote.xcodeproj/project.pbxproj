@@ -118,6 +118,11 @@
 		4A4F6A682939C2C3006BBF0B /* ChangePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */; };
 		4A4F6A6A2939C3E1006BBF0B /* ResponsePlainObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A692939C3E1006BBF0B /* ResponsePlainObject.swift */; };
 		4A4F6A6C2939CAAA006BBF0B /* SavePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */; };
+		4A4F6A6E2939CC52006BBF0B /* WebCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A6D2939CC52006BBF0B /* WebCoordinator.swift */; };
+		4A4F6A702939CCD7006BBF0B /* DefaultWebCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A6F2939CCD7006BBF0B /* DefaultWebCoordinator.swift */; };
+		4A4F6A722939CD90006BBF0B /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A712939CD90006BBF0B /* WebViewController.swift */; };
+		4A4F6A752939CFA5006BBF0B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A4F6A742939CFA5006BBF0B /* WebKit.framework */; };
+		4A4F6A772939D3B8006BBF0B /* WebURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A762939D3B8006BBF0B /* WebURL.swift */; };
 		4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */; };
 		4A5A94E52929E9A600B4197D /* PerfumeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */; };
 		4A5A94E72929E9FC00B4197D /* GenderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */; };
@@ -182,7 +187,6 @@
 		4A857444290BF31900F86C3A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857443290BF31900F86C3A /* SurveyViewController.swift */; };
 		4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857445290BF3F300F86C3A /* SurveyViewModel.swift */; };
 		4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857447290BF77900F86C3A /* BaseCoordinator.swift */; };
-		4A85744A290CC72600F86C3A /* CoordinatorFinishOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */; };
 		4A8574552910C44700F86C3A /* SurveyScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574542910C44700F86C3A /* SurveyScrollView.swift */; };
 		4A8574572910C50200F86C3A /* SurveyPerfumeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574562910C50200F86C3A /* SurveyPerfumeCollectionViewCell.swift */; };
 		4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8574582910CC4600F86C3A /* UIImageView+Load.swift */; };
@@ -421,6 +425,11 @@
 		4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordUseCase.swift; sourceTree = "<group>"; };
 		4A4F6A692939C3E1006BBF0B /* ResponsePlainObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlainObject.swift; sourceTree = "<group>"; };
 		4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePasswordUseCase.swift; sourceTree = "<group>"; };
+		4A4F6A6D2939CC52006BBF0B /* WebCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebCoordinator.swift; sourceTree = "<group>"; };
+		4A4F6A6F2939CCD7006BBF0B /* DefaultWebCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultWebCoordinator.swift; sourceTree = "<group>"; };
+		4A4F6A712939CD90006BBF0B /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		4A4F6A742939CFA5006BBF0B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		4A4F6A762939D3B8006BBF0B /* WebURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebURL.swift; sourceTree = "<group>"; };
 		4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumeDetailUseCase.swift; sourceTree = "<group>"; };
 		4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetail.swift; sourceTree = "<group>"; };
 		4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderResponseDTO.swift; sourceTree = "<group>"; };
@@ -485,7 +494,6 @@
 		4A857443290BF31900F86C3A /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		4A857445290BF3F300F86C3A /* SurveyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewModel.swift; sourceTree = "<group>"; };
 		4A857447290BF77900F86C3A /* BaseCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCoordinator.swift; sourceTree = "<group>"; };
-		4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorFinishOutput.swift; sourceTree = "<group>"; };
 		4A8574542910C44700F86C3A /* SurveyScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyScrollView.swift; sourceTree = "<group>"; };
 		4A8574562910C50200F86C3A /* SurveyPerfumeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyPerfumeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A8574582910CC4600F86C3A /* UIImageView+Load.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Load.swift"; sourceTree = "<group>"; };
@@ -610,6 +618,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A4F6A752939CFA5006BBF0B /* WebKit.framework in Frameworks */,
 				2851444100D02B64E1A0A233 /* Pods_ScentsNote.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -636,6 +645,7 @@
 		28738E7BE54139D15744E949 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A4F6A742939CFA5006BBF0B /* WebKit.framework */,
 				4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */,
 				B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */,
 				C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */,
@@ -1472,6 +1482,7 @@
 			isa = PBXGroup;
 			children = (
 				4AAFE81A28FCE7F000EA6FB4 /* BaseNavigationController.swift */,
+				4A4F6A712939CD90006BBF0B /* WebViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1636,6 +1647,7 @@
 				4AAFE7E128FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift */,
 				4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */,
 				4A857447290BF77900F86C3A /* BaseCoordinator.swift */,
+				4A4F6A6F2939CCD7006BBF0B /* DefaultWebCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1651,6 +1663,7 @@
 				4A857462291129CB00F86C3A /* UserDefaultKey.swift */,
 				4AA280ED2917B0B800D30A99 /* TabBarPage.swift */,
 				4A4F6A35293843B5006BBF0B /* Menu.swift */,
+				4A4F6A762939D3B8006BBF0B /* WebURL.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -1661,7 +1674,7 @@
 				4AA280EB29153E2400D30A99 /* MainCoordinator.swift */,
 				4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */,
 				4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */,
-				4A857449290CC72600F86C3A /* CoordinatorFinishOutput.swift */,
+				4A4F6A6D2939CC52006BBF0B /* WebCoordinator.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2164,11 +2177,12 @@
 				4A6F98BD292F92B80085EBE7 /* SearchFilterViewController+CollectionViewLayout.swift in Sources */,
 				4A6F98B3292F35090085EBE7 /* KeywordCell.swift in Sources */,
 				4A6F9877292DB8680085EBE7 /* PerfumeNewCoordinator.swift in Sources */,
+				4A4F6A772939D3B8006BBF0B /* WebURL.swift in Sources */,
 				4A9A14E929093B1C0067F04D /* NextButton.swift in Sources */,
+				4A4F6A6E2939CC52006BBF0B /* WebCoordinator.swift in Sources */,
 				4A4F69EA29347E09006BBF0B /* FilterBrandView.swift in Sources */,
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
 				4A4F69EC29347F4B006BBF0B /* FilterBrandInitialCell.swift in Sources */,
-				4A85744A290CC72600F86C3A /* CoordinatorFinishOutput.swift in Sources */,
 				4A6F98A0292F036F0085EBE7 /* SearchKeywordCoordinator.swift in Sources */,
 				4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */,
 				4A6F98A2292F03D90085EBE7 /* DefaultSearchKeywordCoordinator.swift in Sources */,
@@ -2335,6 +2349,7 @@
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
 				4AA281072917B90800D30A99 /* SearchViewController.swift in Sources */,
 				4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */,
+				4A4F6A722939CD90006BBF0B /* WebViewController.swift in Sources */,
 				4A6F98BB292F8D8F0085EBE7 /* SearchFilterViewModel.swift in Sources */,
 				4A4C986A29278AF8004851DB /* PerfumeDetailAbundanceContentView.swift in Sources */,
 				4A6F98A8292F0A550085EBE7 /* SearchResultViewController.swift in Sources */,
@@ -2381,6 +2396,7 @@
 				4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */,
+				4A4F6A702939CCD7006BBF0B /* DefaultWebCoordinator.swift in Sources */,
 				4A6F9898292E19230085EBE7 /* SearchKeywordViewModel.swift in Sources */,
 				4A4F6A552938D084006BBF0B /* DefaultChangePasswordCoordinator.swift in Sources */,
 				4A4C984E29273999004851DB /* UITableView+Extension.swift in Sources */,
