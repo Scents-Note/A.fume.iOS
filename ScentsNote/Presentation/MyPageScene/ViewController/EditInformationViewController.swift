@@ -11,9 +11,9 @@ import RxCocoa
 import SnapKit
 import Then
 
-final class EditInfoViewController: UIViewController {
+final class EditInformationViewController: UIViewController {
   // MARK: - Vars & Lets
-  var viewModel: EditInfoViewModel?
+  var viewModel: EditInformationViewModel?
   let disposeBag = DisposeBag()
   
   // MARK: - UI
@@ -121,7 +121,7 @@ final class EditInfoViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = EditInfoViewModel.Input(
+    let input = EditInformationViewModel.Input(
       nicknameTextFieldDidEditEvent: self.nicknameView.editTextField(),
       nicknameCheckButtonDidTapEvent: self.nicknameView.clickDoubleCheck(),
       manButtonDidTapEvent: self.genderView.clickManButton(),
@@ -136,7 +136,7 @@ final class EditInfoViewController: UIViewController {
     self.bindDoneButton(output: output)
   }
   
-  private func bindNickname(output: EditInfoViewModel.Output?) {
+  private func bindNickname(output: EditInformationViewModel.Output?) {
     output?.nickname
       .subscribe(onNext: { [weak self] nickname in
         self?.updateNickname(nickname: nickname)
@@ -150,7 +150,7 @@ final class EditInfoViewController: UIViewController {
       .disposed(by: self.disposeBag)
 
   }
-  private func bindGender(output: EditInfoViewModel.Output?) {
+  private func bindGender(output: EditInformationViewModel.Output?) {
     output?.gender
       .subscribe(onNext: { [weak self] gender in
         self?.updateGender(gender: gender)
@@ -158,7 +158,7 @@ final class EditInfoViewController: UIViewController {
       .disposed(by: self.disposeBag)
   }
   
-  private func bindBirth(output: EditInfoViewModel.Output?) {
+  private func bindBirth(output: EditInformationViewModel.Output?) {
     output?.birth
       .subscribe(onNext: { [weak self] birth in
         self?.updateBirth(birth: birth)
@@ -166,7 +166,7 @@ final class EditInfoViewController: UIViewController {
       .disposed(by: self.disposeBag)
   }
   
-  private func bindDoneButton(output: EditInfoViewModel.Output?) {
+  private func bindDoneButton(output: EditInformationViewModel.Output?) {
     output?.canDone
       .subscribe(onNext: { [weak self] canDone in
         self?.updateDoneButton(canDone: canDone)
@@ -174,7 +174,7 @@ final class EditInfoViewController: UIViewController {
       .disposed(by: self.disposeBag)
   }
   
-  // MARK: - ACTIon
+  // MARK: - ACTion
   private func updateNickname(nickname: String) {
     self.nicknameView.updateNickname(nickname: nickname)
   }
@@ -185,10 +185,7 @@ final class EditInfoViewController: UIViewController {
   }
   
   private func updateGender(gender: String) {
-    self.genderView.manButton.setImage(gender == "MAN" ? .btnManActive : .btnManInactive, for: .normal)
-    self.genderView.manLabel.textColor = gender == "MAN" ? .blackText : .grayCd
-    self.genderView.womanButton.setImage(gender == "WOMAN" ? .btnWomanActive : .btnWomanInactive, for: .normal)
-    self.genderView.womanLabel.textColor = gender == "WOMAN" ? .blackText : .grayCd
+    self.genderView.updateGenderSection(gender: gender)
   }
   
   private func updateBirth(birth: Int) {
@@ -201,7 +198,7 @@ final class EditInfoViewController: UIViewController {
   }
 }
 
-extension EditInfoViewController: BirthPopupDismissDelegate{
+extension EditInformationViewController: BirthPopupDismissDelegate{
   func birthPopupDismiss(with birth: Int) {
     self.viewModel?.updateBirth(birth: birth)
   }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol EditInfoCoordinator: AnyObject {
+protocol EditInformationCoordinator: AnyObject {
 
   var finishFlow: (() -> Void)? { get set }
   

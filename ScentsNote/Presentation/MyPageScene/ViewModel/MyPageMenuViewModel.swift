@@ -57,8 +57,8 @@ final class MyPageMenuViewModel {
   }
   
   private func fetchDatas(menus: PublishRelay<[String]>, disposeBag: DisposeBag) {
-    let isLoggedIn = self.userRepository.fetchLoginState()
-    self.menus = isLoggedIn == true ? Menu.loggedIn : Menu.loggedOut
+    let isLoggedIn = self.userRepository.fetchUserDefaults(key: UserDefaultKey.isLoggedIn) ?? false
+    self.menus = isLoggedIn ? Menu.loggedIn : Menu.loggedOut
     menus.accept(self.menus.map { $0.description} )
   }
   
@@ -68,7 +68,7 @@ final class MyPageMenuViewModel {
     case .editInfo:
       self.coordinator?.runEditInfoFlow()
     case .changePW:
-      self.coordinator?.showChangePasswordViewController()
+      self.coordinator?.runChangePasswordFlow()
     case .report:
       self.coordinator?.showWebViewController()
     case .inquire:

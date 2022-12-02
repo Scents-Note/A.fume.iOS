@@ -24,7 +24,7 @@ final class BirthPopupViewModel {
   
   // MARK: - Vars & Lets
   private weak var signCoordinator: SignUpCoordinator?
-  private weak var editInfoCoordinator: EditInfoCoordinator?
+  private weak var editInfoCoordinator: EditInformationCoordinator?
   var dismissDelegate: BirthPopupDismissDelegate?
   var birth : String
   var from: CoordinatorType
@@ -36,7 +36,7 @@ final class BirthPopupViewModel {
     self.from = from
   }
   
-  init(editInfoCoordinator: EditInfoCoordinator?, birth: Int, from: CoordinatorType) {
+  init(editInfoCoordinator: EditInformationCoordinator?, birth: Int, from: CoordinatorType) {
     self.editInfoCoordinator = editInfoCoordinator
     self.birth = String(birth)
     self.from = from

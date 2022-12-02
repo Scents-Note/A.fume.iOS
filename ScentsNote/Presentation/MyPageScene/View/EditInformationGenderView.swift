@@ -105,4 +105,11 @@ final class EditInformationGenderView: UIView {
   func clickWomanButton() -> Observable<Void> {
     self.womanButton.rx.tap.asObservable()
   }
+  
+  func updateGenderSection(gender: String) {
+    self.manButton.setImage(gender == "MAN" ? .btnManActive : .btnManInactive, for: .normal)
+    self.manLabel.textColor = gender == "MAN" ? .blackText : .grayCd
+    self.womanButton.setImage(gender == "WOMAN" ? .btnWomanActive : .btnWomanInactive, for: .normal)
+    self.womanLabel.textColor = gender == "WOMAN" ? .blackText : .grayCd
+  }
 }

@@ -16,10 +16,7 @@ final class FetchPerfumesLikedUseCase {
   }
   
   func execute() -> Observable<[PerfumeLiked]> {
-    let userIdx = self.userRepository.fetchUserIdx() ?? 0
-    let token = self.userRepository.fetchUserToken() ?? ""
-    Log(userIdx)
-    Log(token)
+    let userIdx = self.userRepository.fetchUserDefaults(key: UserDefaultKey.userIdx) ?? 0
     return self.userRepository.fetchPerfumesLiked(userIdx: userIdx)
   }
 }

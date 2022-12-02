@@ -8,7 +8,7 @@
 import RxSwift
 import RxRelay
 
-final class EditInfoViewModel {
+final class EditInformationViewModel {
   // MARK: - Input & Output
   struct Input {
     let nicknameTextFieldDidEditEvent: Observable<String>
@@ -32,7 +32,7 @@ final class EditInfoViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: EditInfoCoordinator?
+  weak var coordinator: EditInformationCoordinator?
   private let fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase
   private let checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase
   private let updateUserInformationUseCase: UpdateUserInformationUseCase
@@ -42,7 +42,7 @@ final class EditInfoViewModel {
   private var oldUserInfo = UserInfo.default
   
   // MARK: - Life Cycle
-  init(coordinator: EditInfoCoordinator,
+  init(coordinator: EditInformationCoordinator,
        fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase,
        checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase,
        updateUserInformationUseCase: UpdateUserInformationUseCase,

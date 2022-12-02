@@ -13,7 +13,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   var userRepository: UserRepository
   
   override init(_ navigationController: UINavigationController) {
-    self.userRepository = DefaultUserRepository(userService: DefaultUserService())
+    self.userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
+                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     super.init(navigationController)
   }
   

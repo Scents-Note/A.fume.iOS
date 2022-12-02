@@ -17,7 +17,7 @@ final class UpdateUserInformationUseCase {
   }
   
   func execute(userInfo: UserInfo) -> Observable<UserInfo> {
-    let userIdx = self.userRepository.fetchUserIdx() ?? 0
+    let userIdx = self.userRepository.fetchUserDefaults(key: UserDefaultKey.userIdx) ?? 0
     return self.userRepository.updateUserInfo(userIdx: userIdx, userInfo: userInfo)
   }
 }

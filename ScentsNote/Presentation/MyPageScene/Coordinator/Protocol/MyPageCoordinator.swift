@@ -9,9 +9,9 @@ protocol MyPageCoordinator: AnyObject {
 
   var onOnboardingFlow: (() -> Void)? { get set }
   func runEditInfoFlow()
-  func showMyPageMenuViewController()
-  func showChangePasswordViewController()
+  func runChangePasswordFlow()
   func showWebViewController()
+  func showMyPageMenuViewController()
   func hideMyPageMenuViewController()
 }
 

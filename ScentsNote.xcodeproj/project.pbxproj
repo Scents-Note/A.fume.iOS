@@ -92,8 +92,8 @@
 		4A4F6A3229382EE9006BBF0B /* MyPageMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3129382EE9006BBF0B /* MyPageMenuViewModel.swift */; };
 		4A4F6A342938420B006BBF0B /* MenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A332938420B006BBF0B /* MenuCell.swift */; };
 		4A4F6A36293843B5006BBF0B /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A35293843B5006BBF0B /* Menu.swift */; };
-		4A4F6A3829385209006BBF0B /* EditInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3729385209006BBF0B /* EditInfoViewController.swift */; };
-		4A4F6A3A29385268006BBF0B /* EditInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3929385268006BBF0B /* EditInfoViewModel.swift */; };
+		4A4F6A3829385209006BBF0B /* EditInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3729385209006BBF0B /* EditInformationViewController.swift */; };
+		4A4F6A3A29385268006BBF0B /* EditInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3929385268006BBF0B /* EditInformationViewModel.swift */; };
 		4A4F6A3C2938673A006BBF0B /* EditInformationNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3B2938673A006BBF0B /* EditInformationNicknameView.swift */; };
 		4A4F6A3E29386ECF006BBF0B /* EditInformationGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3D29386ECF006BBF0B /* EditInformationGenderView.swift */; };
 		4A4F6A4029387852006BBF0B /* FetchUserInfoForEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3F29387852006BBF0B /* FetchUserInfoForEditUseCase.swift */; };
@@ -102,9 +102,22 @@
 		4A4F6A472938A766006BBF0B /* UpdateUserInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A462938A766006BBF0B /* UpdateUserInformationUseCase.swift */; };
 		4A4F6A492938AA81006BBF0B /* UserInfoRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A482938AA81006BBF0B /* UserInfoRequestDTO.swift */; };
 		4A4F6A4B2938AF27006BBF0B /* UserInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4A2938AF27006BBF0B /* UserInfoResponseDTO.swift */; };
-		4A4F6A4D2938B626006BBF0B /* EditInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4C2938B626006BBF0B /* EditInfoCoordinator.swift */; };
-		4A4F6A4F2938B66B006BBF0B /* DefaultEditInfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4E2938B66B006BBF0B /* DefaultEditInfoCoordinator.swift */; };
+		4A4F6A4D2938B626006BBF0B /* EditInformationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4C2938B626006BBF0B /* EditInformationCoordinator.swift */; };
+		4A4F6A4F2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4E2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift */; };
 		4A4F6A512938BAB3006BBF0B /* SaveUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A502938BAB3006BBF0B /* SaveUserInfoUseCase.swift */; };
+		4A4F6A532938CB1C006BBF0B /* ChangePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A522938CB1C006BBF0B /* ChangePasswordCoordinator.swift */; };
+		4A4F6A552938D084006BBF0B /* DefaultChangePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A542938D084006BBF0B /* DefaultChangePasswordCoordinator.swift */; };
+		4A4F6A5729397F07006BBF0B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A5629397F07006BBF0B /* ChangePasswordViewController.swift */; };
+		4A4F6A592939803F006BBF0B /* ChangePasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A582939803F006BBF0B /* ChangePasswordViewModel.swift */; };
+		4A4F6A5B293980FE006BBF0B /* CommonInputSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A5A293980FE006BBF0B /* CommonInputSection.swift */; };
+		4A4F6A5E2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A5D2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift */; };
+		4A4F6A602939ABEA006BBF0B /* UserDefaultsPersitenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A5F2939ABEA006BBF0B /* UserDefaultsPersitenceService.swift */; };
+		4A4F6A622939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A612939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift */; };
+		4A4F6A642939C1B0006BBF0B /* PasswordRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A632939C1B0006BBF0B /* PasswordRequestDTO.swift */; };
+		4A4F6A662939C27F006BBF0B /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A652939C27F006BBF0B /* Password.swift */; };
+		4A4F6A682939C2C3006BBF0B /* ChangePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */; };
+		4A4F6A6A2939C3E1006BBF0B /* ResponsePlainObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A692939C3E1006BBF0B /* ResponsePlainObject.swift */; };
+		4A4F6A6C2939CAAA006BBF0B /* SavePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */; };
 		4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */; };
 		4A5A94E52929E9A600B4197D /* PerfumeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */; };
 		4A5A94E72929E9FC00B4197D /* GenderResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */; };
@@ -382,8 +395,8 @@
 		4A4F6A3129382EE9006BBF0B /* MyPageMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageMenuViewModel.swift; sourceTree = "<group>"; };
 		4A4F6A332938420B006BBF0B /* MenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCell.swift; sourceTree = "<group>"; };
 		4A4F6A35293843B5006BBF0B /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
-		4A4F6A3729385209006BBF0B /* EditInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoViewController.swift; sourceTree = "<group>"; };
-		4A4F6A3929385268006BBF0B /* EditInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoViewModel.swift; sourceTree = "<group>"; };
+		4A4F6A3729385209006BBF0B /* EditInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationViewController.swift; sourceTree = "<group>"; };
+		4A4F6A3929385268006BBF0B /* EditInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationViewModel.swift; sourceTree = "<group>"; };
 		4A4F6A3B2938673A006BBF0B /* EditInformationNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationNicknameView.swift; sourceTree = "<group>"; };
 		4A4F6A3D29386ECF006BBF0B /* EditInformationGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationGenderView.swift; sourceTree = "<group>"; };
 		4A4F6A3F29387852006BBF0B /* FetchUserInfoForEditUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserInfoForEditUseCase.swift; sourceTree = "<group>"; };
@@ -392,9 +405,22 @@
 		4A4F6A462938A766006BBF0B /* UpdateUserInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserInformationUseCase.swift; sourceTree = "<group>"; };
 		4A4F6A482938AA81006BBF0B /* UserInfoRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRequestDTO.swift; sourceTree = "<group>"; };
 		4A4F6A4A2938AF27006BBF0B /* UserInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoResponseDTO.swift; sourceTree = "<group>"; };
-		4A4F6A4C2938B626006BBF0B /* EditInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInfoCoordinator.swift; sourceTree = "<group>"; };
-		4A4F6A4E2938B66B006BBF0B /* DefaultEditInfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditInfoCoordinator.swift; sourceTree = "<group>"; };
+		4A4F6A4C2938B626006BBF0B /* EditInformationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationCoordinator.swift; sourceTree = "<group>"; };
+		4A4F6A4E2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditInformationCoordinator.swift; sourceTree = "<group>"; };
 		4A4F6A502938BAB3006BBF0B /* SaveUserInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserInfoUseCase.swift; sourceTree = "<group>"; };
+		4A4F6A522938CB1C006BBF0B /* ChangePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCoordinator.swift; sourceTree = "<group>"; };
+		4A4F6A542938D084006BBF0B /* DefaultChangePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChangePasswordCoordinator.swift; sourceTree = "<group>"; };
+		4A4F6A5629397F07006BBF0B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		4A4F6A582939803F006BBF0B /* ChangePasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModel.swift; sourceTree = "<group>"; };
+		4A4F6A5A293980FE006BBF0B /* CommonInputSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonInputSection.swift; sourceTree = "<group>"; };
+		4A4F6A5D2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserPasswordUseCase.swift; sourceTree = "<group>"; };
+		4A4F6A5F2939ABEA006BBF0B /* UserDefaultsPersitenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsPersitenceService.swift; sourceTree = "<group>"; };
+		4A4F6A612939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserDefaultsPersitenceService.swift; sourceTree = "<group>"; };
+		4A4F6A632939C1B0006BBF0B /* PasswordRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRequestDTO.swift; sourceTree = "<group>"; };
+		4A4F6A652939C27F006BBF0B /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
+		4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordUseCase.swift; sourceTree = "<group>"; };
+		4A4F6A692939C3E1006BBF0B /* ResponsePlainObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePlainObject.swift; sourceTree = "<group>"; };
+		4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePasswordUseCase.swift; sourceTree = "<group>"; };
 		4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumeDetailUseCase.swift; sourceTree = "<group>"; };
 		4A5A94E42929E9A600B4197D /* PerfumeDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetail.swift; sourceTree = "<group>"; };
 		4A5A94E62929E9FC00B4197D /* GenderResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderResponseDTO.swift; sourceTree = "<group>"; };
@@ -843,11 +869,14 @@
 		4A4F6A2C29375735006BBF0B /* User */ = {
 			isa = PBXGroup;
 			children = (
+				4A4F6A462938A766006BBF0B /* UpdateUserInformationUseCase.swift */,
 				4A4F6A2D2937574D006BBF0B /* FetchPerfumesLikedUseCase.swift */,
 				4A4F6A3F29387852006BBF0B /* FetchUserInfoForEditUseCase.swift */,
 				4A4F6A4429388C29006BBF0B /* CheckDuplicateNicknameUseCase.swift */,
-				4A4F6A462938A766006BBF0B /* UpdateUserInformationUseCase.swift */,
 				4A4F6A502938BAB3006BBF0B /* SaveUserInfoUseCase.swift */,
+				4A4F6A5D2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift */,
+				4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */,
+				4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -856,6 +885,7 @@
 			isa = PBXGroup;
 			children = (
 				4A4F6A42293878DD006BBF0B /* UserInfo.swift */,
+				4A4F6A652939C27F006BBF0B /* Password.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1257,6 +1287,7 @@
 				4AB65C9D2901406400A96CA5 /* ResponseObject.swift */,
 				4AE4A4922904D70700491246 /* ErrorBody.swift */,
 				4AA2811F2917D7D800D30A99 /* ListInfo.swift */,
+				4A4F6A692939C3E1006BBF0B /* ResponsePlainObject.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1275,6 +1306,7 @@
 			children = (
 				4A9D915E28FFFBE2001551A8 /* LoginRequestDTO.swift */,
 				4A4F6A482938AA81006BBF0B /* UserInfoRequestDTO.swift */,
+				4A4F6A632939C1B0006BBF0B /* PasswordRequestDTO.swift */,
 			);
 			path = Request;
 			sourceTree = "<group>";
@@ -1398,7 +1430,8 @@
 			children = (
 				4AA2810C2917BA1E00D30A99 /* Protocol */,
 				4AA281132917BA6200D30A99 /* DefaultMyPageCoordinator.swift */,
-				4A4F6A4E2938B66B006BBF0B /* DefaultEditInfoCoordinator.swift */,
+				4A4F6A4E2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift */,
+				4A4F6A542938D084006BBF0B /* DefaultChangePasswordCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1407,7 +1440,8 @@
 			isa = PBXGroup;
 			children = (
 				4AA281112917BA4A00D30A99 /* MyPageCoordinator.swift */,
-				4A4F6A4C2938B626006BBF0B /* EditInfoCoordinator.swift */,
+				4A4F6A4C2938B626006BBF0B /* EditInformationCoordinator.swift */,
+				4A4F6A522938CB1C006BBF0B /* ChangePasswordCoordinator.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -1417,7 +1451,8 @@
 			children = (
 				4AA2810F2917BA3900D30A99 /* MyPageViewController.swift */,
 				4A4F6A2F29382EB9006BBF0B /* MyPageMenuViewController.swift */,
-				4A4F6A3729385209006BBF0B /* EditInfoViewController.swift */,
+				4A4F6A3729385209006BBF0B /* EditInformationViewController.swift */,
+				4A4F6A5629397F07006BBF0B /* ChangePasswordViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1427,7 +1462,8 @@
 			children = (
 				4AA281152917BB2400D30A99 /* MyPageViewModel.swift */,
 				4A4F6A3129382EE9006BBF0B /* MyPageMenuViewModel.swift */,
-				4A4F6A3929385268006BBF0B /* EditInfoViewModel.swift */,
+				4A4F6A3929385268006BBF0B /* EditInformationViewModel.swift */,
+				4A4F6A582939803F006BBF0B /* ChangePasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1703,6 +1739,7 @@
 				4A893ADC290A242200CA502B /* DoneButton.swift */,
 				4A4C986F2927C427004851DB /* DynamicCollectionView.swift */,
 				4A6F9874292C5D800085EBE7 /* TabView.swift */,
+				4A4F6A5A293980FE006BBF0B /* CommonInputSection.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1727,6 +1764,7 @@
 				4A85746629112C9500F86C3A /* DefaultPerfumeService.swift */,
 				4A6F98CC29305A790085EBE7 /* DefaultFilterService.swift */,
 				4A4F6A0B2934C815006BBF0B /* DefaultKeywordService.swift */,
+				4A4F6A612939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1734,6 +1772,7 @@
 		4AB759972901316E0086C519 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				4A4F6A5F2939ABEA006BBF0B /* UserDefaultsPersitenceService.swift */,
 				4AB75995290131200086C519 /* UserService.swift */,
 				4A85746429112C3100F86C3A /* PerfumeService.swift */,
 				4A6F98C5293053CB0085EBE7 /* FilterService.swift */,
@@ -2086,9 +2125,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A4DF5F32929033D0066792D /* SeasonalResponseDTO.swift in Sources */,
-				4A4F6A3829385209006BBF0B /* EditInfoViewController.swift in Sources */,
+				4A4F6A3829385209006BBF0B /* EditInformationViewController.swift in Sources */,
 				4AA280F92917B7AA00D30A99 /* HomeViewController.swift in Sources */,
 				4A85746B291363D200F86C3A /* SurveyKeywordView.swift in Sources */,
+				4A4F6A642939C1B0006BBF0B /* PasswordRequestDTO.swift in Sources */,
 				4A9D914A28FFCC47001551A8 /* InputState.swift in Sources */,
 				4A083BE9291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift in Sources */,
 				4A4F6A4529388C29006BBF0B /* CheckDuplicateNicknameUseCase.swift in Sources */,
@@ -2146,8 +2186,10 @@
 				4A85747129136BA100F86C3A /* SurveySeriesCollectionViewCell.swift in Sources */,
 				4A9A14DE2908ED560067F04D /* InputField.swift in Sources */,
 				4A4C985F29276572004851DB /* PerfumeDetailHeaderView.swift in Sources */,
+				4A4F6A6A2939C3E1006BBF0B /* ResponsePlainObject.swift in Sources */,
 				4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */,
 				4A6F98E0293062700085EBE7 /* FilterSeriesCell.swift in Sources */,
+				4A4F6A5729397F07006BBF0B /* ChangePasswordViewController.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
 				4A4C984A29270332004851DB /* PerfumeDetailReviewView.swift in Sources */,
 				4AA2811E2917CCB700D30A99 /* HomeRecommendationCell.swift in Sources */,
@@ -2160,12 +2202,14 @@
 				4AA281092917B90F00D30A99 /* SearchViewModel.swift in Sources */,
 				4A85746F29136B9400F86C3A /* SurveySeriesView.swift in Sources */,
 				4AC7F8DB2918B01300A8D032 /* UICollectionView+Extension.swift in Sources */,
+				4A4F6A5E2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift in Sources */,
 				4A3B041729239387004F155D /* PerfumeDetailViewModel.swift in Sources */,
 				4A4F6A002934C684006BBF0B /* KeywordRepository.swift in Sources */,
 				4A4DF5F629290A340066792D /* LongevityResponseDTO.swift in Sources */,
 				4A3B041529239316004F155D /* PerfumeDetailViewController.swift in Sources */,
 				4A4F6A512938BAB3006BBF0B /* SaveUserInfoUseCase.swift in Sources */,
 				4A6F989E292EF5A50085EBE7 /* PerfumeKeyword.swift in Sources */,
+				4A4F6A662939C27F006BBF0B /* Password.swift in Sources */,
 				4AAFE82728FE368100EA6FB4 /* UIViewController+Extension.swift in Sources */,
 				4A4F6A082934C72A006BBF0B /* KeywordResponseDTO.swift in Sources */,
 				4A6F98D429305B2A0085EBE7 /* FilterSeries.swift in Sources */,
@@ -2181,6 +2225,7 @@
 				4A6F98A4292F09BD0085EBE7 /* SearchResultCoordinator.swift in Sources */,
 				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,
 				4A6F9879292DB8830085EBE7 /* DefaultPerfumeNewCoordinator.swift in Sources */,
+				4A4F6A602939ABEA006BBF0B /* UserDefaultsPersitenceService.swift in Sources */,
 				4A857463291129CB00F86C3A /* UserDefaultKey.swift in Sources */,
 				4A5A94EB2929F1F200B4197D /* Perfume.swift in Sources */,
 				4A3B041B29246C94004F155D /* PerfumeDetailScrollView.swift in Sources */,
@@ -2202,18 +2247,19 @@
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4A4DF5FC292910B10066792D /* PerfumeDetailLongevityCell.swift in Sources */,
 				4A6F98E8293080F50085EBE7 /* FilterScrollView.swift in Sources */,
-				4A4F6A4D2938B626006BBF0B /* EditInfoCoordinator.swift in Sources */,
+				4A4F6A4D2938B626006BBF0B /* EditInformationCoordinator.swift in Sources */,
 				4A4DF5FA29290C890066792D /* PerfumeDetailLongevityContentView.swift in Sources */,
 				4A6F987F292DB8FA0085EBE7 /* PerfumeNewViewController.swift in Sources */,
 				4A9D915828FFFA55001551A8 /* UserRepository.swift in Sources */,
 				4A6F988B292E0B490085EBE7 /* SearchViewController+CollectionViewLayout.swift in Sources */,
 				4AA280F52917B70300D30A99 /* DefaultHomeCoordinator.swift in Sources */,
 				4AAFE83528FE7CE300EA6FB4 /* SignUpInformationViewModel.swift in Sources */,
-				4A4F6A3A29385268006BBF0B /* EditInfoViewModel.swift in Sources */,
+				4A4F6A3A29385268006BBF0B /* EditInformationViewModel.swift in Sources */,
 				4A4DF5EA2928B6540066792D /* SeasonalPieChartView.swift in Sources */,
 				4A9D914E28FFD2D0001551A8 /* UIImage+Custom.swift in Sources */,
 				4A6F98D129305AFA0085EBE7 /* DefaultFilterRepository.swift in Sources */,
 				4A4F6A0C2934C815006BBF0B /* DefaultKeywordService.swift in Sources */,
+				4A4F6A6C2939CAAA006BBF0B /* SavePasswordUseCase.swift in Sources */,
 				4A6F98A6292F09E80085EBE7 /* DefaultSearchResultCoordinator.swift in Sources */,
 				4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */,
 				4A857433290AA15A00F86C3A /* BirthPopupDismissDelegate.swift in Sources */,
@@ -2233,6 +2279,7 @@
 				4A3B041F29247426004F155D /* PerfumeDetailInfoSection.swift in Sources */,
 				4AAFE7F028FBDBCB00EA6FB4 /* LoginCoordinator.swift in Sources */,
 				4A4F6A0E2934DEB5006BBF0B /* FilterKeywordDataSection.swift in Sources */,
+				4A4F6A682939C2C3006BBF0B /* ChangePasswordUseCase.swift in Sources */,
 				4A4DF5F1292902CA0066792D /* Seasonal.swift in Sources */,
 				4AA281202917D7D800D30A99 /* ListInfo.swift in Sources */,
 				4A5A94E92929EA5100B4197D /* Gender.swift in Sources */,
@@ -2241,6 +2288,7 @@
 				4A4DF6052929B7CD0066792D /* Ingredient.swift in Sources */,
 				4AAFE81528FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift in Sources */,
 				4A4DF5EE2929008A0066792D /* PerfumeDetailSeasonalCell.swift in Sources */,
+				4A4F6A592939803F006BBF0B /* ChangePasswordViewModel.swift in Sources */,
 				4A4F69EE29348446006BBF0B /* FilterBrandInfoResponseDTO.swift in Sources */,
 				4A85746529112C3100F86C3A /* PerfumeService.swift in Sources */,
 				4AC7F8EB291905E200A8D032 /* HomeNewCell.swift in Sources */,
@@ -2317,8 +2365,9 @@
 				4A80A4EA2918A8EF009F83B9 /* HomeTitleCell.swift in Sources */,
 				4A4F6A20293741F8006BBF0B /* MyPageScrollView.swift in Sources */,
 				4A4C98702927C427004851DB /* DynamicCollectionView.swift in Sources */,
-				4A4F6A4F2938B66B006BBF0B /* DefaultEditInfoCoordinator.swift in Sources */,
+				4A4F6A4F2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift in Sources */,
 				4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */,
+				4A4F6A5B293980FE006BBF0B /* CommonInputSection.swift in Sources */,
 				4A85745B2910F5C100F86C3A /* SurveyPerfumeView.swift in Sources */,
 				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,
 				4A857439290B641F00F86C3A /* DefaultBirthCoordinator.swift in Sources */,
@@ -2328,11 +2377,14 @@
 				4AA281122917BA4A00D30A99 /* MyPageCoordinator.swift in Sources */,
 				4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */,
 				4A3B0411292392AE004F155D /* PerfumeDetailCoordinator.swift in Sources */,
+				4A4F6A622939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift in Sources */,
 				4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */,
 				4A6F9898292E19230085EBE7 /* SearchKeywordViewModel.swift in Sources */,
+				4A4F6A552938D084006BBF0B /* DefaultChangePasswordCoordinator.swift in Sources */,
 				4A4C984E29273999004851DB /* UITableView+Extension.swift in Sources */,
+				4A4F6A532938CB1C006BBF0B /* ChangePasswordCoordinator.swift in Sources */,
 				4A4F6A4B2938AF27006BBF0B /* UserInfoResponseDTO.swift in Sources */,
 				4A6F98C1292F95CE0085EBE7 /* SearchTab.swift in Sources */,
 				4A4F6A492938AA81006BBF0B /* UserInfoRequestDTO.swift in Sources */,

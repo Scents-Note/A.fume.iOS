@@ -40,6 +40,10 @@ final class DefaultUserService: ScentsNoteService, UserService {
   func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO> {
     requestObject(.updateUserInfo(userIdx: userIdx, userInfo: userInfo))
   }
+  
+  func changePassword(password: PasswordRequestDTO) -> Observable<String> {
+    requestPlainObject(.changePassword(password: password))
+  }
 
 }
 

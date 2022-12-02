@@ -1,25 +1,23 @@
 //
-//  ResponseObject.swift
+//  ResponsePlainObject.swift
 //  ScentsNote
 //
-//  Created by 황득연 on 2022/10/20.
+//  Created by 황득연 on 2022/12/02.
 //
 
+import Foundation
 
-struct ResponseObject<T> {
+struct ResponsePlainObject {
   let message: String?
-  let data: T?
   
   enum CodingKeys: String, CodingKey {
     case message
-    case data
   }
 }
 
-extension ResponseObject: Decodable where T: Decodable  {
+extension ResponsePlainObject: Decodable {
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     message = try? container.decode(String.self, forKey: .message)
-    data = try? container.decode(T.self, forKey: .data)
   }
 }

@@ -10,6 +10,7 @@ import RxSwift
 import Moya
 
 protocol UserRepository {
+  
   // MARK: - Login
   func login(email: String, password: String) -> Observable<LoginInfo>
   func saveLoginInfo(loginInfo: LoginInfo)
@@ -24,14 +25,11 @@ protocol UserRepository {
 
   // MARK: - My Page
   func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]>
-  func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo> 
+  func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo>
+  func changePassword(password: Password) -> Observable<String>
 
-  func fetchUserIdx() -> Int?
-  func fetchUserToken() -> String?
-  func fetchLoginState() -> Bool?
-  func fetchUserGender() -> String?
-  func fetchUserNickname() -> String?
-  func fetchUserBirth() -> Int?
+  func fetchUserDefaults<T>(key: String) -> T?
   func saveUserInfo(userInfo: UserInfo)
+  func savePassword(password: String)
 }
 

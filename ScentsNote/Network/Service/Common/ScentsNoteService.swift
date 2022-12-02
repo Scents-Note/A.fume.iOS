@@ -47,6 +47,18 @@ class ScentsNoteService {
         .map { try JSONDecoder().decode(ResponseObject<T>.self, from: $0.data) }
       .compactMap { $0.data }
   }
+  
+  func requestPlainObject(_ target: ScentsNoteAPI) -> Observable<String> {
+    return provider.rx.request(target)
+      .asObservable()
+      .filterSuccessfulStatusCodes()
+      .catch(self.handleInternetConnection)
+        .catch(self.handleTimeOut)
+        .catch(self.handleREST)
+        .map { try JSONDecoder().decode(ResponsePlainObject.self, from: $0.data) }
+      .compactMap { $0.message }
+
+  }
 }
 
 // MARK: Handle Network Error

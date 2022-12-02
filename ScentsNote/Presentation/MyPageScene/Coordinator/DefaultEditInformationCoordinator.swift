@@ -7,14 +7,14 @@
 
 import UIKit
 
-final class DefaultEditInfoCoordinator: BaseCoordinator, EditInfoCoordinator {
+final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationCoordinator {
   
   var finishFlow: (() -> Void)?
   
-  var editInfoViewController: EditInfoViewController
+  var editInfoViewController: EditInformationViewController
   
   override init(_ navigationController: UINavigationController) {
-    self.editInfoViewController = EditInfoViewController()
+    self.editInfoViewController = EditInformationViewController()
     super.init(navigationController)
   }
   
@@ -24,8 +24,9 @@ final class DefaultEditInfoCoordinator: BaseCoordinator, EditInfoCoordinator {
   
   private func showEditInfoController() {
     let vc = self.editInfoViewController
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared)
-    vc.viewModel = EditInfoViewModel(coordinator: self,
+    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
+                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
+    vc.viewModel = EditInformationViewModel(coordinator: self,
                                      fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase(userRepository: userRepository),
                                      checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: userRepository),
                                      updateUserInformationUseCase: UpdateUserInformationUseCase(userRepository: userRepository),
@@ -35,7 +36,7 @@ final class DefaultEditInfoCoordinator: BaseCoordinator, EditInfoCoordinator {
   }
   
   func showBirthPopupViewController(with birth: Int) {
-    guard let viewController = self.navigationController.viewControllers.last as? EditInfoViewController else {
+    guard let viewController = self.navigationController.viewControllers.last as? EditInformationViewController else {
       return
     }
     

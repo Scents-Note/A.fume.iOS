@@ -18,18 +18,22 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   }
   
   override func start() {
+    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
+                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     self.myPageViewController.viewModel = MyPageViewModel(
       coordinator: self,
-      fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared))
+      fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase(userRepository: userRepository)
     )
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
   }
   
   func showMyPageMenuViewController() {
+    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
+                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     let vc = MyPageMenuViewController()
     vc.viewModel = MyPageMenuViewModel(
       coordinator: self,
-      userRepository: DefaultUserRepository(userService: DefaultUserService.shared)
+      userRepository: userRepository
     )
     vc.modalTransitionStyle = .crossDissolve
     vc.modalPresentationStyle = .overCurrentContext
@@ -37,19 +41,26 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   }
   
   func runEditInfoFlow() {
-    let coordinator = DefaultEditInfoCoordinator(self.navigationController)
+    let coordinator = DefaultEditInformationCoordinator(self.navigationController)
     coordinator.finishFlow = { [unowned self, unowned coordinator] in
       self.navigationController.popViewController(animated: true)
       self.removeDependency(coordinator)
     }
-    
     coordinator.start()
     self.addDependency(coordinator)
   }
   
-  func showChangePasswordViewController() {
-    
+  func runChangePasswordFlow() {
+    let coordinator = DefaultChangePasswordCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start()
+    self.addDependency(coordinator)
   }
+  
+
   
   func showWebViewController() {
     
