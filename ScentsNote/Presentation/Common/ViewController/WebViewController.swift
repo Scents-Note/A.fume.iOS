@@ -28,6 +28,7 @@ final class WebViewController: UIViewController {
   }
   
   private func configureUI() {
+    self.view.backgroundColor = .white
     self.view.addSubview(self.webView)
     self.webView.snp.makeConstraints {
       $0.edges.equalTo(self.view.safeAreaLayoutGuide)
