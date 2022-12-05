@@ -15,9 +15,18 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   }
   
   override func start() {
-    self.runMainFlow()
-//    self.runOnboardingFlow()
-//    self.runSurveyFlow()
+    self.runSplashFlow()
+//    self.runMainFlow()
+  }
+  
+  func runSplashFlow() {
+    let coordinator = DefaultSplashCoordinator(navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.removeDependency(coordinator)
+      self.runMainFlow()
+    }
+    self.addDependency(coordinator)
+    coordinator.start()
   }
   
   func runOnboardingFlow() {
@@ -25,8 +34,6 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
       self.removeDependency(onboardingCoordinator)
       self.navigationController.dismiss(animated: true)
-      
-//      self.initialNavigationController()
       switch type {
       case .main:
         self.runMainFlow()

@@ -9,8 +9,11 @@ import UIKit
 
 extension UIImage {
   
-  // MARK: - Onboarding
+  // MARK: - Splash
+  static let textLogo = UIImage(named: "textLogo")
   static let logo = UIImage(named: "logo")
+
+  // MARK: - Onboarding
   static let signLogo = UIImage(named: "signLogo")
   static let imgBg = UIImage(named: "imgBg")
   
