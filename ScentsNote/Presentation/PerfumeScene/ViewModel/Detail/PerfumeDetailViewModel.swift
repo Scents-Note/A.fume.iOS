@@ -12,6 +12,10 @@ final class PerfumeDetailViewModel {
   
   
   // TODO: 로직 전면 리팩토링
+  struct CellInput {
+    let perfumeDidTapEvent = PublishRelay<Perfume>()
+  }
+  
   struct Input {
     let reviewButtonDidTapEvent: Observable<Void>
   }
@@ -28,6 +32,7 @@ final class PerfumeDetailViewModel {
   }
   
   let input = ScrollInput()
+  let cellInput = CellInput()
   let output = Output()
   private weak var coordinator: PerfumeDetailCoordinator?
   private let perfumeIdx: Int
@@ -52,6 +57,7 @@ final class PerfumeDetailViewModel {
     
     self.bindInput(input: input,
                    scrollInput: self.input,
+                   cellInput: self.cellInput,
                    pageViewPosition: pageViewPosition,
                    perfumeDetail: perfumeDetail,
                    disposeBag: disposeBag)
@@ -66,6 +72,7 @@ final class PerfumeDetailViewModel {
   
   private func bindInput(input: Input,
                          scrollInput: ScrollInput,
+                         cellInput: CellInput,
                          pageViewPosition: PublishRelay<Int>,
                          perfumeDetail: BehaviorRelay<PerfumeDetail?>,
                          disposeBag: DisposeBag) {
@@ -77,6 +84,12 @@ final class PerfumeDetailViewModel {
       })
       .disposed(by: disposeBag)
     
+    cellInput.perfumeDidTapEvent
+      .subscribe(onNext: { [weak self] perfume in
+        self?.coordinator?.runPerfumeDetailFlow?(perfume.perfumeIdx)
+      })
+      .disposed(by: disposeBag)
+
     scrollInput.tabButtonTapEvent
       .subscribe(onNext: { idx in
         pageViewPosition.accept(idx)

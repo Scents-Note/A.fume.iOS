@@ -9,6 +9,7 @@ import UIKit
 
 final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoordinator {
   
+  var finishFlow: (() -> Void)?
   var perfumeReviewViewController: PerfumeReviewViewController
   
   override init(_ navigationController: UINavigationController) {

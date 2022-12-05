@@ -8,7 +8,7 @@
 import Foundation
 
 protocol PerfumeReviewCoordinator: AnyObject {
-//  var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
+  var finishFlow: (() -> Void)? { get set }
   func showKeywordBottomSheetViewController(keywords: [Keyword])
   func hideKeywordBottomSheetViewController(keywords: [Keyword])
   

@@ -430,6 +430,7 @@ final class PerfumeReviewViewController: UIViewController {
     }
 
     let input = PerfumeReviewViewModel.Input(
+      imageContainerDidTapEvent: imageContainerView.rx.tapGesture().when(.recognized).asObservable(),
       starViewDidUpdateEvent: starViewUpdated,
       noteTextFieldDidEditEvent: self.noteTextField.rx.text.orEmpty.asObservable(),
       keywordAddButtonDidTapEvent: self.keywordAddButton.rx.tap.asObservable(),

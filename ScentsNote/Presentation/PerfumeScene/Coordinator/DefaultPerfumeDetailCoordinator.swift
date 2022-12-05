@@ -10,6 +10,8 @@ import UIKit
 final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoordinator {
   
   var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)?
+  var runPerfumeDetailFlow: ((Int) -> Void)?
+  
   var perfumeDetailViewController: PerfumeDetailViewController
   
   override init(_ navigationController: UINavigationController) {

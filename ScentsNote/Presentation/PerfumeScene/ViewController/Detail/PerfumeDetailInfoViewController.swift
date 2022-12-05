@@ -15,8 +15,11 @@ final class PerfumeDetailInfoViewController: UIViewController {
   private typealias Snapshot = NSDiffableDataSourceSnapshot<PerfumeDetailInfoSection, PerfumeDetailInfoItem>
   
   // MARK: - Var
-  private var datasource: DataSource!
+  
   var onUpdateHeight: ((CGFloat) -> Void)?
+  var clickPerfume: ((Perfume) -> Void)? 
+  
+  private var datasource: DataSource!
   var height: CGFloat = 0
   var isLoaded = false
   
@@ -102,7 +105,7 @@ final class PerfumeDetailInfoViewController: UIViewController {
       //    case .gender:
       //      cell.contentConfiguration = headerConfiguration(for: cell, with: title)
     case .similarity(let perfumes):
-      cell.contentConfiguration = similarityConfiguration(for: cell, with: perfumes)
+      cell.contentConfiguration = similarityConfiguration(for: cell, with: perfumes, with: clickPerfume)
     default:
       break
     }

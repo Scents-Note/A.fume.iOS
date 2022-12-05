@@ -9,4 +9,5 @@ import Foundation
 
 protocol PerfumeDetailCoordinator: AnyObject {
   var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)? { get set }
+  var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
 }

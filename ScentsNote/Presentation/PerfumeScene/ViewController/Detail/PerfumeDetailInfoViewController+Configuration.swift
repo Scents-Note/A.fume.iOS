@@ -74,9 +74,10 @@ extension PerfumeDetailInfoViewController {
 //    return contentConfiguration
 //  }
   
-  func similarityConfiguration(for cell: UICollectionViewListCell, with perfumes: [Perfume]?) -> PerfumeDetailSimilarityContentView.Configuration {
+  func similarityConfiguration(for cell: UICollectionViewListCell, with perfumes: [Perfume]?, with clickPerfume: ((Perfume) -> Void)?) -> PerfumeDetailSimilarityContentView.Configuration {
     var contentConfiguration = cell.similarityConfiguration()
     contentConfiguration.perfumes = perfumes
+    contentConfiguration.clickPerfume = clickPerfume
     return contentConfiguration
   }
   

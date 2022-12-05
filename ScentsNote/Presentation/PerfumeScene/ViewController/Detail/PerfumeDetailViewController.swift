@@ -24,7 +24,7 @@ final class PerfumeDetailViewController: UIViewController {
   
   // MARK: - Input
   private let pageViewState = BehaviorRelay<Int>(value: 0)
-
+  
   // MARK: - UI
   private let mainImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
@@ -42,7 +42,16 @@ final class PerfumeDetailViewController: UIViewController {
   
   private let dividerView = UIView().then { $0.backgroundColor = .lightGray }
   private let bottomView = UIView()
-  private let wishView = UIView()
+  private let wishView = UIView().then {
+    $0.layer.borderColor = UIColor.grayCd.cgColor
+    $0.layer.borderWidth = 0.5
+  }
+  private let wishHeartView = UIImageView()
+  private let wishLabel = UILabel().then {
+    $0.text = "위시"
+    $0.textColor = .blackText
+    $0.font = .notoSans(type: .regular, size: 11)
+  }
   private let reviewButton = UIButton().then {
     $0.setTitle("시향 노트 쓰기", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -50,6 +59,9 @@ final class PerfumeDetailViewController: UIViewController {
     $0.backgroundColor = .blackText
     $0.layer.cornerRadius = 2
   }
+  
+  private let dividerViewOfBottomView = UIView().then { $0.backgroundColor = .lightGray }
+  
   
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout (sectionProvider: { section, env -> NSCollectionLayoutSection? in
     let section = self.dataSource.sectionModels[section].model
@@ -97,6 +109,9 @@ extension PerfumeDetailViewController {
           cell.onUpdateHeight = { [weak self] in
             self?.reload()
           }
+          cell.clickPerfume = { [weak self] perfume in
+            self?.viewModel?.cellInput.perfumeDidTapEvent.accept(perfume)
+          }
           cell.updateUI(reviews: self.viewModel?.output.reviews)
           self.updatePageView = { oldValue, newValue in
             cell.updatePageView(oldValue: oldValue, newValue: newValue)
@@ -136,13 +151,42 @@ extension PerfumeDetailViewController {
     }
     
     self.bottomView.snp.makeConstraints {
-      $0.bottom.left.right.equalToSuperview()
-      $0.height.equalTo(92)
+      $0.left.right.equalToSuperview()
+      $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
+      $0.height.equalTo(72)
+    }
+    
+    self.bottomView.addSubview(self.wishView)
+    self.wishView.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.left.equalToSuperview().offset(18)
+      $0.width.equalTo(90)
+      $0.height.equalTo(52)
+    }
+    
+    self.bottomView.addSubview(self.dividerViewOfBottomView)
+    self.dividerViewOfBottomView.snp.makeConstraints {
+      $0.top.left.right.equalToSuperview()
+      $0.height.equalTo(1)
+    }
+    
+    self.wishView.addSubview(self.wishHeartView)
+    self.wishHeartView.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalToSuperview().offset(4)
+    }
+    
+    self.wishView.addSubview(self.wishLabel)
+    self.wishLabel.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalToSuperview().offset(-4)
     }
     
     self.bottomView.addSubview(self.reviewButton)
     self.reviewButton.snp.makeConstraints {
-      $0.top.left.right.equalToSuperview().inset(10)
+      $0.centerY.equalToSuperview()
+      $0.left.equalTo(self.wishView.snp.right).offset(17)
+      $0.right.equalToSuperview().offset(-18)
       $0.height.equalTo(52)
     }
   }

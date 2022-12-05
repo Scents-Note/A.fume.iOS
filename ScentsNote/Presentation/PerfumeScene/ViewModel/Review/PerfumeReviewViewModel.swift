@@ -18,6 +18,7 @@ final class PerfumeReviewViewModel {
   }
   
   struct Input {
+    let imageContainerDidTapEvent: Observable<UITapGestureRecognizer>
     let starViewDidUpdateEvent: PublishRelay<Double>
     let noteTextFieldDidEditEvent: Observable<String>
     let keywordAddButtonDidTapEvent: Observable<Void>
@@ -117,6 +118,12 @@ final class PerfumeReviewViewModel {
                          isShareButtonSelected: BehaviorRelay<Bool>,
                          canDone: PublishRelay<Bool>,
                          disposeBag: DisposeBag) {
+    
+    input.imageContainerDidTapEvent
+      .subscribe(onNext: { [weak self] _ in
+        self?.coordinator?.finishFlow?()
+      })
+      .disposed(by: disposeBag)
     
     input.starViewDidUpdateEvent
       .subscribe(onNext: { [weak self] score in
