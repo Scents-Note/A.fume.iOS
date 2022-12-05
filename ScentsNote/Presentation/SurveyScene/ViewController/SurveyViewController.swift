@@ -275,10 +275,12 @@ extension SurveyViewController: UICollectionViewDataSource {
       }
       let keyword = self.viewModel?.keywords[indexPath.row]
       cell.updateUI(keyword: keyword)
-      cell.clickKeyword = {
-        self.viewModel?.keywords[indexPath.row].isSelected.toggle()
-        self.surveyScrollView.surveyKeywordView.reloadItems(at: [indexPath])
-      }
+      cell.clickKeyword()
+        .subscribe(onNext: { [weak self] _ in
+          self?.viewModel?.keywords[indexPath.row].isSelected.toggle()
+          self?.surveyScrollView.surveyKeywordView.reloadItems(at: [indexPath])
+        })
+        .disposed(by: cell.disposeBag)
       return cell
     } else {
       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SurveySeriesCollectionViewCell.identifier, for: indexPath) as? SurveySeriesCollectionViewCell else {

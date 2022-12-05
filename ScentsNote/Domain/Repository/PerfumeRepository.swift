@@ -30,5 +30,6 @@ protocol PerfumeRepository {
   func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]>
   
   // MARK: - Review
-  func fetchReviews(perfumeIdx: Int) -> Observable<[Review]> 
+  func fetchReviews(perfumeIdx: Int) -> Observable<[Review]>
+  func addReview(perfumeIdx: Int, perfumeReview: PerfumeReview) -> Observable<String>
 }

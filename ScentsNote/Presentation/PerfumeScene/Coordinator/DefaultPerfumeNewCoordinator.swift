@@ -26,6 +26,4 @@ final class DefaultPerfumeNewCoordinator: BaseCoordinator, PerfumeNewCoordinator
     self.perfumeNewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeNewViewController, animated: true)
   }
-  
-  
 }

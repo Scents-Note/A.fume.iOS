@@ -70,15 +70,10 @@ final class FilterKeywordView: UIView {
   
   private func configureCollectionView() {
     self.dataSource = DataSource { dataSource, collectionView, indexPath, item in
-        let cell = self.collectionView.dequeueReusableCell(SurveyKeywordCollectionViewCell.self, for: indexPath)
-        cell.updateUI(keyword: item.keyword)
-//        cell.clickKeyword()
-//          .subscribe(onNext: {_ in
-//            self.viewModel.clickSeries(section: indexPath.section, ingredient: item.ingredient)
-//          })
-//          .disposed(by: cell.disposeBag)
-        return cell
-      }
+      let cell = self.collectionView.dequeueReusableCell(SurveyKeywordCollectionViewCell.self, for: indexPath)
+      cell.updateUI(keyword: item.keyword)
+      return cell
+    }
   }
   
   // MARK: - Bind ViewModel
@@ -92,17 +87,5 @@ final class FilterKeywordView: UIView {
     self.viewModel.keywordDataSource
       .bind(to: self.collectionView.rx.items(dataSource: self.dataSource))
       .disposed(by: self.disposeBag)
-    
-//    self.viewModel.keywords
-//      .bind(to: self.collectionView.rx.items(cellIdentifier: "SurveyKeywordCollectionViewCell", cellType: SurveyKeywordCollectionViewCell.self)) { index, keyword, cell in
-//        cell.updateUI(keyword: keyword)
-//      }
-//      .disposed(by: self.disposeBag)
-//    
-//    self.viewModel.brands
-//      .bind(to: self.brandCollectionView.rx.items(cellIdentifier: "FilterBrandCell", cellType: FilterBrandCell.self)) { index, brand, cell in
-//        cell.updateUI(brand: brand)
-//      }
-//      .disposed(by: self.disposeBag)
   }
 }

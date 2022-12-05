@@ -17,6 +17,12 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   // MARK: - Output
   var onUpdateHeight: (() -> Void)?
   
+  var clickPerfume: ((Perfume) -> Void)? {
+    didSet {
+      self.bindAction(clickPerfume: clickPerfume)
+    }
+  }
+  
   
   // MARK: - UI
   lazy var pageViewController: UIPageViewController = {
@@ -41,11 +47,11 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   }
   
   private func setViewControllersInPageVC() {
+    Log("1")
     let infoVC = PerfumeDetailInfoViewController()
     infoVC.onUpdateHeight = { [weak self] height in
       self?.updateHeight(height: height)
     }
-//    infoVC.collectionView.delegate = self
     
     let reviewVC = PerfumeDetailReviewViewController()
     reviewVC.onUpdateHeight = { [weak self] height in
@@ -83,6 +89,10 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   
   func updatePageView(oldValue: Int, newValue: Int) {
     self.pageViewController.setViewControllers([self.dataSourceVC[newValue]], direction: .forward, animated: false, completion: nil)
+  }
+  
+  func bindAction(clickPerfume: ((Perfume) -> Void)?) {
+    (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).clickPerfume = clickPerfume
   }
 }
 

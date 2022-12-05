@@ -68,4 +68,9 @@ final class DefaultPerfumeRepository: PerfumeRepository {
   func updatePerfumeLike(perfumeIdx: Int) -> Observable<Bool> {
     self.perfumeService.updatePerfumeLike(perfumeIdx: perfumeIdx)
   }
+  
+  func addReview(perfumeIdx: Int, perfumeReview: PerfumeReview) -> Observable<String> {
+    let requestDTO = perfumeReview.toEntity()
+    return self.perfumeService.addReview(perfumeIdx: perfumeIdx, perfumeReview: requestDTO)
+  }
 }

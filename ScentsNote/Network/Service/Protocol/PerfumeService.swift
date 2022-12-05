@@ -29,4 +29,5 @@ protocol PerfumeService {
   
   //Review
   func fetchReviews(perfumeIdx: Int) -> Observable<[ReviewResponseDTO]>
+  func addReview(perfumeIdx: Int, perfumeReview: PerfumeReviewRequsetDTO) -> Observable<String>
 }

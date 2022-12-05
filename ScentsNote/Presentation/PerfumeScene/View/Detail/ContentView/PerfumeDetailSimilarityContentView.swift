@@ -19,12 +19,15 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
         return self
     }
     
+    var clickPerfume: ((Perfume) -> Void)?
     var perfumes: [Perfume]? = []
     
     func makeContentView() -> UIView & UIContentView {
       return PerfumeDetailSimilarityContentView(self)
     }
   }
+  
+  var clickPerfume: ((Perfume) -> Void)?
   
   let disposeBag = DisposeBag()
   var perfumes = BehaviorRelay<[Perfume]>(value: [])
@@ -69,6 +72,7 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration, let perfumes = configuration.perfumes else { return }
     self.perfumes.accept(perfumes)
+    self.clickPerfume = configuration.clickPerfume
   }
   
   func bindUI() {
@@ -79,6 +83,15 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
         cell.updateUI(perfume: perfume)
       }
       .disposed(by: self.disposeBag)
+    
+    self.collectionView.rx.itemSelected.map { $0.row }.asObservable()
+      .subscribe(onNext: { [weak self] idx in
+        guard let self = self else { return }
+        let perfume = self.perfumes.value[idx]
+        self.clickPerfume?(perfume)
+      })
+      .disposed(by: self.disposeBag)
+
   }
 
 }
