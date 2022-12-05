@@ -18,6 +18,12 @@
 		4A0EB117293D780A00630F88 /* ReviewGenderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB116293D780A00630F88 /* ReviewGenderCell.swift */; };
 		4A0EB119293D8A6100630F88 /* ReviewSeasonalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB118293D8A6100630F88 /* ReviewSeasonalCell.swift */; };
 		4A0EB11C293DA22000630F88 /* AddReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB11B293DA22000630F88 /* AddReviewUseCase.swift */; };
+		4A0EB11E293DCE3700630F88 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB11D293DCE3700630F88 /* SplashCoordinator.swift */; };
+		4A0EB120293DCE4500630F88 /* DefaultSplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB11F293DCE4500630F88 /* DefaultSplashCoordinator.swift */; };
+		4A0EB123293DCF4A00630F88 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB122293DCF4A00630F88 /* SplashViewModel.swift */; };
+		4A0EB125293DCF7600630F88 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB124293DCF7600630F88 /* SplashViewController.swift */; };
+		4A0EB127293DCFA800630F88 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB126293DCFA800630F88 /* LoginUseCase.swift */; };
+		4A0EB129293DD4D900630F88 /* SaveLoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB128293DD4D900630F88 /* SaveLoginInfo.swift */; };
 		4A155DFE291B76F10027D26E /* HomeDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFD291B76F10027D26E /* HomeDataSection.swift */; };
 		4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */; };
 		4A3B0411292392AE004F155D /* PerfumeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B0410292392AE004F155D /* PerfumeDetailCoordinator.swift */; };
@@ -333,6 +339,12 @@
 		4A0EB116293D780A00630F88 /* ReviewGenderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewGenderCell.swift; sourceTree = "<group>"; };
 		4A0EB118293D8A6100630F88 /* ReviewSeasonalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSeasonalCell.swift; sourceTree = "<group>"; };
 		4A0EB11B293DA22000630F88 /* AddReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddReviewUseCase.swift; sourceTree = "<group>"; };
+		4A0EB11D293DCE3700630F88 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
+		4A0EB11F293DCE4500630F88 /* DefaultSplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSplashCoordinator.swift; sourceTree = "<group>"; };
+		4A0EB122293DCF4A00630F88 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		4A0EB124293DCF7600630F88 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4A0EB126293DCFA800630F88 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		4A0EB128293DD4D900630F88 /* SaveLoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginInfo.swift; sourceTree = "<group>"; };
 		4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A155DFD291B76F10027D26E /* HomeDataSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSection.swift; sourceTree = "<group>"; };
 		4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Legacy.swift"; sourceTree = "<group>"; };
@@ -679,6 +691,14 @@
 			path = Review;
 			sourceTree = "<group>";
 		};
+		4A0EB121293DCF3200630F88 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EB122293DCF4A00630F88 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		4A155DF72919DEB60027D26E /* PerfumeScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +935,8 @@
 				4A4F6A5D2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift */,
 				4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */,
 				4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */,
+				4A0EB126293DCFA800630F88 /* LoginUseCase.swift */,
+				4A0EB128293DD4D900630F88 /* SaveLoginInfo.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1549,6 +1571,7 @@
 			children = (
 				4AAFE81A28FCE7F000EA6FB4 /* BaseNavigationController.swift */,
 				4A4F6A712939CD90006BBF0B /* WebViewController.swift */,
+				4A0EB124293DCF7600630F88 /* SplashViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1702,6 +1725,7 @@
 				4AAFE79428FAA82900EA6FB4 /* Coordinator */,
 				4AAFE82128FD4BEC00EA6FB4 /* View */,
 				4AA281172917C04800D30A99 /* ViewController */,
+				4A0EB121293DCF3200630F88 /* ViewModel */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -1714,6 +1738,7 @@
 				4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */,
 				4A857447290BF77900F86C3A /* BaseCoordinator.swift */,
 				4A4F6A6F2939CCD7006BBF0B /* DefaultWebCoordinator.swift */,
+				4A0EB11F293DCE4500630F88 /* DefaultSplashCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1741,6 +1766,7 @@
 				4AAFE79528FAA84400EA6FB4 /* Coordinator.swift */,
 				4AAFE7D828FB9E3900EA6FB4 /* ApplicationCoordinator.swift */,
 				4A4F6A6D2939CC52006BBF0B /* WebCoordinator.swift */,
+				4A0EB11D293DCE3700630F88 /* SplashCoordinator.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2218,6 +2244,7 @@
 				4A6F98B5292F89970085EBE7 /* SearchFilterCoordinator.swift in Sources */,
 				4A8574572910C50200F86C3A /* SurveyPerfumeCollectionViewCell.swift in Sources */,
 				4A9A14E4290919390067F04D /* SignUpPasswordViewModel.swift in Sources */,
+				4A0EB125293DCF7600630F88 /* SplashViewController.swift in Sources */,
 				4A4F6A472938A766006BBF0B /* UpdateUserInformationUseCase.swift in Sources */,
 				4AF9FBE7291DE82300667BD7 /* Log.swift in Sources */,
 				4AA2811C2917C80500D30A99 /* HomeHeaderView.swift in Sources */,
@@ -2232,6 +2259,7 @@
 				4A6F9875292C5D800085EBE7 /* TabView.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
 				4A0EB119293D8A6100630F88 /* ReviewSeasonalCell.swift in Sources */,
+				4A0EB127293DCFA800630F88 /* LoginUseCase.swift in Sources */,
 				4A6F9889292DD5020085EBE7 /* PerfumeNewHeaderView.swift in Sources */,
 				4A4F69FE2934C337006BBF0B /* FilterKeywordView.swift in Sources */,
 				4AAFE79628FAA84400EA6FB4 /* Coordinator.swift in Sources */,
@@ -2355,6 +2383,7 @@
 				4A4F6A122935E099006BBF0B /* ReviewCell.swift in Sources */,
 				4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */,
 				4A4DF60B2929CEB80066792D /* PerfumeDetailSimilarityContentView.swift in Sources */,
+				4A0EB11E293DCE3700630F88 /* SplashCoordinator.swift in Sources */,
 				4A5A94ED292A351F00B4197D /* PerfumeDetailInfoViewController.swift in Sources */,
 				4A4C98562927406C004851DB /* PerfumeDetailDataSection.swift in Sources */,
 				4AAFE7F428FBE48F00EA6FB4 /* UIFont+Custom.swift in Sources */,
@@ -2427,6 +2456,7 @@
 				4A6F98BB292F8D8F0085EBE7 /* SearchFilterViewModel.swift in Sources */,
 				4A4C986A29278AF8004851DB /* PerfumeDetailAbundanceContentView.swift in Sources */,
 				4A6F98A8292F0A550085EBE7 /* SearchResultViewController.swift in Sources */,
+				4A0EB120293DCE4500630F88 /* DefaultSplashCoordinator.swift in Sources */,
 				4A893ADF290A832D00CA502B /* BirthPopupViewController.swift in Sources */,
 				4A8574552910C44700F86C3A /* SurveyScrollView.swift in Sources */,
 				4A6F9895292E17370085EBE7 /* SearchKeywordViewController.swift in Sources */,
@@ -2457,6 +2487,7 @@
 				4A0EB115293CE84F00630F88 /* ReviewLongevityCell.swift in Sources */,
 				4A4F6A4F2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift in Sources */,
 				4A857446290BF3F300F86C3A /* SurveyViewModel.swift in Sources */,
+				4A0EB123293DCF4A00630F88 /* SplashViewModel.swift in Sources */,
 				4A4F6A5B293980FE006BBF0B /* CommonInputSection.swift in Sources */,
 				4A85745B2910F5C100F86C3A /* SurveyPerfumeView.swift in Sources */,
 				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,
@@ -2469,6 +2500,7 @@
 				4A3B0411292392AE004F155D /* PerfumeDetailCoordinator.swift in Sources */,
 				4A4F6A622939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift in Sources */,
 				4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */,
+				4A0EB129293DD4D900630F88 /* SaveLoginInfo.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */,
 				4A4F6A702939CCD7006BBF0B /* DefaultWebCoordinator.swift in Sources */,

@@ -42,7 +42,8 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
     self.tabBarController.tabBar.backgroundColor = .bgTabBar
     self.tabBarController.tabBar.tintColor = .blackText
     
-    self.navigationController.pushViewController(self.tabBarController, animated: true)
+    self.navigationController.viewControllers = [self.tabBarController]
+//    self.navigationController.pushViewController(self.tabBarController, animated: true)
   }
   
   private func createTabNavigationController(of page: TabBarPage) -> UINavigationController {

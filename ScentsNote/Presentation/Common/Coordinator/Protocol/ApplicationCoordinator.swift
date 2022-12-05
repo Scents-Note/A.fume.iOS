@@ -8,6 +8,7 @@
 import UIKit
 
 protocol ApplicationCoordinator {
+  func runSplashFlow()
   func runOnboardingFlow()
   func runMainFlow()
   func runSurveyFlow()
