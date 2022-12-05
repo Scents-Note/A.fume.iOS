@@ -125,7 +125,7 @@ final class MyPageMenuViewController: UIViewController {
     }
     
     UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
-      self.view.backgroundColor = .black.withAlphaComponent(0.5)
+      self.view.backgroundColor = .black.withAlphaComponent(0)
       self.view.layoutIfNeeded()
     }) { _ in
       if self.presentingViewController != nil {

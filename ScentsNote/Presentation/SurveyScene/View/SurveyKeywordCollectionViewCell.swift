@@ -13,20 +13,18 @@ import Then
 
 final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
   
-  var clickKeyword: (() -> Void)?
-  
   static let identifier = "SurveyKeywordCollectionViewCell"
   static let height: CGFloat = 42
-  let disposeBag = DisposeBag()
+  var disposeBag = DisposeBag()
   
-  private let keywordLabel = UILabel().then {
+  let keywordLabel = UILabel().then {
+    $0.textAlignment = .center
     $0.font = .notoSans(type: .regular, size: 15)
   }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
-//    self.bindUI()
   }
   
   required init?(coder: NSCoder) {
@@ -34,20 +32,17 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-//  override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-//      let attr = super.preferredLayoutAttributesFitting(layoutAttributes)
-//      var frame = attr.frame
-//      frame.size.width = layoutAttributes.size.width //Key here
-//      attr.frame = frame
-//      return attr
-//  }
-   
+  override func prepareForReuse() {
+    self.disposeBag = DisposeBag()
+  }
+
   func configureUI(){
-    self.contentView.translatesAutoresizingMaskIntoConstraints = false
     self.contentView.addSubview(self.keywordLabel)
+    self.keywordLabel.translatesAutoresizingMaskIntoConstraints = false
     self.keywordLabel.snp.makeConstraints {
       $0.top.bottom.equalToSuperview()
-      $0.left.right.equalToSuperview().inset(18)
+      $0.left.equalToSuperview().offset(18)
+      $0.right.equalToSuperview().offset(-18)
     }
   }
     
@@ -64,10 +59,10 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
       self.layer.borderWidth = 1
       self.layer.borderColor = UIColor.grayCd.cgColor
     }
+    self.keywordLabel.layoutIfNeeded()
   }
   
   func updateUI(ingredient: FilterIngredient) {
-//    guard let keyword = keyword else { return }
     self.keywordLabel.text = "#"+ingredient.name
     if ingredient.isSelected == true {
       self.backgroundColor = .bgSurveySelected
@@ -81,15 +76,7 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
     }
   }
   
-  
-  
-  func bindUI() {
-    self.rx.tapGesture()
-      .when(.recognized)
-      .subscribe(onNext: { [weak self] _ in
-        self?.clickKeyword?()
-      })
-      .disposed(by: disposeBag)
-    
+  func clickKeyword() -> Observable<UITapGestureRecognizer> {
+    self.rx.tapGesture().when(.recognized).asObservable()
   }
 }

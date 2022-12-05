@@ -26,6 +26,9 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
+    coordinator.runPerfumeReviewFlow = { perfumeDetail in
+      self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
+    }
     coordinator.start(perfumeIdx: perfumeIdx)
     self.addDependency(coordinator)
   }
@@ -36,6 +39,15 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
       self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
     }
     coordinator.start()
+    self.addDependency(coordinator)
+  }
+  
+  func runPerfumeReviewFlow(perfumeDetail: PerfumeDetail) {
+    let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+//    coordinator.runPerfumeReviewFlow = { perfumeIdx in
+//      self.runPerfumeReviewFlow(perfumeIdx: perfumeIdx)
+//    }
+    coordinator.start(perfumeDetail: perfumeDetail)
     self.addDependency(coordinator)
   }
 }

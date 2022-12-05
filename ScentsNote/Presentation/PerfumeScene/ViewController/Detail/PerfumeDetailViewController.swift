@@ -5,6 +5,7 @@
 //  Created by 황득연 on 2022/11/15.
 //
 
+import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
@@ -39,6 +40,17 @@ final class PerfumeDetailViewController: UIViewController {
     $0.register(PerfumeDetailContentCell.self)
   }
   
+  private let dividerView = UIView().then { $0.backgroundColor = .lightGray }
+  private let bottomView = UIView()
+  private let wishView = UIView()
+  private let reviewButton = UIButton().then {
+    $0.setTitle("시향 노트 쓰기", for: .normal)
+    $0.setTitleColor(.white, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .bold, size: 18)
+    $0.backgroundColor = .blackText
+    $0.layer.cornerRadius = 2
+  }
+  
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout (sectionProvider: { section, env -> NSCollectionLayoutSection? in
     let section = self.dataSource.sectionModels[section].model
     switch section {
@@ -56,6 +68,7 @@ final class PerfumeDetailViewController: UIViewController {
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
+    Log(UserDefaults.standard.string(forKey: "token"))
     super.viewDidLoad()
     self.configureCollectionView()
     self.configureUI()
@@ -111,16 +124,36 @@ extension PerfumeDetailViewController {
   }
   
   private func configureUI() {
+    self.configureNavigation()
+    
     self.view.backgroundColor = .white
     self.view.addSubview(self.collectionView)
+    self.view.addSubview(self.bottomView)
     self.collectionView.snp.makeConstraints {
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
+      $0.bottom.equalTo(self.bottomView.snp.top)
+      $0.left.right.equalToSuperview()
+    }
+    
+    self.bottomView.snp.makeConstraints {
       $0.bottom.left.right.equalToSuperview()
+      $0.height.equalTo(92)
+    }
+    
+    self.bottomView.addSubview(self.reviewButton)
+    self.reviewButton.snp.makeConstraints {
+      $0.top.left.right.equalToSuperview().inset(10)
+      $0.height.equalTo(52)
     }
   }
   
+  private func configureNavigation() {
+    self.setBackButton()
+  }
+  
   private func bindViewModel() {
-    self.viewModel?.transform(disposeBag: disposeBag)
+    let input = PerfumeDetailViewModel.Input(reviewButtonDidTapEvent: self.reviewButton.rx.tap.asObservable())
+    self.viewModel?.transform(input: input, disposeBag: disposeBag)
     let output = self.viewModel?.output
     self.bindContent(output: output)
     

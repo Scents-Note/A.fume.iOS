@@ -11,7 +11,7 @@ struct CollectionViewLayoutFactory {
   static var keywordLayout: UICollectionViewCompositionalLayout {
     let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(42))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+    
     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     group.interItemSpacing = .fixed(16)
@@ -19,14 +19,14 @@ struct CollectionViewLayoutFactory {
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = .init(top: 24, leading: 20, bottom: 24, trailing: 20)
     section.interGroupSpacing = 16
-    
+  
     return UICollectionViewCompositionalLayout(section: section)
   }
   
   static var filterKeywordLayout: UICollectionViewCompositionalLayout {
     let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(84), heightDimension: .absolute(74))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
+    
     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     group.contentInsets = .init(top: 0, leading: 21, bottom: 0, trailing: 21)
@@ -110,6 +110,35 @@ struct CollectionViewLayoutFactory {
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
+    
+    return UICollectionViewCompositionalLayout(section: section)
+  }
+  
+  static var reviewLongevityLayout: UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1/5), heightDimension: .estimated(56))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    
+    let section = NSCollectionLayoutSection(group: group)
+    
+    return UICollectionViewCompositionalLayout(section: section)
+  }
+  
+  static var reviewSeasonalLayout: UICollectionViewCompositionalLayout {
+    let fraction: CGFloat = 1 / 2
+    
+    let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    item.contentInsets = NSDirectionalEdgeInsets(top: 17, leading: 7.5, bottom: 0, trailing: 7.5)
+
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(56))
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 12.5, bottom: 0, trailing: 12.5)
+
+    let section = NSCollectionLayoutSection(group: group)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 11.5, leading: 0, bottom: 0, trailing: 0)
     
     return UICollectionViewCompositionalLayout(section: section)
   }

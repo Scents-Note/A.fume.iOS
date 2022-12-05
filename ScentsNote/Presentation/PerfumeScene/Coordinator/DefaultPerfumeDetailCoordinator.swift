@@ -8,6 +8,8 @@
 import UIKit
 
 final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoordinator {
+  
+  var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)?
   var perfumeDetailViewController: PerfumeDetailViewController
   
   override init(_ navigationController: UINavigationController) {
@@ -16,6 +18,7 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   }
   
   func start(perfumeIdx: Int) {
+    Log(perfumeIdx)
     self.perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
       coordinator: self,
       fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),

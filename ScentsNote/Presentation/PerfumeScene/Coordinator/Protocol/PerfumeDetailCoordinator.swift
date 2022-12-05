@@ -8,5 +8,5 @@
 import Foundation
 
 protocol PerfumeDetailCoordinator: AnyObject {
-  
+  var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)? { get set }
 }

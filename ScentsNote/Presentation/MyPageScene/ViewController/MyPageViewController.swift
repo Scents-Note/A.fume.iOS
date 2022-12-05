@@ -77,6 +77,11 @@ final class MyPageViewController: UIViewController {
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.equalToSuperview()
     }
+    
+    self.view.addSubview(self.loginButton)
+    self.loginButton.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
 
   }
   

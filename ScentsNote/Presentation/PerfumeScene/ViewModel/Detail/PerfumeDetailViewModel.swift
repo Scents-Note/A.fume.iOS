@@ -10,7 +10,13 @@ import RxRelay
 
 final class PerfumeDetailViewModel {
   
+  
+  // TODO: 로직 전면 리팩토링
   struct Input {
+    let reviewButtonDidTapEvent: Observable<Void>
+  }
+  
+  struct ScrollInput {
     let tabButtonTapEvent = PublishRelay<Int>()
   }
   
@@ -21,7 +27,7 @@ final class PerfumeDetailViewModel {
     let pageViewPosition = BehaviorRelay<Int>(value: 0)
   }
   
-  let input = Input()
+  let input = ScrollInput()
   let output = Output()
   private weak var coordinator: PerfumeDetailCoordinator?
   private let perfumeIdx: Int
@@ -39,41 +45,62 @@ final class PerfumeDetailViewModel {
     
   }
   
-  func transform(disposeBag: DisposeBag) {
-    let perfumeDetail = PublishRelay<PerfumeDetail>()
+  func transform(input: Input, disposeBag: DisposeBag) {
+    let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
     let reviews = PublishRelay<[Review]>()
     let pageViewPosition = PublishRelay<Int>()
     
-    self.bindInput(input: self.input, pageViewPosition: pageViewPosition, disposeBag: disposeBag)
-    self.bindOutput(output: self.output, pageViewPosition: pageViewPosition, perfumeDetail: perfumeDetail, reviews: reviews, disposeBag: disposeBag)
+    self.bindInput(input: input,
+                   scrollInput: self.input,
+                   pageViewPosition: pageViewPosition,
+                   perfumeDetail: perfumeDetail,
+                   disposeBag: disposeBag)
+    self.bindOutput(output: self.output,
+                    pageViewPosition: pageViewPosition,
+                    perfumeDetail: perfumeDetail,
+                    reviews: reviews,
+                    disposeBag: disposeBag)
+    
     self.fetchDatas(perfumeDetail: perfumeDetail, reviews: reviews, disposeBag: disposeBag)
   }
   
   private func bindInput(input: Input,
+                         scrollInput: ScrollInput,
                          pageViewPosition: PublishRelay<Int>,
+                         perfumeDetail: BehaviorRelay<PerfumeDetail?>,
                          disposeBag: DisposeBag) {
-    input.tabButtonTapEvent
+    
+    input.reviewButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self, let detail = perfumeDetail.value else { return }
+        self.coordinator?.runPerfumeReviewFlow?(detail)
+      })
+      .disposed(by: disposeBag)
+    
+    scrollInput.tabButtonTapEvent
       .subscribe(onNext: { idx in
         pageViewPosition.accept(idx)
       })
       .disposed(by: disposeBag)
+    
   }
   
   private func bindOutput(output: Output,
                           pageViewPosition: PublishRelay<Int>,
-                          perfumeDetail: PublishRelay<PerfumeDetail>,
+                          perfumeDetail: BehaviorRelay<PerfumeDetail?>,
                           reviews: PublishRelay<[Review]>,
                           disposeBag: DisposeBag) {
     
     pageViewPosition
       .bind(to: output.pageViewPosition)
       .disposed(by: disposeBag)
-
+    
     perfumeDetail
       .bind(to: output.perfumeDetail)
       .disposed(by: disposeBag)
     
     perfumeDetail.withLatestFrom(output.models) { detail, models in
+      guard let detail = detail else { return [] }
       let titleItems = PerfumeDetailDataSection.Item.title(detail)
       let titleSection = PerfumeDetailDataSection.Model(model: .title, items: [titleItems])
       let contentItems = PerfumeDetailDataSection.Item.content(detail)
@@ -89,7 +116,7 @@ final class PerfumeDetailViewModel {
     
   }
   
-  private func fetchDatas(perfumeDetail: PublishRelay<PerfumeDetail>, reviews: PublishRelay<[Review]>, disposeBag: DisposeBag) {
+  private func fetchDatas(perfumeDetail: BehaviorRelay<PerfumeDetail?>, reviews: PublishRelay<[Review]>, disposeBag: DisposeBag) {
     self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { detail in
         perfumeDetail.accept(detail)
@@ -103,7 +130,7 @@ final class PerfumeDetailViewModel {
         Log(error)
       })
       .disposed(by: disposeBag)
-
+    
   }
   
 }
