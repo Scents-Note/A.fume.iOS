@@ -7,7 +7,7 @@
 
 import RxSwift
 
-final class FetchPerfumesLikedUseCase {
+final class FetchPerfumesInMyPageUseCase {
   private let userRepository: UserRepository
   private let disposeBag = DisposeBag()
   
@@ -15,8 +15,8 @@ final class FetchPerfumesLikedUseCase {
     self.userRepository = userRepository
   }
   
-  func execute() -> Observable<[PerfumeLiked]> {
+  func execute() -> Observable<[PerfumeInMyPage]> {
     let userIdx = self.userRepository.fetchUserDefaults(key: UserDefaultKey.userIdx) ?? 0
-    return self.userRepository.fetchPerfumesLiked(userIdx: userIdx)
+    return self.userRepository.fetchPerfumesInMyPage(userIdx: userIdx)
   }
 }

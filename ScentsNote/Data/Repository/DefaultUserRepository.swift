@@ -39,8 +39,8 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
   
-  func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]> {
-    return self.userService.fetchPerfumesLiked(userIdx: userIdx)
+  func fetchPerfumesInMyPage(userIdx: Int) -> Observable<[PerfumeInMyPage]> {
+    return self.userService.fetchPerfumesInMyPage(userIdx: userIdx)
       .map { $0.rows.map { $0.toDomain() } }
   }
   
@@ -53,6 +53,11 @@ final class DefaultUserRepository: UserRepository {
   func changePassword(password: Password) -> Observable<String> {
     let responseDto = password.toEntity()
     return self.userService.changePassword(password: responseDto)
+  }
+  
+  func fetchReviewsInMyPage() -> Observable<[ReviewInMyPage]> {
+    self.userService.fetchReviewsInMyPage()
+      .map { $0.map {$0.toDomain() }}
   }
   
   func saveLoginInfo(loginInfo: LoginInfo) {
@@ -83,5 +88,6 @@ final class DefaultUserRepository: UserRepository {
   func savePassword(password: String) {
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.password, value: password)
   }
+  
 }
 

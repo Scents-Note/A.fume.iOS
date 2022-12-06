@@ -11,38 +11,54 @@ import RxRelay
 final class MyPageViewModel {
   
   struct Input {
+    let reviewCellDidTapEvent = PublishRelay<Int>()
     let loginButtonDidTapEvent = PublishRelay<Void>()
     let menuButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
     let selectedTab = BehaviorRelay<Int>(value: 0)
-    let perfumesLiked = PublishRelay<[PerfumeLiked]>()
+    let reviews = BehaviorRelay<[[ReviewInMyPage]]>(value: [])
+    let perfumes = BehaviorRelay<[PerfumeInMyPage]>(value: [])
   }
   
   // MARK: - Vars & Lets
   private weak var coordinator: MyPageCoordinator?
-  private let fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase
+  private let fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase
+  private let fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase
+  
   let input = Input()
   let output = Output()
   
-  init(coordinator: MyPageCoordinator, fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase) {
+  init(coordinator: MyPageCoordinator,
+       fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase,
+       fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase) {
     self.coordinator = coordinator
-    self.fetchPerfumesLikedUseCase = fetchPerfumesLikedUseCase
+    self.fetchReviewsInMyPageUseCase = fetchReviewsInMyPageUseCase
+    self.fetchPerfumesInMyPageUseCase = fetchPerfumesInMyPageUseCase
   }
   
   func transform(disposeBag: DisposeBag){
-    let perfumesLiked = PublishRelay<[PerfumeLiked]>()
+    let reviews = PublishRelay<[[ReviewInMyPage]]>()
+    let perfumes = PublishRelay<[PerfumeInMyPage]>()
     
     self.bindInput(disposeBag: disposeBag)
     self.bindOutput(output: output,
-                    perfumesLiked: perfumesLiked,
+                    reviews: reviews,
+                    perfumes: perfumes,
                     disposeBag: disposeBag)
-    self.fetchDatas(perfumesLiked: perfumesLiked,
+    self.fetchDatas(reviews: reviews,
+                    perfumes: perfumes,
                     disposeBag: disposeBag)
   }
   
   private func bindInput(disposeBag: DisposeBag) {
+    self.input.reviewCellDidTapEvent
+      .subscribe(onNext: { [weak self] reviewIdx in
+        self?.coordinator?.runPerfumeReviewFlow(reviewIdx: reviewIdx)
+      })
+      .disposed(by: disposeBag)
+    
     self.input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.onOnboardingFlow?()
@@ -57,23 +73,40 @@ final class MyPageViewModel {
   }
   
   private func bindOutput(output: Output,
-                          perfumesLiked: PublishRelay<[PerfumeLiked]>,
+                          reviews: PublishRelay<[[ReviewInMyPage]]>,
+                          perfumes: PublishRelay<[PerfumeInMyPage]>,
                           disposeBag: DisposeBag) {
-    perfumesLiked
+    
+    reviews
+      .subscribe(onNext: { reviews in
+        output.reviews.accept(reviews)
+        Log(reviews)
+      })
+      .disposed(by: disposeBag)
+    
+    perfumes
       .subscribe(onNext: { perfumes in
-        output.perfumesLiked.accept(perfumes)
+        output.perfumes.accept(perfumes)
       })
       .disposed(by: disposeBag)
     
   }
   
-  private func fetchDatas(perfumesLiked: PublishRelay<[PerfumeLiked]>,
+  private func fetchDatas(reviews: PublishRelay<[[ReviewInMyPage]]>,
+                          perfumes: PublishRelay<[PerfumeInMyPage]>,
                           disposeBag: DisposeBag) {
-    self.fetchPerfumesLikedUseCase.execute()
-      .subscribe(onNext: { perfumes in
-        Log(perfumes)
-
-        perfumesLiked.accept(perfumes)
+    
+    self.fetchReviewsInMyPageUseCase.execute()
+      .subscribe(onNext: { result in
+        reviews.accept(result)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: disposeBag)
+    
+    self.fetchPerfumesInMyPageUseCase.execute()
+      .subscribe(onNext: { result in
+        perfumes.accept(result)
       }, onError: { error in
         Log(error)
       })

@@ -44,7 +44,6 @@ final class MyPageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.configureNavigation()
     self.configureUI()
     self.configureDelegate()
     self.bindViewModel()
@@ -55,14 +54,10 @@ final class MyPageViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
     
   }
-  
-  func configureNavigation() {
-    self.setBackButton()
-    self.setNavigationTitle(title: "마이")
-    self.navigationItem.rightBarButtonItem = self.menuButton
-  }
-  
+ 
   func configureUI() {
+    self.configureNavigation()
+
     self.view.backgroundColor = .white
     self.view.addSubview(self.tabView)
     self.tabView.snp.makeConstraints {
@@ -77,12 +72,12 @@ final class MyPageViewController: UIViewController {
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.equalToSuperview()
     }
-    
-    self.view.addSubview(self.loginButton)
-    self.loginButton.snp.makeConstraints {
-      $0.edges.equalToSuperview()
-    }
-
+  }
+  
+  func configureNavigation() {
+    self.setBackButton()
+    self.setNavigationTitle(title: "마이")
+    self.navigationItem.rightBarButtonItem = self.menuButton
   }
   
   private func updateTab(_ idx: Int) {

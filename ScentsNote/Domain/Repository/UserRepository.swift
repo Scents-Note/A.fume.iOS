@@ -24,12 +24,15 @@ protocol UserRepository {
   func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool>
 
   // MARK: - My Page
-  func fetchPerfumesLiked(userIdx: Int) -> Observable<[PerfumeLiked]>
+  func fetchPerfumesInMyPage(userIdx: Int) -> Observable<[PerfumeInMyPage]>
   func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo>
   func changePassword(password: Password) -> Observable<String>
 
   func fetchUserDefaults<T>(key: String) -> T?
   func saveUserInfo(userInfo: UserInfo)
   func savePassword(password: String)
+  
+  // MAKR: - Review
+  func fetchReviewsInMyPage() -> Observable<[ReviewInMyPage]>
 }
 

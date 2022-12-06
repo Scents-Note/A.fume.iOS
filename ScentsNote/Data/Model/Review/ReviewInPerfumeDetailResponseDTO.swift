@@ -1,5 +1,5 @@
 //
-//  ReviewResponseDTO.swift
+//  ReviewInPerfumeDetailResponseDTO.swift
 //  ScentsNote
 //
 //  Created by 황득연 on 2022/11/29.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReviewResponseDTO: Decodable {
+struct ReviewInPerfumeDetailResponseDTO: Decodable {
   let reviewIdx: Int
   let score: Float
   let access: Bool
@@ -21,9 +21,9 @@ struct ReviewResponseDTO: Decodable {
   let isReported: Bool
 }
 
-extension ReviewResponseDTO {
-  func toDomain() -> Review {
-    Review(score: self.score,
+extension ReviewInPerfumeDetailResponseDTO {
+  func toDomain() -> ReviewInPerfumeDetail {
+    ReviewInPerfumeDetail(score: self.score,
            access: self.access,
            content: self.content,
            likeCount: self.likeCount,

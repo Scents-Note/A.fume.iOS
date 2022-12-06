@@ -12,7 +12,7 @@ import RxRelay
 final class MyPageScrollView: UIScrollView {
   
   private let viewModel: MyPageViewModel
-//  private lazy var myPerfumeView = MyPagePerfumeView(viewModel: self.viewModel)
+  private lazy var myReviewView = MyPageReviewView(viewModel: self.viewModel)
   private lazy var myWishView = MyPageWishView(viewModel: self.viewModel)
 
   init(viewModel: MyPageViewModel) {
@@ -31,14 +31,14 @@ final class MyPageScrollView: UIScrollView {
     let height = self.frame.height
 
     self.contentSize = CGSize(width: width * CGFloat(2), height: 0)
-//    self.myPerfumeView.frame = CGRect(x: width * CGFloat(0), y: 0, width: width, height: height)
+    self.myReviewView.frame = CGRect(x: width * CGFloat(0), y: 0, width: width, height: height)
     self.myWishView.frame = CGRect(x: width * CGFloat(1), y: 0, width: width, height: height)
   }
   
   private func configureUI() {
     self.isPagingEnabled = true
 
-//    self.addSubview(self.myPerfumeView)
+    self.addSubview(self.myReviewView)
     self.addSubview(self.myWishView)
   }
 
@@ -47,12 +47,11 @@ final class MyPageScrollView: UIScrollView {
       self.subviews.last?.alpha = 1
       self.delegate?.scrollViewWillBeginDragging?(self)
       UIView.animate(withDuration: TimeInterval(0.3), animations: {
-        if idx == 0 {
+        switch idx {
+        case 0:
           self.setContentOffset(CGPoint.zero, animated: false)
-        } else if idx == 1 {
+        default:
           self.setContentOffset(CGPoint(x: self.frame.width, y: 0), animated: false)
-        } else {
-          self.setContentOffset(CGPoint(x: self.frame.width * 2, y: 0), animated: false)
         }
       }, completion: {_ in
           self.delegate?.scrollViewDidEndDecelerating?(self)

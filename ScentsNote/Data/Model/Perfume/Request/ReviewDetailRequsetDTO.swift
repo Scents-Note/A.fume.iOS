@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PerfumeReviewRequsetDTO {
+struct ReviewDetailRequsetDTO {
   let score: Double
   let sillage: Int?
   let longevity: Int?

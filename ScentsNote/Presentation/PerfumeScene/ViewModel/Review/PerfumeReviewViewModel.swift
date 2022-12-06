@@ -31,7 +31,7 @@ final class PerfumeReviewViewModel {
   }
   
   struct Output {
-    let perfumeReview = BehaviorRelay<PerfumeReview?>(value: nil)
+    let perfumeReview = BehaviorRelay<ReviewDetail?>(value: nil)
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
     let keywords = BehaviorRelay<[Keyword]>(value: [])
     let longevities = BehaviorRelay<[Longevity]>(value: [])
@@ -45,10 +45,12 @@ final class PerfumeReviewViewModel {
   // MARK: - Vars & Lets
   weak var coordinator: PerfumeReviewCoordinator?
   private let fetchKeywordsUseCase: FetchKeywordsUseCase
-  private let addReviewUseCase: AddReviewUseCase
+  private let fetchReviewInMyPageUseCase: FetchReviewInMyPageUseCase?
+  private let addReviewUseCase: AddReviewUseCase?
+  private let updateReviewUseCase: UpdateReviewUseCase?
   
-  private let perfumeDetail: PerfumeDetail!
-  private let reviewIdx: Int = 0
+  private let perfumeDetail: PerfumeDetail?
+  private var reviewIdx: Int = 0
   private var keywords: [Keyword] = []
   private let bottomSheetInput = BottomSheetInput()
   
@@ -70,6 +72,16 @@ final class PerfumeReviewViewModel {
     self.perfumeDetail = perfumeDetail
     self.fetchKeywordsUseCase = fetchKeywordsUseCase
     self.addReviewUseCase = addReviewUseCase
+  }
+  
+  init(coordinator: PerfumeReviewCoordinator,
+       reviewIdx: Int,
+       fetchKeywordsUseCase: FetchKeywordsUseCase,
+       addReviewUseCase: AddReviewUseCase) {
+    self.coordinator = coordinator
+    self.reviewIdx = reviewIdx
+    self.fetchKeywordsUseCase = fetchKeywordsUseCase
+    self.updateReviewUseCase = updateReviewUseCase
   }
   
   
@@ -259,6 +271,10 @@ final class PerfumeReviewViewModel {
         Log(error)
       }
       .disposed(by: disposeBag)
+    
+    if self.reviewIdx != 0 {
+      self.fe
+    }
   }
   
   private func updateKeywords(keywords: [Keyword]) {
@@ -306,7 +322,7 @@ final class PerfumeReviewViewModel {
   private func registerReview(disposeBag: DisposeBag) {
     let selectedKeywords = self.keywords.filter { $0.isSelected }
     
-    let perfumeReview = PerfumeReview(score: self.score,
+    let perfumeReview = ReviewDetail(score: self.score,
                                       sillage: self.sillageIdx,
                                       longevity: self.longevityIdx,
                                       seasonal: self.seasonals,
@@ -316,9 +332,9 @@ final class PerfumeReviewViewModel {
                                       keywords: selectedKeywords,
                                       Brand: nil,
                                       access: self.isAccessable)
-    self.addReviewUseCase.execute(perfumeIdx: self.perfumeDetail.perfumeIdx, perfumeReview: perfumeReview)
-      .subscribe(onNext: { [weak self] str in
-        Log(str)
+    self.addReviewUseCase.execute(perfumeIdx: self.perfumeDetail!.perfumeIdx, perfumeReview: perfumeReview)
+      .subscribe(onNext: { [weak self] _ in
+        self?.coordinator?.finishFlow?()
       }, onError: { error in
         Log(error)
       })

@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/12/03.
 //
 
-struct PerfumeReview {
+struct ReviewDetail {
   var score: Double
   var sillage: Int?
   var longevity: Int?
@@ -29,9 +29,9 @@ struct BrandInReview {
   let brandName: String
 }
 
-extension PerfumeReview {
-  func toEntity() -> PerfumeReviewRequsetDTO {
-    PerfumeReviewRequsetDTO(score: self.score,
+extension ReviewDetail {
+  func toEntity() -> ReviewDetailRequsetDTO {
+    ReviewDetailRequsetDTO(score: self.score,
                             sillage: self.sillage,
                             longevity: self.longevity,
                             seasonal: self.seasonal,

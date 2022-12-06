@@ -14,7 +14,7 @@ enum ScentsNoteAPI {
   case signUp(signUpInfo: SignUpInfo)
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
-  case fetchPerfumesLiked(userIdx: Int)
+  case fetchPerfumesInMyPage(userIdx: Int)
   case updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO)
   case changePassword(password: PasswordRequestDTO)
   
@@ -39,8 +39,9 @@ enum ScentsNoteAPI {
   case fetchBrandForFilter
   
   // MARK: - Review
-  case fetchReviews(perfumeIdx: Int)
-  case addReview(perfumeIdx: Int, perfumeReview: PerfumeReviewRequsetDTO)
+  case fetchReviewsInPerfumeDetail(perfumeIdx: Int)
+  case addReview(perfumeIdx: Int, perfumeReview: ReviewDetailRequsetDTO)
+  case fetchReviewsInMyPage
 
 }
 
@@ -48,10 +49,10 @@ extension ScentsNoteAPI: TargetType {
   public var baseURL: URL {
     var base = Config.Network.baseURL
     switch self {
-    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesLiked, .updateUserInfo, .changePassword:
+    case .login, .signUp, .checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesInMyPage, .updateUserInfo, .changePassword, .fetchReviewsInMyPage:
       base += "/user"
     case .fetchPerfumesInSurvey, .fetchPerfumesRecommended, .fetchPerfumesPopular, .fetchPerfumesRecent,
-        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviews, .addReview,
+        .fetchPerfumesNew, .fetchPerfumeDetail, .fetchSimilarPerfumes, .fetchPerfumesSearched, .fetchReviewsInPerfumeDetail, .addReview,
         .updatePerfumeLike:
       base += "/perfume"
     case .fetchSeriesForFilter, .fetchBrandForFilter:
@@ -116,13 +117,15 @@ extension ScentsNoteAPI: TargetType {
       return "/brand"
       
       // MARK: - Review
-    case .fetchReviews(let perfumeIdx):
+    case .fetchReviewsInPerfumeDetail(let perfumeIdx):
       return "/\(perfumeIdx)/review"
     case .addReview(let perfumeIdx, _):
       return "/\(perfumeIdx)/review"
+    case .fetchReviewsInMyPage:
+      return "/review"
       
       // MARK: - User
-    case .fetchPerfumesLiked(let userIdx):
+    case .fetchPerfumesInMyPage(let userIdx):
       return "/\(userIdx)/perfume/liked"
     case .updateUserInfo(let userIdx, _):
       return "/\(userIdx)"

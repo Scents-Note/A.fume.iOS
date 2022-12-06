@@ -27,7 +27,7 @@ final class PerfumeDetailViewModel {
   struct Output {
     let models = BehaviorRelay<[PerfumeDetailDataSection.Model]>(value: [])
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
-    let reviews = BehaviorRelay<[Review]>(value: [])
+    let reviews = BehaviorRelay<[ReviewInPerfumeDetail]>(value: [])
     let pageViewPosition = BehaviorRelay<Int>(value: 0)
   }
   
@@ -52,7 +52,7 @@ final class PerfumeDetailViewModel {
   
   func transform(input: Input, disposeBag: DisposeBag) {
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
-    let reviews = PublishRelay<[Review]>()
+    let reviews = PublishRelay<[ReviewInPerfumeDetail]>()
     let pageViewPosition = PublishRelay<Int>()
     
     self.bindInput(input: input,
@@ -101,7 +101,7 @@ final class PerfumeDetailViewModel {
   private func bindOutput(output: Output,
                           pageViewPosition: PublishRelay<Int>,
                           perfumeDetail: BehaviorRelay<PerfumeDetail?>,
-                          reviews: PublishRelay<[Review]>,
+                          reviews: PublishRelay<[ReviewInPerfumeDetail]>,
                           disposeBag: DisposeBag) {
     
     pageViewPosition
@@ -129,14 +129,14 @@ final class PerfumeDetailViewModel {
     
   }
   
-  private func fetchDatas(perfumeDetail: BehaviorRelay<PerfumeDetail?>, reviews: PublishRelay<[Review]>, disposeBag: DisposeBag) {
+  private func fetchDatas(perfumeDetail: BehaviorRelay<PerfumeDetail?>, reviews: PublishRelay<[ReviewInPerfumeDetail]>, disposeBag: DisposeBag) {
     self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { detail in
         perfumeDetail.accept(detail)
       })
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchReviews(perfumeIdx: self.perfumeIdx)
+    self.perfumeRepository.fetchReviewsInPerfumeDetail(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { result in
         reviews.accept(result)
       }, onError: { error in

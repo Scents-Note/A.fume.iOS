@@ -97,7 +97,7 @@ final class MyPageWishCell: UICollectionViewCell {
     
   }
     
-  func updateUI(perfume: PerfumeLiked) {
+  func updateUI(perfume: PerfumeInMyPage) {
     self.imageView.load(url: perfume.imageUrl)
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name

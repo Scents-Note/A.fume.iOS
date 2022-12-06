@@ -143,7 +143,7 @@ final class ReviewCell: UICollectionViewCell {
 //    }
   }
     
-  func updateUI(review: Review) {
+  func updateUI(review: ReviewInPerfumeDetail) {
     self.quotesImageView.image = .checkmark
     self.heartButton.setImage(.checkmark, for: .normal)
     self.likeCountLabel.text = "\(review.likeCount)"

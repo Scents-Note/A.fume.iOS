@@ -8,7 +8,7 @@
 import UIKit
 
 final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
- 
+  
   var onOnboardingFlow: (() -> Void)?
   
   var myPageViewController: MyPageViewController
@@ -20,11 +20,22 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   override func start() {
     let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
                                                userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
-    self.myPageViewController.viewModel = MyPageViewModel(
-      coordinator: self,
-      fetchPerfumesLikedUseCase: FetchPerfumesLikedUseCase(userRepository: userRepository)
-    )
+    
+    self.myPageViewController.viewModel = MyPageViewModel(coordinator: self,
+                                                          fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase(userRepository: userRepository),
+                                                          fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase(userRepository: userRepository))
+    
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
+  }
+  
+  func runPerfumeReviewFlow(reviewIdx: Int) {
+    let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(reviewIdx: reviewIdx)
+    self.addDependency(coordinator)
   }
   
   func runEditInfoFlow() {

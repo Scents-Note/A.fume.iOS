@@ -16,7 +16,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
   
   // MARK: - Output
   var onUpdateHeight: ((CGFloat) -> Void)?
-  var reviews: BehaviorRelay<[Review]>?
+  var reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?
   
   // MARK: - Vars & Lets
   var viewModel: PerfumeDetailViewModel?
@@ -68,7 +68,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
       .disposed(by: self.disposeBag)
   }
   
-  func bindOutput(reviews: BehaviorRelay<[Review]>?) {
+  func bindOutput(reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?) {
     self.reviews = reviews
   }
   

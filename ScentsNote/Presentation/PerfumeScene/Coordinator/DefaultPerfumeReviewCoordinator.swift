@@ -27,6 +27,16 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
   }
   
+  func start(reviewIdx: Int) {
+    self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
+      coordinator: self,
+      reviewIdx: reviewIdx,
+      fetchKeywordsUseCase: FetchKeywordsUseCase(repository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
+      addReviewUseCase: AddReviewUseCase(repository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
+    )
+    self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
+  }
+  
   func showKeywordBottomSheetViewController(keywords: [Keyword]) {
     let vc = KeywordBottomSheetViewController()
     vc.viewModel = KeywordBottomSheetViewModel(

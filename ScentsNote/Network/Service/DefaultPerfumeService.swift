@@ -48,16 +48,17 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchPerfumesSearched(perfumeSearch: perfumeSearch))
   }
   
-  func fetchReviews(perfumeIdx: Int) -> Observable<[ReviewResponseDTO]> {
-    requestObject(.fetchReviews(perfumeIdx: perfumeIdx))
+  func fetchReviewsInPerfumeDetail(perfumeIdx: Int) -> Observable<[ReviewInPerfumeDetailResponseDTO]> {
+    requestObject(.fetchReviewsInPerfumeDetail(perfumeIdx: perfumeIdx))
   }
   
   func updatePerfumeLike(perfumeIdx: Int) -> Observable<Bool> {
     requestObject(.updatePerfumeLike(perfumeIdx: perfumeIdx))
   }
   
-  func addReview(perfumeIdx: Int, perfumeReview: PerfumeReviewRequsetDTO) -> Observable<String> {
+  func addReview(perfumeIdx: Int, perfumeReview: ReviewDetailRequsetDTO) -> Observable<String> {
     requestPlainObject(.addReview(perfumeIdx: perfumeIdx, perfumeReview: perfumeReview))
   }
+  
   
 }

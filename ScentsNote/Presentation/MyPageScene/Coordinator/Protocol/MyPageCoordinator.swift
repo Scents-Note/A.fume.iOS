@@ -8,6 +8,8 @@
 protocol MyPageCoordinator: AnyObject {
 
   var onOnboardingFlow: (() -> Void)? { get set }
+  
+  func runPerfumeReviewFlow(reviewIdx: Int)
   func runEditInfoFlow()
   func runChangePasswordFlow()
   func runWebFlow(with url: String)

@@ -15,7 +15,7 @@ final class AddReviewUseCase {
     self.repository = repository
   }
   
-  func execute(perfumeIdx: Int, perfumeReview: PerfumeReview) -> Observable<String> {
+  func execute(perfumeIdx: Int, perfumeReview: ReviewDetail) -> Observable<String> {
     return self.repository.addReview(perfumeIdx: perfumeIdx, perfumeReview: perfumeReview)
   }
 }
