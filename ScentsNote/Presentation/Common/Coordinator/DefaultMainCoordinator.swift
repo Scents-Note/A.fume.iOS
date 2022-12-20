@@ -27,33 +27,39 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
     self.configureTabBarController(with: controllers)
   }
   
-  private func configureTabBarItem(of page: TabBarPage) -> UITabBarItem {
-    return UITabBarItem(
-      title: nil,
-      image: UIImage(named: page.tabIconName()),
-      tag: page.pageOrderNumber()
-    )
-  }
-  
   private func configureTabBarController(with tabViewControllers: [UIViewController]) {
-    self.tabBarController.setViewControllers(tabViewControllers, animated: true)
+    self.tabBarController.setViewControllers(tabViewControllers, animated: false)
     self.tabBarController.selectedIndex = TabBarPage.home.pageOrderNumber()
-    self.tabBarController.view.backgroundColor = .white
+    self.tabBarController.view.backgroundColor = .bgTabBar
     self.tabBarController.tabBar.backgroundColor = .bgTabBar
     self.tabBarController.tabBar.tintColor = .blackText
-    
+    self.tabBarController.tabBar.isTranslucent = true
     self.navigationController.viewControllers = [self.tabBarController]
-//    self.navigationController.pushViewController(self.tabBarController, animated: true)
+    if #available(iOS 15.0, *) {
+      let appearance = UITabBarAppearance()
+      appearance.configureWithOpaqueBackground()
+      appearance.backgroundColor = .bgTabBar
+      UITabBar.appearance().standardAppearance = appearance
+      UITabBar.appearance().scrollEdgeAppearance = UITabBar.appearance().standardAppearance
+    }
+    //    self.navigationController.pushViewController(self.tabBarController, animated: true)
   }
   
   private func createTabNavigationController(of page: TabBarPage) -> UINavigationController {
     let tabNavigationController = BaseNavigationController()
-    
     tabNavigationController.setNavigationBarHidden(false, animated: false)
     tabNavigationController.tabBarItem = self.configureTabBarItem(of: page)
     self.startTabCoordinator(of: page, to: tabNavigationController)
     return tabNavigationController
   }
+  
+  private func configureTabBarItem(of page: TabBarPage) -> UITabBarItem {
+    return UITabBarItem(title: page.tabName(),
+                        image: UIImage(named: page.tabIconUnselected()),
+                        selectedImage: UIImage(named: page.tabIconSelected()))
+  }
+  
+  
   
   private func startTabCoordinator(of page: TabBarPage, to tabNavigationController: UINavigationController) {
     switch page {
@@ -72,11 +78,4 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
       myPageCoordinator.start()
     }
   }
-  
-  //  private func showOnboardingViewController() {
-  //    self.onboardingViewController.viewModel = OnboardingViewModel(
-  //      coordinator: self
-  //    )
-  //    self.navigationController.viewControllers = [self.onboardingViewController]
-  //  }
 }

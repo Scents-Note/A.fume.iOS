@@ -8,7 +8,8 @@
 import UIKit
 
 final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinator {
-  
+    
+  // MARK: - Life Cycle
   override init(_ navigationController: UINavigationController) {
     super.init(navigationController)
     self.navigationController.setNavigationBarHidden(true, animated: true)
@@ -16,7 +17,6 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   
   override func start() {
     self.runSplashFlow()
-//    self.runMainFlow()
   }
   
   func runSplashFlow() {
@@ -30,9 +30,9 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   }
   
   func runOnboardingFlow() {
-    let onboardingCoordinator = DefaultOnboardingCoordinator(navigationController)
-    onboardingCoordinator.finishFlow = { [unowned self, unowned onboardingCoordinator] type in
-      self.removeDependency(onboardingCoordinator)
+    let coordinator = DefaultOnboardingCoordinator(navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] type in
+      self.removeDependency(coordinator)
       self.navigationController.dismiss(animated: true)
       switch type {
       case .main:
@@ -43,29 +43,27 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
         break
       }
     }
-    self.addDependency(onboardingCoordinator)
-    onboardingCoordinator.start()
+    self.addDependency(coordinator)
+    coordinator.start()
   }
   
   func runMainFlow() {
-    let mainCoordinator = DefaultMainCoordinator(self.navigationController)
-    mainCoordinator.onOnboardingFlow = {
+    let coordinator = DefaultMainCoordinator(self.navigationController)
+    coordinator.onOnboardingFlow = {
       self.runOnboardingFlow()
     }
-    self.addDependency(mainCoordinator)
-    mainCoordinator.start()
+    self.addDependency(coordinator)
+    coordinator.start()
   }
   
   func runSurveyFlow() {
-    let surveyCoordinator = DefaultSurveyCoordinator(self.navigationController)
-    surveyCoordinator.finishFlow = { [unowned self] in
-      self.removeDependency(surveyCoordinator)
-//      self.initialNavigationController()
+    let coordinator = DefaultSurveyCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self] in
+      self.removeDependency(coordinator)
       self.runMainFlow()
     }
-    self.addDependency(surveyCoordinator)
-    surveyCoordinator.start()
-
+    self.addDependency(coordinator)
+    coordinator.start()
   }
 
 }

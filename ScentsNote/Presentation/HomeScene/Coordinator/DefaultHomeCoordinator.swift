@@ -26,10 +26,10 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
-    coordinator.runPerfumeReviewFlow = { perfumeDetail in
+    coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
       self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
     }
-    coordinator.runPerfumeDetailFlow = { perfumeIdx in
+    coordinator.runPerfumeDetailFlow = { [unowned self] perfumeIdx in
       self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
     }
     coordinator.start(perfumeIdx: perfumeIdx)
