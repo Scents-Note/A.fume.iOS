@@ -20,7 +20,6 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   }
   
   func start(perfumeIdx: Int) {
-    Log(perfumeIdx)
     self.perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
       coordinator: self,
       fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),

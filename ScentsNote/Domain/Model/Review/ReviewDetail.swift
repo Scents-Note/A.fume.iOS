@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/12/03.
 //
 
-struct PerfumeReview {
+struct ReviewDetail {
   var score: Double
   var sillage: Int?
   var longevity: Int?
@@ -13,25 +13,18 @@ struct PerfumeReview {
   var gender: Int?
   var content: String
   var reviewIdx: Int?
-  let Perfume: PerfumeInReview?
+  let perfume: PerfumeInReviewDetail?
   var keywords: [Keyword]
-  let Brand: BrandInReview?
-  let access: Bool
+  let brand: BrandInReviewDetail?
+  var access: Bool
+  
+  static let `default` = ReviewDetail(score: 0, content: "", perfume: nil, keywords: [], brand: nil, access: false)
 }
 
-struct PerfumeInReview {
-  let keywordIdx: Int
-  let name: String
-}
 
-struct BrandInReview {
-  let brandIdx: Int
-  let brandName: String
-}
-
-extension PerfumeReview {
-  func toEntity() -> PerfumeReviewRequsetDTO {
-    PerfumeReviewRequsetDTO(score: self.score,
+extension ReviewDetail {
+  func toEntity() -> ReviewDetailRequestDTO {
+    ReviewDetailRequestDTO(score: self.score,
                             sillage: self.sillage,
                             longevity: self.longevity,
                             seasonal: self.seasonal,

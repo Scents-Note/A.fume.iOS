@@ -30,6 +30,7 @@ final class SplashViewModel {
     self.loginUseCase.execute()
       .subscribe(onNext: { [weak self] loginInfo in
         if loginInfo.userIdx != -1 {
+          Log(loginInfo.token)
           self?.saveLoginInfo.execute(loginInfo: loginInfo)
         }
         self?.coordinator?.finishFlow?()

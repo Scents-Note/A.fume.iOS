@@ -8,14 +8,14 @@
 import RxSwift
 
 final class AddReviewUseCase {
-  private let repository: PerfumeRepository
+  private let perfumeRepository: PerfumeRepository
   private let disposeBag = DisposeBag()
   
-  init(repository: PerfumeRepository) {
-    self.repository = repository
+  init(perfumeRepository: PerfumeRepository) {
+    self.perfumeRepository = perfumeRepository
   }
   
-  func execute(perfumeIdx: Int, perfumeReview: PerfumeReview) -> Observable<String> {
-    return self.repository.addReview(perfumeIdx: perfumeIdx, perfumeReview: perfumeReview)
+  func execute(perfumeIdx: Int, perfumeReview: ReviewDetail) -> Observable<String> {
+    return self.perfumeRepository.addReview(perfumeIdx: perfumeIdx, perfumeReview: perfumeReview)
   }
 }

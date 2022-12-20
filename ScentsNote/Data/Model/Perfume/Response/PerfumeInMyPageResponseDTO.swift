@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/11/30.
 //
 
-struct PerfumeLikedResponseDTO: Decodable {
+struct PerfumeInMyPageResponseDTO: Decodable {
   let perfumeIdx: Int
   let name: String
   let brandName: String
@@ -14,9 +14,9 @@ struct PerfumeLikedResponseDTO: Decodable {
   let reviewIdx: Int
 }
 
-extension PerfumeLikedResponseDTO {
-  func toDomain() -> PerfumeLiked {
-    PerfumeLiked(idx: self.perfumeIdx,
+extension PerfumeInMyPageResponseDTO {
+  func toDomain() -> PerfumeInMyPage {
+    PerfumeInMyPage(idx: self.perfumeIdx,
                  name: self.name,
                  brandName: self.brandName,
                  imageUrl: self.imageUrl,

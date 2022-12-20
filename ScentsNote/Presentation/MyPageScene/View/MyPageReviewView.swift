@@ -1,5 +1,5 @@
 //
-//  MyPageWishView.swift
+//  MyPageReviewView.swift
 //  ScentsNote
 //
 //  Created by 황득연 on 2022/11/30.
@@ -12,11 +12,11 @@ import SnapKit
 import Then
 import RxDataSources
 
-final class MyPageWishView: UIView {
+final class MyPageReviewView: UIView {
   
   // MARK: - UI
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.wishLayout).then {
-    $0.register(MyPageWishCell.self)
+  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewGroupInMyPageLayout).then {
+    $0.register(MyPageReviewGroupCell.self)
   }
   
   // MARK: - Vars & Lets
@@ -46,22 +46,17 @@ final class MyPageWishView: UIView {
   
   
   // MARK: - Bind ViewModel
-  private func bindViewModel() {
+  func bindViewModel() {
     let output = self.viewModel.output
-    self.bindPerfumes(output: output)
-    
-  }
-  
-  private func bindPerfumes(output: MyPageViewModel.Output) {
-    output.perfumes
-      .bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageWishCell", cellType: MyPageWishCell.self)) { index, perfume, cell in
-        cell.updateUI(perfume: perfume)
-        cell.clickPerfume()
-          .subscribe(onNext: { [weak self] _ in
-            self?.viewModel.scrollInput.perfumeCellDidTapEvent.accept(perfume.idx)
-          })
-          .disposed(by: self.disposeBag)
+
+    output.reviews
+      .bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageReviewGroupCell", cellType: MyPageReviewGroupCell.self)) { _, reviews, cell in
+        cell.updateUI(reviews: reviews)
+        cell.onClickReview = { [weak self] reviewIdx in
+          self?.viewModel.scrollInput.reviewCellDidTapEvent.accept(reviewIdx)
+        }
       }
       .disposed(by: self.disposeBag)
+    
   }
 }

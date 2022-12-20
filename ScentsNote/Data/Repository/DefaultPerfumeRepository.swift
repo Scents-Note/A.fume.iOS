@@ -60,8 +60,8 @@ final class DefaultPerfumeRepository: PerfumeRepository {
       .map { $0.rows.map { $0.toDomain() } }
   }
   
-  func fetchReviews(perfumeIdx: Int) -> Observable<[Review]> {
-    self.perfumeService.fetchReviews(perfumeIdx: perfumeIdx)
+  func fetchReviewsInPerfumeDetail(perfumeIdx: Int) -> Observable<[ReviewInPerfumeDetail]> {
+    self.perfumeService.fetchReviewsInPerfumeDetail(perfumeIdx: perfumeIdx)
       .map { $0.map { $0.toDomain() } }
   }
   
@@ -69,7 +69,7 @@ final class DefaultPerfumeRepository: PerfumeRepository {
     self.perfumeService.updatePerfumeLike(perfumeIdx: perfumeIdx)
   }
   
-  func addReview(perfumeIdx: Int, perfumeReview: PerfumeReview) -> Observable<String> {
+  func addReview(perfumeIdx: Int, perfumeReview: ReviewDetail) -> Observable<String> {
     let requestDTO = perfumeReview.toEntity()
     return self.perfumeService.addReview(perfumeIdx: perfumeIdx, perfumeReview: requestDTO)
   }

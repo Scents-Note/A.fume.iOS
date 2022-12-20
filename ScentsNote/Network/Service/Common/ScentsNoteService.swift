@@ -19,22 +19,6 @@ fileprivate let provider: MoyaProvider<ScentsNoteAPI> = {
   return provider
 }()
 
-//fileprivate let endpointClosure = { (target: ScentsNoteAPI) -> Endpoint in
-//  let url = target.baseURL.appendingPathComponent(target.path).absoluteString
-//  var endpoint: Endpoint = Endpoint(url: url, sampleResponseClosure: {.networkResponse(200, target.sampleData)}, method: target.method, task: target.task, httpHeaderFields: target.headers)
-//  return endpoint
-//}
-//
-//fileprivate class DefaultAlamofireManager: Alamofire.Session {
-//  static let shared: DefaultAlamofireManager = {
-//    let configuration = URLSessionConfiguration.default
-//    configuration.timeoutIntervalForRequest = 10
-//    configuration.timeoutIntervalForResource = 10
-//    configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-//    return DefaultAlamofireManager(configuration: configuration)
-//  }()
-//}
-
 class ScentsNoteService {
   
   func requestObject<T: Decodable>(_ target: ScentsNoteAPI) -> Observable<T> {

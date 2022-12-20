@@ -74,7 +74,7 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
     (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).updateSnapshot(perfumeDetail: perfuemDetail)
   }
   
-  func updateUI(reviews: BehaviorRelay<[Review]>?) {
+  func updateUI(reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?) {
     (self.dataSourceVC[1] as! PerfumeDetailReviewViewController).bindOutput(reviews: reviews)
   }
   

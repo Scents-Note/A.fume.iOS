@@ -44,7 +44,6 @@ final class MyPageViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.configureNavigation()
     self.configureUI()
     self.configureDelegate()
     self.bindViewModel()
@@ -53,16 +52,11 @@ final class MyPageViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
-    
   }
-  
-  func configureNavigation() {
-    self.setBackButton()
-    self.setNavigationTitle(title: "마이")
-    self.navigationItem.rightBarButtonItem = self.menuButton
-  }
-  
+ 
   func configureUI() {
+    self.configureNavigation()
+
     self.view.backgroundColor = .white
     self.view.addSubview(self.tabView)
     self.tabView.snp.makeConstraints {
@@ -77,12 +71,41 @@ final class MyPageViewController: UIViewController {
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.equalToSuperview()
     }
+  }
+  
+  func configureNavigation() {
+    self.setBackButton()
+    self.setNavigationTitle(title: "마이")
+    self.navigationItem.rightBarButtonItem = self.menuButton
+  }
+  
+  private func configureDelegate() {
+    self.scrollView.delegate = self
+  }
+  
+  private func bindViewModel() {
+    let input = MyPageViewModel.Input(
+      myPerfumeButtonDidTapEvent: self.myPerfumeButton.rx.tap.asObservable(),
+      wishListButtonDidTapEvent: self.wishListButton.rx.tap.asObservable(),
+      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
+      menuButtonDidTapEvent: self.menuButton.rx.tap.asObservable()
+    )
     
-    self.view.addSubview(self.loginButton)
-    self.loginButton.snp.makeConstraints {
-      $0.edges.equalToSuperview()
-    }
-
+    self.viewModel.transform(input: input, disposeBag: self.disposeBag)
+    let output = self.viewModel.output
+    
+    self.bindTab(output: output)
+  }
+  
+  private func bindTab(output: MyPageViewModel.Output) {
+    output.selectedTab
+      .observe(on: MainScheduler.instance)
+      .subscribe(onNext: { [weak self] idx in
+        self?.updateTab(idx)
+        self?.updateHighLight(idx)
+        self?.updatePage(idx)
+      })
+      .disposed(by: self.disposeBag)
   }
   
   private func updateTab(_ idx: Int) {
@@ -97,63 +120,30 @@ final class MyPageViewController: UIViewController {
     }
   }
   
+
   
-  private func bindViewModel() {
-    self.viewModel.transform(disposeBag: self.disposeBag)
-    let input = self.viewModel.input
-    let output = self.viewModel.output
-    
-    self.bindUI(input: input)
-    self.bindTab(output: output)
+  private func updateHighLight(_ idx: Int) {
+    UIView.animate(withDuration: 0.3) { [weak self] in
+      self?.highlightView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * CGFloat(idx) / 2, y: 0)
+      self?.highlightView.layoutIfNeeded()
+    }
   }
   
-  private func bindUI(input: MyPageViewModel.Input) {
-    self.loginButton.rx.tap.asObservable()
-      .subscribe(onNext: {
-        input.loginButtonDidTapEvent.accept(())
-      })
-      .disposed(by: self.disposeBag)
-    
-    self.menuButton.rx.tap.asObservable()
-      .subscribe(onNext: {
-        input.menuButtonDidTapEvent.accept(())
-      })
-      .disposed(by: self.disposeBag)
-  }
-  
-  private func bindTab(output: MyPageViewModel.Output) {
-    output.selectedTab
-      .subscribe(onNext: { [weak self] idx in
-        self?.updateTab(idx)
-      })
-      .disposed(by: self.disposeBag)
-  }
-  
-  private func configureDelegate() {
-    self.scrollView.delegate = self
+  private func updatePage(_ idx: Int) {
+    self.scrollView.updatePage(idx)
   }
 }
 
 extension MyPageViewController: UIScrollViewDelegate {
   
-  func isScrollViewHorizontalDragging() -> Bool {
-    return self.scrollView.contentOffset.x.remainder(dividingBy: self.scrollView.frame.width) == 0
-  }
-  
   func scrollViewDidScroll(_ scrollView: UIScrollView) {
     guard let scrollView = (scrollView as? MyPageScrollView) else { return }
-    
-    UIView.animate(withDuration: 0.1) { [weak self] in
-      self?.highlightView.transform = CGAffineTransform(translationX: scrollView.contentOffset.x / 2, y: 0)
-      self?.highlightView.layoutIfNeeded()
-    }
-    
+    self.highlightView.transform = CGAffineTransform(translationX: scrollView.contentOffset.x / 2, y: 0)
+    self.highlightView.layoutIfNeeded()
+    self.updateTab(scrollView.contentOffset.x > UIScreen.main.bounds.width / 2 ? 1 : 0)
   }
   
   func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
     guard let _ = (scrollView as? MyPageScrollView) else { return }
-    
-    let index = Int(targetContentOffset.pointee.x / self.view.frame.width)
-//    self.viewModel.selectedTab.accept(index)
   }
 }

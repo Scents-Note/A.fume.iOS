@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/11/30.
 //
 
-struct PerfumeLiked {
+struct PerfumeInMyPage {
   let idx: Int
   let name: String
   let brandName: String

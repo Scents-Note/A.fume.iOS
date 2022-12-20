@@ -8,14 +8,14 @@
 import RxSwift
 
 final class FetchKeywordsUseCase {
-  private let repository: KeywordRepository
+  private let keywordRepository: KeywordRepository
   private let disposeBag = DisposeBag()
   
-  init(repository: KeywordRepository) {
-    self.repository = repository
+  init(keywordRepository: KeywordRepository) {
+    self.keywordRepository = keywordRepository
   }
   
   func execute() -> Observable<[Keyword]> {
-    return self.repository.fetchKeywords()
+    return self.keywordRepository.fetchKeywords()
   }
 }

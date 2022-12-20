@@ -33,8 +33,8 @@ final class DefaultUserService: ScentsNoteService, UserService {
     requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList))
   }
   
-  func fetchPerfumesLiked(userIdx: Int) -> Observable<ListInfo<PerfumeLikedResponseDTO>> {
-    requestObject(.fetchPerfumesLiked(userIdx: userIdx))
+  func fetchPerfumesInMyPage(userIdx: Int) -> Observable<ListInfo<PerfumeInMyPageResponseDTO>> {
+    requestObject(.fetchPerfumesInMyPage(userIdx: userIdx))
   }
   
   func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO> {
@@ -43,6 +43,10 @@ final class DefaultUserService: ScentsNoteService, UserService {
   
   func changePassword(password: PasswordRequestDTO) -> Observable<String> {
     requestPlainObject(.changePassword(password: password))
+  }
+  
+  func fetchReviewsInMyPage() -> Observable<[ReviewInMyPageResponseDTO]> {
+    requestObject(.fetchReviewsInMyPage)
   }
 
 }
