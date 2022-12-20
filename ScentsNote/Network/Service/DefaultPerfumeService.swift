@@ -56,7 +56,7 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.updatePerfumeLike(perfumeIdx: perfumeIdx))
   }
   
-  func addReview(perfumeIdx: Int, perfumeReview: ReviewDetailRequsetDTO) -> Observable<String> {
+  func addReview(perfumeIdx: Int, perfumeReview: ReviewDetailRequestDTO) -> Observable<String> {
     requestPlainObject(.addReview(perfumeIdx: perfumeIdx, perfumeReview: perfumeReview))
   }
   

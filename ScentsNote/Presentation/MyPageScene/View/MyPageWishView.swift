@@ -46,19 +46,22 @@ final class MyPageWishView: UIView {
   
   
   // MARK: - Bind ViewModel
-  func bindViewModel() {
+  private func bindViewModel() {
     let output = self.viewModel.output
-//    self.collectionView.rx.itemSelected.map { $0.item }
-//      .subscribe(onNext: { [weak self] pos in
-//        self?.viewModel.clickKeyword(pos: pos)
-//      })
-//      .disposed(by: self.disposeBag)
-//    
+    self.bindPerfumes(output: output)
+    
+  }
+  
+  private func bindPerfumes(output: MyPageViewModel.Output) {
     output.perfumes
       .bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageWishCell", cellType: MyPageWishCell.self)) { index, perfume, cell in
         cell.updateUI(perfume: perfume)
+        cell.clickPerfume()
+          .subscribe(onNext: { [weak self] _ in
+            self?.viewModel.scrollInput.perfumeCellDidTapEvent.accept(perfume.idx)
+          })
+          .disposed(by: self.disposeBag)
       }
       .disposed(by: self.disposeBag)
-    
   }
 }

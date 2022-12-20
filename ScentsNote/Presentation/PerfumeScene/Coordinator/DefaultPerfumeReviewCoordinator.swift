@@ -21,19 +21,24 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       perfumeDetail: perfumeDetail,
-      fetchKeywordsUseCase: FetchKeywordsUseCase(repository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
-      addReviewUseCase: AddReviewUseCase(repository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
+      addReviewUseCase: AddReviewUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
+      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared))
     )
+    self.navigationController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
   }
   
   func start(reviewIdx: Int) {
+    let reviewRepository = DefaultReviewRepository(reviewService: DefaultReviewService.shared)
+    
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       reviewIdx: reviewIdx,
-      fetchKeywordsUseCase: FetchKeywordsUseCase(repository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
-      addReviewUseCase: AddReviewUseCase(repository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
+      fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: reviewRepository),
+      updateReviewUseCase: UpdateReviewUseCase(reviewRepository: reviewRepository),
+      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared))
     )
+    self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
   }
   

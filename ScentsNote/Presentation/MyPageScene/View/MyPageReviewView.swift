@@ -52,8 +52,8 @@ final class MyPageReviewView: UIView {
     output.reviews
       .bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageReviewGroupCell", cellType: MyPageReviewGroupCell.self)) { _, reviews, cell in
         cell.updateUI(reviews: reviews)
-        cell.onClickReview = { reviewIdx in
-          self.viewModel.input.reviewCellDidTapEvent.accept(reviewIdx)
+        cell.onClickReview = { [weak self] reviewIdx in
+          self?.viewModel.scrollInput.reviewCellDidTapEvent.accept(reviewIdx)
         }
       }
       .disposed(by: self.disposeBag)

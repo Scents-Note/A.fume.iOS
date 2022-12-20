@@ -89,5 +89,8 @@ final class DefaultUserRepository: UserRepository {
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.password, value: password)
   }
   
+//  func clearUserInfo() {
+//    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.token)
+//  }
 }
 

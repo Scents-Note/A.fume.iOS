@@ -10,10 +10,16 @@ import RxRelay
 
 final class MyPageViewModel {
   
-  struct Input {
+  struct ScrollInput {
     let reviewCellDidTapEvent = PublishRelay<Int>()
-    let loginButtonDidTapEvent = PublishRelay<Void>()
-    let menuButtonDidTapEvent = PublishRelay<Void>()
+    let perfumeCellDidTapEvent = PublishRelay<Int>()
+  }
+  
+  struct Input {
+    let myPerfumeButtonDidTapEvent: Observable<Void>
+    let wishListButtonDidTapEvent: Observable<Void>
+    let loginButtonDidTapEvent: Observable<Void>
+    let menuButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
@@ -27,7 +33,7 @@ final class MyPageViewModel {
   private let fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase
   private let fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase
   
-  let input = Input()
+  let scrollInput = ScrollInput()
   let output = Output()
   
   init(coordinator: MyPageCoordinator,
@@ -38,12 +44,18 @@ final class MyPageViewModel {
     self.fetchPerfumesInMyPageUseCase = fetchPerfumesInMyPageUseCase
   }
   
-  func transform(disposeBag: DisposeBag){
+  func transform(input: Input, disposeBag: DisposeBag){
+    let selectedTab = PublishRelay<Int>()
     let reviews = PublishRelay<[[ReviewInMyPage]]>()
     let perfumes = PublishRelay<[PerfumeInMyPage]>()
     
-    self.bindInput(disposeBag: disposeBag)
-    self.bindOutput(output: output,
+    self.bindInput(input: input,
+                   scrollInput: self.scrollInput,
+                   selectedTab: selectedTab,
+                   disposeBag: disposeBag)
+    
+    self.bindOutput(output: self.output,
+                    selectedTab: selectedTab,
                     reviews: reviews,
                     perfumes: perfumes,
                     disposeBag: disposeBag)
@@ -52,42 +64,64 @@ final class MyPageViewModel {
                     disposeBag: disposeBag)
   }
   
-  private func bindInput(disposeBag: DisposeBag) {
-    self.input.reviewCellDidTapEvent
-      .subscribe(onNext: { [weak self] reviewIdx in
-        self?.coordinator?.runPerfumeReviewFlow(reviewIdx: reviewIdx)
+  private func bindInput(input: Input,
+                         scrollInput: ScrollInput,
+                         selectedTab: PublishRelay<Int>,
+                         disposeBag: DisposeBag) {
+   
+    input.myPerfumeButtonDidTapEvent
+      .subscribe(onNext: {
+        selectedTab.accept(0)
       })
       .disposed(by: disposeBag)
     
-    self.input.loginButtonDidTapEvent
+    input.wishListButtonDidTapEvent
+      .subscribe(onNext: {
+        selectedTab.accept(1)
+      })
+      .disposed(by: disposeBag)
+    
+    input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.onOnboardingFlow?()
       })
       .disposed(by: disposeBag)
     
-    self.input.menuButtonDidTapEvent
+    input.menuButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.showMyPageMenuViewController()
+      })
+      .disposed(by: disposeBag)
+    
+    scrollInput.reviewCellDidTapEvent
+      .subscribe(onNext: { [weak self] reviewIdx in
+        self?.coordinator?.runPerfumeReviewFlow(reviewIdx: reviewIdx)
+      })
+      .disposed(by: disposeBag)
+    
+    scrollInput.perfumeCellDidTapEvent
+      .subscribe(onNext: { [weak self] perfumeIdx in
+        self?.coordinator?.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
       })
       .disposed(by: disposeBag)
   }
   
   private func bindOutput(output: Output,
+                          selectedTab: PublishRelay<Int>,
                           reviews: PublishRelay<[[ReviewInMyPage]]>,
                           perfumes: PublishRelay<[PerfumeInMyPage]>,
                           disposeBag: DisposeBag) {
     
+    selectedTab
+      .bind(to: output.selectedTab)
+      .disposed(by: disposeBag)
+    
     reviews
-      .subscribe(onNext: { reviews in
-        output.reviews.accept(reviews)
-        Log(reviews)
-      })
+      .bind(to: output.reviews)
       .disposed(by: disposeBag)
     
     perfumes
-      .subscribe(onNext: { perfumes in
-        output.perfumes.accept(perfumes)
-      })
+      .bind(to: output.perfumes)
       .disposed(by: disposeBag)
     
   }

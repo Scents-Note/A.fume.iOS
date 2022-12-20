@@ -166,4 +166,5 @@ struct CollectionViewLayoutFactory {
     
     return UICollectionViewCompositionalLayout(section: section)
   }
+
 }

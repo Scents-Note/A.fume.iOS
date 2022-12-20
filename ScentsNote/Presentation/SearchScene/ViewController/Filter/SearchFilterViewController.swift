@@ -134,12 +134,14 @@ final class SearchFilterViewController: UIViewController {
       .disposed(by: self.disposeBag)
     
     output?.selectedTab
+      .observe(on: MainScheduler.instance)
       .subscribe(onNext: { [weak self] idx in
         self?.updatePage(idx)
       })
       .disposed(by: disposeBag)
 
     output?.hightlightViewTransform
+      .observe(on: MainScheduler.instance)
       .subscribe(onNext: {  [weak self] idx in
         UIView.animate(withDuration: 0.3) {
           self?.highlightView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * CGFloat(idx) / 3, y: 0)

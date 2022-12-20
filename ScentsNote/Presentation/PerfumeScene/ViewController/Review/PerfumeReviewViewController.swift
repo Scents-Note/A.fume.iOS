@@ -14,8 +14,6 @@ import Cosmos
 
 final class PerfumeReviewViewController: UIViewController {
   
-  
-  
   // MARK: - UI
   
   // Label
@@ -116,6 +114,11 @@ final class PerfumeReviewViewController: UIViewController {
   private let shareButton = UIButton().then {
     $0.setImage(.checkmark, for: .normal)
   }
+  
+  private let doneButton = DoneButton(title: "기록 완료")
+  private let deleteButton = DoneButton(title: "삭제")
+  private let updateButton = DoneButton(title: "수정 완료")
+
 
   // CollectionView
   private let keywordCollectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.keywordLayout).then {
@@ -138,14 +141,11 @@ final class PerfumeReviewViewController: UIViewController {
     $0.register(ReviewGenderCell.self)
   }
   
-  
-  
   private let scrollView = UIScrollView()
   private let containerView = UIView()
   private let imageContainerView = UIView()
   private let imageView = UIImageView().then { $0.contentMode = .scaleAspectFit }
   private let arrowRightView = UIImageView()
-  private let doneButton = DoneButton(title: "기록 완료")
   
   private let dividerViewUnderRecord = UIView().then { $0.backgroundColor = .blackText }
   private let dividerViewUnderScore = UIView().then { $0.backgroundColor = .blackText }
@@ -153,7 +153,6 @@ final class PerfumeReviewViewController: UIViewController {
   private let dividerViewUnderKeyword = UIView().then { $0.backgroundColor = .blackText }
   private let dividerViewUnderSillage = UIView().then { $0.backgroundColor = .blackText }
   private let dividerViewUnderGender = UIView().then { $0.backgroundColor = .blackText }
-  
  
   
   // MARK: - Vars & Lets
@@ -414,6 +413,23 @@ final class PerfumeReviewViewController: UIViewController {
       $0.bottom.left.right.equalToSuperview()
       $0.height.equalTo(86)
     }
+    self.doneButton.isHidden = true
+    
+    self.view.addSubview(self.deleteButton)
+    self.deleteButton.snp.makeConstraints {
+      $0.bottom.left.equalToSuperview()
+      $0.width.equalTo(100)
+      $0.height.equalTo(86)
+    }
+    self.deleteButton.isHidden = true
+    
+    self.view.addSubview(self.updateButton)
+    self.updateButton.snp.makeConstraints {
+      $0.left.equalTo(self.deleteButton.snp.right)
+      $0.bottom.right.equalToSuperview()
+      $0.height.equalTo(86)
+    }
+    self.updateButton.isHidden = true
   }
   
   private func configureNavigation() {
@@ -439,7 +455,9 @@ final class PerfumeReviewViewController: UIViewController {
       seasonalCellDidTapEvent: self.seasonalCollectionView.rx.itemSelected.map {$0.item}.asObservable(),
       genderCellDidTapEvent: self.genderCollectionView.rx.itemSelected.map {$0.item}.asObservable(),
       shareButtonDidTapEvent: self.shareButton.rx.tap.asObservable(),
-      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable()
+      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
+      deleteButtonDidTapEvent: self.deleteButton.rx.tap.asObservable(),
+      updateButtonDidTapEvent: self.updateButton.rx.tap.asObservable()
     )
     let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
     self.bindView(output: output)
@@ -453,8 +471,16 @@ final class PerfumeReviewViewController: UIViewController {
   }
   
   private func bindView(output: PerfumeReviewViewModel.Output?) {
+    output?.reviewDetail
+      .asDriver()
+      .drive(onNext: { [weak self] reviewDetail in
+        self?.updateUI(reviewDetail: reviewDetail)
+      })
+      .disposed(by: self.disposeBag)
+    
     output?.perfumeDetail
-      .subscribe(onNext: { [weak self] perfumeDetail in
+      .asDriver()
+      .drive(onNext: { [weak self] perfumeDetail in
         self?.updateUI(perfumeDetail: perfumeDetail)
       })
       .disposed(by: self.disposeBag)
@@ -531,6 +557,19 @@ final class PerfumeReviewViewController: UIViewController {
     self.imageView.load(url: perfumeDetail.imageUrls[0])
     self.brandLabel.text = perfumeDetail.brandName
     self.nameLabel.text = perfumeDetail.name
+    self.doneButton.isHidden = false
+  }
+  
+  private func updateUI(reviewDetail: ReviewDetail?) {
+    guard let reviewDetail = reviewDetail, let perfume = reviewDetail.perfume, let brand = reviewDetail.brand else { return }
+    self.imageView.load(url: perfume.imageUrl)
+    self.brandLabel.text = brand.name
+    self.nameLabel.text = perfume.name
+    self.starView.rating = reviewDetail.score
+    self.noteTextField.text = reviewDetail.content
+    self.deleteButton.isHidden = false
+    self.updateButton.isHidden = false
+    self.shareButton.setImage(reviewDetail.access ? .checkmark : nil, for: .normal)
   }
   
   private func updateViewHeight() {

@@ -32,6 +32,8 @@ protocol UserRepository {
   func saveUserInfo(userInfo: UserInfo)
   func savePassword(password: String)
   
+//  func clearUserInfo()
+  
   // MAKR: - Review
   func fetchReviewsInMyPage() -> Observable<[ReviewInMyPage]>
 }

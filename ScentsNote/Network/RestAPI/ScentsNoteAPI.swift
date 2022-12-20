@@ -40,8 +40,10 @@ enum ScentsNoteAPI {
   
   // MARK: - Review
   case fetchReviewsInPerfumeDetail(perfumeIdx: Int)
-  case addReview(perfumeIdx: Int, perfumeReview: ReviewDetailRequsetDTO)
+  case addReview(perfumeIdx: Int, perfumeReview: ReviewDetailRequestDTO)
   case fetchReviewsInMyPage
+  case fetchReviewDetail(reviewIdx: Int)
+  case updateReview(reviewIdx: Int, reviewDetail: ReviewDetailRequestDTO)
 
 }
 
@@ -57,6 +59,8 @@ extension ScentsNoteAPI: TargetType {
       base += "/perfume"
     case .fetchSeriesForFilter, .fetchBrandForFilter:
       base += "/filter"
+    case .fetchReviewDetail, .updateReview:
+      base += "/review"
     default:
       break
     }
@@ -123,6 +127,10 @@ extension ScentsNoteAPI: TargetType {
       return "/\(perfumeIdx)/review"
     case .fetchReviewsInMyPage:
       return "/review"
+    case .fetchReviewDetail(let reviewIdx):
+      return "/\(reviewIdx)"
+    case .updateReview(let reviewIdx, _):
+      return "/\(reviewIdx)"
       
       // MARK: - User
     case .fetchPerfumesInMyPage(let userIdx):
@@ -138,7 +146,7 @@ extension ScentsNoteAPI: TargetType {
     switch self {
     case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike, .addReview:
       return .post
-    case .updateUserInfo, .changePassword:
+    case .updateUserInfo, .changePassword, .updateReview:
       return .put
     default:
       return .get
@@ -147,7 +155,8 @@ extension ScentsNoteAPI: TargetType {
   
   var task: Moya.Task {
     switch self {
-    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched, .updateUserInfo, .changePassword, .addReview:
+    case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched,
+        .updateUserInfo, .changePassword, .addReview, .updateReview:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -157,7 +166,6 @@ extension ScentsNoteAPI: TargetType {
   var headers: [String: String]? {
     // TODO: propertyWrapper 사용해볼것
     if let userToken = UserDefaults.standard.string(forKey: UserDefaultKey.token) {
-//      Log(userToken)
       return [
         "x-access-token": "Bearer " + userToken,
         "Content-Type": "application/json"
@@ -203,7 +211,7 @@ extension ScentsNoteAPI: TargetType {
     case let .changePassword(password):
       params["prevPassword"] = password.prevPassword
       params["newPassword"] = password.newPassword
-    case let .addReview(_, perfumeReview):
+    case let .addReview(_, perfumeReview), let .updateReview(_, perfumeReview):
       params["score"] = perfumeReview.score
       params["content"] = perfumeReview.content
       params["access"] = perfumeReview.access

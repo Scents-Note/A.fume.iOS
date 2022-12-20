@@ -102,4 +102,8 @@ final class MyPageWishCell: UICollectionViewCell {
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
   }
+  
+  func clickPerfume() -> Observable<UITapGestureRecognizer> {
+    self.contentView.rx.tapGesture().when(.recognized).asObservable()
+  }
 }

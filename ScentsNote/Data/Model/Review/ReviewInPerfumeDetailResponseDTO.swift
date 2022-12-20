@@ -24,12 +24,12 @@ struct ReviewInPerfumeDetailResponseDTO: Decodable {
 extension ReviewInPerfumeDetailResponseDTO {
   func toDomain() -> ReviewInPerfumeDetail {
     ReviewInPerfumeDetail(score: self.score,
-           access: self.access,
-           content: self.content,
-           likeCount: self.likeCount,
-           isLiked: self.isLiked,
-           gender: self.userGender,
-           age: self.age,
-           nickname: self.nickname)
+                          access: self.access,
+                          content: self.content,
+                          likeCount: self.likeCount,
+                          isLiked: self.isLiked,
+                          gender: self.userGender,
+                          age: self.age,
+                          nickname: self.nickname)
   }
 }

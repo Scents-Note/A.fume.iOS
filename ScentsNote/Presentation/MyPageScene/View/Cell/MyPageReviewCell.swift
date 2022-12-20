@@ -14,9 +14,10 @@ import Then
 
 final class MyPageReviewCell: UICollectionViewCell {
   
-  // MARK: - Var $ Let
+  // MARK: - Input
   var onClickReview: ((Int) -> Void)?
   
+  // MARK: - Var & Let
   var disposeBag = DisposeBag()
   var reviewIdx = 0
   
