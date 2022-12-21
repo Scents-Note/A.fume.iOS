@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+// TODO: - 좀더 통일되게 네이밍 등 바꾸기
 struct CollectionViewLayoutFactory {
   static var keywordLayout: UICollectionViewCompositionalLayout {
     let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(42))

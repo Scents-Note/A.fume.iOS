@@ -23,7 +23,7 @@
 		4A0EB123293DCF4A00630F88 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB122293DCF4A00630F88 /* SplashViewModel.swift */; };
 		4A0EB125293DCF7600630F88 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB124293DCF7600630F88 /* SplashViewController.swift */; };
 		4A0EB127293DCFA800630F88 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB126293DCFA800630F88 /* LoginUseCase.swift */; };
-		4A0EB129293DD4D900630F88 /* SaveLoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB128293DD4D900630F88 /* SaveLoginInfo.swift */; };
+		4A0EB129293DD4D900630F88 /* SaveLoginInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EB128293DD4D900630F88 /* SaveLoginInfoUseCase.swift */; };
 		4A155DFE291B76F10027D26E /* HomeDataSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFD291B76F10027D26E /* HomeDataSection.swift */; };
 		4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */; };
 		4A3B0411292392AE004F155D /* PerfumeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B0410292392AE004F155D /* PerfumeDetailCoordinator.swift */; };
@@ -213,7 +213,6 @@
 		4A857430290A962300F86C3A /* BirthPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85742F290A962300F86C3A /* BirthPopupViewModel.swift */; };
 		4A857433290AA15A00F86C3A /* BirthPopupDismissDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857432290AA15A00F86C3A /* BirthPopupDismissDelegate.swift */; };
 		4A857435290B5C7800F86C3A /* Birth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857434290B5C7800F86C3A /* Birth.swift */; };
-		4A857439290B641F00F86C3A /* DefaultBirthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857438290B641F00F86C3A /* DefaultBirthCoordinator.swift */; };
 		4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85743F290BED4B00F86C3A /* SurveyCoordinator.swift */; };
 		4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857441290BF21500F86C3A /* DefaultSurveyCoordinator.swift */; };
 		4A857444290BF31900F86C3A /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A857443290BF31900F86C3A /* SurveyViewController.swift */; };
@@ -308,7 +307,6 @@
 		4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83028FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift */; };
 		4AAFE83328FE7CBE00EA6FB4 /* SignUpInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83228FE7CBE00EA6FB4 /* SignUpInformationViewController.swift */; };
 		4AAFE83528FE7CE300EA6FB4 /* SignUpInformationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83428FE7CE300EA6FB4 /* SignUpInformationViewModel.swift */; };
-		4AAFE83728FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAFE83628FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift */; };
 		4AB65C9C29013F4D00A96CA5 /* ScentsNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */; };
 		4AB65C9E2901406400A96CA5 /* ResponseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB65C9D2901406400A96CA5 /* ResponseObject.swift */; };
 		4AB759932900F0990086C519 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB759922900F0990086C519 /* Config.swift */; };
@@ -321,6 +319,22 @@
 		4AC7F8EB291905E200A8D032 /* HomeNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7F8EA291905E200A8D032 /* HomeNewCell.swift */; };
 		4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A48C290382AA00491246 /* DefaultUserService.swift */; };
 		4AE4A4932904D70700491246 /* ErrorBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A4922904D70700491246 /* ErrorBody.swift */; };
+		4AE938952951BD47006A7DAF /* CheckDuplcateEmailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938942951BD47006A7DAF /* CheckDuplcateEmailUseCase.swift */; };
+		4AE938972951BED7006A7DAF /* SignUpUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938962951BED7006A7DAF /* SignUpUseCase.swift */; };
+		4AE938992951C1C4006A7DAF /* FetchPerfumesInSurveyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938982951C1C4006A7DAF /* FetchPerfumesInSurveyUseCase.swift */; };
+		4AE9389C2951C25A006A7DAF /* FetchSeriesUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE9389B2951C25A006A7DAF /* FetchSeriesUseCase.swift */; };
+		4AE9389E2951C368006A7DAF /* RegisterSurveyUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE9389D2951C368006A7DAF /* RegisterSurveyUseCase.swift */; };
+		4AE938A02952D93B006A7DAF /* PrimitiveSequence+handleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE9389F2952D93B006A7DAF /* PrimitiveSequence+handleResponse.swift */; };
+		4AE938A22952F06D006A7DAF /* FetchPerfumesNewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938A12952F06D006A7DAF /* FetchPerfumesNewUseCase.swift */; };
+		4AE938A42952F12A006A7DAF /* FetchReviewsInPerfumeDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938A32952F12A006A7DAF /* FetchReviewsInPerfumeDetailUseCase.swift */; };
+		4AE938A62952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938A52952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift */; };
+		4AE938A82952F267006A7DAF /* FetchPerfumesPopularUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938A72952F267006A7DAF /* FetchPerfumesPopularUseCase.swift */; };
+		4AE938AA2952F275006A7DAF /* FetchPerfumesRecentUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938A92952F275006A7DAF /* FetchPerfumesRecentUseCase.swift */; };
+		4AE938AC2952F29F006A7DAF /* FetchPerfumesSimilarUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938AB2952F29F006A7DAF /* FetchPerfumesSimilarUseCase.swift */; };
+		4AE938AE2952F2AC006A7DAF /* FetchPerfumeSearchedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938AD2952F2AC006A7DAF /* FetchPerfumeSearchedUseCase.swift */; };
+		4AE938B02952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938AF2952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift */; };
+		4AE938B22952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938B12952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift */; };
+		4AE938B42952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938B32952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift */; };
 		4AF9FBE7291DE82300667BD7 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9FBE6291DE82300667BD7 /* Log.swift */; };
 		86FEC2F1709BCB9A42494D27 /* Pods_ScentsNote_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */; };
 /* End PBXBuildFile section */
@@ -361,7 +375,7 @@
 		4A0EB122293DCF4A00630F88 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		4A0EB124293DCF7600630F88 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4A0EB126293DCFA800630F88 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
-		4A0EB128293DD4D900630F88 /* SaveLoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginInfo.swift; sourceTree = "<group>"; };
+		4A0EB128293DD4D900630F88 /* SaveLoginInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginInfoUseCase.swift; sourceTree = "<group>"; };
 		4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A155DFD291B76F10027D26E /* HomeDataSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDataSection.swift; sourceTree = "<group>"; };
 		4A155DFF291BA80E0027D26E /* HomeViewController+Legacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Legacy.swift"; sourceTree = "<group>"; };
@@ -552,7 +566,6 @@
 		4A85742F290A962300F86C3A /* BirthPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthPopupViewModel.swift; sourceTree = "<group>"; };
 		4A857432290AA15A00F86C3A /* BirthPopupDismissDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthPopupDismissDelegate.swift; sourceTree = "<group>"; };
 		4A857434290B5C7800F86C3A /* Birth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Birth.swift; sourceTree = "<group>"; };
-		4A857438290B641F00F86C3A /* DefaultBirthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBirthCoordinator.swift; sourceTree = "<group>"; };
 		4A85743F290BED4B00F86C3A /* SurveyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCoordinator.swift; sourceTree = "<group>"; };
 		4A857441290BF21500F86C3A /* DefaultSurveyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSurveyCoordinator.swift; sourceTree = "<group>"; };
 		4A857443290BF31900F86C3A /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
@@ -651,7 +664,6 @@
 		4AAFE83028FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSignUpCoordinator.swift; sourceTree = "<group>"; };
 		4AAFE83228FE7CBE00EA6FB4 /* SignUpInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInformationViewController.swift; sourceTree = "<group>"; };
 		4AAFE83428FE7CE300EA6FB4 /* SignUpInformationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpInformationViewModel.swift; sourceTree = "<group>"; };
-		4AAFE83628FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnSignUpCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		4AB65C9B29013F4D00A96CA5 /* ScentsNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsNoteService.swift; sourceTree = "<group>"; };
 		4AB65C9D2901406400A96CA5 /* ResponseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseObject.swift; sourceTree = "<group>"; };
 		4AB759922900F0990086C519 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -664,6 +676,22 @@
 		4AC7F8EA291905E200A8D032 /* HomeNewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewCell.swift; sourceTree = "<group>"; };
 		4AE4A48C290382AA00491246 /* DefaultUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserService.swift; sourceTree = "<group>"; };
 		4AE4A4922904D70700491246 /* ErrorBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorBody.swift; sourceTree = "<group>"; };
+		4AE938942951BD47006A7DAF /* CheckDuplcateEmailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplcateEmailUseCase.swift; sourceTree = "<group>"; };
+		4AE938962951BED7006A7DAF /* SignUpUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCase.swift; sourceTree = "<group>"; };
+		4AE938982951C1C4006A7DAF /* FetchPerfumesInSurveyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesInSurveyUseCase.swift; sourceTree = "<group>"; };
+		4AE9389B2951C25A006A7DAF /* FetchSeriesUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSeriesUseCase.swift; sourceTree = "<group>"; };
+		4AE9389D2951C368006A7DAF /* RegisterSurveyUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSurveyUseCase.swift; sourceTree = "<group>"; };
+		4AE9389F2952D93B006A7DAF /* PrimitiveSequence+handleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PrimitiveSequence+handleResponse.swift"; sourceTree = "<group>"; };
+		4AE938A12952F06D006A7DAF /* FetchPerfumesNewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesNewUseCase.swift; sourceTree = "<group>"; };
+		4AE938A32952F12A006A7DAF /* FetchReviewsInPerfumeDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchReviewsInPerfumeDetailUseCase.swift; sourceTree = "<group>"; };
+		4AE938A52952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesRecommendedUseCase.swift; sourceTree = "<group>"; };
+		4AE938A72952F267006A7DAF /* FetchPerfumesPopularUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesPopularUseCase.swift; sourceTree = "<group>"; };
+		4AE938A92952F275006A7DAF /* FetchPerfumesRecentUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesRecentUseCase.swift; sourceTree = "<group>"; };
+		4AE938AB2952F29F006A7DAF /* FetchPerfumesSimilarUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesSimilarUseCase.swift; sourceTree = "<group>"; };
+		4AE938AD2952F2AC006A7DAF /* FetchPerfumeSearchedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumeSearchedUseCase.swift; sourceTree = "<group>"; };
+		4AE938AF2952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePerfumeLikeUseCase.swift; sourceTree = "<group>"; };
+		4AE938B12952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSeriesForFilterUseCase.swift; sourceTree = "<group>"; };
+		4AE938B32952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBrandsForFilterUseCase.swift; sourceTree = "<group>"; };
 		4AF9FBE6291DE82300667BD7 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7D37C98027E5BF948F7A0652 /* Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -720,7 +748,6 @@
 		4A0EB11A293DA21900630F88 /* Review */ = {
 			isa = PBXGroup;
 			children = (
-				4A0EB11B293DA22000630F88 /* AddReviewUseCase.swift */,
 				4A44AB67293EDC9B00F42B0D /* FetchReviewsInMyPageUseCase.swift */,
 				4A63C484294334A8001B42C0 /* FetchReviewDetailUseCase.swift */,
 				4A63C486294334F9001B42C0 /* UpdateReviewUseCase.swift */,
@@ -927,7 +954,18 @@
 		4A4F69F5293487E1006BBF0B /* Perfume */ = {
 			isa = PBXGroup;
 			children = (
+				4AE9389B2951C25A006A7DAF /* FetchSeriesUseCase.swift */,
 				4A5A94E12929E54900B4197D /* FetchPerfumeDetailUseCase.swift */,
+				4AE938982951C1C4006A7DAF /* FetchPerfumesInSurveyUseCase.swift */,
+				4AE938A12952F06D006A7DAF /* FetchPerfumesNewUseCase.swift */,
+				4AE938A52952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift */,
+				4AE938A72952F267006A7DAF /* FetchPerfumesPopularUseCase.swift */,
+				4AE938A92952F275006A7DAF /* FetchPerfumesRecentUseCase.swift */,
+				4AE938AB2952F29F006A7DAF /* FetchPerfumesSimilarUseCase.swift */,
+				4AE938AD2952F2AC006A7DAF /* FetchPerfumeSearchedUseCase.swift */,
+				4AE938A32952F12A006A7DAF /* FetchReviewsInPerfumeDetailUseCase.swift */,
+				4AE938AF2952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift */,
+				4A0EB11B293DA22000630F88 /* AddReviewUseCase.swift */,
 			);
 			path = Perfume;
 			sourceTree = "<group>";
@@ -936,6 +974,8 @@
 			isa = PBXGroup;
 			children = (
 				4A4F69F729348835006BBF0B /* FetchFilterBrandInitialUseCase.swift */,
+				4AE938B12952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift */,
+				4AE938B32952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -1002,7 +1042,10 @@
 				4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */,
 				4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */,
 				4A0EB126293DCFA800630F88 /* LoginUseCase.swift */,
-				4A0EB128293DD4D900630F88 /* SaveLoginInfo.swift */,
+				4A0EB128293DD4D900630F88 /* SaveLoginInfoUseCase.swift */,
+				4AE938942951BD47006A7DAF /* CheckDuplcateEmailUseCase.swift */,
+				4AE938962951BED7006A7DAF /* SignUpUseCase.swift */,
+				4AE9389D2951C368006A7DAF /* RegisterSurveyUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1047,6 +1090,7 @@
 		4A5A94E02929E52D00B4197D /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				4AE9389A2951C250006A7DAF /* Series */,
 				4A0EB11A293DA21900630F88 /* Review */,
 				4A828474293C2D3B00E37538 /* Keyword */,
 				4A4F6A2C29375735006BBF0B /* User */,
@@ -1809,6 +1853,7 @@
 				4AC7F8DA2918B01300A8D032 /* UICollectionView+Extension.swift */,
 				4A4C984D29273999004851DB /* UITableView+Extension.swift */,
 				4A44AB69293EE32000F42B0D /* Array+Division.swift */,
+				4AE9389F2952D93B006A7DAF /* PrimitiveSequence+handleResponse.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1883,7 +1928,6 @@
 				4AAFE7ED28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift */,
 				4AAFE81428FC02DB00EA6FB4 /* DefaultLoginCoordinator.swift */,
 				4AAFE83028FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift */,
-				4A857438290B641F00F86C3A /* DefaultBirthCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -1914,7 +1958,6 @@
 				4AAFE7EB28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift */,
 				4AAFE7EF28FBDBCB00EA6FB4 /* LoginCoordinator.swift */,
 				4AAFE82E28FE7C5900EA6FB4 /* SignUpCoordinator.swift */,
-				4AAFE83628FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift */,
 				4A857432290AA15A00F86C3A /* BirthPopupDismissDelegate.swift */,
 			);
 			path = Protocol;
@@ -2054,6 +2097,13 @@
 				4A9D915C28FFFBBD001551A8 /* User */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4AE9389A2951C250006A7DAF /* Series */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Series;
 			sourceTree = "<group>";
 		};
 		4AF9FBE8291E1E5B00667BD7 /* Common */ = {
@@ -2353,6 +2403,7 @@
 				4A4C986329277008004851DB /* PerfumeDetailStoryContentView.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A4C985129273A53004851DB /* PerfumeDetailTitleCell.swift in Sources */,
+				4AE938A62952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift in Sources */,
 				4A4F6A1B2936EAE0006BBF0B /* PerfumeDetailTabCell.swift in Sources */,
 				4A4F6A3029382EB9006BBF0B /* MyPageMenuViewController.swift in Sources */,
 				4A6F9875292C5D800085EBE7 /* TabView.swift in Sources */,
@@ -2378,16 +2429,20 @@
 				4A4F6A772939D3B8006BBF0B /* WebURL.swift in Sources */,
 				4A9A14E929093B1C0067F04D /* NextButton.swift in Sources */,
 				4A4F6A6E2939CC52006BBF0B /* WebCoordinator.swift in Sources */,
+				4AE9389C2951C25A006A7DAF /* FetchSeriesUseCase.swift in Sources */,
 				4A4F69EA29347E09006BBF0B /* FilterBrandView.swift in Sources */,
 				4AAFE79C28FAA94E00EA6FB4 /* CoordinatorType.swift in Sources */,
 				4A4F69EC29347F4B006BBF0B /* FilterBrandInitialCell.swift in Sources */,
 				4A6F98A0292F036F0085EBE7 /* SearchKeywordCoordinator.swift in Sources */,
+				4AE938972951BED7006A7DAF /* SignUpUseCase.swift in Sources */,
 				4A155E00291BA80E0027D26E /* HomeViewController+Legacy.swift in Sources */,
 				4A6F98A2292F03D90085EBE7 /* DefaultSearchKeywordCoordinator.swift in Sources */,
+				4AE938A02952D93B006A7DAF /* PrimitiveSequence+handleResponse.swift in Sources */,
 				4A4F69F229348516006BBF0B /* FilterBrandInfo.swift in Sources */,
 				4A4F6A0A2934C7F5006BBF0B /* KeywordService.swift in Sources */,
 				4A6F98B0292F31B80085EBE7 /* KeywordDataSection.swift in Sources */,
 				4A4F69F42934851C006BBF0B /* FilterBrand.swift in Sources */,
+				4AE9389E2951C368006A7DAF /* RegisterSurveyUseCase.swift in Sources */,
 				4AAFE83128FE7C7500EA6FB4 /* DefaultSignUpCoordinator.swift in Sources */,
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4A4F6A3E29386ECF006BBF0B /* EditInformationGenderView.swift in Sources */,
@@ -2438,6 +2493,7 @@
 				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,
 				4A6F9879292DB8830085EBE7 /* DefaultPerfumeNewCoordinator.swift in Sources */,
 				4A4F6A602939ABEA006BBF0B /* UserDefaultsPersitenceService.swift in Sources */,
+				4AE938952951BD47006A7DAF /* CheckDuplcateEmailUseCase.swift in Sources */,
 				4A857463291129CB00F86C3A /* UserDefaultKey.swift in Sources */,
 				4A5A94EB2929F1F200B4197D /* Perfume.swift in Sources */,
 				4A428AC529432DF700B559C7 /* DefaultReviewRepository.swift in Sources */,
@@ -2464,6 +2520,7 @@
 				4A4F6A4D2938B626006BBF0B /* EditInformationCoordinator.swift in Sources */,
 				4A4DF5FA29290C890066792D /* PerfumeDetailLongevityContentView.swift in Sources */,
 				4A6F987F292DB8FA0085EBE7 /* PerfumeNewViewController.swift in Sources */,
+				4AE938A22952F06D006A7DAF /* FetchPerfumesNewUseCase.swift in Sources */,
 				4A63C485294334A8001B42C0 /* FetchReviewDetailUseCase.swift in Sources */,
 				4A9D915828FFFA55001551A8 /* UserRepository.swift in Sources */,
 				4A6F988B292E0B490085EBE7 /* SearchViewController+CollectionViewLayout.swift in Sources */,
@@ -2477,6 +2534,7 @@
 				4A4F6A6C2939CAAA006BBF0B /* SavePasswordUseCase.swift in Sources */,
 				4A6F98A6292F09E80085EBE7 /* DefaultSearchResultCoordinator.swift in Sources */,
 				4AAFE7F228FBE32200EA6FB4 /* UIColor+Custom.swift in Sources */,
+				4AE938AE2952F2AC006A7DAF /* FetchPerfumeSearchedUseCase.swift in Sources */,
 				4A828476293C2D4800E37538 /* FetchKeywordsUseCase.swift in Sources */,
 				4A857433290AA15A00F86C3A /* BirthPopupDismissDelegate.swift in Sources */,
 				4AC7F8E52918F70700A8D032 /* SectionBackgroundDecorationView.swift in Sources */,
@@ -2487,6 +2545,7 @@
 				4AA281242917D84E00D30A99 /* PerfumeResponseDTO.swift in Sources */,
 				4A6F98CF29305AC30085EBE7 /* FilterRepository.swift in Sources */,
 				4A4F6A122935E099006BBF0B /* ReviewCell.swift in Sources */,
+				4AE938B02952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift in Sources */,
 				4A5A94E22929E54900B4197D /* FetchPerfumeDetailUseCase.swift in Sources */,
 				4A4DF60B2929CEB80066792D /* PerfumeDetailSimilarityContentView.swift in Sources */,
 				4A428AC329432DCC00B559C7 /* ReviewRepository.swift in Sources */,
@@ -2515,6 +2574,7 @@
 				4A4F6A7E2939E8D2006BBF0B /* PerfumeReviewViewController.swift in Sources */,
 				4A4F6A2929374BD7006BBF0B /* PerfumeInMyPageResponseDTO.swift in Sources */,
 				4AA281222917D82E00D30A99 /* SurveySeries.swift in Sources */,
+				4AE938AC2952F29F006A7DAF /* FetchPerfumesSimilarUseCase.swift in Sources */,
 				4AB65C9C29013F4D00A96CA5 /* ScentsNoteService.swift in Sources */,
 				4A6F98E3293067E70085EBE7 /* FilterSeriesDataSection.swift in Sources */,
 				4AA281052917B90100D30A99 /* DefaultSearchCoordinator.swift in Sources */,
@@ -2526,6 +2586,7 @@
 				4A4F6A36293843B5006BBF0B /* Menu.swift in Sources */,
 				4A4F6A2429374500006BBF0B /* MyPageWishView.swift in Sources */,
 				4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */,
+				4AE938A42952F12A006A7DAF /* FetchReviewsInPerfumeDetailUseCase.swift in Sources */,
 				4A85745F291127D600F86C3A /* DefaultPerfumeRepository.swift in Sources */,
 				4A428ACE2943310B00B559C7 /* BrandInReviewDetailResponseDTO.swift in Sources */,
 				4A4C986629277669004851DB /* PerfumeDetailIngredientContentView.swift in Sources */,
@@ -2549,7 +2610,6 @@
 				4A3B0426292502D1004F155D /* PerfumeDetailFooterContentView.swift in Sources */,
 				4A4DF5FE2929B62E0066792D /* SillageResponseDTO.swift in Sources */,
 				4A4F6A102935DF82006BBF0B /* PerfumeDetailReviewViewController.swift in Sources */,
-				4AAFE83728FE7EAF00EA6FB4 /* OnSignUpCoordinatorDelegate.swift in Sources */,
 				4A828473293B80EF00E37538 /* KeywordBottomSheetViewModel.swift in Sources */,
 				4A6F98F02931D9270085EBE7 /* FilterSeriesHeaderView.swift in Sources */,
 				4A44AB6C293EE4C300F42B0D /* MyPageReviewGroupCell.swift in Sources */,
@@ -2563,13 +2623,16 @@
 				4AAFE81928FC058800EA6FB4 /* LoginViewModel.swift in Sources */,
 				4AA281072917B90800D30A99 /* SearchViewController.swift in Sources */,
 				4A44AB6E293EEAAE00F42B0D /* MyPageReviewCell.swift in Sources */,
+				4AE938992951C1C4006A7DAF /* FetchPerfumesInSurveyUseCase.swift in Sources */,
 				4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */,
+				4AE938B42952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift in Sources */,
 				4A4F6A722939CD90006BBF0B /* WebViewController.swift in Sources */,
 				4A6F98BB292F8D8F0085EBE7 /* SearchFilterViewModel.swift in Sources */,
 				4A4C986A29278AF8004851DB /* PerfumeDetailAbundanceContentView.swift in Sources */,
 				4A6F98A8292F0A550085EBE7 /* SearchResultViewController.swift in Sources */,
 				4A0EB120293DCE4500630F88 /* DefaultSplashCoordinator.swift in Sources */,
 				4A893ADF290A832D00CA502B /* BirthPopupViewController.swift in Sources */,
+				4AE938B22952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift in Sources */,
 				4A8574552910C44700F86C3A /* SurveyScrollView.swift in Sources */,
 				4A6F9895292E17370085EBE7 /* SearchKeywordViewController.swift in Sources */,
 				4A80A4E12917EC02009F83B9 /* HomeRecommendationSection.swift in Sources */,
@@ -2589,6 +2652,7 @@
 				4A083BE5291BBA9C0026A12C /* NetworkError.swift in Sources */,
 				4A6F9886292DD2B50085EBE7 /* PerfuemNewDataSection.swift in Sources */,
 				4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */,
+				4AE938AA2952F275006A7DAF /* FetchPerfumesRecentUseCase.swift in Sources */,
 				4AB75996290131200086C519 /* UserService.swift in Sources */,
 				4A4F6A3229382EE9006BBF0B /* MyPageMenuViewModel.swift in Sources */,
 				4A4F6A192935F698006BBF0B /* PerfumeReviewViewModel.swift in Sources */,
@@ -2604,16 +2668,16 @@
 				4A4F6A5B293980FE006BBF0B /* CommonInputSection.swift in Sources */,
 				4A85745B2910F5C100F86C3A /* SurveyPerfumeView.swift in Sources */,
 				4A9A14F0290A10840067F04D /* GenderState.swift in Sources */,
-				4A857439290B641F00F86C3A /* DefaultBirthCoordinator.swift in Sources */,
 				4A857461291127E600F86C3A /* PerfumeRepository.swift in Sources */,
 				4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */,
 				4A4DF5F829290A820066792D /* Longevity.swift in Sources */,
 				4AA281122917BA4A00D30A99 /* MyPageCoordinator.swift in Sources */,
+				4AE938A82952F267006A7DAF /* FetchPerfumesPopularUseCase.swift in Sources */,
 				4A9A14E729091E220067F04D /* SignUpInfo.swift in Sources */,
 				4A3B0411292392AE004F155D /* PerfumeDetailCoordinator.swift in Sources */,
 				4A4F6A622939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift in Sources */,
 				4A857442290BF21500F86C3A /* DefaultSurveyCoordinator.swift in Sources */,
-				4A0EB129293DD4D900630F88 /* SaveLoginInfo.swift in Sources */,
+				4A0EB129293DD4D900630F88 /* SaveLoginInfoUseCase.swift in Sources */,
 				4A8F89CA28F4F91A00ACE0F1 /* SceneDelegate.swift in Sources */,
 				4A8574592910CC4600F86C3A /* UIImageView+Load.swift in Sources */,
 				4A4F6A702939CCD7006BBF0B /* DefaultWebCoordinator.swift in Sources */,

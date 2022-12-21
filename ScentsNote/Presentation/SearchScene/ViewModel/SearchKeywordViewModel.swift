@@ -21,13 +21,11 @@ final class SearchKeywordViewModel {
   
   // MARK: - Vars & Lets
   weak var coordinator: SearchKeywordCoordinator?
-  var perfumeRepository: PerfumeRepository
   let from: CoordinatorType
   
   // MARK: - Life Cycle
-  init(coordinator: SearchKeywordCoordinator, perfumeRepository: PerfumeRepository, from: CoordinatorType) {
+  init(coordinator: SearchKeywordCoordinator, from: CoordinatorType) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
     self.from = from
   }
   

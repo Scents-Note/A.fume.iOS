@@ -9,12 +9,8 @@ import RxSwift
 import RxRelay
 
 final class SignUpInformationViewModel {
-  private weak var coordinator: SignUpCoordinator?
-  private let userRepository: UserRepository
-  
-  var email = ""
-  var nickname = ""
-  
+
+  // MARK: - Input & Output
   struct Input {
     let emailTextFieldDidEditEvent: Observable<String>
     let emailCheckButtonDidTapEvent: Observable<Void>
@@ -28,9 +24,21 @@ final class SignUpInformationViewModel {
     var nicknameValidationState = BehaviorRelay<InputState>(value: .empty)
   }
   
-  init(coordinator: SignUpCoordinator?, userRepository: UserRepository) {
+  // MARK: - Vars & Lets
+  
+  private weak var coordinator: SignUpCoordinator?
+  private let checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase
+  private let checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase
+  
+  var email = ""
+  var nickname = ""
+  
+  init(coordinator: SignUpCoordinator?,
+       checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase,
+       checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase) {
     self.coordinator = coordinator
-    self.userRepository = userRepository
+    self.checkDuplcateEmailUseCase = checkDuplcateEmailUseCase
+    self.checkDuplicateNicknameUseCase = checkDuplicateNicknameUseCase
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -46,7 +54,7 @@ final class SignUpInformationViewModel {
     input.emailCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository.checkDuplicateEmail(email: self.email)
+        self.checkDuplcateEmailUseCase.execute(email: self.email)
           .subscribe{ _ in
             output.emailValidationState.accept(.success)
           } onError: { error in
@@ -67,13 +75,11 @@ final class SignUpInformationViewModel {
     input.nicknameCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository.checkDuplicateNickname(nickname: self.nickname)
+        self.checkDuplicateNicknameUseCase.execute(nickname: self.nickname)
           .subscribe { _ in
             output.nicknameValidationState.accept(.success)
           } onError: { error in
-//            if error == .duplicate {
               output.nicknameValidationState.accept(.duplicate)
-//            }
           }
           .disposed(by: disposeBag)
       })

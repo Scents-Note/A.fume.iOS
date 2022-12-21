@@ -1,11 +1,11 @@
 //
-//  SaveLoginInfo.swift
+//  SaveLoginInfoUseCase.swift
 //  ScentsNote
 //
 //  Created by 황득연 on 2022/12/05.
 //
 
-final class SaveLoginInfo {
+final class SaveLoginInfoUseCase {
   private let userRepository: UserRepository
   
   init(userRepository: UserRepository) {

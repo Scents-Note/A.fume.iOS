@@ -26,13 +26,13 @@ final class PerfumeNewViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: PerfumeNewCoordinator?
-  var perfumeRepository: PerfumeRepository
+  private weak var coordinator: PerfumeNewCoordinator?
+  private let fetchPerfumesNewUseCase: FetchPerfumesNewUseCase
   
   // MARK: - Life Cycle
-  init(coordinator: PerfumeNewCoordinator, perfumeRepository: PerfumeRepository) {
+  init(coordinator: PerfumeNewCoordinator, fetchPerfumesNewUseCase: FetchPerfumesNewUseCase) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
+    self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
   }
   
   
@@ -78,7 +78,7 @@ final class PerfumeNewViewModel {
   }
   
   private func fetchDatas(perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
-    self.perfumeRepository.fetchPerfumesNew(size: nil)
+    self.fetchPerfumesNewUseCase.execute(size: nil)
       .subscribe(onNext: { data in
         perfumes.accept(data)
       })

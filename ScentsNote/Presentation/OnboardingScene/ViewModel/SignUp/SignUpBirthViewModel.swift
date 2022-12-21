@@ -9,21 +9,27 @@ import RxSwift
 import RxRelay
 
 final class SignUpBirthViewModel {
-  private weak var coordinator: SignUpCoordinator?
-  private let userRepository: UserRepository
-  private var signUpInfo: SignUpInfo
-  
-  var birth = BehaviorRelay<Int>(value: 1990)
   
   struct Input {
     let birthButtonDidTapEvent: Observable<Void>
     let doneButtonDidTapEvent: Observable<Void>
   }
   
+  private weak var coordinator: SignUpCoordinator?
+  private let signUpUseCase: SignUpUseCase
+  private let saveLoginInfoUseCase: SaveLoginInfoUseCase
+  private var signUpInfo: SignUpInfo
   
-  init(coordinator: SignUpCoordinator?, userRepository: UserRepository, signUpInfo: SignUpInfo) {
+  /// Popup Callback
+  var birth = BehaviorRelay<Int>(value: 1990)
+  
+  init(coordinator: SignUpCoordinator?,
+       signUpUseCase: SignUpUseCase,
+       saveLoginInfoUseCase: SaveLoginInfoUseCase,
+       signUpInfo: SignUpInfo) {
     self.coordinator = coordinator
-    self.userRepository = userRepository
+    self.signUpUseCase = signUpUseCase
+    self.saveLoginInfoUseCase = saveLoginInfoUseCase
     self.signUpInfo = signUpInfo
   }
   
@@ -39,9 +45,9 @@ final class SignUpBirthViewModel {
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
         self.signUpInfo.birth = self.birth.value
-        self.userRepository.signUp(signUpInfo: self.signUpInfo)
+        self.signUpUseCase.execute(signUpInfo: self.signUpInfo)
           .subscribe { loginInfo in
-            self.userRepository.saveLoginInfo(loginInfo: loginInfo)
+            self.saveLoginInfoUseCase.execute(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
           } onError: { error in
             Log(error)

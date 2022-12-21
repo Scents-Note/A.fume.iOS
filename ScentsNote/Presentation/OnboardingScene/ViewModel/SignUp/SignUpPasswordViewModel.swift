@@ -9,12 +9,6 @@ import RxSwift
 import RxRelay
 
 final class SignUpPasswordViewModel {
-  private weak var coordinator: SignUpCoordinator?
-  private let userRepository: UserRepository
-  private var signUpInfo: SignUpInfo
-  
-  private var password = ""
-  private var passwordCheck = ""
   
   struct Input {
     let passwordTextFieldDidEditEvent: Observable<String>
@@ -27,9 +21,14 @@ final class SignUpPasswordViewModel {
     var passwordCheckValidationState = BehaviorRelay<InputState>(value: .empty)
   }
   
-  init(coordinator: SignUpCoordinator?, userRepository: UserRepository, signUpInfo: SignUpInfo) {
+  private weak var coordinator: SignUpCoordinator?
+  private var signUpInfo: SignUpInfo
+  
+  private var password = ""
+  private var passwordCheck = ""
+  
+  init(coordinator: SignUpCoordinator?, signUpInfo: SignUpInfo) {
     self.coordinator = coordinator
-    self.userRepository = userRepository
     self.signUpInfo = signUpInfo
   }
   

@@ -23,13 +23,28 @@ final class HomeViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: HomeCoordinator?
-  var perfumeRepository: PerfumeRepository
+  private weak var coordinator: HomeCoordinator?
+  private let updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase
+  private let fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase
+  private let fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase
+  private let fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase
+  private let fetchPerfumesNewUseCase: FetchPerfumesNewUseCase
   
-  init(coordinator: HomeCoordinator, perfumeRepository: PerfumeRepository) {
+  init(coordinator: HomeCoordinator,
+       updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase,
+       fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase,
+       fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase,
+       fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase,
+       fetchPerfumesNewUseCase: FetchPerfumesNewUseCase) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
+    self.updatePerfumeLikeUseCase = updatePerfumeLikeUseCase
+    self.fetchPerfumesRecommendedUseCase = fetchPerfumesRecommendedUseCase
+    self.fetchPerfumesPopularUseCase = fetchPerfumesPopularUseCase
+    self.fetchPerfumesRecentUseCase = fetchPerfumesRecentUseCase
+    self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
   }
+  
+  
   
   // MARK: - TransForm
   func transform(from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
@@ -77,7 +92,7 @@ final class HomeViewModel {
 
     cellInput.perfumeHeartButtonDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
-        self?.perfumeRepository.updatePerfumeLike(perfumeIdx: perfume.perfumeIdx)
+        self?.updatePerfumeLikeUseCase.execute(perfumeIdx: perfume.perfumeIdx)
           .subscribe(onNext: { [weak self] _ in
             self?.updatePerfumeLike(perfumeIdx: perfume.perfumeIdx,
                                     perfumesPopular: perfumesPopular,
@@ -171,7 +186,7 @@ final class HomeViewModel {
                           perfumesNew: BehaviorRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
     
-    self.perfumeRepository.fetchPerfumesRecommended()
+    self.fetchPerfumesRecommendedUseCase.execute()
       .subscribe { perfumes in
         perfumesRecommended.accept(perfumes)
       } onError: { error in
@@ -179,7 +194,7 @@ final class HomeViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchPerfumesPopular()
+    self.fetchPerfumesPopularUseCase.execute()
       .subscribe { perfumes in
         perfumesPopular.accept(perfumes)
       } onError: { error in
@@ -187,7 +202,7 @@ final class HomeViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchPerfumesRecent()
+    self.fetchPerfumesRecentUseCase.execute()
       .subscribe { perfumes in
         perfumesRecent.accept(perfumes)
       } onError: { error in
@@ -195,7 +210,7 @@ final class HomeViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchPerfumesNew(size: 10)
+    self.fetchPerfumesNewUseCase.execute(size: 10)
       .subscribe { perfumes in
         perfumesNew.accept(perfumes)
       } onError: { error in
