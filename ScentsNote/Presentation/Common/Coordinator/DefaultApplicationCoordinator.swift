@@ -49,7 +49,7 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   
   func runMainFlow() {
     let coordinator = DefaultMainCoordinator(self.navigationController)
-    coordinator.onOnboardingFlow = {
+    coordinator.onOnboardingFlow = { [unowned self] in
       self.runOnboardingFlow()
     }
     self.addDependency(coordinator)
@@ -66,11 +66,4 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     coordinator.start()
   }
 
-}
-
-extension DefaultApplicationCoordinator {
-  func initialNavigationController() {
-    self.navigationController.view.backgroundColor = .white
-    self.navigationController.viewControllers.removeAll()
-  }
 }

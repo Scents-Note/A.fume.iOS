@@ -12,16 +12,6 @@ import Moya
 
 
 final class LoginViewModel {
-  private weak var coordinator: LoginCoordinator?
-  private let userRepository: UserRepository
-  
-  private var email = ""
-  private var password = ""
-  
-  init(coordinator: LoginCoordinator?, userRepository: UserRepository) {
-    self.coordinator = coordinator
-    self.userRepository = userRepository
-  }
   
   struct Input {
     let emailTextFieldDidEditEvent: Observable<String>
@@ -34,6 +24,21 @@ final class LoginViewModel {
     var emailFieldText = BehaviorRelay<String?>(value: "")
     var passwordFieldText = BehaviorRelay<String?>(value: "")
     var doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
+  }
+  
+  private weak var coordinator: LoginCoordinator?
+  private let loginUseCase: LoginUseCase
+  private let saveLoginInfoUseCase: SaveLoginInfoUseCase
+  
+  private var email = ""
+  private var password = ""
+  
+  init(coordinator: LoginCoordinator?,
+       loginUseCase: LoginUseCase,
+       saveLoginInfoUseCase: SaveLoginInfoUseCase) {
+    self.coordinator = coordinator
+    self.loginUseCase = loginUseCase
+    self.saveLoginInfoUseCase = saveLoginInfoUseCase
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -55,9 +60,9 @@ final class LoginViewModel {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.userRepository.login(email: self.email, password: self.password)
+        self.loginUseCase.execute(email: self.email, password: self.password)
           .subscribe { loginInfo in
-            self.userRepository.saveLoginInfo(loginInfo: loginInfo)
+            self.saveLoginInfoUseCase.execute(loginInfo: loginInfo)
             self.coordinator?.finishFlow?()
           } onError: { error in
             print("User Log: error \(error)")
@@ -68,7 +73,7 @@ final class LoginViewModel {
     
     input.signupButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.onSignUpFlow?()
+        self?.coordinator?.runSignUpFlow?()
       })
       .disposed(by: disposeBag)
     

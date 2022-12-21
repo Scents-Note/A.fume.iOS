@@ -28,6 +28,9 @@ class ScentsNoteService {
       .catch(self.handleInternetConnection)
         .catch(self.handleTimeOut)
         .catch(self.handleREST)
+//        .retry(2)
+//        .retry(when: retryHandler)
+//        .take(3)
         .map { try JSONDecoder().decode(ResponseObject<T>.self, from: $0.data) }
       .compactMap { $0.data }
   }
@@ -39,9 +42,50 @@ class ScentsNoteService {
       .catch(self.handleInternetConnection)
         .catch(self.handleTimeOut)
         .catch(self.handleREST)
+//      .retry(when: retryHandler)
         .map { try JSONDecoder().decode(ResponsePlainObject.self, from: $0.data) }
       .compactMap { $0.message }
+  }
+  
+  let retryHandler: (Observable<Error>) -> Observable<Int> = { error in
+    return error.enumerated().flatMap { (attempt, error) -> Observable<Int> in
+      if attempt >= 2 {
+        return Observable.error(error)
+      }
+      UserDefaults.standard.removeObject(forKey: "token")
+      let token = UserDefaults.standard.string(forKey: "token")
+      Log(token)
+      let email = UserDefaults.standard.string(forKey: "email")
+      let password = UserDefaults.standard.string(forKey: "password")
+      guard let email = email, let password = password else {
+        return Observable.error(error)
+      }
+      
+      DefaultUserService.shared.login(email: email, password: password)
+        .subscribe(onNext: { loginInfo in
+          Log(loginInfo)
+        }, onError: { error in
+          Log(error)
+        })
+        .disposed(by: DisposeBag())
+      
+//      provider.rx.request(.login(email: email, password: password))
+//        .asObservable()
+//        .map { try JSONDecoder().decode(ResponseObject<LoginInfo>.self, from: $0.data) }
+//        .compactMap { $0.data }
+//        .subscribe(onNext: { loginInfo in
+//          Log(loginInfo)
+////          UserDefaults.standard.set(loginInfo.token, forKey: "token")
+//        }, onError: { error in
+//          Log(error)
+//        })
+//        .disposed(by: DisposeBag())
+////      DefaultUserService.shared.login(email: email, password: password)
 
+      Log("123123123")
+
+      return Observable.just(1)
+    }
   }
 }
 
@@ -67,6 +111,18 @@ extension ScentsNoteService {
     guard error is NetworkError else {
       let statusCode = (error as? MoyaError)?.response?.statusCode
       let description = (try? (error as? MoyaError)?.response?.mapJSON() as? [String: Any])?.first?.value as? String
+//      if statusCode == 401 {
+//        Log("ihihi")
+//        let email = UserDefaults.standard.string(forKey: "email")
+//        let password = UserDefaults.standard.string(forKey: "password")
+//        DefaultUserService.shared.login(email: email!, password: password!)
+//          .subscribe(onNext: { loginInfo in
+//            Log(loginInfo)
+//          }, onError: { error in
+//            Log(error)
+//          })
+//          .disposed(by: DisposeBag())
+//      }
       Log((error as? MoyaError)?.response)
       throw NetworkError.restError(statusCode: statusCode, description: description)
     }

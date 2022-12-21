@@ -45,14 +45,14 @@ final class DefaultUserRepository: UserRepository {
   }
   
   func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo> {
-    let responseDto = userInfo.toEntity()
-    return self.userService.updateUserInfo(userIdx: userIdx, userInfo: responseDto)
+    let requestDTO = userInfo.toEntity()
+    return self.userService.updateUserInfo(userIdx: userIdx, userInfo: requestDTO)
       .map { $0.toDomain() }
   }
   
   func changePassword(password: Password) -> Observable<String> {
-    let responseDto = password.toEntity()
-    return self.userService.changePassword(password: responseDto)
+    let requestDTO = password.toEntity()
+    return self.userService.changePassword(password: requestDTO)
   }
   
   func fetchReviewsInMyPage() -> Observable<[ReviewInMyPage]> {

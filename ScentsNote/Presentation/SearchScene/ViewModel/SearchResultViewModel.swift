@@ -29,15 +29,16 @@ final class SearchResultViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: SearchResultCoordinator?
-  var perfumeRepository: PerfumeRepository
-//  private let perfumeSearch: PerfumeSearch
+  private weak var coordinator: SearchResultCoordinator?
+  private let fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase
   let perfumeSearch = BehaviorRelay<PerfumeSearch>(value: PerfumeSearch.default)
   
   // MARK: - Life Cycle
-  init(coordinator: SearchResultCoordinator, perfumeRepository: PerfumeRepository, perfumeSearch: PerfumeSearch) {
+  init(coordinator: SearchResultCoordinator,
+       fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase,
+       perfumeSearch: PerfumeSearch) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
+    self.fetchPerfumeSearchedUseCase = fetchPerfumeSearchedUseCase
     self.perfumeSearch.accept(perfumeSearch)
   }
   
@@ -47,7 +48,6 @@ final class SearchResultViewModel {
     let output = Output()
     let keywords = PublishRelay<[SearchKeyword]>()
     let perfumes = PublishRelay<[Perfume]>()
-//    let perfumeSearch = PublishRelay<PerfumeSearch>()
     
     self.bindInput(input: input,
                    cellInput: cellInput,
@@ -172,7 +172,7 @@ final class SearchResultViewModel {
   private func fetchPerfumes(perfumeSearch: PerfumeSearch,
                              perfumes: PublishRelay<[Perfume]>,
                              disposeBag: DisposeBag) {
-    self.perfumeRepository.fetchPerfumeSearched(perfumeSearch: perfumeSearch)
+    self.fetchPerfumeSearchedUseCase.execute(perfumeSearch: perfumeSearch)
       .subscribe(onNext: { perfumesFetched in
         perfumes.accept(perfumesFetched)
       }, onError: { error in

@@ -9,6 +9,6 @@ import Foundation
 
 protocol LoginCoordinator: AnyObject {
   var finishFlow: (() -> Void)? { get set }
-  var onSignUpFlow: (() -> Void)? { get set }
+  var runSignUpFlow: (() -> Void)? { get set }
   func showLoginViewController()
 }

@@ -10,7 +10,7 @@ import UIKit
 final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   
   var finishFlow: (() -> Void)?
-  var onSignUpFlow: (() -> Void)?
+  var runSignUpFlow: (() -> Void)?
   
   var loginViewController: LoginViewController
   
@@ -27,7 +27,8 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
     let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
                                                userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     self.loginViewController.viewModel = LoginViewModel(coordinator: self,
-                                                        userRepository: userRepository)
+                                                        loginUseCase: LoginUseCase(userRepository: userRepository),
+                                                        saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: userRepository))
     
     self.navigationController.pushViewController(self.loginViewController, animated: true)
   }

@@ -31,23 +31,24 @@ final class PerfumeDetailViewModel {
     let pageViewPosition = BehaviorRelay<Int>(value: 0)
   }
   
+  private weak var coordinator: PerfumeDetailCoordinator?
+  private let fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
+  private let fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase
+  
   let input = ScrollInput()
   let cellInput = CellInput()
   let output = Output()
-  private weak var coordinator: PerfumeDetailCoordinator?
+  
   private let perfumeIdx: Int
-  private let fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
-  private let perfumeRepository: PerfumeRepository
   
   init(coordinator: PerfumeDetailCoordinator,
        fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase,
-       perfumeRepository: PerfumeRepository,
+       fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase,
        perfumeIdx: Int) {
     self.coordinator = coordinator
     self.fetchPerfumeDetailUseCase = fetchPerfumeDetailUseCase
-    self.perfumeRepository = perfumeRepository
+    self.fetchReviewsInPerfumeDetailUseCase = fetchReviewsInPerfumeDetailUseCase
     self.perfumeIdx = perfumeIdx
-    
   }
   
   func transform(input: Input, disposeBag: DisposeBag) {
@@ -61,6 +62,7 @@ final class PerfumeDetailViewModel {
                    pageViewPosition: pageViewPosition,
                    perfumeDetail: perfumeDetail,
                    disposeBag: disposeBag)
+    
     self.bindOutput(output: self.output,
                     pageViewPosition: pageViewPosition,
                     perfumeDetail: perfumeDetail,
@@ -136,7 +138,7 @@ final class PerfumeDetailViewModel {
       })
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchReviewsInPerfumeDetail(perfumeIdx: self.perfumeIdx)
+    self.fetchReviewsInPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
       .subscribe(onNext: { result in
         reviews.accept(result)
       }, onError: { error in

@@ -27,11 +27,11 @@ final class SearchFilterViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: SearchFilterCoordinator?
-  private let perfumeRepository: PerfumeRepository
-  private let filterRepostiroy: FilterRepository
-  private let keywordRepository: KeywordRepository
+  private weak var coordinator: SearchFilterCoordinator?
+  private let fetchSeriesForFilterUseCase: FetchSeriesForFilterUseCase
+  private let fetchBrandsForFilterUseCase: FetchBrandsForFilterUseCase
   private let fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase
+  private let fetchKeywordsUseCase: FetchKeywordsUseCase
   private let from: CoordinatorType
   
   /// Tab
@@ -57,16 +57,16 @@ final class SearchFilterViewModel {
   
   // MARK: - Life Cycle
   init(coordinator: SearchFilterCoordinator,
-       perfumeRepository: PerfumeRepository,
-       filterRepository: FilterRepository,
-       keywordRepository: KeywordRepository,
        fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase,
+       fetchBrandsForFilterUseCase: FetchBrandsForFilterUseCase,
+       fetchSeriesForFilterUseCase: FetchSeriesForFilterUseCase,
+       fetchKeywordsUseCase: FetchKeywordsUseCase,
        from: CoordinatorType) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
-    self.filterRepostiroy = filterRepository
-    self.keywordRepository = keywordRepository
+    self.fetchSeriesForFilterUseCase = fetchSeriesForFilterUseCase
+    self.fetchBrandsForFilterUseCase = fetchBrandsForFilterUseCase
     self.fetchFilterBrandInitialUseCase = fetchFilterBrandInitialUseCase
+    self.fetchKeywordsUseCase = fetchKeywordsUseCase
     self.from = from
   }
   
@@ -210,7 +210,7 @@ final class SearchFilterViewModel {
   // MARK: - Network
   private func fetchDatas(disposeBag: DisposeBag) {
     /// Series
-    self.filterRepostiroy.fetchSeriesForFilter()
+    self.fetchSeriesForFilterUseCase.execute()
       .subscribe { [weak self] data in
         let count = data.count
         let sectionSet = Set(0..<count)
@@ -220,7 +220,7 @@ final class SearchFilterViewModel {
       .disposed(by: disposeBag)
     
     /// Brand
-    self.filterRepostiroy.fetchBrandsForFilter()
+    self.fetchBrandsForFilterUseCase.execute()
       .subscribe(onNext: { [weak self] brandInfos in
         self?.brandInfos = brandInfos
       })
@@ -233,7 +233,7 @@ final class SearchFilterViewModel {
       })
       .disposed(by: disposeBag)
     
-    self.keywordRepository.fetchKeywords()
+    self.fetchKeywordsUseCase.execute()
       .subscribe(onNext: { [weak self] keywords in
         self?.keywords.accept(keywords)
       })

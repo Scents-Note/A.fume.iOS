@@ -10,7 +10,6 @@ import RxRelay
 
 final class SignUpGenderViewModel {
   private weak var coordinator: SignUpCoordinator?
-  private let userRepository: UserRepository
   private var signUpInfo: SignUpInfo
   
   struct Input {
@@ -23,9 +22,8 @@ final class SignUpGenderViewModel {
     var selectedGenderState = BehaviorRelay<GenderState>(value: .none)
   }
   
-  init(coordinator: SignUpCoordinator?, userRepository: UserRepository, signUpInfo: SignUpInfo) {
+  init(coordinator: SignUpCoordinator?, signUpInfo: SignUpInfo) {
     self.coordinator = coordinator
-    self.userRepository = userRepository
     self.signUpInfo = signUpInfo
   }
   

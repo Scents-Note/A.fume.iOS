@@ -26,15 +26,14 @@ final class SearchViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: SearchCoordinator?
-  var perfumeRepository: PerfumeRepository
+  private weak var coordinator: SearchCoordinator?
+  private let fetchPerfumesNewUseCase: FetchPerfumesNewUseCase
   
   // MARK: - Life Cycle
-  init(coordinator: SearchCoordinator, perfumeRepository: PerfumeRepository) {
+  init(coordinator: SearchCoordinator, fetchPerfumesNewUseCase: FetchPerfumesNewUseCase) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
+    self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
   }
-  
   
   // MARK: - Binding
   func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
@@ -91,7 +90,7 @@ final class SearchViewModel {
   }
   
   private func fetchDatas(perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
-    self.perfumeRepository.fetchPerfumesNew(size: nil)
+    self.fetchPerfumesNewUseCase.execute(size: nil)
       .subscribe { perfumesFetched in
         perfumes.accept(perfumesFetched)
       } onError: { error in

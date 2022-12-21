@@ -14,7 +14,7 @@ final class DefaultUserService: ScentsNoteService, UserService {
   static let shared: DefaultUserService = DefaultUserService()
   
   func login(email: String, password: String) -> Observable<LoginInfo> {
-    requestObject(.login(email: email, password: password))
+    return requestObject(.login(email: email, password: password))
   }
   
   func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {

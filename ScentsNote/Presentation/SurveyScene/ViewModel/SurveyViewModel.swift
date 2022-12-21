@@ -11,17 +11,6 @@ import RxSwift
 import RxRelay
 
 final class SurveyViewModel {
-  private weak var coordinator: SurveyCoordinator?
-  private let perfumeRepository: PerfumeRepository
-  private let userRepository: UserRepository
-  private let keywordRepository: KeywordRepository
-  private let disposeBag = DisposeBag()
-  
-  var perfumes: [Perfume] = []
-  var keywords: [Keyword] = []
-  var series: [SurveySeries] = []
-  
-  var selectedTab = BehaviorRelay<Int>(value: 0)
   
   struct Input {
     let perfumeButtonDidTapEvent: Observable<Void>
@@ -38,11 +27,30 @@ final class SurveyViewModel {
     var exitAlertShown = PublishRelay<Bool>()
   }
   
-  init(coordinator: SurveyCoordinator?, perfumeRepository: PerfumeRepository, userRepository: UserRepository, keywordRepository: KeywordRepository) {
+  private weak var coordinator: SurveyCoordinator?
+  private let fetchPerfumesInSurveyUseCase: FetchPerfumesInSurveyUseCase
+  private let fetchKeywordsUseCase: FetchKeywordsUseCase
+  private let fetchSeriesUseCase: FetchSeriesUseCase
+  private let registerSurveyUseCase: RegisterSurveyUseCase
+  private let disposeBag = DisposeBag()
+  
+  var perfumes: [Perfume] = []
+  var keywords: [Keyword] = []
+  var series: [SurveySeries] = []
+  
+  var selectedTab = BehaviorRelay<Int>(value: 0)
+  
+  init(coordinator: SurveyCoordinator?,
+       fetchPerfumesInSurveyUseCase: FetchPerfumesInSurveyUseCase,
+       fetchKeywordsUseCase: FetchKeywordsUseCase,
+       fetchSeriesUseCase: FetchSeriesUseCase,
+       registerSurveyUseCase: RegisterSurveyUseCase
+  ) {
     self.coordinator = coordinator
-    self.perfumeRepository = perfumeRepository
-    self.userRepository = userRepository
-    self.keywordRepository = keywordRepository
+    self.fetchPerfumesInSurveyUseCase = fetchPerfumesInSurveyUseCase
+    self.fetchKeywordsUseCase = fetchKeywordsUseCase
+    self.fetchSeriesUseCase = fetchSeriesUseCase
+    self.registerSurveyUseCase = registerSurveyUseCase
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -86,7 +94,7 @@ final class SurveyViewModel {
       })
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchPerfumesInSurvey()
+    self.fetchPerfumesInSurveyUseCase.execute()
       .subscribe { [weak self] perfumes in
         self?.perfumes = perfumes
         output.loadData.accept(true)
@@ -95,7 +103,7 @@ final class SurveyViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.keywordRepository.fetchKeywords()
+    self.fetchKeywordsUseCase.execute()
       .subscribe { [weak self] keywordInfo in
         self?.keywords = keywordInfo.compactMap({
           return Keyword(idx: $0.idx, name: $0.name, isSelected: false)
@@ -106,7 +114,7 @@ final class SurveyViewModel {
       }
       .disposed(by: disposeBag)
     
-    self.perfumeRepository.fetchSeries()
+    self.fetchSeriesUseCase.execute()
       .subscribe { [weak self] seriesInfo in
         self?.series = seriesInfo.rows.compactMap({
           return SurveySeries(seriesIdx: $0.seriesIdx, name: $0.name, imageUrl: $0.imageUrl, isLiked: false)
@@ -137,7 +145,7 @@ final class SurveyViewModel {
       .filter { $0.isLiked == true }
       .map { $0.seriesIdx }
     
-    self.userRepository.registerSurvey(perfumeList: perfumeListLiked, keywordList: keywordListLiked, seriesList: seriesListLiked)
+    self.registerSurveyUseCase.execute(perfumeList: perfumeListLiked, keywordList: keywordListLiked, seriesList: seriesListLiked)
       .subscribe { [weak self] _ in
         self?.coordinator?.finishFlow?()
       } onError: { error in

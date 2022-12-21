@@ -11,7 +11,6 @@ import UIKit
 final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator {
   
   var finishFlow: ((CoordinatorType) -> Void)?
-  var onSignUpFlow: ((CoordinatorType) -> Void)?
 
   var onboardingViewController: OnboardingViewController
   
@@ -32,34 +31,28 @@ final class DefaultOnboardingCoordinator: BaseCoordinator, OnboardingCoordinator
   }
   
   func runLoginFlow() {
-    let loginCoordinator = DefaultLoginCoordinator(self.navigationController)
-    loginCoordinator.finishFlow = { [unowned self, unowned loginCoordinator] in
-      self.removeDependency(loginCoordinator)
+    let coordinator = DefaultLoginCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.removeDependency(coordinator)
       self.navigationController.viewControllers.removeAll()
       self.navigationController.view.backgroundColor = .white
       self.finishFlow?(.main)
     }
-    loginCoordinator.onSignUpFlow = {
+    coordinator.runSignUpFlow = {
       self.runSignUpFlow()
     }
 
-    loginCoordinator.start()
-    self.addDependency(loginCoordinator)
+    coordinator.start()
+    self.addDependency(coordinator)
   }
   
   func runSignUpFlow() {
-    let signupCoordinator = DefaultSignUpCoordinator(self.navigationController)
-    signupCoordinator.finishFlow = { [unowned self] in
+    let coordinator = DefaultSignUpCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.removeDependency(coordinator)
       self.finishFlow?(.survey)
     }
-    self.childCoordinators.append(signupCoordinator)
-    signupCoordinator.start()
-  }
-  
-}
-
-extension DefaultOnboardingCoordinator: OnSignUpCoordinatorDelegate {
-  func onSignUpCoordinator() {
-    self.runSignUpFlow()
+    self.childCoordinators.append(coordinator)
+    coordinator.start()
   }
 }

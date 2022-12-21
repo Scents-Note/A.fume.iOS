@@ -21,7 +21,6 @@ final class DefaultSearchKeywordCoordinator: BaseCoordinator, SearchKeywordCoord
   
   override func start(from: CoordinatorType) {
     self.searchKeywordViewController.viewModel = SearchKeywordViewModel(coordinator: self,
-                                                                        perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared),
                                                                         from: from)
     
     self.searchKeywordViewController.hidesBottomBarWhenPushed = true

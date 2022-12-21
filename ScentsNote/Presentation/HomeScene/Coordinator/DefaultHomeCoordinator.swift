@@ -17,10 +17,13 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   }
   
   override func start() {
-    self.viewController.viewModel = HomeViewModel(
-      coordinator: self,
-      perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService())
-    )
+    let perfumeRepository = DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)
+    self.viewController.viewModel = HomeViewModel(coordinator: self,
+                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: perfumeRepository),
+                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: perfumeRepository),
+                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: perfumeRepository),
+                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: perfumeRepository),
+                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: perfumeRepository))
     self.navigationController.pushViewController(self.viewController, animated: true)
   }
   
