@@ -15,8 +15,8 @@ import Then
 final class BirthPopupViewController: UIViewController {
   
   var viewModel: BirthPopupViewModel?
-  private var disposeBag = DisposeBag()
   weak var delegate: BirthPopupDismissDelegate?
+  private var disposeBag = DisposeBag()
   
   private let container = UIView().then {
     $0.backgroundColor = .white

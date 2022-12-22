@@ -80,7 +80,6 @@ final class PerfumeDetailViewController: UIViewController {
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
-    Log(UserDefaults.standard.string(forKey: "token"))
     super.viewDidLoad()
     self.configureCollectionView()
     self.configureUI()

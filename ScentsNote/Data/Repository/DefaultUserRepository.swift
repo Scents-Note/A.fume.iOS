@@ -23,6 +23,16 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.login(email: email, password: password)
   }
   
+  func logout() {
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.token)
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.refreshToken)
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.userIdx)
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.nickname)
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.gender)
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.birth)
+    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.isLoggedIn)
+  }
+  
   func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
     return self.userService.signUp(signUpInfo: signUpInfo)
   }

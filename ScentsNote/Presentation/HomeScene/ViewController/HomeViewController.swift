@@ -186,7 +186,8 @@ final class HomeViewController: UIViewController {
   
   // MARK: - Binding ViewMOdel
   private func bindViewModel(cellInput: HomeViewModel.CellInput) {
-    let output = viewModel?.transform(from: cellInput, disposeBag: disposeBag)
+    let input = HomeViewModel.Input(viewWillAppearEvent: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in })
+    let output = viewModel?.transform(from: input, from: cellInput, disposeBag: disposeBag)
     self.bindSection(output: output)
   }
   

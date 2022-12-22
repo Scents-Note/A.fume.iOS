@@ -9,6 +9,7 @@ import RxSwift
 import RxRelay
 
 final class MyPageMenuViewModel {
+  
   // MARK: - Input & Output
   struct Input {
     let closeButtonDidTapEvent: Observable<Void>
@@ -20,15 +21,22 @@ final class MyPageMenuViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: MyPageCoordinator?
-  var userRepository: UserRepository
+  private weak var coordinator: MyPageCoordinator?
+  weak var delegate: MyPageMenuDismissDelegate?
+  private let fetchUserDefaultUseCase: FetchUserDefaultUseCase
+  private let logoutUseCase: LogoutUseCase
+
   var menus: [Menu] = []
-  
+  let loadData = BehaviorRelay<Void>(value: ())
   
   // MARK: - Life Cycle
-  init(coordinator: MyPageCoordinator, userRepository: UserRepository) {
+  init(coordinator: MyPageCoordinator,
+       fetchUserDefaultUseCase: FetchUserDefaultUseCase,
+       logoutUseCase: LogoutUseCase) {
     self.coordinator = coordinator
-    self.userRepository = userRepository
+    self.fetchUserDefaultUseCase = fetchUserDefaultUseCase
+    self.logoutUseCase = logoutUseCase
+
   }
   
   // MARK: - Binding
@@ -38,7 +46,8 @@ final class MyPageMenuViewModel {
     
     self.bindInput(input: input, disposeBag: disposeBag)
     self.bindOutput(menus: menus, output: output, disposeBag: disposeBag)
-    self.fetchDatas(menus: menus, disposeBag: disposeBag)
+    self.fetchDatas(loadData: self.loadData, menus: menus, disposeBag: disposeBag)
+    
     return output
   }
   
@@ -56,14 +65,22 @@ final class MyPageMenuViewModel {
       .disposed(by: disposeBag)
   }
   
-  private func fetchDatas(menus: PublishRelay<[String]>, disposeBag: DisposeBag) {
-    let isLoggedIn = self.userRepository.fetchUserDefaults(key: UserDefaultKey.isLoggedIn) ?? false
-    self.menus = isLoggedIn ? Menu.loggedIn : Menu.loggedOut
-    menus.accept(self.menus.map { $0.description} )
+  private func fetchDatas(loadData: BehaviorRelay<Void>,
+                          menus: PublishRelay<[String]>,
+                          disposeBag: DisposeBag) {
+    
+    loadData
+      .subscribe(onNext: { [weak self] in
+        let isLoggedIn = self?.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
+        self?.menus = isLoggedIn ? Menu.loggedIn : Menu.loggedOut
+        menus.accept(self?.menus.map { $0.description} ?? [])
+      })
+      .disposed(by: disposeBag)
+    
   }
   
   private func performAction(idx: Int) {
-    self.coordinator?.hideMyPageMenuViewController()
+    
     switch self.menus[idx] {
     case .editInfo:
       self.coordinator?.runEditInfoFlow()
@@ -74,10 +91,16 @@ final class MyPageMenuViewModel {
     case .inquire:
       self.coordinator?.runWebFlow(with: WebURL.inquire)
     case .logout:
-      break
+      self.logoutUseCase.execute()
+      self.loadData.accept(())
+      self.delegate?.reloadData()
     case .login:
       self.coordinator?.onOnboardingFlow?()
     }
-    
+    self.coordinator?.hideMyPageMenuViewController()
   }
+}
+
+protocol MyPageMenuDismissDelegate: AnyObject {
+  func reloadData()
 }

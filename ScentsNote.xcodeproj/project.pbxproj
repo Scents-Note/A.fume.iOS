@@ -335,6 +335,8 @@
 		4AE938B02952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938AF2952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift */; };
 		4AE938B22952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938B12952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift */; };
 		4AE938B42952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938B32952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift */; };
+		4AE938B62953DEE5006A7DAF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938B52953DEE5006A7DAF /* LogoutUseCase.swift */; };
+		4AE938B82953E0AD006A7DAF /* FetchUserDefaultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938B72953E0AD006A7DAF /* FetchUserDefaultUseCase.swift */; };
 		4AF9FBE7291DE82300667BD7 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9FBE6291DE82300667BD7 /* Log.swift */; };
 		86FEC2F1709BCB9A42494D27 /* Pods_ScentsNote_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */; };
 /* End PBXBuildFile section */
@@ -692,6 +694,8 @@
 		4AE938AF2952F301006A7DAF /* UpdatePerfumeLikeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePerfumeLikeUseCase.swift; sourceTree = "<group>"; };
 		4AE938B12952F75B006A7DAF /* FetchSeriesForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSeriesForFilterUseCase.swift; sourceTree = "<group>"; };
 		4AE938B32952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchBrandsForFilterUseCase.swift; sourceTree = "<group>"; };
+		4AE938B52953DEE5006A7DAF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
+		4AE938B72953E0AD006A7DAF /* FetchUserDefaultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserDefaultUseCase.swift; sourceTree = "<group>"; };
 		4AF9FBE6291DE82300667BD7 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7D37C98027E5BF948F7A0652 /* Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1046,6 +1050,8 @@
 				4AE938942951BD47006A7DAF /* CheckDuplcateEmailUseCase.swift */,
 				4AE938962951BED7006A7DAF /* SignUpUseCase.swift */,
 				4AE9389D2951C368006A7DAF /* RegisterSurveyUseCase.swift */,
+				4AE938B52953DEE5006A7DAF /* LogoutUseCase.swift */,
+				4AE938B72953E0AD006A7DAF /* FetchUserDefaultUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2406,6 +2412,7 @@
 				4AE938A62952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift in Sources */,
 				4A4F6A1B2936EAE0006BBF0B /* PerfumeDetailTabCell.swift in Sources */,
 				4A4F6A3029382EB9006BBF0B /* MyPageMenuViewController.swift in Sources */,
+				4AE938B82953E0AD006A7DAF /* FetchUserDefaultUseCase.swift in Sources */,
 				4A6F9875292C5D800085EBE7 /* TabView.swift in Sources */,
 				4A9D914628FFA21D001551A8 /* BackBarButtonItem.swift in Sources */,
 				4A0EB119293D8A6100630F88 /* ReviewSeasonalCell.swift in Sources */,
@@ -2561,6 +2568,7 @@
 				4A4DF5F1292902CA0066792D /* Seasonal.swift in Sources */,
 				4AA281202917D7D800D30A99 /* ListInfo.swift in Sources */,
 				4A5A94E92929EA5100B4197D /* Gender.swift in Sources */,
+				4AE938B62953DEE5006A7DAF /* LogoutUseCase.swift in Sources */,
 				4A9A14DA2908D4AF0067F04D /* DoubleCheckButton.swift in Sources */,
 				4A4C986129276771004851DB /* PerfumeDetailHeaderContentView.swift in Sources */,
 				4A4DF6052929B7CD0066792D /* Ingredient.swift in Sources */,

@@ -10,6 +10,7 @@ import RxSwift
 import RxGesture
 import SnapKit
 import Then
+import Kingfisher
 
 final class MyPageWishCell: UICollectionViewCell {
   
@@ -98,7 +99,7 @@ final class MyPageWishCell: UICollectionViewCell {
   }
     
   func updateUI(perfume: PerfumeInMyPage) {
-    self.imageView.load(url: perfume.imageUrl)
+    self.imageView.kf.setImage(with: URL(string: perfume.imageUrl))
     self.brandLabel.text = perfume.brandName
     self.nameLabel.text = perfume.name
   }

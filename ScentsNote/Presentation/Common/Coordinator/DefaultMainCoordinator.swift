@@ -35,6 +35,7 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
     self.tabBarController.tabBar.tintColor = .blackText
     self.tabBarController.tabBar.isTranslucent = true
     self.navigationController.viewControllers = [self.tabBarController]
+    self.navigationController.isNavigationBarHidden = true
     if #available(iOS 15.0, *) {
       let appearance = UITabBarAppearance()
       appearance.configureWithOpaqueBackground()

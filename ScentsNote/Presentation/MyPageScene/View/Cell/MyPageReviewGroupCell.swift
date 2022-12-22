@@ -23,9 +23,10 @@ final class MyPageReviewGroupCell: UICollectionViewCell {
   
   // MARK: - UI
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewInMyPageLayout).then {
+    $0.isScrollEnabled = false
     $0.register(MyPageReviewCell.self)
   }
-
+  
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -38,10 +39,11 @@ final class MyPageReviewGroupCell: UICollectionViewCell {
   }
   
   override func prepareForReuse() {
+    super.prepareForReuse()
     self.disposeBag = DisposeBag()
-    reviews.accept([])
+    self.bindUI()
   }
-   
+  
   // MARK: Configure
   func configureUI() {
     self.contentView.addSubview(self.collectionView)
@@ -51,11 +53,12 @@ final class MyPageReviewGroupCell: UICollectionViewCell {
   }
   
   func bindUI() {
-    self.reviews.bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageReviewCell", cellType: MyPageReviewCell.self)) { _, review, cell in
-      cell.updateUI(review: review)
-      cell.onClickReview = self.onClickReview
-    }
-    .disposed(by: self.disposeBag)
+    self.reviews
+      .bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageReviewCell", cellType: MyPageReviewCell.self)) { _, review, cell in
+        cell.updateUI(review: review)
+        cell.onClickReview = self.onClickReview
+      }
+      .disposed(by: self.disposeBag)
   }
   
   func updateUI(reviews: [ReviewInMyPage]) {
