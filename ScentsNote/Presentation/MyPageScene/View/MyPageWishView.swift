@@ -60,7 +60,7 @@ final class MyPageWishView: UIView {
           .subscribe(onNext: { [weak self] _ in
             self?.viewModel.scrollInput.perfumeCellDidTapEvent.accept(perfume.idx)
           })
-          .disposed(by: self.disposeBag)
+          .disposed(by: cell.disposeBag)
       }
       .disposed(by: self.disposeBag)
   }

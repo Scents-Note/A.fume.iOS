@@ -11,6 +11,7 @@ import RxCocoa
 import RxGesture
 import SnapKit
 import Then
+import Kingfisher
 
 final class MyPageReviewCell: UICollectionViewCell {
   
@@ -77,7 +78,7 @@ final class MyPageReviewCell: UICollectionViewCell {
   }
     
   func updateUI(review: ReviewInMyPage) {
-    self.imageView.load(url: review.imageUrl)
+    self.imageView.kf.setImage(with: URL(string: review.imageUrl))
     self.brandLabel.text = review.brand
     self.nameLabel.text = review.perfume
     self.reviewIdx = review.reviewIdx

@@ -53,10 +53,10 @@ final class MyPageViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
- 
+  
   func configureUI() {
     self.configureNavigation()
-
+    
     self.view.backgroundColor = .white
     self.view.addSubview(self.tabView)
     self.tabView.snp.makeConstraints {
@@ -84,12 +84,11 @@ final class MyPageViewController: UIViewController {
   }
   
   private func bindViewModel() {
-    let input = MyPageViewModel.Input(
-      myPerfumeButtonDidTapEvent: self.myPerfumeButton.rx.tap.asObservable(),
-      wishListButtonDidTapEvent: self.wishListButton.rx.tap.asObservable(),
-      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
-      menuButtonDidTapEvent: self.menuButton.rx.tap.asObservable()
-    )
+    let input = MyPageViewModel.Input(viewWillAppearEvent: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in },
+                                      myPerfumeButtonDidTapEvent: self.myPerfumeButton.rx.tap.asObservable(),
+                                      wishListButtonDidTapEvent: self.wishListButton.rx.tap.asObservable(),
+                                      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
+                                      menuButtonDidTapEvent: self.menuButton.rx.tap.asObservable())
     
     self.viewModel.transform(input: input, disposeBag: self.disposeBag)
     let output = self.viewModel.output
@@ -120,7 +119,7 @@ final class MyPageViewController: UIViewController {
     }
   }
   
-
+  
   
   private func updateHighLight(_ idx: Int) {
     UIView.animate(withDuration: 0.3) { [weak self] in

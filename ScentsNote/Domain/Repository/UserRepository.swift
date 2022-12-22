@@ -13,6 +13,7 @@ protocol UserRepository {
   
   // MARK: - Login
   func login(email: String, password: String) -> Observable<LoginInfo>
+  func logout()
   func saveLoginInfo(loginInfo: LoginInfo)
   
   // MARK: - SignUp

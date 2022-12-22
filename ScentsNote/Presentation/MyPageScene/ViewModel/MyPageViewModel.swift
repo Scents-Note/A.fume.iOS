@@ -16,6 +16,7 @@ final class MyPageViewModel {
   }
   
   struct Input {
+    let viewWillAppearEvent: Observable<Void>
     let myPerfumeButtonDidTapEvent: Observable<Void>
     let wishListButtonDidTapEvent: Observable<Void>
     let loginButtonDidTapEvent: Observable<Void>
@@ -35,6 +36,7 @@ final class MyPageViewModel {
   
   let scrollInput = ScrollInput()
   let output = Output()
+  let loadData = PublishRelay<Void>()
   
   init(coordinator: MyPageCoordinator,
        fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase,
@@ -51,6 +53,7 @@ final class MyPageViewModel {
     
     self.bindInput(input: input,
                    scrollInput: self.scrollInput,
+                   loadData: self.loadData,
                    selectedTab: selectedTab,
                    disposeBag: disposeBag)
     
@@ -59,16 +62,24 @@ final class MyPageViewModel {
                     reviews: reviews,
                     perfumes: perfumes,
                     disposeBag: disposeBag)
-    self.fetchDatas(reviews: reviews,
-                    perfumes: perfumes,
-                    disposeBag: disposeBag)
+    
+    self.fetchDatas(loadData: self.loadData,
+                     reviews: reviews,
+                     perfumes: perfumes,
+                     disposeBag: disposeBag)
+    
   }
   
   private func bindInput(input: Input,
                          scrollInput: ScrollInput,
+                         loadData: PublishRelay<Void>,
                          selectedTab: PublishRelay<Int>,
                          disposeBag: DisposeBag) {
-   
+    
+    input.viewWillAppearEvent
+      .bind(to: loadData)
+      .disposed(by: disposeBag)
+    
     input.myPerfumeButtonDidTapEvent
       .subscribe(onNext: {
         selectedTab.accept(0)
@@ -126,27 +137,39 @@ final class MyPageViewModel {
     
   }
   
-  private func fetchDatas(reviews: PublishRelay<[[ReviewInMyPage]]>,
+  private func fetchDatas(loadData: PublishRelay<Void>,
+                          reviews: PublishRelay<[[ReviewInMyPage]]>,
                           perfumes: PublishRelay<[PerfumeInMyPage]>,
                           disposeBag: DisposeBag) {
     
-    self.fetchReviewsInMyPageUseCase.execute()
-      .subscribe(onNext: { result in
-        reviews.accept(result)
-      }, onError: { error in
-        Log(error)
+    loadData
+      .subscribe(onNext: { [weak self] in
+        self?.fetchReviewsInMyPageUseCase.execute()
+          .subscribe(onNext: { result in
+            reviews.accept(result)
+          }, onError: { error in
+            reviews.accept([])
+            Log(error)
+          })
+          .disposed(by: disposeBag)
+        
+        self?.fetchPerfumesInMyPageUseCase.execute()
+          .subscribe(onNext: { result in
+            perfumes.accept(result)
+          }, onError: { error in
+            perfumes.accept([])
+            Log(error)
+          })
+          .disposed(by: disposeBag)
       })
       .disposed(by: disposeBag)
-    
-    self.fetchPerfumesInMyPageUseCase.execute()
-      .subscribe(onNext: { result in
-        perfumes.accept(result)
-      }, onError: { error in
-        Log(error)
-      })
-      .disposed(by: disposeBag)
-    
   }
   
   
+}
+
+extension MyPageViewModel: MyPageMenuDismissDelegate {
+  func reloadData() {
+    self.loadData.accept(())
+  }
 }

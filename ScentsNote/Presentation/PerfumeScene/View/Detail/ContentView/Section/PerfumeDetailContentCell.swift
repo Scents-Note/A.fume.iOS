@@ -47,7 +47,6 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   }
   
   private func setViewControllersInPageVC() {
-    Log("1")
     let infoVC = PerfumeDetailInfoViewController()
     infoVC.onUpdateHeight = { [weak self] height in
       self?.updateHeight(height: height)

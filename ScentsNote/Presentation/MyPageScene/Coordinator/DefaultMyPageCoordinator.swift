@@ -91,13 +91,18 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   }
   
   func showMyPageMenuViewController() {
+    guard let pvc = self.navigationController.viewControllers.last as? MyPageViewController else {
+      return
+    }
+    
     let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
                                                userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     let vc = MyPageMenuViewController()
-    vc.viewModel = MyPageMenuViewModel(
-      coordinator: self,
-      userRepository: userRepository
-    )
+    vc.viewModel = MyPageMenuViewModel(coordinator: self,
+                                       fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
+                                       logoutUseCase: LogoutUseCase(userRepository: userRepository))
+    vc.viewModel?.delegate = pvc.viewModel
+    
     vc.modalTransitionStyle = .crossDissolve
     vc.modalPresentationStyle = .overCurrentContext
     self.navigationController.present(vc, animated: false)
@@ -106,5 +111,4 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   func hideMyPageMenuViewController() {
     self.navigationController.dismiss(animated: false)
   }
-  
 }

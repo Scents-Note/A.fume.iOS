@@ -12,6 +12,11 @@ import Moya
 final class HomeViewModel {
   
   // MARK: - Input & Output
+  
+  struct Input {
+    let viewWillAppearEvent: Observable<Void>
+  }
+  
   struct CellInput {
     let perfumeCellDidTapEvent: PublishRelay<Perfume>
     let perfumeHeartButtonDidTapEvent: PublishRelay<Perfume>
@@ -47,19 +52,22 @@ final class HomeViewModel {
   
   
   // MARK: - TransForm
-  func transform(from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
+  func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
     let output = Output()
+    let loadData = PublishRelay<Void>()
     let perfumesRecommended = BehaviorRelay<[Perfume]>(value: [])
     let perfumesPopular = BehaviorRelay<[Perfume]>(value: [])
     let perfumesRecent = BehaviorRelay<[Perfume]>(value: [])
     let perfumesNew = BehaviorRelay<[Perfume]>(value: [])
     
-    self.bindCellInput(cellInput: cellInput,
-                       perfumesRecommended: perfumesRecommended,
-                       perfumesPopular: perfumesPopular,
-                       perfumesRecent: perfumesRecent,
-                       perfumesNew: perfumesNew,
-                       disposeBag: disposeBag)
+    self.bindInput(input: input,
+                   cellInput: cellInput,
+                   loadData: loadData,
+                   perfumesRecommended: perfumesRecommended,
+                   perfumesPopular: perfumesPopular,
+                   perfumesRecent: perfumesRecent,
+                   perfumesNew: perfumesNew,
+                   disposeBag: disposeBag)
     
     self.bindOutput(output: output,
                     perfumesRecommended: perfumesRecommended,
@@ -69,27 +77,38 @@ final class HomeViewModel {
                     disposeBag: disposeBag)
     
     // TODO: willAppear로 빼기
-    self.fetchDatas(perfumesRecommended: perfumesRecommended,
-                    perfumesPopular: perfumesPopular,
-                    perfumesRecent: perfumesRecent,
-                    perfumesNew: perfumesNew,
-                    disposeBag: disposeBag)
+    loadData
+      .subscribe(onNext: { [weak self] in
+        self?.fetchDatas(perfumesRecommended: perfumesRecommended,
+                         perfumesPopular: perfumesPopular,
+                         perfumesRecent: perfumesRecent,
+                         perfumesNew: perfumesNew,
+                         disposeBag: disposeBag)
+      })
+      .disposed(by: disposeBag)
+    
     
     return output
   }
   
-  private func bindCellInput(cellInput: CellInput,
-                             perfumesRecommended: BehaviorRelay<[Perfume]>,
-                             perfumesPopular: BehaviorRelay<[Perfume]>,
-                             perfumesRecent: BehaviorRelay<[Perfume]>,
-                             perfumesNew: BehaviorRelay<[Perfume]>,
-                             disposeBag: DisposeBag) {
+  private func bindInput(input: Input,
+                         cellInput: CellInput,
+                         loadData: PublishRelay<Void>,
+                         perfumesRecommended: BehaviorRelay<[Perfume]>,
+                         perfumesPopular: BehaviorRelay<[Perfume]>,
+                         perfumesRecent: BehaviorRelay<[Perfume]>,
+                         perfumesNew: BehaviorRelay<[Perfume]>,
+                         disposeBag: DisposeBag) {
+    input.viewWillAppearEvent
+      .bind(to: loadData)
+      .disposed(by: disposeBag)
+    
     cellInput.perfumeCellDidTapEvent
       .subscribe { [weak self] perfume in
         self?.coordinator?.runPerfumeDetailFlow(perfumeIdx: perfume.perfumeIdx)
       }
       .disposed(by: disposeBag)
-
+    
     cellInput.perfumeHeartButtonDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
         self?.updatePerfumeLikeUseCase.execute(perfumeIdx: perfume.perfumeIdx)
