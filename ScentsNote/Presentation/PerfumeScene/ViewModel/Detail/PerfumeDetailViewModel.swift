@@ -34,6 +34,7 @@ final class PerfumeDetailViewModel {
   private weak var coordinator: PerfumeDetailCoordinator?
   private let fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
   private let fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase
+//  private let
   
   let input = ScrollInput()
   let cellInput = CellInput()
@@ -145,7 +146,10 @@ final class PerfumeDetailViewModel {
         Log(error)
       })
       .disposed(by: disposeBag)
-    
   }
   
+  func clickReport(reviewIdx: Int) {
+    Log("sefuhsekf")
+    self.coordinator?.showReviewReportPopupViewController(reviewIdx: reviewIdx)
+  }
 }

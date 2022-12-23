@@ -1,23 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "btnClose.png",
-      "scale" : "1x",
+      "filename" : "btnClose.svg",
       "idiom" : "universal"
-    },
-    {
-      "scale" : "2x",
-      "filename" : "btnClose@2x.png",
-      "idiom" : "universal"
-    },
-    {
-      "filename" : "btnClose@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

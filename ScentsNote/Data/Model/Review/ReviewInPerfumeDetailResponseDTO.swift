@@ -23,7 +23,8 @@ struct ReviewInPerfumeDetailResponseDTO: Decodable {
 
 extension ReviewInPerfumeDetailResponseDTO {
   func toDomain() -> ReviewInPerfumeDetail {
-    ReviewInPerfumeDetail(score: self.score,
+    ReviewInPerfumeDetail(idx: self.reviewIdx,
+                          score: self.score,
                           access: self.access,
                           content: self.content,
                           likeCount: self.likeCount,

@@ -111,7 +111,7 @@ extension PerfumeDetailViewController {
           cell.clickPerfume = { [weak self] perfume in
             self?.viewModel?.cellInput.perfumeDidTapEvent.accept(perfume)
           }
-          cell.updateUI(reviews: self.viewModel?.output.reviews)
+          cell.setViewModel(viewModel: self.viewModel)
           self.updatePageView = { oldValue, newValue in
             cell.updatePageView(oldValue: oldValue, newValue: newValue)
           }

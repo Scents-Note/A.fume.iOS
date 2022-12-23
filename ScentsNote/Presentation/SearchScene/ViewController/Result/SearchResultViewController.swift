@@ -27,11 +27,6 @@ final class SearchResultViewController: UIViewController {
     $0.showsHorizontalScrollIndicator = false
     $0.backgroundColor = .lightGray
     $0.register(KeywordCell.self)
-    
-    var list = [[1,2], [1,3], [2,3]]
-    list.sorted {
-      $0[1] < $1[1]
-    }
   }
   private lazy var perfumeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.gridCompositionalLayout()).then {
     $0.showsVerticalScrollIndicator = false

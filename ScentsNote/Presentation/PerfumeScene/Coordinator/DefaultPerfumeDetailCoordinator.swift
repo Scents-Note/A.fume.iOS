@@ -30,4 +30,17 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
     perfumeDetailViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeDetailViewController, animated: true)
   }
+  
+  func showReviewReportPopupViewController(reviewIdx: Int) {
+    let vc = ReviewReportPopupViewController()
+    vc.viewModel = ReviewReportPopupViewModel(coordinator: self,
+                                              reviewIdx: reviewIdx)
+    
+    vc.modalPresentationStyle = .overFullScreen
+    self.navigationController.present(vc, animated: false, completion: nil)
+  }
+  
+  func hideReviewReportPopupViewController() {
+    self.navigationController.dismiss(animated: false)
+  }
 }

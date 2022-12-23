@@ -1,23 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "btnWomanActive.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "btnWomanActive@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "btnWomanActive@3x.png"
+      "filename" : "btnWomanActive.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
