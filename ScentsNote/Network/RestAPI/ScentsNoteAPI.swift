@@ -44,7 +44,7 @@ enum ScentsNoteAPI {
   case fetchReviewsInMyPage
   case fetchReviewDetail(reviewIdx: Int)
   case updateReview(reviewIdx: Int, reviewDetail: ReviewDetailRequestDTO)
-  case reportReview(reviewIdx: Int)
+  case reportReview(reviewIdx: Int, reason: ReviewReportRequestDTO)
 
 }
 
@@ -132,7 +132,7 @@ extension ScentsNoteAPI: TargetType {
       return "/\(reviewIdx)"
     case .updateReview(let reviewIdx, _):
       return "/\(reviewIdx)"
-    case .reportReview(let reviewIdx):
+    case .reportReview(let reviewIdx, _):
       return "/\(reviewIdx)/report"
       
       // MARK: - User
@@ -233,6 +233,8 @@ extension ScentsNoteAPI: TargetType {
       if let keywordsList = perfumeReview.keywordsList {
         params["keywordsList"] = keywordsList
       }
+    case let .reportReview(_, reason):
+      params["reason"] = reason.reason
     default:
       break
     }

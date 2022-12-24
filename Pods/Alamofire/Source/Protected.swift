@@ -35,24 +35,51 @@ extension Lock {
     /// - Parameter closure: The closure to run.
     ///
     /// - Returns:           The value the closure generated.
-    func around<T>(_ closure: () throws -> T) rethrows -> T {
+    func around<T>(_ closure: () -> T) -> T {
         lock(); defer { unlock() }
-        return try closure()
+        return closure()
     }
 
     /// Execute a closure while acquiring the lock.
     ///
     /// - Parameter closure: The closure to run.
-    func around(_ closure: () throws -> Void) rethrows {
+    func around(_ closure: () -> Void) {
         lock(); defer { unlock() }
-        try closure()
+        closure()
     }
 }
 
-#if os(Linux) || os(Windows)
+#if os(Linux)
+/// A `pthread_mutex_t` wrapper.
+final class MutexLock: Lock {
+    private var mutex: UnsafeMutablePointer<pthread_mutex_t>
 
-extension NSLock: Lock {}
+    init() {
+        mutex = .allocate(capacity: 1)
 
+        var attr = pthread_mutexattr_t()
+        pthread_mutexattr_init(&attr)
+        pthread_mutexattr_settype(&attr, .init(PTHREAD_MUTEX_ERRORCHECK))
+
+        let error = pthread_mutex_init(mutex, &attr)
+        precondition(error == 0, "Failed to create pthread_mutex")
+    }
+
+    deinit {
+        let error = pthread_mutex_destroy(mutex)
+        precondition(error == 0, "Failed to destroy pthread_mutex")
+    }
+
+    fileprivate func lock() {
+        let error = pthread_mutex_lock(mutex)
+        precondition(error == 0, "Failed to lock pthread_mutex")
+    }
+
+    fileprivate func unlock() {
+        let error = pthread_mutex_unlock(mutex)
+        precondition(error == 0, "Failed to unlock pthread_mutex")
+    }
+}
 #endif
 
 #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
@@ -86,8 +113,8 @@ final class UnfairLock: Lock {
 final class Protected<T> {
     #if os(macOS) || os(iOS) || os(watchOS) || os(tvOS)
     private let lock = UnfairLock()
-    #elseif os(Linux) || os(Windows)
-    private let lock = NSLock()
+    #elseif os(Linux)
+    private let lock = MutexLock()
     #endif
     private var value: T
 
@@ -112,8 +139,8 @@ final class Protected<T> {
     /// - Parameter closure: The closure to execute.
     ///
     /// - Returns:           The return value of the closure passed.
-    func read<U>(_ closure: (T) throws -> U) rethrows -> U {
-        try lock.around { try closure(self.value) }
+    func read<U>(_ closure: (T) -> U) -> U {
+        lock.around { closure(self.value) }
     }
 
     /// Synchronously modify the protected value.
@@ -122,17 +149,53 @@ final class Protected<T> {
     ///
     /// - Returns:           The modified value.
     @discardableResult
-    func write<U>(_ closure: (inout T) throws -> U) rethrows -> U {
-        try lock.around { try closure(&self.value) }
+    func write<U>(_ closure: (inout T) -> U) -> U {
+        lock.around { closure(&self.value) }
     }
 
     subscript<Property>(dynamicMember keyPath: WritableKeyPath<T, Property>) -> Property {
         get { lock.around { value[keyPath: keyPath] } }
         set { lock.around { value[keyPath: keyPath] = newValue } }
     }
+}
 
-    subscript<Property>(dynamicMember keyPath: KeyPath<T, Property>) -> Property {
-        lock.around { value[keyPath: keyPath] }
+extension Protected where T: RangeReplaceableCollection {
+    /// Adds a new element to the end of this protected collection.
+    ///
+    /// - Parameter newElement: The `Element` to append.
+    func append(_ newElement: T.Element) {
+        write { (ward: inout T) in
+            ward.append(newElement)
+        }
+    }
+
+    /// Adds the elements of a sequence to the end of this protected collection.
+    ///
+    /// - Parameter newElements: The `Sequence` to append.
+    func append<S: Sequence>(contentsOf newElements: S) where S.Element == T.Element {
+        write { (ward: inout T) in
+            ward.append(contentsOf: newElements)
+        }
+    }
+
+    /// Add the elements of a collection to the end of the protected collection.
+    ///
+    /// - Parameter newElements: The `Collection` to append.
+    func append<C: Collection>(contentsOf newElements: C) where C.Element == T.Element {
+        write { (ward: inout T) in
+            ward.append(contentsOf: newElements)
+        }
+    }
+}
+
+extension Protected where T == Data? {
+    /// Adds the contents of a `Data` value to the end of the protected `Data`.
+    ///
+    /// - Parameter data: The `Data` to be appended.
+    func append(_ data: Data) {
+        write { (ward: inout T) in
+            ward?.append(data)
+        }
     }
 }
 

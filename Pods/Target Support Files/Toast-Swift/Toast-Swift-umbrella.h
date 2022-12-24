@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double ReusableVersionNumber;
-FOUNDATION_EXPORT const unsigned char ReusableVersionString[];
+FOUNDATION_EXPORT double Toast_SwiftVersionNumber;
+FOUNDATION_EXPORT const unsigned char Toast_SwiftVersionString[];
 

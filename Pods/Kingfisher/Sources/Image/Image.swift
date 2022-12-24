@@ -103,11 +103,7 @@ extension KingfisherWrapper where Base: KFCrossPlatformImage {
         guard let cgImage = cgImage else {
             return pixel * 4
         }
-        let bytesPerPixel = cgImage.bitsPerPixel / 8
-        guard let imageCount = images?.count else {
-            return pixel * bytesPerPixel
-        }
-        return pixel * bytesPerPixel * imageCount
+        return pixel * cgImage.bitsPerPixel / 8
     }
 }
 

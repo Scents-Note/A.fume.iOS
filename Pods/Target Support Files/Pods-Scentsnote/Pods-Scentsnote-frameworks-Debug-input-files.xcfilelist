@@ -4,7 +4,6 @@ ${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework
 ${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework
 ${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework
 ${BUILT_PRODUCTS_DIR}/Moya/Moya.framework
-${BUILT_PRODUCTS_DIR}/Reusable/Reusable.framework
 ${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
 ${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework
 ${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework
@@ -12,3 +11,4 @@ ${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
 ${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
 ${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
 ${BUILT_PRODUCTS_DIR}/Then/Then.framework
+${BUILT_PRODUCTS_DIR}/Toast-Swift/Toast_Swift.framework

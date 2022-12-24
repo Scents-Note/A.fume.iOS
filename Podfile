@@ -7,17 +7,17 @@ target 'ScentsNote' do
 
   # Pods for ScentsNote
 
-  pod 'RxSwift'
-  pod 'RxCocoa'
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
   pod 'RxGesture'
   pod 'RxDataSources', '~> 5.0'
-  pod 'Reusable'
   pod 'Moya/RxSwift'
-  pod 'Alamofire'
-  pod 'SnapKit'
-  pod 'Then'
-  pod 'Kingfisher'
+  pod 'Alamofire', '5.3'
+  pod 'SnapKit', '~> 5.6.0'
+  pod 'Then', '3.0.0'
+  pod 'Kingfisher', '7.0'
   pod 'Cosmos', '~> 23.0'
+  pod 'Toast-Swift', '~> 5.0.1'
 
   target 'ScentsNoteTests' do
     inherit! :search_paths

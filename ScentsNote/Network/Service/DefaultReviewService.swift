@@ -19,8 +19,8 @@ final class DefaultReviewService: ScentsNoteService, ReviewService {
     requestPlainObject(.updateReview(reviewIdx: reviewIdx, reviewDetail: reviewDetail))
   }
   
-  func reportReview(reviewIdx: Int) -> Observable<String> {
-    requestObject(.reportReview(reviewIdx: reviewIdx))
+  func reportReview(reviewIdx: Int, reason: ReviewReportRequestDTO) -> Observable<String> {
+    requestPlainObject(.reportReview(reviewIdx: reviewIdx, reason: reason))
   }
   
 }

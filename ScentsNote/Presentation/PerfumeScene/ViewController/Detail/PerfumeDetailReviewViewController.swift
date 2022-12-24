@@ -63,6 +63,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
       .bind(to: self.collectionView.rx.items(
         cellIdentifier: "ReviewCell", cellType: ReviewCell.self
       )) { _, review, cell in
+        Log(review)
         cell.updateUI(review: review)
         cell.clickReport()
           .subscribe(onNext: { [weak self] in

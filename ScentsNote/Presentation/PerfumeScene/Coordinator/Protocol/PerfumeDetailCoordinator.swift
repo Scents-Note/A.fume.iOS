@@ -13,4 +13,5 @@ protocol PerfumeDetailCoordinator: AnyObject {
   
   func showReviewReportPopupViewController(reviewIdx: Int)
   func hideReviewReportPopupViewController()
+  func hideReviewReportPopupViewController(hasToast: Bool)
 }

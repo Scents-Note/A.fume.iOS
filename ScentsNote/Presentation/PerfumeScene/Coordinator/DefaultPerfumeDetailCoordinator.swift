@@ -8,7 +8,7 @@
 import UIKit
 
 final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoordinator {
-  
+
   var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)?
   var runPerfumeDetailFlow: ((Int) -> Void)?
   
@@ -34,13 +34,24 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   func showReviewReportPopupViewController(reviewIdx: Int) {
     let vc = ReviewReportPopupViewController()
     vc.viewModel = ReviewReportPopupViewModel(coordinator: self,
+                                              reportReviewUseCase: ReportReviewUseCase(reviewRepository: DefaultReviewRepository(reviewService: DefaultReviewService.shared)),
                                               reviewIdx: reviewIdx)
-    
     vc.modalPresentationStyle = .overFullScreen
     self.navigationController.present(vc, animated: false, completion: nil)
   }
   
   func hideReviewReportPopupViewController() {
-    self.navigationController.dismiss(animated: false)
+    self.hideReviewReportPopupViewController(hasToast: false)
   }
+  
+  func hideReviewReportPopupViewController(hasToast: Bool) {
+    self.navigationController.dismiss(animated: false)
+    if hasToast {
+      guard let pvc = self.navigationController.viewControllers.last as? PerfumeDetailViewController else {
+        return
+      }
+      pvc.viewModel?.showToast()
+    }
+  }
+
 }

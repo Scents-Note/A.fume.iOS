@@ -38,7 +38,7 @@ final class ReviewReportPopupViewController: UIViewController {
     $0.setTitle("신고하기", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.titleLabel?.font = .notoSans(type: .bold, size: 15)
-    $0.backgroundColor = .blackText
+    $0.backgroundColor = .lightGray219
   }
   
   private lazy var stackView = UIStackView().then {
@@ -55,35 +55,6 @@ final class ReviewReportPopupViewController: UIViewController {
     self.bindViewModel()
   }
   
-  
-//  override func viewWillLayoutSubviews() {
-//    super.viewWillLayoutSubviews()
-//    let height = self.collectionView.collectionViewLayout.collectionViewContentSize.height
-//    Log(height)
-//    self.collectionView.snp.updateConstraints {
-//      $0.height.equalTo(height)
-//    }
-//    self.view.layoutIfNeeded()
-//  }
-  
-//  override func viewWillAppear(_ animated: Bool) {
-//    super.viewWillAppear(animated)
-//
-//    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseOut) { [weak self] in
-//      self?.container.transform = .identity
-//      self?.container.isHidden = false
-//    }
-//  }
-//
-//  override func viewWillDisappear(_ animated: Bool) {
-//    super.viewWillDisappear(animated)
-//
-//    UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) { [weak self] in
-//      self?.container.transform = .identity
-//      self?.container.isHidden = true
-//    }
-//  }
-  
   private func configureUI() {
     self.view.addSubview(self.container)
     self.container.snp.makeConstraints {
@@ -99,7 +70,7 @@ final class ReviewReportPopupViewController: UIViewController {
       $0.height.equalTo(400)
     }
     
-   
+    
     self.stackView.snp.makeConstraints {
       $0.bottom.right.left.equalToSuperview()
       $0.height.equalTo(52)
@@ -108,13 +79,27 @@ final class ReviewReportPopupViewController: UIViewController {
   
   private func bindViewModel() {
     let input = ReviewReportPopupViewModel.Input(reportCellDidTapEvent: self.collectionView.rx.itemSelected.map { $0.row },
-                                                 cancelButtonDidTapEvent: self.cancelButton.rx.tap.asObservable())
+                                                 cancelButtonDidTapEvent: self.cancelButton.rx.tap.asObservable(),
+                                                 reportButtonDidTapEvent: self.reportButton.rx.tap.asObservable())
     let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    
+    self.bindReports(output: output)
+    
+  }
+  
+  private func bindReports(output: ReviewReportPopupViewModel.Output?) {
     output?.reports
       .bind(to: self.collectionView.rx.items(cellIdentifier: "ReviewReportCell", cellType: ReviewReportCell.self)) { _, report, cell in
         cell.updateUI(report: report)
-        cell.layoutIfNeeded()
       }
       .disposed(by: self.disposeBag)
+    
+    output?.isSelected
+      .asDriver(onErrorJustReturn: ())
+      .drive(onNext: { [weak self] in
+        self?.reportButton.backgroundColor = .blackText
+      })
+      .disposed(by: self.disposeBag)
+
   }
 }

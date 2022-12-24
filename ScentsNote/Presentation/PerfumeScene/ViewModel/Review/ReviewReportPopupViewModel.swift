@@ -14,21 +14,27 @@ final class ReviewReportPopupViewModel {
   struct Input {
     let reportCellDidTapEvent: Observable<Int>
     let cancelButtonDidTapEvent: Observable<Void>
-//    let 
+    let reportButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
     let reports = BehaviorRelay<[ReportType.Report]>(value: [])
+    let isSelected = PublishRelay<Void>()
   }
   
   // MARK: - Vars & Lets
   private weak var coordinator: PerfumeDetailCoordinator?
+  private let reportReviewUseCase: ReportReviewUseCase
   private let reviewIdx: Int
-  private var report: String?
+  
+  private var reason: String?
   
   // MARK: - Life Cycle
-  init(coordinator: PerfumeDetailCoordinator, reviewIdx: Int) {
+  init(coordinator: PerfumeDetailCoordinator,
+       reportReviewUseCase: ReportReviewUseCase,
+       reviewIdx: Int) {
     self.coordinator = coordinator
+    self.reportReviewUseCase = reportReviewUseCase
     self.reviewIdx = reviewIdx
   }
   
@@ -53,10 +59,11 @@ final class ReviewReportPopupViewModel {
   private func bindInput(input: Input,
                          reports: PublishRelay<[ReportType.Report]>,
                          disposeBag: DisposeBag) {
+    
     input.reportCellDidTapEvent.withLatestFrom(reports) { updated, originals in
       originals.enumerated().map { [weak self] idx, report in
         if idx == updated {
-          self?.report = report.type.description
+          self?.reason = report.type.description
           return ReportType.Report(type: report.type, isSelected: true)
         } else {
           return ReportType.Report(type: report.type, isSelected: false)
@@ -65,14 +72,36 @@ final class ReviewReportPopupViewModel {
     }
     .bind(to: reports)
     .disposed(by: disposeBag)
-   
+    
+    input.cancelButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.hideReviewReportPopupViewController()
+      })
+      .disposed(by: disposeBag)
+    
+    input.reportButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let reviewIdx = self?.reviewIdx, let reason = self?.reason else { return }
+        self?.reportReviewUseCase.execute(reviewIdx: reviewIdx, reason: reason)
+          .subscribe(onNext: { _ in
+            self?.coordinator?.hideReviewReportPopupViewController(hasToast: true)
+          }, onError: { error in
+            Log(error)
+          })
+          .disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
+
   }
   
   private func bindOutput(output: Output,
                           reports: PublishRelay<[ReportType.Report]>,
                           disposeBag: DisposeBag) {
     reports
-      .bind(to: output.reports)
+      .subscribe(onNext: { reports in
+        output.reports.accept(reports)
+        output.isSelected.accept(())
+      })
       .disposed(by: disposeBag)
 
   }
