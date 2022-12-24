@@ -20,8 +20,6 @@ final class LoginUseCase {
   
   // TODO: 임시 자동로그인
   func execute() -> Observable<LoginInfo> {
-    UserDefaults.standard.removeObject(forKey: "token")
-//    UserDefaults.standard.set("", forKey: "token")
     let isLoggedIn = self.userRepository.fetchUserDefaults(key: UserDefaultKey.isLoggedIn) ?? false
     if isLoggedIn {
       let email = self.userRepository.fetchUserDefaults(key: UserDefaultKey.email) ?? ""

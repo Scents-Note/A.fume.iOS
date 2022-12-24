@@ -16,7 +16,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
   
   // MARK: - Output
   var onUpdateHeight: ((CGFloat) -> Void)?
-  var reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?
+//  var reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?
   
   // MARK: - Vars & Lets
   var viewModel: PerfumeDetailViewModel?
@@ -59,18 +59,24 @@ final class PerfumeDetailReviewViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
     
-    self.reviews?
+    self.viewModel?.output.reviews
       .bind(to: self.collectionView.rx.items(
         cellIdentifier: "ReviewCell", cellType: ReviewCell.self
       )) { _, review, cell in
+        Log(review)
         cell.updateUI(review: review)
+        cell.clickReport()
+          .subscribe(onNext: { [weak self] in
+            self?.viewModel?.clickReport(reviewIdx: review.idx)
+          })
+          .disposed(by: self.disposeBag)
       }
       .disposed(by: self.disposeBag)
   }
   
-  func bindOutput(reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?) {
-    self.reviews = reviews
-  }
+//  func bindOutput(reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?) {
+//    self.reviews = reviews
+//  }
   
   private func updateViewHeight() {
     guard isLoaded else { return }

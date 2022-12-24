@@ -1,23 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "mypageActive.png",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "mypageActive@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "mypageActive@3x.png",
-      "scale" : "3x"
+      "filename" : "mypageActive.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

@@ -37,6 +37,7 @@ struct KFImageRenderer<HoldingView> : View where HoldingView: KFImageHoldingView
     let context: KFImage.Context<HoldingView>
     
     var body: some View {
+        
         ZStack {
             context.configurations
                 .reduce(HoldingView.created(from: binder.loadedImage, context: context)) {
@@ -44,7 +45,7 @@ struct KFImageRenderer<HoldingView> : View where HoldingView: KFImageHoldingView
                 }
                 .opacity(binder.loaded ? 1.0 : 0.0)
             if binder.loadedImage == nil {
-                ZStack {
+                Group {
                     if let placeholder = context.placeholder, let view = placeholder(binder.progress) {
                         view
                     } else {
@@ -69,16 +70,6 @@ struct KFImageRenderer<HoldingView> : View where HoldingView: KFImageHoldingView
                 }
             }
         }
-        // Workaround for https://github.com/onevcat/Kingfisher/issues/1988
-        // on iOS 16 there seems to be a bug that when in a List, the `onAppear` of the `ZStack` above in the
-        // `binder.loadedImage == nil` not get called. Adding this empty `onAppear` fixes it and the life cycle can
-        // work again.
-        //
-        // There is another "fix": adding an `else` clause and put a `Color.clear` there. But I believe this `onAppear`
-        // should work better.
-        //
-        // It should be a bug in iOS 16, I guess it is some kinds of over-optimization in list cell loading caused it.
-        .onAppear()
     }
 }
 

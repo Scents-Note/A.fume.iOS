@@ -8,7 +8,7 @@
 import RxSwift
 
 final class DefaultReviewRepository: ReviewRepository {
-    
+  
   private let reviewService: ReviewService
   
   init(reviewService: ReviewService) {
@@ -22,5 +22,10 @@ final class DefaultReviewRepository: ReviewRepository {
   
   func updateReview(reviewDetail: ReviewDetail) -> Observable<String> {
     self.reviewService.updateReview(reviewIdx: reviewDetail.reviewIdx!, reviewDetail: reviewDetail.toEntity())
+  }
+  
+  func reportReview(reviewIdx: Int, reason: String) -> Observable<String> {
+    let requestDTO = ReviewReportRequestDTO(reason: reason)
+    return self.reviewService.reportReview(reviewIdx: reviewIdx, reason: requestDTO)
   }
 }

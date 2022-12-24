@@ -23,13 +23,11 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
     }
   }
   
-  
   // MARK: - UI
   lazy var pageViewController: UIPageViewController = {
     let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     return vc
   }()
-  
   
   // MARK: - Vars & Lets
   var dataSourceVC: [UIViewController] = []
@@ -70,11 +68,13 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   }
   
   func updateUI(perfuemDetail: PerfumeDetail) {
-    (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).updateSnapshot(perfumeDetail: perfuemDetail)
+    let vc = self.dataSourceVC[0] as! PerfumeDetailInfoViewController
+    vc.updateSnapshot(perfumeDetail: perfuemDetail)
   }
   
-  func updateUI(reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?) {
-    (self.dataSourceVC[1] as! PerfumeDetailReviewViewController).bindOutput(reviews: reviews)
+  func setViewModel(viewModel: PerfumeDetailViewModel?) {
+    let vc = self.dataSourceVC[1] as! PerfumeDetailReviewViewController
+    vc.viewModel = viewModel
   }
   
   private func updateHeight(height: CGFloat) {

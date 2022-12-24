@@ -152,5 +152,10 @@ final class ReviewCell: UICollectionViewCell {
     self.contentLabel.text = review.content
     self.scoreLabel.text = "\(review.score)"
     self.nicknameLabel.text = "by. \(review.nickname)"
+    self.reportButton.isHidden = review.access != true
+  }
+  
+  func clickReport() -> Observable<Void> {
+    self.reportButton.rx.tap.asObservable()
   }
 }

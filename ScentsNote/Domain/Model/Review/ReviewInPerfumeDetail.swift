@@ -6,6 +6,7 @@
 //
 
 struct ReviewInPerfumeDetail {
+  let idx: Int
   let score: Float
   let access: Bool
   let content: String

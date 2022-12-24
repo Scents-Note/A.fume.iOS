@@ -12,6 +12,7 @@ import RxCocoa
 import RxRelay
 import SnapKit
 import Then
+import Toast_Swift
 
 final class PerfumeDetailViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDetailDataSection.Model>
@@ -111,7 +112,7 @@ extension PerfumeDetailViewController {
           cell.clickPerfume = { [weak self] perfume in
             self?.viewModel?.cellInput.perfumeDidTapEvent.accept(perfume)
           }
-          cell.updateUI(reviews: self.viewModel?.output.reviews)
+          cell.setViewModel(viewModel: self.viewModel)
           self.updatePageView = { oldValue, newValue in
             cell.updatePageView(oldValue: oldValue, newValue: newValue)
           }
@@ -197,9 +198,11 @@ extension PerfumeDetailViewController {
   private func bindViewModel() {
     let input = PerfumeDetailViewModel.Input(reviewButtonDidTapEvent: self.reviewButton.rx.tap.asObservable())
     self.viewModel?.transform(input: input, disposeBag: disposeBag)
+    
+    // TODO: 필드에 직접 접근하는게 맞는건지?
     let output = self.viewModel?.output
     self.bindContent(output: output)
-    
+    self.bindToast(output: output)
   }
   
   private func bindContent(output: PerfumeDetailViewModel.Output?) {
@@ -214,6 +217,16 @@ extension PerfumeDetailViewController {
         self?.updatePageView?(oldValue, newValue)
       })
       .disposed(by: self.disposeBag)
+  }
+  
+  private func bindToast(output: PerfumeDetailViewModel.Output?) {
+    output?.toast
+      .asDriver(onErrorJustReturn: ())
+      .drive(onNext: { [weak self] in
+        self?.view.makeToast("신고 되었습니다.")
+      })
+      .disposed(by: self.disposeBag)
+    
   }
   
   private func reload() {

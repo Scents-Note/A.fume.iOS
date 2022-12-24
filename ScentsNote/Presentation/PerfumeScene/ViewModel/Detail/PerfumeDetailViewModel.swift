@@ -29,17 +29,20 @@ final class PerfumeDetailViewModel {
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
     let reviews = BehaviorRelay<[ReviewInPerfumeDetail]>(value: [])
     let pageViewPosition = BehaviorRelay<Int>(value: 0)
+    let toast = PublishRelay<Void>()
   }
   
   private weak var coordinator: PerfumeDetailCoordinator?
   private let fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase
   private let fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase
+//  private let
   
   let input = ScrollInput()
   let cellInput = CellInput()
   let output = Output()
   
   private let perfumeIdx: Int
+  private let toast = PublishRelay<Void>()
   
   init(coordinator: PerfumeDetailCoordinator,
        fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase,
@@ -67,6 +70,7 @@ final class PerfumeDetailViewModel {
                     pageViewPosition: pageViewPosition,
                     perfumeDetail: perfumeDetail,
                     reviews: reviews,
+                    toast: self.toast,
                     disposeBag: disposeBag)
     
     self.fetchDatas(perfumeDetail: perfumeDetail, reviews: reviews, disposeBag: disposeBag)
@@ -104,6 +108,7 @@ final class PerfumeDetailViewModel {
                           pageViewPosition: PublishRelay<Int>,
                           perfumeDetail: BehaviorRelay<PerfumeDetail?>,
                           reviews: PublishRelay<[ReviewInPerfumeDetail]>,
+                          toast: PublishRelay<Void>,
                           disposeBag: DisposeBag) {
     
     pageViewPosition
@@ -129,6 +134,10 @@ final class PerfumeDetailViewModel {
       .bind(to: output.reviews)
       .disposed(by: disposeBag)
     
+    toast
+      .bind(to: output.toast)
+      .disposed(by: disposeBag)
+    
   }
   
   private func fetchDatas(perfumeDetail: BehaviorRelay<PerfumeDetail?>, reviews: PublishRelay<[ReviewInPerfumeDetail]>, disposeBag: DisposeBag) {
@@ -145,7 +154,13 @@ final class PerfumeDetailViewModel {
         Log(error)
       })
       .disposed(by: disposeBag)
-    
   }
   
+  func clickReport(reviewIdx: Int) {
+    self.coordinator?.showReviewReportPopupViewController(reviewIdx: reviewIdx)
+  }
+  
+  func showToast() {
+    self.toast.accept(())
+  }
 }

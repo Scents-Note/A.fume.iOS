@@ -1,23 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "btnManActive.png",
-      "scale" : "1x",
+      "filename" : "btnManActive.svg",
       "idiom" : "universal"
-    },
-    {
-      "scale" : "2x",
-      "filename" : "btnManActive@2x.png",
-      "idiom" : "universal"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "btnManActive@3x.png"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

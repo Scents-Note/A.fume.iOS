@@ -1,23 +1,12 @@
 {
   "images" : [
     {
-      "idiom" : "universal",
-      "filename" : "homeInactive.png",
-      "scale" : "1x"
-    },
-    {
-      "scale" : "2x",
-      "idiom" : "universal",
-      "filename" : "homeInactive@2x.png"
-    },
-    {
-      "filename" : "homeInactive@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "homeInactive.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
