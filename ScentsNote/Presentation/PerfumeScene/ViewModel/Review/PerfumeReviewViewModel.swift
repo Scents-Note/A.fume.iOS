@@ -386,7 +386,7 @@ final class PerfumeReviewViewModel {
   private func longevitiesUpdated(updatedIdx: Int, longevities: [Longevity]) -> [Longevity] {
     self.newReviewDetail.longevity = updatedIdx + 1
     return longevities.enumerated().map { idx, longevity in
-      Longevity(longevity: longevity.longevity, duration: longevity.duration, percent: longevity.percent, isAccent: updatedIdx == idx)
+      Longevity(longevity: longevity.longevity, duration: longevity.duration, percent: longevity.percent, isAccent: updatedIdx == idx, isEmpty: longevity.isEmpty)
     }
   }
   
@@ -426,7 +426,7 @@ final class PerfumeReviewViewModel {
   private func gendersUpdated(updatedIdx: Int, genders: [Gender]) -> [Gender] {
     self.newReviewDetail.gender = updatedIdx + 1
     return genders.enumerated().map { idx, gender in
-      Gender(gender: gender.gender, percent: gender.percent, isAccent: updatedIdx == idx)
+      Gender(gender: gender.gender, percent: gender.percent, color: gender.color, isAccent: updatedIdx == idx)
     }
   }
   

@@ -29,8 +29,14 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self] in
+      self.removeDependency(coordinator)
+    }
     coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
       self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
+    }
+    coordinator.runPerfumeReviewFlowWithReviewIdx = { [unowned self] reviewIdx in
+      self.runPerfumeReviewFlow(reviewIdx: reviewIdx)
     }
     coordinator.runPerfumeDetailFlow = { [unowned self] perfumeIdx in
       self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
@@ -55,6 +61,16 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
       self.removeDependency(coordinator)
     }
     coordinator.start(perfumeDetail: perfumeDetail)
+    self.addDependency(coordinator)
+  }
+  
+  func runPerfumeReviewFlow(reviewIdx: Int) {
+    let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(reviewIdx: reviewIdx)
     self.addDependency(coordinator)
   }
 }

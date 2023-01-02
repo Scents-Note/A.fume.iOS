@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E7734A1E5133B76FDDF14FD /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */; };
 		2851444100D02B64E1A0A233 /* Pods_ScentsNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */; };
 		4A083BE5291BBA9C0026A12C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A083BE4291BBA9C0026A12C /* NetworkError.swift */; };
 		4A083BE7291C93E60026A12C /* HomeViewController+CollectionViewSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A083BE6291C93E60026A12C /* HomeViewController+CollectionViewSection.swift */; };
@@ -34,6 +33,8 @@
 		4A3B041F29247426004F155D /* PerfumeDetailInfoSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B041E29247426004F155D /* PerfumeDetailInfoSection.swift */; };
 		4A3B04212924760F004F155D /* PerfumeDetailInfoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B04202924760F004F155D /* PerfumeDetailInfoItem.swift */; };
 		4A3B0426292502D1004F155D /* PerfumeDetailFooterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B0425292502D1004F155D /* PerfumeDetailFooterContentView.swift */; };
+		4A3DEF722962604800D5228A /* PerfumeDetailGenderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF712962604800D5228A /* PerfumeDetailGenderContentView.swift */; };
+		4A3DEF742962728600D5228A /* UpdateReviewLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF732962728600D5228A /* UpdateReviewLikeUseCase.swift */; };
 		4A428AC129432D5700B559C7 /* DefaultReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC029432D5700B559C7 /* DefaultReviewService.swift */; };
 		4A428AC329432DCC00B559C7 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC229432DCC00B559C7 /* ReviewRepository.swift */; };
 		4A428AC529432DF700B559C7 /* DefaultReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */; };
@@ -343,8 +344,11 @@
 		4AE938C029543318006A7DAF /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938BF29543318006A7DAF /* Report.swift */; };
 		4AF455BD2955B15A00E87A4E /* ReportReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455BC2955B15A00E87A4E /* ReportReviewUseCase.swift */; };
 		4AF455BF2955B1A000E87A4E /* ReviewReportRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455BE2955B1A000E87A4E /* ReviewReportRequestDTO.swift */; };
+		4AF455C429598B2700E87A4E /* PerfumeDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455C329598B2700E87A4E /* PerfumeDetailViewModelTests.swift */; };
+		4AF455C829598FDB00E87A4E /* MockPerfumeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455C729598FDB00E87A4E /* MockPerfumeRepository.swift */; };
 		4AF9FBE7291DE82300667BD7 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9FBE6291DE82300667BD7 /* Log.swift */; };
-		86FEC2F1709BCB9A42494D27 /* Pods_ScentsNote_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */; };
+		6C86FD673F00A764FE7F4E98 /* Pods_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */; };
+		8386930A65262E87EF5A32C1 /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -367,8 +371,11 @@
 /* Begin PBXFileReference section */
 		02ECD673E98C72A46A8B32D3 /* Pods-Scentsnote-ScentsnoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote-ScentsnoteUITests.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		08C74AC5C1D83FD46A833F85 /* Pods-Scentsnote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.debug.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.debug.xcconfig"; sourceTree = "<group>"; };
+		14C290035DC383158E473CED /* Pods-ScentsNoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteUITests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNoteUITests/Pods-ScentsNoteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1A82A9EC388AC1FD16853DFC /* Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-Scentsnote-ScentsnoteUITests/Pods-Scentsnote-ScentsnoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNoteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21E07E4F3006358C71EFB2FA /* Pods-ScentsNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote/Pods-ScentsNote.release.xcconfig"; sourceTree = "<group>"; };
+		47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A083BE4291BBA9C0026A12C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4A083BE6291C93E60026A12C /* HomeViewController+CollectionViewSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+CollectionViewSection.swift"; sourceTree = "<group>"; };
 		4A083BE8291CD1700026A12C /* RxCollectionViewSectionedNonAnimatedDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxCollectionViewSectionedNonAnimatedDataSource.swift; sourceTree = "<group>"; };
@@ -395,6 +402,8 @@
 		4A3B041E29247426004F155D /* PerfumeDetailInfoSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailInfoSection.swift; sourceTree = "<group>"; };
 		4A3B04202924760F004F155D /* PerfumeDetailInfoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailInfoItem.swift; sourceTree = "<group>"; };
 		4A3B0425292502D1004F155D /* PerfumeDetailFooterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailFooterContentView.swift; sourceTree = "<group>"; };
+		4A3DEF712962604800D5228A /* PerfumeDetailGenderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailGenderContentView.swift; sourceTree = "<group>"; };
+		4A3DEF732962728600D5228A /* UpdateReviewLikeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewLikeUseCase.swift; sourceTree = "<group>"; };
 		4A428AC029432D5700B559C7 /* DefaultReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewService.swift; sourceTree = "<group>"; };
 		4A428AC229432DCC00B559C7 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewRepository.swift; sourceTree = "<group>"; };
@@ -708,14 +717,17 @@
 		4AE938BF29543318006A7DAF /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
 		4AF455BC2955B15A00E87A4E /* ReportReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportReviewUseCase.swift; sourceTree = "<group>"; };
 		4AF455BE2955B1A000E87A4E /* ReviewReportRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportRequestDTO.swift; sourceTree = "<group>"; };
+		4AF455C329598B2700E87A4E /* PerfumeDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailViewModelTests.swift; sourceTree = "<group>"; };
+		4AF455C729598FDB00E87A4E /* MockPerfumeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPerfumeRepository.swift; sourceTree = "<group>"; };
 		4AF9FBE6291DE82300667BD7 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests.debug.xcconfig"; sourceTree = "<group>"; };
+		62D7AFA18E55044D2C124DCA /* Pods-ScentsNote-ScentsNoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteTests/Pods-ScentsNote-ScentsNoteTests.release.xcconfig"; sourceTree = "<group>"; };
+		6C728AD47948C2E4F989AFB1 /* Pods-ScentsNote-ScentsNoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteTests/Pods-ScentsNote-ScentsNoteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7D37C98027E5BF948F7A0652 /* Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNote_ScentsNoteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7812640266CA42AA29AA1E7 /* Pods-ScentsnoteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		D37B14197EF78A34619ABB26 /* Pods-ScentsNoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		D45F0457F552EBBA9504237B /* Pods-ScentsNote.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNote/Pods-ScentsNote.debug.xcconfig"; sourceTree = "<group>"; };
+		D5FC19504A916067C2FC9882 /* Pods-ScentsNoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNoteUITests/Pods-ScentsNoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		E8310DB383F15C0DABB20B95 /* Pods-ScentsNote-ScentsNoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.release.xcconfig"; sourceTree = "<group>"; };
@@ -735,7 +747,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0E7734A1E5133B76FDDF14FD /* Pods_ScentsNoteTests.framework in Frameworks */,
+				8386930A65262E87EF5A32C1 /* Pods_ScentsNoteTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -743,7 +755,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86FEC2F1709BCB9A42494D27 /* Pods_ScentsNote_ScentsNoteUITests.framework in Frameworks */,
+				6C86FD673F00A764FE7F4E98 /* Pods_ScentsNoteUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -755,8 +767,8 @@
 			children = (
 				4A4F6A742939CFA5006BBF0B /* WebKit.framework */,
 				4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */,
-				B3CA21D7BE8FD26F31C2DF5D /* Pods_ScentsNote_ScentsNoteUITests.framework */,
-				C5C3F68AC78C9603A8D81447 /* Pods_ScentsNoteTests.framework */,
+				47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */,
+				1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -768,6 +780,7 @@
 				4A63C484294334A8001B42C0 /* FetchReviewDetailUseCase.swift */,
 				4A63C486294334F9001B42C0 /* UpdateReviewUseCase.swift */,
 				4AF455BC2955B15A00E87A4E /* ReportReviewUseCase.swift */,
+				4A3DEF732962728600D5228A /* UpdateReviewLikeUseCase.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -858,6 +871,7 @@
 				4A4DF5E62928B2120066792D /* PerfumeDetailSeasonalContentView.swift */,
 				4A4DF5F929290C890066792D /* PerfumeDetailLongevityContentView.swift */,
 				4A4DF6062929BC890066792D /* PerfumeDetailSillageContentView.swift */,
+				4A3DEF712962604800D5228A /* PerfumeDetailGenderContentView.swift */,
 				4A4DF60A2929CEB80066792D /* PerfumeDetailSimilarityContentView.swift */,
 			);
 			path = ContentView;
@@ -1466,6 +1480,9 @@
 		4A8F89DD28F4F91A00ACE0F1 /* ScentsNoteTests */ = {
 			isa = PBXGroup;
 			children = (
+				4AF455CA2959952500E87A4E /* Domain */,
+				4AF455C529598FB800E87A4E /* Data */,
+				4AF455C129598ABD00E87A4E /* Presentation */,
 				4A8F89DE28F4F91A00ACE0F1 /* ScentsNoteTests.swift */,
 			);
 			path = ScentsNoteTests;
@@ -2130,6 +2147,45 @@
 			path = Series;
 			sourceTree = "<group>";
 		};
+		4AF455C129598ABD00E87A4E /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				4AF455C229598ACD00E87A4E /* PerfumeScene */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		4AF455C229598ACD00E87A4E /* PerfumeScene */ = {
+			isa = PBXGroup;
+			children = (
+				4AF455C329598B2700E87A4E /* PerfumeDetailViewModelTests.swift */,
+			);
+			path = PerfumeScene;
+			sourceTree = "<group>";
+		};
+		4AF455C529598FB800E87A4E /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				4AF455C629598FBE00E87A4E /* MockRepository */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		4AF455C629598FBE00E87A4E /* MockRepository */ = {
+			isa = PBXGroup;
+			children = (
+				4AF455C729598FDB00E87A4E /* MockPerfumeRepository.swift */,
+			);
+			path = MockRepository;
+			sourceTree = "<group>";
+		};
+		4AF455CA2959952500E87A4E /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
 		4AF9FBE8291E1E5B00667BD7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -2154,6 +2210,10 @@
 				E8310DB383F15C0DABB20B95 /* Pods-ScentsNote-ScentsNoteUITests.release.xcconfig */,
 				5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */,
 				D37B14197EF78A34619ABB26 /* Pods-ScentsNoteTests.release.xcconfig */,
+				6C728AD47948C2E4F989AFB1 /* Pods-ScentsNote-ScentsNoteTests.debug.xcconfig */,
+				62D7AFA18E55044D2C124DCA /* Pods-ScentsNote-ScentsNoteTests.release.xcconfig */,
+				D5FC19504A916067C2FC9882 /* Pods-ScentsNoteUITests.debug.xcconfig */,
+				14C290035DC383158E473CED /* Pods-ScentsNoteUITests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -2188,6 +2248,7 @@
 				4A8F89D628F4F91A00ACE0F1 /* Sources */,
 				4A8F89D728F4F91A00ACE0F1 /* Frameworks */,
 				4A8F89D828F4F91A00ACE0F1 /* Resources */,
+				07039D7302DF5AB4C3306FFB /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2296,6 +2357,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		07039D7302DF5AB4C3306FFB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScentsNoteTests/Pods-ScentsNoteTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		0DD4804CEDDAAA1562D8B45F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2372,7 +2450,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ScentsNote-ScentsNoteUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-ScentsNoteUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2385,15 +2463,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ScentsNoteUITests/Pods-ScentsNoteUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-ScentsNoteUITests/Pods-ScentsNoteUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ScentsNoteUITests/Pods-ScentsNoteUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2543,6 +2621,7 @@
 				4A4F6A2B29374C66006BBF0B /* PerfumeInMyPage.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4A4DF5FC292910B10066792D /* PerfumeDetailLongevityCell.swift in Sources */,
+				4A3DEF722962604800D5228A /* PerfumeDetailGenderContentView.swift in Sources */,
 				4A6F98E8293080F50085EBE7 /* FilterScrollView.swift in Sources */,
 				4A4F6A4D2938B626006BBF0B /* EditInformationCoordinator.swift in Sources */,
 				4A4DF5FA29290C890066792D /* PerfumeDetailLongevityContentView.swift in Sources */,
@@ -2657,6 +2736,7 @@
 				4A857440290BED4B00F86C3A /* SurveyCoordinator.swift in Sources */,
 				4AE938B42952F7F4006A7DAF /* FetchBrandsForFilterUseCase.swift in Sources */,
 				4A4F6A722939CD90006BBF0B /* WebViewController.swift in Sources */,
+				4A3DEF742962728600D5228A /* UpdateReviewLikeUseCase.swift in Sources */,
 				4A6F98BB292F8D8F0085EBE7 /* SearchFilterViewModel.swift in Sources */,
 				4A4C986A29278AF8004851DB /* PerfumeDetailAbundanceContentView.swift in Sources */,
 				4A6F98A8292F0A550085EBE7 /* SearchResultViewController.swift in Sources */,
@@ -2732,6 +2812,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AF455C829598FDB00E87A4E /* MockPerfumeRepository.swift in Sources */,
+				4AF455C429598B2700E87A4E /* PerfumeDetailViewModelTests.swift in Sources */,
 				4A8F89DF28F4F91A00ACE0F1 /* ScentsNoteTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2998,7 +3080,7 @@
 		};
 		4A8F89F528F4F91A00ACE0F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D37C98027E5BF948F7A0652 /* Pods-ScentsNote-ScentsNoteUITests.debug.xcconfig */;
+			baseConfigurationReference = D5FC19504A916067C2FC9882 /* Pods-ScentsNoteUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -3017,7 +3099,7 @@
 		};
 		4A8F89F628F4F91A00ACE0F1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E8310DB383F15C0DABB20B95 /* Pods-ScentsNote-ScentsNoteUITests.release.xcconfig */;
+			baseConfigurationReference = 14C290035DC383158E473CED /* Pods-ScentsNoteUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

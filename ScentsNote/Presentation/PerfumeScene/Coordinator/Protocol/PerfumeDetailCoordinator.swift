@@ -8,9 +8,12 @@
 import Foundation
 
 protocol PerfumeDetailCoordinator: AnyObject {
+  var finishFlow: (() -> Void)? { get set }
   var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)? { get set }
+  var runPerfumeReviewFlowWithReviewIdx: ((Int) -> Void)? { get set }
   var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
   
+  func runWebFlow(with url: String)
   func showReviewReportPopupViewController(reviewIdx: Int)
   func hideReviewReportPopupViewController()
   func hideReviewReportPopupViewController(hasToast: Bool)

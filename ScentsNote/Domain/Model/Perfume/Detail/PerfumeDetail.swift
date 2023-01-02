@@ -14,12 +14,12 @@ struct PerfumeDetail: Hashable {
   let abundanceRate: String
   let volumeAndPrice: [String]
   let imageUrls: [String]
-  let score: Float
+  let score: Double
   let seasonal: [Seasonal]
   let sillage: [Sillage]
   let longevity: [Longevity]
   let gender: [Gender]
-  let isLiked: Bool
+  var isLiked: Bool
   let Keywords: [String]
   let noteType: Int
   let ingredients: [Ingredient]

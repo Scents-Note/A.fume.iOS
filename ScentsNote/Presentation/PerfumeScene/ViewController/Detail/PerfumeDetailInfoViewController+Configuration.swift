@@ -68,11 +68,11 @@ extension PerfumeDetailInfoViewController {
     return contentConfiguration
   }
   
-//  func genderConfiguration(for cell: UICollectionViewListCell, with keywords: [String]) -> PerfumedetailGenderContentView.Configuration {
-//    var contentConfiguration = cell.keywordsConfiguration()
-//    contentConfiguration.keywords = keywords
-//    return contentConfiguration
-//  }
+  func genderConfiguration(for cell: UICollectionViewListCell, with genders: [Gender]) -> PerfumeDetailGenderContentView.Configuration {
+    var contentConfiguration = cell.genderConfiguration()
+    contentConfiguration.genders = genders
+    return contentConfiguration
+  }
   
   func similarityConfiguration(for cell: UICollectionViewListCell, with perfumes: [Perfume]?, with clickPerfume: ((Perfume) -> Void)?) -> PerfumeDetailSimilarityContentView.Configuration {
     var contentConfiguration = cell.similarityConfiguration()

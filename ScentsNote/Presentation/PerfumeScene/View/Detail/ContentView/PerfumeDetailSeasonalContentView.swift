@@ -28,8 +28,8 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
   let disposeBag = DisposeBag()
   var seasonals = BehaviorRelay<[Seasonal]>(value: [])
   
-  private lazy var seasonalPieChartView = SeasonalPieChartView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.seasonalCompositionalLayout()).then {
+  private lazy var seasonalPieChartView = SeasonalPieChartView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.seasonalCompositionalLayout()).then {
     $0.isScrollEnabled = false
     $0.isUserInteractionEnabled = false
     $0.register(PerfumeDetailSeasonalCell.self)
@@ -51,10 +51,6 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
     
     self.configureUI()
     self.bindUI()
-    //    self.collectionView.sizeToFit()
-    //    self.collectionView.systemLayoutSizeFitting(CGSize(width: 0, height: 180))
-    //    self.collectionView.
-    //    self.collectionView.setNeedsLayout()
   }
   
   required init?(coder: NSCoder) {
@@ -71,17 +67,18 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
   }
   
   func configureUI() {
+    self.backgroundColor = .white
     self.addSubview(self.seasonalPieChartView)
     self.seasonalPieChartView.snp.makeConstraints {
       $0.top.bottom.left.equalToSuperview()
-      $0.height.width.equalTo(200)
+      $0.height.width.equalTo(150)
     }
     
     self.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.right.bottom.equalToSuperview()
-      $0.width.equalTo(100)
       $0.height.equalTo(100)
+      $0.width.equalTo(112)
     }
   }
   

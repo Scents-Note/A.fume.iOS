@@ -29,21 +29,16 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
   let disposeBag = DisposeBag()
   var prices = BehaviorRelay<[String]>(value: [])
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
-    $0.isUserInteractionEnabled = false
-    $0.translatesAutoresizingMaskIntoConstraints = false
+  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
+    $0.backgroundColor = .white
     $0.register(PerfumeDetailCommonCell.self)
+    $0.isScrollEnabled = false
   }
   
   var configuration: UIContentConfiguration {
     didSet {
       configure(configuration: configuration)
     }
-  }
-  
-  
-  override var intrinsicContentSize: CGSize {
-    return CGSize(width: 0, height: prices.value.count * 20)
   }
   
   init(_ configuration: UIContentConfiguration) {
@@ -62,10 +57,14 @@ class PerfumeDetailPriceContentView: UIView, UIContentView {
     fatalError("init(coder:) has not been implemented")
   }
   
+  override var intrinsicContentSize: CGSize {
+    return CGSize(width: 0, height: prices.value.count * 20)
+  }
+  
   override func layoutSubviews() {
-    invalidateIntrinsicContentSize()
     super.layoutSubviews()
-    self.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
+    self.invalidateIntrinsicContentSize()
+//    self.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
   }
   
   func configure(configuration: UIContentConfiguration) {

@@ -53,8 +53,8 @@ final class PerfumeDetailSillageCell: UICollectionViewCell {
     self.contentView.addSubview(self.progressView)
     self.progressView.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.right.equalTo(self.percentLabel.snp.left).offset(-16)
-      $0.width.equalTo(200)
+      $0.left.equalToSuperview().offset(80)
+      $0.right.equalToSuperview().offset(-54)
       $0.height.equalTo(12)
     }
   }
@@ -64,7 +64,7 @@ final class PerfumeDetailSillageCell: UICollectionViewCell {
     self.sillageLabel.do {
       $0.text = sillage.sillage
       $0.textColor = isAccent ? .blackText : .darkGray7d
-      $0.font = .notoSans(type: isAccent ? .bold : .medium, size: 14)
+      $0.font = .systemFont(ofSize: 14, weight: isAccent ? .bold : .regular)
     }
     self.progressView.do {
       $0.progressTintColor = isAccent ? .SNDarkBeige1 : .SNLightBeige1
@@ -73,7 +73,7 @@ final class PerfumeDetailSillageCell: UICollectionViewCell {
     self.percentLabel.do {
       $0.text = String(sillage.percent) + "%"
       $0.textColor = isAccent ? .blackText : .darkGray7d
-      $0.font = .notoSans(type: isAccent ? .bold : .medium, size: 14)
+      $0.font = .systemFont(ofSize: 14, weight: isAccent ? .bold : .regular)
     }
   }
 }

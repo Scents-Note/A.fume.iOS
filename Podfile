@@ -21,10 +21,17 @@ target 'ScentsNote' do
 
   target 'ScentsNoteTests' do
     inherit! :search_paths
+    pod 'RxSwift'
+    pod 'RxRelay'
+    pod 'RxTest'
     # Pods for testing
   end
 
   target 'ScentsNoteUITests' do
+    inherit! :search_paths
+    pod 'RxSwift'
+    pod 'RxRelay'
+    pod 'RxTest'
     # Pods for testing
   end
 

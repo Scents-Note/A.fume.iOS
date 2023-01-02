@@ -28,4 +28,8 @@ final class DefaultReviewRepository: ReviewRepository {
     let requestDTO = ReviewReportRequestDTO(reason: reason)
     return self.reviewService.reportReview(reviewIdx: reviewIdx, reason: requestDTO)
   }
+  
+  func updateReviewLike(reviewIdx: Int) -> Observable<Bool> {
+    self.reviewService.updateReviewLike(reviewIdx: reviewIdx)
+  }
 }

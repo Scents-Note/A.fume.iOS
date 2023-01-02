@@ -18,7 +18,9 @@ final class PerfumeDetailKeywordCell: UICollectionViewCell {
   static let height: CGFloat = 42
   
   private let keywordLabel = UILabel().then {
-    $0.font = .notoSans(type: .regular, size: 15)
+    $0.textAlignment = .center
+    $0.textColor = .white
+    $0.font = .notoSans(type: .medium, size: 15)
   }
   
   // MARK: - Life Cycle
@@ -34,15 +36,17 @@ final class PerfumeDetailKeywordCell: UICollectionViewCell {
    
   // MARK: Configure
   func configureUI(){
+    self.contentView.layer.cornerRadius = 15
+    self.contentView.backgroundColor = .pointBeige
+    
     self.contentView.addSubview(self.keywordLabel)
     self.keywordLabel.snp.makeConstraints {
-      $0.top.bottom.equalToSuperview()
-      $0.left.right.equalToSuperview().inset(18)
-      $0.height.equalTo(42)
+      $0.edges.equalToSuperview()
+      $0.height.equalTo(30)
     }
   }
     
   func updateUI(keyword: String) {
-    self.keywordLabel.text = keyword
+    self.keywordLabel.text = "#\(keyword)"
   }
 }

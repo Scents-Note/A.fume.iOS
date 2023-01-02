@@ -36,5 +36,14 @@ extension UIImage {
   static let btnManActive = UIImage(named: "btnManActive")
   static let btnWomanActive = UIImage(named: "btnWomanActive")
   
+  // MARK: - Tab
   static let searchInactive = UIImage(named: "searchInactive")
+  
+  // MARK: - Star
+  static let starFilled = UIImage(named: "starFilled")
+  static let starUnfilled = UIImage(named: "starUnfilled")
+  
+  // MARK: - Perfume Detail
+  static let pen = UIImage(named: "pen")
+  static let quotes = UIImage(named: "icQuotes")
 }

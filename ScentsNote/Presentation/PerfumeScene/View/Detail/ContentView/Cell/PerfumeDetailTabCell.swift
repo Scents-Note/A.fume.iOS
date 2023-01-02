@@ -10,19 +10,26 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+
+
 final class PerfumeDetailTabCell: UICollectionViewCell {
+  
+  enum TabType:Int, Equatable {
+    case info
+    case note
+  }
   
   var disposeBag = DisposeBag()
   
   private let infoButton = UIButton().then {
     $0.setTitle("향수 정보", for: .normal)
-    $0.setTitleColor(.darkGray7d, for: .normal)
-    $0.titleLabel?.font = .notoSans(type: .bold, size: 18)
+    $0.setTitleColor(.blackText, for: .normal)
+    $0.titleLabel?.font = .notoSans(type: .bold, size: 16)
   }
   private let noteButton = UIButton().then {
     $0.setTitle("시향 노트", for: .normal)
     $0.setTitleColor(.darkGray7d, for: .normal)
-    $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
+    $0.titleLabel?.font = .notoSans(type: .regular, size: 16)
   }
   
   private let highlightView = UIView().then {
@@ -53,6 +60,14 @@ final class PerfumeDetailTabCell: UICollectionViewCell {
       $0.left.right.equalToSuperview()
       $0.height.equalTo(48)
     }
+  }
+  
+  func updateUI(type: PerfumeDetailTabCell.TabType) {
+    self.highlightView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * CGFloat(type.rawValue) / 2, y: 0)
+    self.infoButton.titleLabel?.font = .notoSans(type: type == .info ? .bold : .regular, size: 16)
+    self.infoButton.setTitleColor(type == .info ? .blackText : .darkGray7d, for: .normal)
+    self.noteButton.titleLabel?.font = .notoSans(type: type == .info ? .regular : .bold, size: 16)
+    self.noteButton.setTitleColor(type == .info ? .darkGray7d : .blackText, for: .normal)
   }
   
   func clickInfoButton() -> Observable<Void> {

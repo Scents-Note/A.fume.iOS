@@ -23,4 +23,8 @@ final class DefaultReviewService: ScentsNoteService, ReviewService {
     requestPlainObject(.reportReview(reviewIdx: reviewIdx, reason: reason))
   }
   
+  func updateReviewLike(reviewIdx: Int) -> Observable<Bool> {
+    requestObject(.updateReviewLike(reviewIdx: reviewIdx))
+  }
+  
 }

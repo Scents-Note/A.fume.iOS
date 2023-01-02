@@ -88,7 +88,6 @@ class KeywordBottomSheetViewController: UIViewController {
       $0.height.equalTo(self.bottomHeight + self.view.safeAreaInsets.bottom)
     }
     
-    //    self.bottomSheetView.translatesAutoresizingMaskIntoConstraints = false
     self.bottomSheetView.addSubview(self.titleLabel)
     self.titleLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(31)

@@ -9,26 +9,38 @@ import UIKit
 
 final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoordinator {
 
+  var finishFlow: (() -> Void)?
   var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)?
+  var runPerfumeReviewFlowWithReviewIdx: ((Int) -> Void)?
   var runPerfumeDetailFlow: ((Int) -> Void)?
   
-  var perfumeDetailViewController: PerfumeDetailViewController
-  
   override init(_ navigationController: UINavigationController) {
-    self.perfumeDetailViewController = PerfumeDetailViewController()
+    
     super.init(navigationController)
   }
   
   func start(perfumeIdx: Int) {
-    
-    self.perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
+    let perfumeDetailViewController = PerfumeDetailViewController()
+    perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
       coordinator: self,
       fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
       fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
+      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
+      updateReviewLikeUseCase: UpdateReviewLikeUseCase(reviewRepository: DefaultReviewRepository(reviewService: DefaultReviewService.shared)),
       perfumeIdx: perfumeIdx
     )
     perfumeDetailViewController.hidesBottomBarWhenPushed = true
-    self.navigationController.pushViewController(self.perfumeDetailViewController, animated: true)
+    self.navigationController.pushViewController(perfumeDetailViewController, animated: true)
+  }
+  
+  func runWebFlow(with url: String) {
+    let coordinator = DefaultWebCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(with: url)
+    self.addDependency(coordinator)
   }
   
   func showReviewReportPopupViewController(reviewIdx: Int) {

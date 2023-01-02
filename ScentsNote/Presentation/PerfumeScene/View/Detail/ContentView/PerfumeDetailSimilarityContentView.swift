@@ -45,7 +45,7 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
   
   
   override var intrinsicContentSize: CGSize {
-    return CGSize(width: 0, height: HomePopularityCell.height)
+    return CGSize(width: 0, height: 250)
   }
   
   init(_ configuration: UIContentConfiguration) {
@@ -81,6 +81,7 @@ class PerfumeDetailSimilarityContentView: UIView, UIContentView {
         cellIdentifier: "HomePopularityCell", cellType: HomePopularityCell.self
       )) { _, perfume, cell in
         cell.updateUI(perfume: perfume)
+        cell.hideHeart()
       }
       .disposed(by: self.disposeBag)
     

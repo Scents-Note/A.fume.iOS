@@ -46,7 +46,7 @@ final class PerfumeDetailSeasonalCell: UICollectionViewCell {
     self.contentView.addSubview(self.seasonLabel)
     self.seasonLabel.snp.makeConstraints {
       $0.centerY.equalTo(self.colorView)
-      $0.left.equalTo(self.colorView.snp.right)
+      $0.left.equalTo(self.colorView.snp.right).offset(12)
     }
     
     self.contentView.addSubview(self.percentLabel)
@@ -61,8 +61,26 @@ final class PerfumeDetailSeasonalCell: UICollectionViewCell {
     self.seasonLabel.do {
       $0.text = seasonal.season
       $0.textColor = seasonal.isAccent ? .blackText : .darkGray7d
-      $0.font = .notoSans(type: seasonal.isAccent ? .bold : .regular, size: 14)
+      $0.font = .systemFont(ofSize: 14, weight: seasonal.isAccent ? .bold : .regular)
     }
-    self.percentLabel.text = String(seasonal.percent) + "%"
+    self.percentLabel.do {
+      $0.text = String(seasonal.percent) + "%"
+      $0.textColor = seasonal.isAccent ? .blackText : .darkGray7d
+      $0.font = .systemFont(ofSize: 14, weight: seasonal.isAccent ? .bold : .regular)
+    }
+  }
+  
+  func updateUI(gender: Gender) {
+    self.colorView.backgroundColor = gender.color
+    self.seasonLabel.do {
+      $0.text = gender.gender
+      $0.textColor = gender.isAccent ? .blackText : .darkGray7d
+      $0.font = .systemFont(ofSize: 14, weight: gender.isAccent ? .bold : .regular)
+    }
+    self.percentLabel.do {
+      $0.text = String(gender.percent) + "%"
+      $0.textColor = gender.isAccent ? .blackText : .darkGray7d
+      $0.font = .systemFont(ofSize: 14, weight: gender.isAccent ? .bold : .regular)
+    }
   }
 }

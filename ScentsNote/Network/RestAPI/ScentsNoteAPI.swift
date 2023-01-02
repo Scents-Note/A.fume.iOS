@@ -45,6 +45,7 @@ enum ScentsNoteAPI {
   case fetchReviewDetail(reviewIdx: Int)
   case updateReview(reviewIdx: Int, reviewDetail: ReviewDetailRequestDTO)
   case reportReview(reviewIdx: Int, reason: ReviewReportRequestDTO)
+  case updateReviewLike(reviewIdx: Int)
 
 }
 
@@ -60,7 +61,7 @@ extension ScentsNoteAPI: TargetType {
       base += "/perfume"
     case .fetchSeriesForFilter, .fetchBrandForFilter:
       base += "/filter"
-    case .fetchReviewDetail, .updateReview, .reportReview:
+    case .fetchReviewDetail, .updateReview, .reportReview, .updateReviewLike:
       base += "/review"
     default:
       break
@@ -134,6 +135,8 @@ extension ScentsNoteAPI: TargetType {
       return "/\(reviewIdx)"
     case .reportReview(let reviewIdx, _):
       return "/\(reviewIdx)/report"
+    case .updateReviewLike(let reviewIdx):
+      return "/\(reviewIdx)/like"
       
       // MARK: - User
     case .fetchPerfumesInMyPage(let userIdx):
@@ -147,7 +150,7 @@ extension ScentsNoteAPI: TargetType {
   
   var method: Moya.Method {
     switch self {
-    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike, .addReview, .reportReview:
+    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike, .addReview, .reportReview, .updateReviewLike:
       return .post
     case .updateUserInfo, .changePassword, .updateReview:
       return .put

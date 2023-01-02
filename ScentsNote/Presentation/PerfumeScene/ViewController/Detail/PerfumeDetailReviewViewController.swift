@@ -16,7 +16,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
   
   // MARK: - Output
   var onUpdateHeight: ((CGFloat) -> Void)?
-//  var reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?
+  //  var reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?
   
   // MARK: - Vars & Lets
   var viewModel: PerfumeDetailViewModel?
@@ -25,7 +25,15 @@ final class PerfumeDetailReviewViewController: UIViewController {
   var height: CGFloat = 0
   
   // MARK: - UI
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewLayout).then {
+  private let emptyLabel = UILabel().then {
+    $0.textAlignment = .center
+    $0.text = "아직 등록된 시향노트가 없어요 :)\n이 향수의 첫번째 시향 노트를 작성해보세요!"
+    $0.textColor = .lightGray185
+    $0.numberOfLines = 2
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
+  }
+  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewLayout).then {
+    $0.backgroundColor = .lightGray
     $0.isScrollEnabled = false
     $0.register(ReviewCell.self)
   }
@@ -44,12 +52,19 @@ final class PerfumeDetailReviewViewController: UIViewController {
   
   // MARK: - Configure UI
   private func configureUI() {
+    self.view.backgroundColor = .lightGray
+    self.view.addSubview(self.emptyLabel)
+    self.emptyLabel.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
+    
     self.view.addSubview(self.collectionView)
+    self.collectionView.delegate = self
     self.collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
   }
-
+  
   private func bindViewModel() {
     rx.methodInvoked(#selector(viewWillLayoutSubviews))
       .take(2)
@@ -60,6 +75,14 @@ final class PerfumeDetailReviewViewController: UIViewController {
       .disposed(by: self.disposeBag)
     
     self.viewModel?.output.reviews
+      .asDriver()
+      .drive(onNext: { [weak self] reviews in
+        Log(reviews.count)
+        self?.updateUI(count: reviews.count)
+      })
+      .disposed(by: self.disposeBag)
+
+    self.viewModel?.output.reviews
       .bind(to: self.collectionView.rx.items(
         cellIdentifier: "ReviewCell", cellType: ReviewCell.self
       )) { _, review, cell in
@@ -69,22 +92,39 @@ final class PerfumeDetailReviewViewController: UIViewController {
           .subscribe(onNext: { [weak self] in
             self?.viewModel?.clickReport(reviewIdx: review.idx)
           })
-          .disposed(by: self.disposeBag)
+          .disposed(by: cell.disposeBag)
+        cell.clickHeart()
+          .subscribe(onNext: { [weak self] in
+            self?.viewModel?.clickHeart(reviewIdx: review.idx)
+          })
+          .disposed(by: cell.disposeBag)
       }
       .disposed(by: self.disposeBag)
   }
-  
-//  func bindOutput(reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?) {
-//    self.reviews = reviews
-//  }
   
   private func updateViewHeight() {
     guard isLoaded else { return }
     let height = self.collectionView.contentSize.height
     if height == 0 {
-      self.onUpdateHeight?(400)
+      self.onUpdateHeight?(200)
     } else {
       self.onUpdateHeight?(self.collectionView.contentSize.height)
+    }
+  }
+  
+  private func updateUI(count: Int) {
+    self.collectionView.isHidden = count == 0
+    self.emptyLabel.isHidden = count != 0
+  }
+}
+
+extension PerfumeDetailReviewViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    if cell.frame.size.height == 100 {
+      DispatchQueue.main.async {
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.layoutIfNeeded()
+      }
     }
   }
 }

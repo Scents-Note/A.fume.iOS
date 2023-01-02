@@ -16,7 +16,6 @@ class PerfumeDetailStoryContentView: UIView, UIContentView {
     }
     
     var text: String? = ""
-    var onChange: (Date)->Void = { _ in }
     
     func makeContentView() -> UIView & UIContentView {
       return PerfumeDetailStoryContentView(self)
@@ -24,8 +23,9 @@ class PerfumeDetailStoryContentView: UIView, UIContentView {
   }
   
   let contentLabel = UILabel().then {
-    $0.font = .notoSans(type: .regular, size: 14)
-    $0.textColor = .blackText
+    $0.backgroundColor = .white
+    $0.font = .notoSans(type: .regular, size: 15)
+    $0.textColor = .black42
     $0.numberOfLines = 0
   }
   var configuration: UIContentConfiguration {
@@ -41,7 +41,6 @@ class PerfumeDetailStoryContentView: UIView, UIContentView {
     self.addSubview(self.contentLabel)
     self.contentLabel.snp.makeConstraints {
       $0.edges.equalToSuperview()
-//      $0.height.equalTo(200)
     }
   }
   
@@ -51,6 +50,11 @@ class PerfumeDetailStoryContentView: UIView, UIContentView {
   
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
+    let story = configuration.text
+    if story?.isEmpty == true {
+      self.contentLabel.text = "정보를 준비 중입니다."
+      self.contentLabel.textColor = .lightGray185
+    }
     contentLabel.text = configuration.text
   }
 
