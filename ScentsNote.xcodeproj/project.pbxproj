@@ -39,6 +39,7 @@
 		4A3DEF792963E11200D5228A /* LabelPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */; };
 		4A3DEF7B2963E87200D5228A /* DeleteReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */; };
 		4A3DEF7D2963F6BA00D5228A /* MyPageReviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF7C2963F6BA00D5228A /* MyPageReviewHeaderView.swift */; };
+		4A3DEF7F2964340800D5228A /* FetchUserInfoForHomeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF7E2964340800D5228A /* FetchUserInfoForHomeUseCase.swift */; };
 		4A428AC129432D5700B559C7 /* DefaultReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC029432D5700B559C7 /* DefaultReviewService.swift */; };
 		4A428AC329432DCC00B559C7 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC229432DCC00B559C7 /* ReviewRepository.swift */; };
 		4A428AC529432DF700B559C7 /* DefaultReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */; };
@@ -412,6 +413,7 @@
 		4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPopupViewModel.swift; sourceTree = "<group>"; };
 		4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReviewUseCase.swift; sourceTree = "<group>"; };
 		4A3DEF7C2963F6BA00D5228A /* MyPageReviewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageReviewHeaderView.swift; sourceTree = "<group>"; };
+		4A3DEF7E2964340800D5228A /* FetchUserInfoForHomeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserInfoForHomeUseCase.swift; sourceTree = "<group>"; };
 		4A428AC029432D5700B559C7 /* DefaultReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewService.swift; sourceTree = "<group>"; };
 		4A428AC229432DCC00B559C7 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewRepository.swift; sourceTree = "<group>"; };
@@ -1091,6 +1093,7 @@
 				4AE9389D2951C368006A7DAF /* RegisterSurveyUseCase.swift */,
 				4AE938B52953DEE5006A7DAF /* LogoutUseCase.swift */,
 				4AE938B72953E0AD006A7DAF /* FetchUserDefaultUseCase.swift */,
+				4A3DEF7E2964340800D5228A /* FetchUserInfoForHomeUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2634,6 +2637,7 @@
 				4A6F98CB293059700085EBE7 /* FilterIngredientResponseDTO.swift in Sources */,
 				4A4F6A022934C6AC006BBF0B /* DefaultKeywordRepository.swift in Sources */,
 				4A4F6A2B29374C66006BBF0B /* PerfumeInMyPage.swift in Sources */,
+				4A3DEF7F2964340800D5228A /* FetchUserInfoForHomeUseCase.swift in Sources */,
 				4AAFE7E228FBC83800EA6FB4 /* DefaultApplicationCoordinator.swift in Sources */,
 				4A4DF5FC292910B10066792D /* PerfumeDetailLongevityCell.swift in Sources */,
 				4A3DEF722962604800D5228A /* PerfumeDetailGenderContentView.swift in Sources */,

@@ -93,6 +93,7 @@ final class HomeViewController: UIViewController {
   
   private func configureCollectionView() -> HomeViewModel.CellInput {
     // MARK: - Cell Input
+    
     /// Cell 클릭
     let perfumeClicked = PublishRelay<Perfume>()
     let moreClicked = PublishRelay<Bool>()
@@ -160,14 +161,15 @@ final class HomeViewController: UIViewController {
       if kind == UICollectionView.elementKindSectionHeader {
         let section = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
         switch self.dataSource.sectionModels[indexPath.section].model {
-        case .recommendation:
-          section.updateUI(title: "000 님을 위한\n향수 추천", content: "어퓸을 사용할수록\n더 잘 맞는 향수를 보여드려요")
-        case .popularity:
-          section.updateUI(title: "20대 여성이\n많이 찾는 향수", content: "00 님 연령대 분들에게 인기 많은 향수 입니다.")
-        case .recent:
-          section.updateUI(title: "최근 찾아본 향수", content: nil)
-        case .new:
-          section.updateUI(title: "새로\n등록된 향수", content: "기대하세요.  새로운 향수가 업데이트 됩니다.")
+          
+        case let .recommendation(data):
+          section.updateUI(title: data.title, content: data.content)
+        case let .popularity(data):
+          section.updateUI(title: data.title, content: data.content)
+        case let .recent(data):
+          section.updateUI(title: data.title, content: nil)
+        case let .new(data):
+          section.updateUI(title: data.title, content: data.content)
         default:
           break
         }
