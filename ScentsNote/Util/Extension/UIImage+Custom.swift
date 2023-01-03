@@ -33,6 +33,9 @@ extension UIImage {
   static let checkWhite = UIImage(named: "icCheckWhite")
   static let checkGray = UIImage(named: "icCheckGray")
 
+  // MARK: - Home
+  static let logoHome = UIImage(named: "logoHome")
+  
   // MARK: - My Page
   static let bgMypageReview = UIImage(named: "bgMypageReview")
   static let emptyMypageReview = UIImage(named: "emptyMypageReview")

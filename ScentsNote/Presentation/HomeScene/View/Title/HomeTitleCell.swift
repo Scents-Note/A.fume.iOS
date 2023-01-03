@@ -10,10 +10,8 @@ import SnapKit
 import Then
 
 final class HomeTitleCell: UICollectionViewCell {
-  private let titleLabel = UILabel().then {
-    $0.text = "Scents Note"
-    $0.textColor = .blackText
-    $0.font = .nanumMyeongjo(type: .bold, size: 30)
+  private let logoImage = UIImageView().then {
+    $0.image = .logoHome
   }
   
   override init(frame: CGRect) {
@@ -29,9 +27,9 @@ final class HomeTitleCell: UICollectionViewCell {
   private func configureUI() {
     self.backgroundColor = .white
     
-    self.contentView.addSubview(self.titleLabel)
-    self.titleLabel.snp.makeConstraints {
-      $0.top.bottom.equalToSuperview()
+    self.contentView.addSubview(self.logoImage)
+    self.logoImage.snp.makeConstraints {
+      $0.top.equalToSuperview()
       $0.left.equalToSuperview().offset(20)
     }
   }

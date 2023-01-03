@@ -109,6 +109,9 @@ final class HomeViewController: UIViewController {
           return cell
         case .recommendation(let perfumes):
           let cell = self.collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
+          cell.clickPerfume = { perfume in
+            perfumeClicked.accept(perfume)
+          }
           cell.updateUI(perfumes: perfumes)
           return cell
         case .popularity(let perfume):

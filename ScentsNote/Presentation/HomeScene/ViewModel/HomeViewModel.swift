@@ -36,7 +36,8 @@ final class HomeViewModel {
   private let fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase
   private let fetchPerfumesNewUseCase: FetchPerfumesNewUseCase
   
-  private var isLoggedIn = true
+  private var isLoggedIn: Bool?
+  private var oldIsLoggedIn: Bool?
   private var birth = 1990
   private var gender = "남"
   private var nickname = ""
@@ -226,13 +227,17 @@ final class HomeViewModel {
       .subscribe(onNext: { [weak self] in
         self?.setUserInfo()
         
-        self?.fetchPerfumesRecommendedUseCase.execute()
-          .subscribe { perfumes in
-            perfumesRecommended.accept(perfumes)
-          } onError: { error in
-            Log(error)
-          }
-          .disposed(by: disposeBag)
+        /// 로그인 로그아웃 할때만 recommendation 바뀌게. 안그러면 로그아웃 상태에서 willAppear 시에 계속 바뀜.
+        if self?.oldIsLoggedIn != self?.isLoggedIn {
+          self?.fetchPerfumesRecommendedUseCase.execute()
+            .subscribe { perfumes in
+              self?.oldIsLoggedIn = self?.isLoggedIn
+              perfumesRecommended.accept(perfumes)
+            } onError: { error in
+              Log(error)
+            }
+            .disposed(by: disposeBag)
+        }
         
         self?.fetchPerfumesPopularUseCase.execute()
           .subscribe { perfumes in

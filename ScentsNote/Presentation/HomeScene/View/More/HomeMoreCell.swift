@@ -19,9 +19,9 @@ final class HomeMoreCell: UICollectionViewCell {
     $0.setTitle("더 보기", for: .normal)
     $0.setTitleColor(.darkGray7d, for: .normal)
     $0.backgroundColor = .white
-    $0.titleLabel?.font = .notoSans(type: .medium, size: 15)
+    $0.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
     $0.tintColor = .darkGray7d
-    $0.setImage(.btnClose, for: .normal)
+    $0.setImage(.arrowRight, for: .normal)
     $0.semanticContentAttribute = .forceRightToLeft
     $0.layer.borderWidth = 1
     $0.layer.borderColor = UIColor.grayCd.cgColor
