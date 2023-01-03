@@ -22,6 +22,7 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
                                                userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     
     self.myPageViewController.viewModel = MyPageViewModel(coordinator: self,
+                                                          fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
                                                           fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase(userRepository: userRepository),
                                                           fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase(userRepository: userRepository))
     

@@ -38,6 +38,7 @@
 		4A3DEF772963E0F600D5228A /* LabelPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF762963E0F600D5228A /* LabelPopupViewController.swift */; };
 		4A3DEF792963E11200D5228A /* LabelPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */; };
 		4A3DEF7B2963E87200D5228A /* DeleteReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */; };
+		4A3DEF7D2963F6BA00D5228A /* MyPageReviewHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF7C2963F6BA00D5228A /* MyPageReviewHeaderView.swift */; };
 		4A428AC129432D5700B559C7 /* DefaultReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC029432D5700B559C7 /* DefaultReviewService.swift */; };
 		4A428AC329432DCC00B559C7 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC229432DCC00B559C7 /* ReviewRepository.swift */; };
 		4A428AC529432DF700B559C7 /* DefaultReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */; };
@@ -410,6 +411,7 @@
 		4A3DEF762963E0F600D5228A /* LabelPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPopupViewController.swift; sourceTree = "<group>"; };
 		4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPopupViewModel.swift; sourceTree = "<group>"; };
 		4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReviewUseCase.swift; sourceTree = "<group>"; };
+		4A3DEF7C2963F6BA00D5228A /* MyPageReviewHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageReviewHeaderView.swift; sourceTree = "<group>"; };
 		4A428AC029432D5700B559C7 /* DefaultReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewService.swift; sourceTree = "<group>"; };
 		4A428AC229432DCC00B559C7 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewRepository.swift; sourceTree = "<group>"; };
@@ -1066,6 +1068,7 @@
 				4A4F6A332938420B006BBF0B /* MenuCell.swift */,
 				4A44AB6B293EE4C300F42B0D /* MyPageReviewGroupCell.swift */,
 				4A44AB6D293EEAAE00F42B0D /* MyPageReviewCell.swift */,
+				4A3DEF7C2963F6BA00D5228A /* MyPageReviewHeaderView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -2514,6 +2517,7 @@
 				4AAFE81728FC035D00EA6FB4 /* LoginViewController.swift in Sources */,
 				4A083BE7291C93E60026A12C /* HomeViewController+CollectionViewSection.swift in Sources */,
 				4A4C986329277008004851DB /* PerfumeDetailStoryContentView.swift in Sources */,
+				4A3DEF7D2963F6BA00D5228A /* MyPageReviewHeaderView.swift in Sources */,
 				4AAFE7E928FBCF2700EA6FB4 /* OnboardingViewModel.swift in Sources */,
 				4A4C985129273A53004851DB /* PerfumeDetailTitleCell.swift in Sources */,
 				4AE938A62952F244006A7DAF /* FetchPerfumesRecommendedUseCase.swift in Sources */,

@@ -37,6 +37,7 @@ final class MyPageScrollView: UIScrollView {
   
   private func configureUI() {
     self.isPagingEnabled = true
+    self.showsHorizontalScrollIndicator = false
     
     self.addSubview(self.myReviewView)
     self.addSubview(self.myWishView)
