@@ -28,9 +28,13 @@ extension UIImage {
   static let btnBack = UIImage(systemName: "btnBack")
   static let btnNext = UIImage(named: "btnNext")
   static let btnClose = UIImage(named: "btnClose")
+  static let arrowRight = UIImage(named: "arrowRight")
+  static let checkBeige = UIImage(named: "icCheckBeige")
+  static let checkWhite = UIImage(named: "icCheckWhite")
+  static let checkGray = UIImage(named: "icCheckGray")
+
   
   // MARK: - Sign Up
-  static let check = UIImage(named: "icCheck")
   static let btnManInactive = UIImage(named: "btnManInactive")
   static let btnWomanInactive = UIImage(named: "btnWomanInactive")
   static let btnManActive = UIImage(named: "btnManActive")

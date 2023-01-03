@@ -28,7 +28,7 @@ class PerfumeDetailGenderContentView: UIView, UIContentView {
   let disposeBag = DisposeBag()
   var genders = BehaviorRelay<[Gender]>(value: [])
   
-  private lazy var seasonalPieChartView = SeasonalPieChartView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
+  private lazy var seasonalPieChartView = SeasonalPieChartView(frame: CGRect(x: 0, y: 0, width: 150, height: 150)).then { $0.type = .gender}
   private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.seasonalCompositionalLayout()).then {
     $0.isScrollEnabled = false
     $0.isUserInteractionEnabled = false

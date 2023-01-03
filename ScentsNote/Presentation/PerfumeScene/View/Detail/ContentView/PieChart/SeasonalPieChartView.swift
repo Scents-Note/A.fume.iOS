@@ -10,6 +10,29 @@ import SnapKit
 
 class SeasonalPieChartView: UIView {
   
+  enum ChartType {
+    case seasonal
+    case gender
+  }
+  
+  private var colors: [UIColor] = []
+  private var labels: [String] = []
+  
+  var type: ChartType? {
+    didSet {
+      switch type {
+      case .seasonal:
+        colors = [.SNDarkBeige1, .SNLightBeige1, .SNLightBeige2, .SNDarkBeige2]
+        labels = ["봄", "여름", "가을", "겨울"]
+      case .gender:
+        colors = [.SNDarkBeige1, .SNDarkBeige1, .pointBeige, .SNLightBeige239]
+        labels = ["남성", "여성", "중성"]
+      default:
+        break
+      }
+    }
+  }
+  
   func drawPieChart(degrees: [CGFloat]) {
     if isEmpty(degrees: degrees) {
       self.drawEmpty()
@@ -40,14 +63,12 @@ class SeasonalPieChartView: UIView {
   
   private func drawColor(degrees: [CGFloat]) {
     let center = CGPoint(x: self.center.x, y: self.center.y)
-    let seasonalColors: [UIColor] = [.SNDarkBeige1, .SNLightBeige1, .SNLightBeige2, .SNDarkBeige2]
-    
     let total: CGFloat = 360
     
     var startAngle: CGFloat = (-(.pi) / 2)
     var endAngle: CGFloat = 0.0
     
-    degrees.enumerated().forEach { idx, value in
+    degrees.enumerated().forEach { [weak self] idx, value in
       endAngle = (value / total) * (.pi * 2)
       
       let path = UIBezierPath()
@@ -60,8 +81,8 @@ class SeasonalPieChartView: UIView {
       
       let fillLayer = CAShapeLayer()
       fillLayer.path = path.cgPath
-      fillLayer.fillColor = seasonalColors[idx].cgColor
-      self.layer.addSublayer(fillLayer)
+      fillLayer.fillColor = self?.colors[idx].cgColor
+      self?.layer.addSublayer(fillLayer)
       
       startAngle += endAngle
     }
@@ -70,7 +91,6 @@ class SeasonalPieChartView: UIView {
   
   private func drawLabel(degrees: [CGFloat]) {
     var current: CGFloat = -90
-    let seasons: [String] = ["봄", "여름", "가을", "겨울"]
     
     let idx = hasAProperty(degrees: degrees)
     /// 하나의 값만 100 일때
@@ -81,7 +101,7 @@ class SeasonalPieChartView: UIView {
       label.textColor = .white
       label.textAlignment = .center
       self.addSubview(label)
-      label.text = seasons[idx]
+      label.text = labels[idx]
       label.snp.makeConstraints {
         $0.centerX.equalToSuperview().offset(center.x - 75)
         $0.centerY.equalToSuperview().offset(center.y - 75)
@@ -101,7 +121,7 @@ class SeasonalPieChartView: UIView {
       label.textAlignment = .center
       
       self.addSubview(label)
-      label.text = seasons[idx]
+      label.text = labels[idx]
       label.translatesAutoresizingMaskIntoConstraints = false
       label.snp.makeConstraints {
         $0.centerX.equalToSuperview().offset(labelCenter.x - center.x)
@@ -144,7 +164,7 @@ class SeasonalPieChartView: UIView {
   func hasAProperty(degrees: [CGFloat]) -> Int {
     var cnt = 0
     var idx = 0
-    for i in 0..<4 {
+    for i in 0..<degrees.count {
       if degrees[i] != CGFloat(0) {
         cnt += 1
         idx = i

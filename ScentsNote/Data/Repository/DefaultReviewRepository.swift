@@ -21,7 +21,7 @@ final class DefaultReviewRepository: ReviewRepository {
   }
   
   func updateReview(reviewDetail: ReviewDetail) -> Observable<String> {
-    self.reviewService.updateReview(reviewIdx: reviewDetail.reviewIdx!, reviewDetail: reviewDetail.toEntity())
+    self.reviewService.updateReview(reviewIdx: reviewDetail.reviewIdx, reviewDetail: reviewDetail.toEntity())
   }
   
   func reportReview(reviewIdx: Int, reason: String) -> Observable<String> {
@@ -31,5 +31,9 @@ final class DefaultReviewRepository: ReviewRepository {
   
   func updateReviewLike(reviewIdx: Int) -> Observable<Bool> {
     self.reviewService.updateReviewLike(reviewIdx: reviewIdx)
+  }
+  
+  func deleteReview(reviewIdx: Int) -> Observable<String> {
+    self.reviewService.deleteReview(reviewIdx: reviewIdx)
   }
 }

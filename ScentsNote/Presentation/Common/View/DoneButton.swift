@@ -29,4 +29,8 @@ class DoneButton: UIButton {
   func updateTitle(title: String) {
     self.setTitle(title, for: .normal)
   }
+  
+  func setBackgroundColor(color: UIColor) {
+    self.layer.backgroundColor = color.cgColor
+  }
 }

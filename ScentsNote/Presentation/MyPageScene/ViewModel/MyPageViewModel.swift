@@ -146,7 +146,6 @@ final class MyPageViewModel {
       .subscribe(onNext: { [weak self] in
         self?.fetchReviewsInMyPageUseCase.execute()
           .subscribe(onNext: { result in
-            Log(result)
             reviews.accept(result)
           }, onError: { error in
             reviews.accept([])

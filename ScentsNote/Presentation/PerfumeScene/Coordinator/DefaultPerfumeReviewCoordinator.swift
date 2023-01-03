@@ -36,7 +36,8 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
       reviewIdx: reviewIdx,
       fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: reviewRepository),
       updateReviewUseCase: UpdateReviewUseCase(reviewRepository: reviewRepository),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared))
+      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
+      deleteReviewUseCase: DeleteReviewUseCase(reviewRepository: reviewRepository)
     )
     self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
@@ -57,5 +58,22 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
   
   func hideKeywordBottomSheetViewController(keywords: [Keyword]) {
     
+  }
+  
+  func showDeletePopup() {
+    let vc = LabelPopupViewController()
+    vc.setLabel(content: "정말로 삭제하실 건가요?")
+    vc.viewModel = LabelPopupViewModel(
+      coordinator: self,
+      delegate: self.perfumeReviewViewController.viewModel!
+    )
+    
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+  }
+  
+  func hideDeletePopup() {
+    self.navigationController.dismiss(animated: false)
   }
 }

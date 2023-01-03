@@ -11,5 +11,7 @@ protocol PerfumeReviewCoordinator: AnyObject {
   var finishFlow: (() -> Void)? { get set }
   func showKeywordBottomSheetViewController(keywords: [Keyword])
   func hideKeywordBottomSheetViewController(keywords: [Keyword])
+  func showDeletePopup()
+  func hideDeletePopup()
   
 }

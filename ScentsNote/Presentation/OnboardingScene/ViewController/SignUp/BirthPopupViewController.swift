@@ -36,7 +36,7 @@ final class BirthPopupViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = .black.withAlphaComponent(0.2)
+    self.view.backgroundColor = .black.withAlphaComponent(0.5)
     self.configureUI()
     self.bindViewModel()
   }

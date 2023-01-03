@@ -15,5 +15,5 @@ struct ReviewDetailRequestDTO {
   let gender: Int?
   let access: Bool
   let content: String
-  let keywordsList: [Int]?
+  let keywordList: [Int]?
 }

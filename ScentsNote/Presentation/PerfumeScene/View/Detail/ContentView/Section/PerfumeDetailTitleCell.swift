@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import Then
 import Cosmos
+import Kingfisher
 
 final class PerfumeDetailTitleCell: UICollectionViewCell {
  
@@ -82,7 +83,7 @@ final class PerfumeDetailTitleCell: UICollectionViewCell {
   }
   
   func updateUI(perfumeDetail: PerfumeDetail) {
-    self.mainImageView.load(url: perfumeDetail.imageUrls[0])
+    self.mainImageView.kf.setImage(with: URL(string: perfumeDetail.imageUrls[0]))
     self.brandLabel.text = perfumeDetail.brandName
     self.nameLabel.text = perfumeDetail.name
     self.starView.rating = perfumeDetail.score

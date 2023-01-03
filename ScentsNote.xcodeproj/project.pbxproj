@@ -35,6 +35,9 @@
 		4A3B0426292502D1004F155D /* PerfumeDetailFooterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3B0425292502D1004F155D /* PerfumeDetailFooterContentView.swift */; };
 		4A3DEF722962604800D5228A /* PerfumeDetailGenderContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF712962604800D5228A /* PerfumeDetailGenderContentView.swift */; };
 		4A3DEF742962728600D5228A /* UpdateReviewLikeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF732962728600D5228A /* UpdateReviewLikeUseCase.swift */; };
+		4A3DEF772963E0F600D5228A /* LabelPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF762963E0F600D5228A /* LabelPopupViewController.swift */; };
+		4A3DEF792963E11200D5228A /* LabelPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */; };
+		4A3DEF7B2963E87200D5228A /* DeleteReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */; };
 		4A428AC129432D5700B559C7 /* DefaultReviewService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC029432D5700B559C7 /* DefaultReviewService.swift */; };
 		4A428AC329432DCC00B559C7 /* ReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC229432DCC00B559C7 /* ReviewRepository.swift */; };
 		4A428AC529432DF700B559C7 /* DefaultReviewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */; };
@@ -404,6 +407,9 @@
 		4A3B0425292502D1004F155D /* PerfumeDetailFooterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailFooterContentView.swift; sourceTree = "<group>"; };
 		4A3DEF712962604800D5228A /* PerfumeDetailGenderContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailGenderContentView.swift; sourceTree = "<group>"; };
 		4A3DEF732962728600D5228A /* UpdateReviewLikeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateReviewLikeUseCase.swift; sourceTree = "<group>"; };
+		4A3DEF762963E0F600D5228A /* LabelPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPopupViewController.swift; sourceTree = "<group>"; };
+		4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPopupViewModel.swift; sourceTree = "<group>"; };
+		4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteReviewUseCase.swift; sourceTree = "<group>"; };
 		4A428AC029432D5700B559C7 /* DefaultReviewService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewService.swift; sourceTree = "<group>"; };
 		4A428AC229432DCC00B559C7 /* ReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewRepository.swift; sourceTree = "<group>"; };
 		4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReviewRepository.swift; sourceTree = "<group>"; };
@@ -781,6 +787,7 @@
 				4A63C486294334F9001B42C0 /* UpdateReviewUseCase.swift */,
 				4AF455BC2955B15A00E87A4E /* ReportReviewUseCase.swift */,
 				4A3DEF732962728600D5228A /* UpdateReviewLikeUseCase.swift */,
+				4A3DEF7A2963E87200D5228A /* DeleteReviewUseCase.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -789,6 +796,7 @@
 			isa = PBXGroup;
 			children = (
 				4A0EB122293DCF4A00630F88 /* SplashViewModel.swift */,
+				4A3DEF782963E11200D5228A /* LabelPopupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1749,6 +1757,7 @@
 				4AAFE81A28FCE7F000EA6FB4 /* BaseNavigationController.swift */,
 				4A4F6A712939CD90006BBF0B /* WebViewController.swift */,
 				4A0EB124293DCF7600630F88 /* SplashViewController.swift */,
+				4A3DEF762963E0F600D5228A /* LabelPopupViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2482,6 +2491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A4DF5F32929033D0066792D /* SeasonalResponseDTO.swift in Sources */,
+				4A3DEF772963E0F600D5228A /* LabelPopupViewController.swift in Sources */,
 				4A4F6A3829385209006BBF0B /* EditInformationViewController.swift in Sources */,
 				4AA280F92917B7AA00D30A99 /* HomeViewController.swift in Sources */,
 				4A85746B291363D200F86C3A /* SurveyKeywordView.swift in Sources */,
@@ -2574,6 +2584,7 @@
 				4AA281092917B90F00D30A99 /* SearchViewModel.swift in Sources */,
 				4A85746F29136B9400F86C3A /* SurveySeriesView.swift in Sources */,
 				4AC7F8DB2918B01300A8D032 /* UICollectionView+Extension.swift in Sources */,
+				4A3DEF792963E11200D5228A /* LabelPopupViewModel.swift in Sources */,
 				4A4F6A5E2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift in Sources */,
 				4A3B041729239387004F155D /* PerfumeDetailViewModel.swift in Sources */,
 				4A4F6A002934C684006BBF0B /* KeywordRepository.swift in Sources */,
@@ -2722,6 +2733,7 @@
 				4A6F98F02931D9270085EBE7 /* FilterSeriesHeaderView.swift in Sources */,
 				4A44AB6C293EE4C300F42B0D /* MyPageReviewGroupCell.swift in Sources */,
 				4A44AB70293EF67B00F42B0D /* ReviewService.swift in Sources */,
+				4A3DEF7B2963E87200D5228A /* DeleteReviewUseCase.swift in Sources */,
 				4A3B04192923A5EA004F155D /* PerfumeDetailResponseDTO.swift in Sources */,
 				4A4F6A27293747A8006BBF0B /* MyPageWishCell.swift in Sources */,
 				4AE938BA29542061006A7DAF /* ReviewReportPopupViewController.swift in Sources */,

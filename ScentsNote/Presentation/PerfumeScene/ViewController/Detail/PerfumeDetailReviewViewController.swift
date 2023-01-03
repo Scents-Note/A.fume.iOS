@@ -81,7 +81,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
         self?.updateUI(count: reviews.count)
       })
       .disposed(by: self.disposeBag)
-
+    
     self.viewModel?.output.reviews
       .bind(to: self.collectionView.rx.items(
         cellIdentifier: "ReviewCell", cellType: ReviewCell.self
@@ -105,12 +105,14 @@ final class PerfumeDetailReviewViewController: UIViewController {
   private func updateViewHeight() {
     guard isLoaded else { return }
     let height = self.collectionView.contentSize.height
-    if height == 0 {
+    /// review가 없을때
+    if height == 68 {
       self.onUpdateHeight?(200)
     } else {
-      self.onUpdateHeight?(self.collectionView.contentSize.height)
+      self.onUpdateHeight?(height)
     }
   }
+  
   
   private func updateUI(count: Int) {
     self.collectionView.isHidden = count == 0

@@ -17,6 +17,7 @@ struct LongevityResponseDTO: Decodable, Hashable {
 
 extension LongevityResponseDTO {
   func toDomain() -> [Longevity] {
+    Log(self)
     let longevityList = [self.veryWeak, self.weak, self.medium, self.strong, self.veryStrong]
     let maxPercent = longevityList.max()
     let isEmpty = maxPercent == 0

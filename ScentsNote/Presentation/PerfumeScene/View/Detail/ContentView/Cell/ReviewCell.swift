@@ -176,13 +176,13 @@ final class ReviewCell: UICollectionViewCell {
   func updateUI(review: ReviewInPerfumeDetail) {
     guard !review.isReported else {
       self.containerView.isHidden = true
+      self.reportLabel.isHidden = false
       self.containerView.snp.makeConstraints {
         $0.height.equalTo(50)
       }
-      self.reportLabel.isHidden = false
       return
     }
-    self.containerView.isHidden = true
+    self.containerView.isHidden = false
     self.reportLabel.isHidden = true
     self.heartButton.setImage(review.isLiked ? .favoriteActive : .favoriteInactive, for: .normal)
     self.likeCountLabel.text = "\(review.likeCount)"

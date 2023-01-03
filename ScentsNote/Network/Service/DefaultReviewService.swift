@@ -27,4 +27,8 @@ final class DefaultReviewService: ScentsNoteService, ReviewService {
     requestObject(.updateReviewLike(reviewIdx: reviewIdx))
   }
   
+  func deleteReview(reviewIdx: Int) -> Observable<String> {
+    requestPlainObject(.deleteReview(reviewIdx: reviewIdx))
+  }
+  
 }
