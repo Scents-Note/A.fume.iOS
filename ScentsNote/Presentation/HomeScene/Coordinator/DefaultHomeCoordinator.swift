@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Then
 
 final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
+  var runOnboardingFlow: (() -> Void)?
   var viewController: HomeViewController
   
   override init(_ navigationController: UINavigationController) {
@@ -28,11 +30,14 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     self.navigationController.pushViewController(self.viewController, animated: true)
   }
   
+  
+  
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
     coordinator.finishFlow = { [unowned self] in
       self.removeDependency(coordinator)
     }
+    coordinator.runOnboardingFlow = runOnboardingFlow
     coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
       self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
     }
@@ -73,5 +78,24 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     }
     coordinator.start(reviewIdx: reviewIdx)
     self.addDependency(coordinator)
+  }
+  
+  func showPopup() {
+    let vc = LabelPopupViewController().then {
+      $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
+      $0.setConfirmLabel(content: "로그인 하기")
+    }
+    vc.viewModel = LabelPopupViewModel(
+      coordinator: self,
+      delegate: self.viewController.viewModel!
+    )
+    
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+  }
+  
+  func hidePopup() {
+    self.navigationController.dismiss(animated: false)
   }
 }

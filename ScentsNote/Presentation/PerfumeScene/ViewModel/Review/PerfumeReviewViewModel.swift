@@ -220,8 +220,7 @@ final class PerfumeReviewViewModel {
     
     input.deleteButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-//        self?.confirm()
-        self?.coordinator?.showDeletePopup()
+        self?.coordinator?.showPopup()
       })
       .disposed(by: disposeBag)
     

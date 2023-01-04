@@ -29,7 +29,7 @@ extension SearchResultViewController {
     let brandNameOffset: CGFloat = 10
     let brandNameHeight: CGFloat = 18
     let nameHeight: CGFloat = 24
-    let height: CGFloat = imageHeight + brandNameOffset + brandNameHeight + brandNameHeight + nameHeight
+    let height: CGFloat = imageHeight + brandNameOffset + brandNameHeight + nameHeight
     let fraction: CGFloat = 1 / 2
     
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
@@ -47,4 +47,5 @@ extension SearchResultViewController {
     
     return UICollectionViewCompositionalLayout(section: section)
   }
+  
 }

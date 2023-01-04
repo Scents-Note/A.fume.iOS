@@ -8,8 +8,9 @@
 import UIKit
 
 final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
-  var runPerfumeDetailFlow: ((Int) -> Void)?
   
+  var runOnboardingFlow: (() -> Void)?
+  var runPerfumeDetailFlow: ((Int) -> Void)?
   var searchViewController: SearchViewController
   
   override init(_ navigationController: UINavigationController) {
@@ -20,13 +21,16 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   override func start() {
     self.searchViewController.viewModel = SearchViewModel(
       coordinator: self,
-      fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
+      fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
+      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
     )
     self.navigationController.pushViewController(self.searchViewController, animated: true)
   }
+
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
+    coordinator.runOnboardingFlow = runOnboardingFlow
     coordinator.start(perfumeIdx: perfumeIdx)
     self.addDependency(coordinator)
   }
@@ -75,6 +79,7 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   
   func runSearchResultFlow(perfumeSearch: PerfumeSearch) {
     let coordinator = DefaultSearchResultCoordinator(self.navigationController)
+    coordinator.runOnboardingFlow = runOnboardingFlow
     coordinator.runPerfumeDetailFlow = { [weak self] perfumeIdx in
       self?.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
     }
@@ -91,7 +96,22 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
     self.addDependency(coordinator)
   }
   
+  func showPopup() {
+    let vc = LabelPopupViewController().then {
+      $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
+      $0.setConfirmLabel(content: "로그인 하기")
+    }
+    vc.viewModel = LabelPopupViewModel(
+      coordinator: self,
+      delegate: self.searchViewController.viewModel!
+    )
+    
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+  }
   
-  
-  
+  func hidePopup() {
+    self.navigationController.dismiss(animated: false)
+  }
 }

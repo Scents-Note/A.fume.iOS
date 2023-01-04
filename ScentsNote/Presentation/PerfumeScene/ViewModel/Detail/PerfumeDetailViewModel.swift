@@ -46,7 +46,7 @@ final class PerfumeDetailViewModel {
   private let fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase
   private let updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase
   private let updateReviewLikeUseCase: UpdateReviewLikeUseCase
-//  private let
+  private let fetchUserDefaultUseCase: FetchUserDefaultUseCase
   
   let input = ScrollInput()
   let reviewInput = ReviewInput()
@@ -57,18 +57,21 @@ final class PerfumeDetailViewModel {
   private let toast = PublishRelay<Void>()
   private var perfumeDetail: PerfumeDetail?
   private var isLiked = false
+  private var isLoggedIn = false
   
   init(coordinator: PerfumeDetailCoordinator?,
        fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase,
        fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase,
        updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase,
        updateReviewLikeUseCase: UpdateReviewLikeUseCase,
+       fetchUserDefaultUseCase: FetchUserDefaultUseCase,
        perfumeIdx: Int) {
     self.coordinator = coordinator
     self.fetchPerfumeDetailUseCase = fetchPerfumeDetailUseCase
     self.fetchReviewsInPerfumeDetailUseCase = fetchReviewsInPerfumeDetailUseCase
     self.updatePerfumeLikeUseCase = updatePerfumeLikeUseCase
     self.updateReviewLikeUseCase = updateReviewLikeUseCase
+    self.fetchUserDefaultUseCase = fetchUserDefaultUseCase
     self.perfumeIdx = perfumeIdx
   }
   
@@ -135,8 +138,11 @@ final class PerfumeDetailViewModel {
     
     input.reviewButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.runPerfumeReview()
-        
+        if self?.isLoggedIn == true {
+          self?.runPerfumeReview()
+        } else {
+          self?.coordinator?.showPopup()
+        }
       })
       .disposed(by: disposeBag)
     
@@ -213,6 +219,8 @@ final class PerfumeDetailViewModel {
                           reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
                           disposeBag: DisposeBag) {
     
+    self.isLoggedIn = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
+    
     loadView.subscribe(onNext: { [weak self] in
       guard let perfumeIdx = self?.perfumeIdx else { return }
       self?.fetchPerfumeDetailUseCase.execute(perfumeIdx: perfumeIdx)
@@ -253,7 +261,8 @@ final class PerfumeDetailViewModel {
         guard let isLiked = self?.isLiked else { return }
         updatePerfumeLike.accept(!isLiked)
         self?.isLiked = !isLiked
-      }, onError: { error in
+      }, onError: { [weak self] error in
+        self?.coordinator?.showPopup()
         Log(error)
       })
       .disposed(by: disposeBag)
@@ -300,5 +309,11 @@ final class PerfumeDetailViewModel {
   
   func showToast() {
     self.toast.accept(())
+  }
+}
+
+extension PerfumeDetailViewModel: LabelPopupDelegate {
+  func confirm() {
+    self.coordinator?.runOnboardingFlow?()
   }
 }

@@ -63,6 +63,7 @@ final class PerfumeDetailViewController: UIViewController {
   }
   
   private let reviewButton = UIButton().then {
+    $0.setTitle("시향 노트 쓰기", for: .normal)
     $0.setTitleColor(.white, for: .normal)
     $0.titleLabel?.font = .notoSans(type: .bold, size: 18)
     $0.backgroundColor = .blackText

@@ -34,7 +34,9 @@ final class MyPageViewController: UIViewController {
     $0.backgroundColor = .blackText
   }
   
-  private lazy var menuButton = UIBarButtonItem(image: .checkmark, style: .plain, target: self, action: nil)
+  private lazy var menuButton = UIBarButtonItem(image: .btnSidebar, style: .plain, target: self, action: nil).then {
+    $0.tintColor = .blackText
+  }
   private lazy var tabView = Tabview(buttons: [self.myPerfumeButton, self.wishListButton], highlight: self.highlightView)
   private lazy var scrollView = MyPageScrollView(viewModel: self.viewModel)
   

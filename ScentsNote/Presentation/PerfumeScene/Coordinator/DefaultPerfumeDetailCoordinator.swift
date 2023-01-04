@@ -10,23 +10,25 @@ import UIKit
 final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoordinator {
 
   var finishFlow: (() -> Void)?
+  var runOnboardingFlow: (() -> Void)?
   var runPerfumeReviewFlow: ((PerfumeDetail) -> Void)?
   var runPerfumeReviewFlowWithReviewIdx: ((Int) -> Void)?
   var runPerfumeDetailFlow: ((Int) -> Void)?
+  private let perfumeDetailViewController: PerfumeDetailViewController
   
   override init(_ navigationController: UINavigationController) {
-    
+    self.perfumeDetailViewController = PerfumeDetailViewController()
     super.init(navigationController)
   }
   
   func start(perfumeIdx: Int) {
-    let perfumeDetailViewController = PerfumeDetailViewController()
     perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
       coordinator: self,
       fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
       fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
       updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
       updateReviewLikeUseCase: UpdateReviewLikeUseCase(reviewRepository: DefaultReviewRepository(reviewService: DefaultReviewService.shared)),
+      fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared, userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)),
       perfumeIdx: perfumeIdx
     )
     perfumeDetailViewController.hidesBottomBarWhenPushed = true
@@ -65,5 +67,23 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
       pvc.viewModel?.showToast()
     }
   }
-
+  
+  func showPopup() {
+    let vc = LabelPopupViewController().then {
+      $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
+      $0.setConfirmLabel(content: "로그인 하기")
+    }
+    vc.viewModel = LabelPopupViewModel(
+      coordinator: self,
+      delegate: self.perfumeDetailViewController.viewModel!
+    )
+    
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+  }
+  
+  func hidePopup() {
+    self.navigationController.dismiss(animated: false)
+  }
 }

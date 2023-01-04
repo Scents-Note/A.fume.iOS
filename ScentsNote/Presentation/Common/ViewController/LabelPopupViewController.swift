@@ -85,6 +85,10 @@ final class LabelPopupViewController: UIViewController {
     self.contentLabel.text = content
   }
   
+  func setConfirmLabel(content: String) {
+    self.confirmButton.setTitle(content, for: .normal)
+  }
+  
   // MARK: - Configure UI
   private func configureUI() {
     self.view.backgroundColor = .black.withAlphaComponent(0.5)

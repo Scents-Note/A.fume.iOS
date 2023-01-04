@@ -32,14 +32,18 @@ final class SearchResultViewModel {
   // MARK: - Vars & Lets
   private weak var coordinator: SearchResultCoordinator?
   private let fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase
+  private let updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase
+  
   let perfumeSearch = BehaviorRelay<PerfumeSearch>(value: PerfumeSearch.default)
   
   // MARK: - Life Cycle
   init(coordinator: SearchResultCoordinator,
        fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase,
+       updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase,
        perfumeSearch: PerfumeSearch) {
     self.coordinator = coordinator
     self.fetchPerfumeSearchedUseCase = fetchPerfumeSearchedUseCase
+    self.updatePerfumeLikeUseCase = updatePerfumeLikeUseCase
     self.perfumeSearch.accept(perfumeSearch)
   }
   
@@ -48,7 +52,7 @@ final class SearchResultViewModel {
   func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
     let output = Output()
     let keywords = PublishRelay<[SearchKeyword]>()
-    let perfumes = PublishRelay<[Perfume]>()
+    let perfumes = BehaviorRelay<[Perfume]>(value: [])
     
     self.bindInput(input: input,
                    cellInput: cellInput,
@@ -69,7 +73,7 @@ final class SearchResultViewModel {
   
   private func bindInput(input: Input,
                          cellInput: CellInput,
-                         perfumes: PublishRelay<[Perfume]>,
+                         perfumes: BehaviorRelay<[Perfume]>,
                          disposeBag: DisposeBag) {
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
@@ -123,24 +127,23 @@ final class SearchResultViewModel {
       })
       .disposed(by: disposeBag)
     
-    cellInput.perfumeHeartDidTapEvent.withLatestFrom(perfumes) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          Log($0.perfumeIdx)
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumes)
-    .disposed(by: disposeBag)
+    cellInput.perfumeHeartDidTapEvent
+      .subscribe(onNext: { [weak self] perfume in
+        self?.updatePerfumeLikeUseCase.execute(perfumeIdx: perfume.perfumeIdx)
+          .subscribe(onNext: { _ in
+            let updatedPerfumes = self?.togglePerfumeLike(perfumeIdx: perfume.perfumeIdx, originals: perfumes.value) ?? []
+            perfumes.accept(updatedPerfumes)
+          }, onError: { error in
+            self?.coordinator?.showPopup()
+          })
+          .disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
   }
   
   private func bindOutput(output: Output,
                           keywords: PublishRelay<[SearchKeyword]>,
-                          perfumes: PublishRelay<[Perfume]>,
+                          perfumes: BehaviorRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
     keywords.subscribe(onNext: { keywords in
       let items = keywords.map { KeywordDataSection.Item(keyword: $0) }
@@ -165,7 +168,7 @@ final class SearchResultViewModel {
   }
   
   private func bindNetwork(keywords: PublishRelay<[SearchKeyword]>,
-                           perfumes: PublishRelay<[Perfume]>,
+                           perfumes: BehaviorRelay<[Perfume]>,
                            disposeBag: DisposeBag) {
     
     perfumeSearch
@@ -177,7 +180,7 @@ final class SearchResultViewModel {
   }
   
   private func fetchPerfumes(perfumeSearch: PerfumeSearch,
-                             perfumes: PublishRelay<[Perfume]>,
+                             perfumes: BehaviorRelay<[Perfume]>,
                              disposeBag: DisposeBag) {
     self.fetchPerfumeSearchedUseCase.execute(perfumeSearch: perfumeSearch)
       .subscribe(onNext: { perfumesFetched in
@@ -190,5 +193,23 @@ final class SearchResultViewModel {
   
   func updateSearchWords(perfumeSearch: PerfumeSearch) {
     self.perfumeSearch.accept(perfumeSearch)
+  }
+  
+  private func togglePerfumeLike(perfumeIdx: Int, originals perfumes: [Perfume]) -> [Perfume] {
+    perfumes.map {
+      guard $0.perfumeIdx != perfumeIdx else {
+        var updatePerfume = $0
+        updatePerfume.isLiked = !updatePerfume.isLiked
+        return updatePerfume
+      }
+      return $0
+    }
+  }
+  
+}
+
+extension SearchResultViewModel: LabelPopupDelegate {
+  func confirm() {
+    self.coordinator?.runOnboardingFlow?()
   }
 }

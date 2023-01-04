@@ -123,11 +123,12 @@ final class HomeViewModel {
                                     perfumesPopular: perfumesPopular,
                                     perfumesRecent: perfumesRecent,
                                     perfumesNew: perfumesNew)
+          }, onError: { error in
+            Log(error)
+            self?.coordinator?.showPopup()
           })
           .disposed(by: disposeBag)
-      }) { error in
-        Log(error)
-      }
+      })
       .disposed(by: disposeBag)
     
     cellInput.moreCellDidTapEvent
@@ -323,4 +324,10 @@ final class HomeViewModel {
     }
   }
   
+}
+
+extension HomeViewModel: LabelPopupDelegate {
+  func confirm() {
+    self.coordinator?.runOnboardingFlow?()
+  }
 }

@@ -60,7 +60,7 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     
   }
   
-  func showDeletePopup() {
+  func showPopup() {
     let vc = LabelPopupViewController()
     vc.setLabel(content: "정말로 삭제하실 건가요?")
     vc.viewModel = LabelPopupViewModel(
@@ -73,7 +73,7 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.navigationController.present(vc, animated: false)
   }
   
-  func hideDeletePopup() {
+  func hidePopup() {
     self.navigationController.dismiss(animated: false)
   }
 }

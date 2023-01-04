@@ -21,11 +21,11 @@ final class LabelPopupViewModel {
   }
   
   // MARK: - Vars & Lets
-  private weak var coordinator: PerfumeReviewCoordinator?
+  private weak var coordinator: PopUpCoordinator?
   private weak var delegate: LabelPopupDelegate?
   
   // MARK: - Life Cycle
-  init(coordinator: PerfumeReviewCoordinator, delegate: LabelPopupDelegate) {
+  init(coordinator: PopUpCoordinator, delegate: LabelPopupDelegate) {
     self.coordinator = coordinator
     self.delegate = delegate
   }
@@ -35,8 +35,6 @@ final class LabelPopupViewModel {
     let output = Output()
     
     self.bindInput(input: input, disposeBag: disposeBag)
-    self.bindOutput(output: output, disposeBag: disposeBag)
-    self.fetchDatas(disposeBag: disposeBag)
     return output
   }
   
@@ -44,31 +42,23 @@ final class LabelPopupViewModel {
     
     input.dimmedViewDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.hideDeletePopup()
+        self?.coordinator?.hidePopup()
       })
       .disposed(by: disposeBag)
     
     input.cancelButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.hideDeletePopup()
+        self?.coordinator?.hidePopup()
       })
       .disposed(by: disposeBag)
     
     input.confirmButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.hideDeletePopup()
         self?.delegate?.confirm()
+        self?.coordinator?.hidePopup()
       })
       .disposed(by: disposeBag)
 
-  }
-  
-  private func bindOutput(output: Output, disposeBag: DisposeBag) {
-    
-  }
-  
-  private func fetchDatas(disposeBag: DisposeBag) {
-    
   }
 }
 

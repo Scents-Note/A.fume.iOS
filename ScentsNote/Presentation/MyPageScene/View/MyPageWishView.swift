@@ -17,12 +17,12 @@ final class MyPageWishView: UIView {
   // MARK: - UI
   private let emptyView = UIView()
   private let emptyImage = UIImageView().then {
-    $0.image = .emptyMypageReview
+    $0.image = .favoriteInactive
   }
   private let emptyLabel = UILabel().then {
     $0.textAlignment = .center
-    $0.text = "아직 시향 노트가 비어 있어요.\n그동안 사용했던 향수\n혹은 시향해봤던 향수를\n기록해보세요."
-    $0.numberOfLines = 4
+    $0.text = "아직 시향해보고 싶은 향수가 없군요!\n평소에 관심 있었던 향수를\n위시리스트에 추가해보세요!"
+    $0.numberOfLines = 3
     $0.textColor = .grayCd
     $0.font = .systemFont(ofSize: 14, weight: .regular)
   }
@@ -80,6 +80,7 @@ final class MyPageWishView: UIView {
     self.emptyImage.snp.makeConstraints {
       $0.top.equalToSuperview()
       $0.centerX.equalToSuperview()
+      $0.size.equalTo(44)
     }
     
     self.emptyView.addSubview(self.emptyLabel)

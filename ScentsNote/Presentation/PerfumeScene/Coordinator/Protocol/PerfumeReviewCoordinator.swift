@@ -7,11 +7,8 @@
 
 import Foundation
 
-protocol PerfumeReviewCoordinator: AnyObject {
+protocol PerfumeReviewCoordinator: PopUpCoordinator {
   var finishFlow: (() -> Void)? { get set }
   func showKeywordBottomSheetViewController(keywords: [Keyword])
   func hideKeywordBottomSheetViewController(keywords: [Keyword])
-  func showDeletePopup()
-  func hideDeletePopup()
-  
 }
