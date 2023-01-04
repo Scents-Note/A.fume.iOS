@@ -9,4 +9,5 @@ import Foundation
 
 protocol PerfumeNewCoordinator: AnyObject {
   var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
+  func runWebFlow(with url: String)
 }

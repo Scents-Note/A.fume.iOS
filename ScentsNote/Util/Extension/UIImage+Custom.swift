@@ -36,6 +36,7 @@ extension UIImage {
 
   // MARK: - Home
   static let logoHome = UIImage(named: "logoHome")
+  static let time = UIImage(named: "time")
   
   // MARK: - Search
   static let btnSearch = UIImage(named: "btnSearch")

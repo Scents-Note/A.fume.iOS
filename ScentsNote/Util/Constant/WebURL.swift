@@ -12,4 +12,5 @@ struct WebURL {
   static let inquire = "https://forms.gle/KrXTfWriJRcHV8XKA"
   static let perfumeDetailSuggestion = "https://forms.gle/MxHHfosbXN7bjddV9"
   static let reportPerfumeInSearch = "https://forms.gle/KdZws6P8dGdwzQnC9"
+  static let reportPerfumeInNew = "https://forms.gle/btD8aEfGaogaFVKc9"
 }

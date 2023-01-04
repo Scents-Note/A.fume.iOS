@@ -42,6 +42,7 @@ final class PerfumeDetailViewController: UIViewController {
   }
   
   private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout).then {
+    $0.showsVerticalScrollIndicator = false
     $0.register(PerfumeDetailTabCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     $0.register(PerfumeDetailTitleCell.self)
     $0.register(PerfumeDetailContentCell.self)

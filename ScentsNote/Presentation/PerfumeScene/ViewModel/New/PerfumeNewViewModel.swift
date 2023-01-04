@@ -13,7 +13,7 @@ final class PerfumeNewViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    
+    let reportButtonDidTapEvent: Observable<Void>
   }
   
   struct CellInput {
@@ -41,13 +41,19 @@ final class PerfumeNewViewModel {
     let output = Output()
     let perfumes = PublishRelay<[Perfume]>()
     
-    self.bindInput(cellInput: cellInput, perfumes: perfumes, disposeBag: disposeBag)
+    self.bindInput(input: input, cellInput: cellInput, perfumes: perfumes, disposeBag: disposeBag)
     self.bindOutput(output: output, perfumes: perfumes, disposeBag: disposeBag)
     self.fetchDatas(perfumes: perfumes, disposeBag: disposeBag)
     return output
   }
   
-  private func bindInput(cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+  private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+    input.reportButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runWebFlow(with: WebURL.reportPerfumeInNew)
+      })
+      .disposed(by: disposeBag)
+    
     cellInput.perfumeDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
         self?.coordinator?.runPerfumeDetailFlow?(perfume.perfumeIdx)

@@ -156,7 +156,9 @@ final class PerfumeReviewViewController: UIViewController {
     $0.register(ReviewGenderCell.self)
   }
   
-  private let scrollView = UIScrollView()
+  private let scrollView = UIScrollView().then {
+    $0.showsVerticalScrollIndicator = false
+  }
   private let containerView = UIView()
   private let imageContainerView = UIView().then {
     $0.backgroundColor = .white

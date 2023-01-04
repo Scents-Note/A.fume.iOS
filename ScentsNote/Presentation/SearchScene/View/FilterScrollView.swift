@@ -38,6 +38,8 @@ final class FilterScrollView: UIScrollView {
   
   private func configureUI() {
     self.isPagingEnabled = true
+    self.showsVerticalScrollIndicator = false
+    self.showsHorizontalScrollIndicator = false
 
     self.addSubview(self.seriesView)
     self.addSubview(self.brandView)
