@@ -9,6 +9,7 @@ import Foundation
 
 protocol PerfumeReviewCoordinator: PopUpCoordinator {
   var finishFlow: (() -> Void)? { get set }
+  var runPerfumeDetailFlow: ((Int) -> Void)? { get set}
   func showKeywordBottomSheetViewController(keywords: [Keyword])
   func hideKeywordBottomSheetViewController(keywords: [Keyword])
 }

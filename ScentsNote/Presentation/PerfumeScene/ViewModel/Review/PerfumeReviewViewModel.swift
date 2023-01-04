@@ -48,6 +48,7 @@ final class PerfumeReviewViewModel {
     let canDone = BehaviorRelay<Bool>(value: false)
     let canUpdate = BehaviorRelay<Bool>(value: false)
     let showToast = PublishRelay<Void>()
+    let pop = PublishRelay<Void>()
   }
   
   // MARK: - Vars & Lets
@@ -61,6 +62,7 @@ final class PerfumeReviewViewModel {
   
   private let disposeBag = DisposeBag()
   private var perfumeDetail: PerfumeDetail?
+  private var perfumeIdx: Int = 0
   private var reviewIdx: Int = 0
   private var keywords: [Keyword] = []
   
@@ -78,6 +80,7 @@ final class PerfumeReviewViewModel {
        fetchKeywordsUseCase: FetchKeywordsUseCase) {
     self.coordinator = coordinator
     self.perfumeDetail = perfumeDetail
+    self.perfumeIdx = perfumeDetail.perfumeIdx
     self.addReviewUseCase = addReviewUseCase
     self.fetchKeywordsUseCase = fetchKeywordsUseCase
     self.mode = .review
@@ -114,6 +117,7 @@ final class PerfumeReviewViewModel {
     let canDone = PublishRelay<Bool>()
     let canUpdate = PublishRelay<Bool>()
     let showToast = PublishRelay<Void>()
+    let pop = PublishRelay<Void>()
     
     self.bindInput(input: input,
                    bottomSheetInput: bottomSheetInput,
@@ -126,6 +130,7 @@ final class PerfumeReviewViewModel {
                    canDone: canDone,
                    canUpdate: canUpdate,
                    showToast: showToast,
+                   pop: pop,
                    disposeBag: disposeBag)
     
     self.bindOutput(output: output,
@@ -139,6 +144,7 @@ final class PerfumeReviewViewModel {
                     canDone: canDone,
                     canUpdate: canUpdate,
                     showToast: showToast,
+                    pop: pop,
                     disposeBag: disposeBag)
     
     self.fetchDatas(reviewDetail: reviewDetail, disposeBag: disposeBag)
@@ -156,11 +162,17 @@ final class PerfumeReviewViewModel {
                          canDone: PublishRelay<Bool>,
                          canUpdate: PublishRelay<Bool>,
                          showToast: PublishRelay<Void>,
+                         pop: PublishRelay<Void>,
                          disposeBag: DisposeBag) {
     
     input.imageContainerDidTapEvent
       .subscribe(onNext: { [weak self] _ in
-        self?.coordinator?.finishFlow?()
+        if self?.isPerfumeDetailPushed() == true {
+          self?.coordinator?.finishFlow?()
+        } else {
+          self?.coordinator?.runPerfumeDetailFlow?(self?.perfumeIdx ?? 0)
+          pop.accept(())
+        }
       })
       .disposed(by: disposeBag)
     
@@ -272,6 +284,7 @@ final class PerfumeReviewViewModel {
                           canDone: PublishRelay<Bool>,
                           canUpdate: PublishRelay<Bool>,
                           showToast: PublishRelay<Void>,
+                          pop: PublishRelay<Void>,
                           disposeBag: DisposeBag) {
     
     if let perfumeDetail = self.perfumeDetail {
@@ -331,6 +344,9 @@ final class PerfumeReviewViewModel {
       .bind(to: output.showToast)
       .disposed(by: disposeBag)
     
+    pop
+      .bind(to: output.pop)
+      .disposed(by: disposeBag)
   }
   
   // MARK: - Network
@@ -345,8 +361,8 @@ final class PerfumeReviewViewModel {
     
     if self.reviewIdx != 0 {
       self.fetchReviewDetailUseCase?.execute(reviewIdx: reviewIdx)
-        .subscribe { result in
-          Log(result)
+        .subscribe { [weak self] result in
+          self?.perfumeIdx = result.perfume?.idx ?? 0
           reviewDetail.accept(result)
         } onError: { error in
           Log(error)
@@ -540,6 +556,10 @@ final class PerfumeReviewViewModel {
     }
     
     return indice
+  }
+  
+  private func isPerfumeDetailPushed() -> Bool {
+    return (self.coordinator as? DefaultPerfumeReviewCoordinator)?.findViewController(PerfumeDetailViewController.self) != nil
   }
   
 }

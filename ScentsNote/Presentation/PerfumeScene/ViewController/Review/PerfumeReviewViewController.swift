@@ -503,6 +503,12 @@ final class PerfumeReviewViewController: UIViewController {
   }
   
   private func bindView(output: PerfumeReviewViewModel.Output?) {
+    output?.pop
+      .subscribe(onNext: { [weak self] in
+        self?.popViewController()
+      })
+      .disposed(by: self.disposeBag)
+
     output?.reviewDetail
       .asDriver()
       .drive(onNext: { [weak self] reviewDetail in
@@ -621,27 +627,14 @@ final class PerfumeReviewViewController: UIViewController {
     self.updateButton.isHidden = false
     self.shareView.backgroundColor = reviewDetail.access ? .pointBeige : .bgTabBar
   }
-//
-//  private func updateViewHeight() {
-//    let height = keywordCollectionView.contentSize.height
-//    guard height != collectionViewHeight else { return }
-//    self.collectionViewHeight = height
-//    self.keywordCollectionView.snp.updateConstraints {
-//      $0.height.equalTo(height)
-//    }
-//  }
   
-//  private func dottedLineLayer() -> CAShapeLayer {
-//    let borderLayer = CAShapeLayer()
-//    borderLayer.strokeColor = UIColor.black.cgColor
-//    borderLayer.lineDashPattern = [2, 2]
-//    let path = CGMutablePath()
-//        path.addLines(between: [CGPoint(x: 0, y: 0),
-//                                CGPoint(x: self.view.bounds.width - 36, y: 0)])
-//
-//    borderLayer.path = path
-//    return borderLayer
-//  }
+  private func popViewController() {
+    DispatchQueue.main.async {
+      if let idx = self.navigationController?.viewControllers.firstIndex(where: { $0 === self }) {
+        self.navigationController?.viewControllers.remove(at: idx)
+      }
+    }
+  }
 }
 
 extension PerfumeReviewViewController: UICollectionViewDelegateFlowLayout {
