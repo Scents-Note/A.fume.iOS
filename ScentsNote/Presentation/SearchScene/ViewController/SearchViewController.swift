@@ -20,7 +20,9 @@ final class SearchViewController: UIViewController {
   let disposeBag = DisposeBag()
   
   // MARK: - UI
-  private lazy var searchButton = UIBarButtonItem(image: .checkmark, style: .plain, target: self, action: nil)
+  private lazy var searchButton = UIBarButtonItem(image: .btnSearch, style: .plain, target: self, action: nil).then {
+    $0.tintColor = .blackText
+  }
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.gridCompositionalLayout()).then {
     $0.showsVerticalScrollIndicator = false
     $0.backgroundColor = .white

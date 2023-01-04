@@ -135,7 +135,7 @@ final class PerfumeReviewViewController: UIViewController {
 
 
   // CollectionView
-  private let keywordCollectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.keywordLayout).then {
+  private let keywordCollectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewKeywordLayout).then {
     $0.backgroundColor = .lightGray
     $0.register(SurveyKeywordCollectionViewCell.self)
   }

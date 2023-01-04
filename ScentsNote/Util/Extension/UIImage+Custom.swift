@@ -29,6 +29,7 @@ extension UIImage {
   static let btnNext = UIImage(named: "btnNext")
   static let btnClose = UIImage(named: "btnClose")
   static let arrowRight = UIImage(named: "arrowRight")
+  static let arrowDown = UIImage(named: "arrowDown")
   static let checkBeige = UIImage(named: "icCheckBeige")
   static let checkWhite = UIImage(named: "icCheckWhite")
   static let checkGray = UIImage(named: "icCheckGray")
@@ -36,9 +37,14 @@ extension UIImage {
   // MARK: - Home
   static let logoHome = UIImage(named: "logoHome")
   
+  // MARK: - Search
+  static let btnSearch = UIImage(named: "btnSearch")
+  static let btnCancelWhite = UIImage(named: "btnCancelWhite")
+  
   // MARK: - My Page
   static let bgMypageReview = UIImage(named: "bgMypageReview")
   static let emptyMypageReview = UIImage(named: "emptyMypageReview")
+  static let btnSidebar = UIImage(named: "btnSidebar")
   
   // MARK: - Sign Up
   static let btnManInactive = UIImage(named: "btnManInactive")

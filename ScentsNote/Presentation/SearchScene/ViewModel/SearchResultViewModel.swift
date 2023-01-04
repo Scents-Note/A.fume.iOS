@@ -13,6 +13,7 @@ final class SearchResultViewModel {
   struct Input {
     let searchButtonDidTapEvent: Observable<Void>
     let filterButtonDidTapEvent: Observable<Void>
+    let reportButtonDidTapEvent: Observable<Void>
   }
   
   struct CellInput {
@@ -82,6 +83,12 @@ final class SearchResultViewModel {
       })
       .disposed(by: disposeBag)
     
+    input.reportButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runWebFlow(with: WebURL.reportPerfumeInSearch)
+      })
+      .disposed(by: disposeBag)
+
     cellInput.keywordDeleteDidTapEvent.withLatestFrom(perfumeSearch) { updated, originals in
       switch updated.category {
       case .searchWord:

@@ -29,4 +29,14 @@ final class DefaultSearchResultCoordinator: BaseCoordinator, SearchResultCoordin
 //    self.searchResultViewController.hidesBottomBarWhenPushed = false
     self.navigationController.pushViewController(self.searchResultViewController, animated: true)
   }
+  
+  func runWebFlow(with url: String) {
+    let coordinator = DefaultWebCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(with: url)
+    self.addDependency(coordinator)
+  }
 }

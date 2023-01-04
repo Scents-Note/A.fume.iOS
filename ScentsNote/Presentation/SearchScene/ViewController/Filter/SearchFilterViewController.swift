@@ -44,7 +44,6 @@ final class SearchFilterViewController: UIViewController {
     self.configureUI()
     self.bindViewModel()
     self.configureDelegate()
-    
   }
   
   override func viewWillAppear(_ animated: Bool) {

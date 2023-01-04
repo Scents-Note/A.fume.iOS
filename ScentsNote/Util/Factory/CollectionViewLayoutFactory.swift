@@ -10,7 +10,7 @@ import UIKit
 
 // TODO: - 좀더 통일되게 네이밍 등 바꾸기
 struct CollectionViewLayoutFactory {
-  static var keywordLayout: UICollectionViewCompositionalLayout {
+  static var reviewKeywordLayout: UICollectionViewCompositionalLayout {
     let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(42))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
     
@@ -23,6 +23,26 @@ struct CollectionViewLayoutFactory {
     section.interGroupSpacing = 14
   
     return UICollectionViewCompositionalLayout(section: section)
+  }
+  
+  static var keywordLayout: UICollectionViewCompositionalLayout {
+    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(42))
+    let item = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+    let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
+    let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+    group.interItemSpacing = .fixed(16)
+    
+    let section = NSCollectionLayoutSection(group: group)
+    section.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 16, bottom: 24, trailing: 16)
+    section.interGroupSpacing = 16
+    
+    let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
+    section.decorationItems = [sectionBackground]
+  
+    return UICollectionViewCompositionalLayout(section: section).then {
+      $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")
+    }
   }
   
   static var filterKeywordLayout: UICollectionViewCompositionalLayout {

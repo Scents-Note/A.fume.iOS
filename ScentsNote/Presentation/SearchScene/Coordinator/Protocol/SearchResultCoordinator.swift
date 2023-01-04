@@ -10,4 +10,6 @@ protocol SearchResultCoordinator: AnyObject {
   var runSearchKeywordFlow: (() -> Void)? { get set }
   var runSearchFilterFlow: (() -> Void)? { get set }
   var finishFlow: (() -> Void)? { get set }
+  
+  func runWebFlow(with url: String)
 }
