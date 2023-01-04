@@ -23,7 +23,7 @@ final class ReviewReportPopupViewController: UIViewController {
     $0.clipsToBounds = true
   }
   
-  private let collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.menuLayout).then {
+  private let collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reportLayout).then {
     $0.register(ReviewReportCell.self)
   }
   

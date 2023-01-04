@@ -52,6 +52,12 @@ final class MyPageMenuViewModel {
   }
   
   private func bindInput(input: Input, disposeBag: DisposeBag) {
+    input.closeButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.hideMyPageMenuViewController()
+      })
+      .disposed(by: disposeBag)
+
     input.menuCellDidTapEvent
       .subscribe(onNext: { [weak self] idx in
         self?.performAction(idx: idx)

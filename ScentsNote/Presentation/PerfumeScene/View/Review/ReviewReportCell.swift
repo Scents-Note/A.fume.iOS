@@ -28,6 +28,10 @@ final class ReviewReportCell: UICollectionViewCell {
     $0.layer.cornerRadius = 5
   }
   
+  private let dividerView = UIView().then {
+    $0.backgroundColor = .bgTabBar
+  }
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
@@ -45,8 +49,7 @@ final class ReviewReportCell: UICollectionViewCell {
     
     self.contentView.addSubview(self.contentLabel)
     self.contentLabel.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(15)
-      $0.bottom.equalToSuperview().offset(-15)
+      $0.centerY.equalToSuperview()
       $0.left.equalToSuperview()
     }
     
@@ -61,6 +64,12 @@ final class ReviewReportCell: UICollectionViewCell {
     self.innerCheckView.snp.makeConstraints {
       $0.centerX.centerY.equalToSuperview()
       $0.width.height.equalTo(10)
+    }
+    
+    self.contentView.addSubview(self.dividerView)
+    self.dividerView.snp.makeConstraints {
+      $0.left.right.bottom.equalToSuperview()
+      $0.height.equalTo(1)
     }
   }
     
