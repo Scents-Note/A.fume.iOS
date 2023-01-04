@@ -13,4 +13,5 @@ struct WebURL {
   static let perfumeDetailSuggestion = "https://forms.gle/MxHHfosbXN7bjddV9"
   static let reportPerfumeInSearch = "https://forms.gle/KdZws6P8dGdwzQnC9"
   static let reportPerfumeInNew = "https://forms.gle/btD8aEfGaogaFVKc9"
+  static let withdrawal = "https://forms.gle/QuhCXDEjeMhTD4uq8"
 }

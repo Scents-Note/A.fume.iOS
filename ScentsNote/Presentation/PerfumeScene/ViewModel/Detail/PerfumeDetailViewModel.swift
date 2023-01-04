@@ -186,7 +186,10 @@ final class PerfumeDetailViewModel {
       .disposed(by: disposeBag)
     
     perfumeDetail
-      .bind(to: output.perfumeDetail)
+      .subscribe(onNext: { detail in
+        output.perfumeDetail.accept(detail)
+        output.pageViewPosition.accept(0)
+      })
       .disposed(by: disposeBag)
     
     perfumeDetail.withLatestFrom(output.models) { detail, models in
@@ -228,6 +231,7 @@ final class PerfumeDetailViewModel {
           self?.perfumeDetail = detail
           self?.isLiked = detail.isLiked
           perfumeDetail.accept(detail)
+          
         })
         .disposed(by: disposeBag)
       
@@ -277,7 +281,8 @@ final class PerfumeDetailViewModel {
         let updated = self?.toggleReviewLike(reviewIdx: reviewIdx, reviews: reviews.value)
         guard let updated = updated else { return }
         reviews.accept(updated)
-      }) { error in
+      }) { [weak self] error in
+        self?.coordinator?.showPopup()
         Log(error)
       }
       .disposed(by: disposeBag)
@@ -300,7 +305,11 @@ final class PerfumeDetailViewModel {
   }
   
   func clickReport(reviewIdx: Int) {
-    self.coordinator?.showReviewReportPopupViewController(reviewIdx: reviewIdx)
+    if self.isLoggedIn {
+      self.coordinator?.showReviewReportPopupViewController(reviewIdx: reviewIdx)
+    } else {
+      self.coordinator?.showPopup()
+    }
   }
   
   func clickHeart(reviewIdx: Int) {

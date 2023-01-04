@@ -110,4 +110,8 @@ final class MyPageWishCell: UICollectionViewCell {
   func clickPerfume() -> Observable<UITapGestureRecognizer> {
     self.contentView.rx.tapGesture().when(.recognized).asObservable()
   }
+  
+  func clickReview() -> Observable<Void> {
+    self.reviewButton.rx.tap.asObservable()
+  }
 }

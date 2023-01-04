@@ -21,9 +21,10 @@ final class LoginViewModel {
   }
   
   struct Output {
-    var emailFieldText = BehaviorRelay<String?>(value: "")
-    var passwordFieldText = BehaviorRelay<String?>(value: "")
-    var doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
+    let emailFieldText = BehaviorRelay<String?>(value: "")
+    let passwordFieldText = BehaviorRelay<String?>(value: "")
+    let doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
+    let notCorrect = PublishRelay<Void>()
   }
   
   private weak var coordinator: LoginCoordinator?
@@ -62,10 +63,10 @@ final class LoginViewModel {
         guard let self = self else { return }
         self.loginUseCase.execute(email: self.email, password: self.password)
           .subscribe { loginInfo in
-            self.saveLoginInfoUseCase.execute(loginInfo: loginInfo)
+            self.saveLoginInfoUseCase.execute(loginInfo: loginInfo, email: self.email, password: self.password)
             self.coordinator?.finishFlow?()
           } onError: { error in
-            print("User Log: error \(error)")
+            output.notCorrect.accept(())
           }
           .disposed(by: disposeBag)
       })

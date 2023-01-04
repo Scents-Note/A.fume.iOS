@@ -32,6 +32,11 @@ class LoginViewController: UIViewController {
     $0.layer.backgroundColor = UIColor.grayCd.cgColor
   }
   
+  private let notCorrectLabel = UILabel().then {
+    $0.textColor = .brick
+    $0.font = .systemFont(ofSize: 12, weight: .regular)
+  }
+  
   private let noAccountLabel = UILabel().then {
     $0.text = "혹시 계정이 없으신가요?"
     $0.font = .notoSans(type: .regular, size: 14)
@@ -67,6 +72,10 @@ class LoginViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+    self.view.endEditing(true)
+  }
+  
 }
 
 extension LoginViewController {
@@ -94,10 +103,16 @@ extension LoginViewController {
       $0.top.equalTo(self.emailSection.snp.bottom).offset(42)
     }
     
+    self.container.addSubview(self.notCorrectLabel)
+    self.notCorrectLabel.snp.makeConstraints {
+      $0.left.right.equalToSuperview()
+      $0.top.equalTo(self.passwordSection.snp.bottom).offset(11)
+    }
+    
     self.container.addSubview(self.loginButton)
     self.loginButton.snp.makeConstraints {
       $0.left.right.equalToSuperview()
-      $0.top.equalTo(self.passwordSection.snp.bottom).offset(31)
+      $0.top.equalTo(self.notCorrectLabel.snp.bottom).offset(32)
       $0.height.equalTo(52)
     }
     
@@ -130,6 +145,13 @@ extension LoginViewController {
       .drive(onNext: { [weak self] isValid in
         self?.loginButton.isEnabled = isValid
         self?.loginButton.backgroundColor = isValid ? .blackText : .grayCd
+      })
+      .disposed(by: self.disposeBag)
+    
+    output?.notCorrect
+      .asDriver(onErrorJustReturn: ())
+      .drive(onNext: { [weak self] in
+        self?.notCorrectLabel.text = "입력된 아이디 또는 비밀번호가 올바르지 않습니다."
       })
       .disposed(by: self.disposeBag)
   }

@@ -15,12 +15,17 @@ final class SplashViewModel {
   // MARK: - Vars & Lets
   weak var coordinator: SplashCoordinator?
   private let loginUseCase: LoginUseCase
+  private let logoutUseCase: LogoutUseCase
   private let saveLoginInfoUseCase: SaveLoginInfoUseCase
   
   // MARK: - Life Cycle
-  init(coordinator: SplashCoordinator, loginUseCase: LoginUseCase, saveLoginInfoUseCase: SaveLoginInfoUseCase) {
+  init(coordinator: SplashCoordinator,
+       loginUseCase: LoginUseCase,
+       logoutUseCase: LogoutUseCase,
+       saveLoginInfoUseCase: SaveLoginInfoUseCase) {
     self.coordinator = coordinator
     self.loginUseCase = loginUseCase
+    self.logoutUseCase = logoutUseCase
     self.saveLoginInfoUseCase = saveLoginInfoUseCase
   }
   
@@ -32,11 +37,13 @@ final class SplashViewModel {
       .subscribe(onNext: { [weak self] loginInfo in
         if loginInfo.userIdx != -1 {
           Log(loginInfo.token)
-          self?.saveLoginInfoUseCase.execute(loginInfo: loginInfo)
+          self?.saveLoginInfoUseCase.execute(loginInfo: loginInfo, email: nil, password: nil)
         }
         self?.coordinator?.finishFlow?()
-      }, onError: { error in
+      }, onError: { [weak self] error in
         Log(error)
+        self?.logoutUseCase.execute()
+        self?.coordinator?.finishFlow?()
       })
       .disposed(by: disposeBag)
   }

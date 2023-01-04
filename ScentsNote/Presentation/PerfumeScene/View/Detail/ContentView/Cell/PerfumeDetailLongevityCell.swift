@@ -60,6 +60,7 @@ final class PerfumeDetailLongevityCell: UICollectionViewCell {
       $0.bottom.equalTo(self.longevityLabel.snp.top).offset(-8)
       $0.centerX.equalToSuperview()
       $0.width.equalTo(25)
+      $0.height.equalTo(0)
     }
     
     self.contentView.addSubview(self.percentLabel)
@@ -81,15 +82,8 @@ final class PerfumeDetailLongevityCell: UICollectionViewCell {
     self.durationLabel.textColor = isAccent ? .blackText : .darkGray7d
     self.durationLabel.font = .systemFont(ofSize: 11, weight: isAccent ? .bold : .regular)
     self.barView.backgroundColor = longevity.isAccent ? .SNDarkBeige1 : .pointBeige
-    if longevity.isEmpty {
-      self.barView.snp.makeConstraints {
-        $0.height.equalTo(100)
-      }
-      self.percentLabel.isHidden = true
-    } else {
-      self.barView.snp.makeConstraints {
-        $0.height.equalTo(longevity.percent)
-      }
+    self.barView.snp.updateConstraints {
+      $0.height.equalTo(longevity.percent)
     }
   }
 }

@@ -31,7 +31,8 @@ final class MenuCell: UICollectionViewCell {
   private func configureUI() {
     self.contentView.addSubview(self.menuLabel)
     self.menuLabel.snp.makeConstraints {
-      $0.top.bottom.left.equalToSuperview().inset(16)
+      $0.centerY.equalToSuperview()
+      $0.left.equalToSuperview().inset(16)
     }
     
     self.contentView.addSubview(self.dividerView)

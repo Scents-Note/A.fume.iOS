@@ -13,6 +13,7 @@ final class MyPageViewModel {
   struct ScrollInput {
     let reviewCellDidTapEvent = PublishRelay<Int>()
     let perfumeCellDidTapEvent = PublishRelay<Int>()
+    let reviewButtonDidTapEvent = PublishRelay<PerfumeInMyPage>()
     let loginButtonDidTapEvent = PublishRelay<Void>()
 
   }
@@ -126,6 +127,18 @@ final class MyPageViewModel {
       })
       .disposed(by: disposeBag)
     
+    scrollInput.reviewButtonDidTapEvent
+      .subscribe(onNext: { [weak self] perfume in
+        if perfume.reviewIdx == 0 {
+          let perfumeDetail = self?.getPerfumeDetail(perfume: perfume)
+          guard let perfumeDetail = perfumeDetail else { return }
+          self?.coordinator?.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
+        } else {
+          self?.coordinator?.runPerfumeReviewFlow(reviewIdx: perfume.reviewIdx)
+        }
+      })
+      .disposed(by: disposeBag)
+    
     scrollInput.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.onOnboardingFlow?()
@@ -193,6 +206,9 @@ final class MyPageViewModel {
       .disposed(by: disposeBag)
   }
   
+  private func getPerfumeDetail(perfume: PerfumeInMyPage) -> PerfumeDetail {
+    PerfumeDetail(perfumeIdx: perfume.idx, name: perfume.name, brandName: perfume.brandName, story: "", abundanceRate: "", volumeAndPrice: [], imageUrls: [perfume.imageUrl], score: 0, seasonal: [], sillage: [], longevity: [], gender: [], isLiked: false, Keywords: [], noteType: 0, ingredients: [], reviewIdx: 0)
+  }
   
 }
 

@@ -44,6 +44,9 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   
   func runPerfumeReviewFlow(perfumeDetail: PerfumeDetail) {
     let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+    coordinator.runPerfumeDetailFlow = { [unowned self] perfumeIdx in
+      self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
+    }
     coordinator.finishFlow = { [unowned self, unowned coordinator] in
       self.navigationController.popViewController(animated: true)
       self.removeDependency(coordinator)

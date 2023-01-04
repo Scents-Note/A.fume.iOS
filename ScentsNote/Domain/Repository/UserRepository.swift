@@ -14,7 +14,7 @@ protocol UserRepository {
   // MARK: - Login
   func login(email: String, password: String) -> Observable<LoginInfo>
   func logout()
-  func saveLoginInfo(loginInfo: LoginInfo)
+  func saveLoginInfo(loginInfo: LoginInfo, email: String?, password: String?)
   
   // MARK: - SignUp
   func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo>
@@ -22,7 +22,7 @@ protocol UserRepository {
   func checkDuplicateNickname(nickname: String) -> Observable<Bool>
   
   // MARK: - Survey
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool>
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<String>
 
   // MARK: - My Page
   func fetchPerfumesInMyPage(userIdx: Int) -> Observable<[PerfumeInMyPage]>

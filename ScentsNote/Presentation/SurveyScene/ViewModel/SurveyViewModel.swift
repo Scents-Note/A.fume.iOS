@@ -125,8 +125,6 @@ final class SurveyViewModel {
       }
       .disposed(by: disposeBag)
     
-    
-    
     return output
   }
   
@@ -146,10 +144,11 @@ final class SurveyViewModel {
       .map { $0.seriesIdx }
     
     self.registerSurveyUseCase.execute(perfumeList: perfumeListLiked, keywordList: keywordListLiked, seriesList: seriesListLiked)
-      .subscribe { [weak self] _ in
+      .subscribe { [weak self] a in
+        Log(a)
         self?.coordinator?.finishFlow?()
       } onError: { error in
-        print("User Log: error - \(error)")
+        Log(error)
       }
       .disposed(by: disposeBag)
   }

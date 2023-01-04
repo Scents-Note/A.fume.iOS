@@ -14,7 +14,7 @@ final class RegisterSurveyUseCase {
     self.userRepository = userRepository
   }
   
-  func execute(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool> {
+  func execute(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<String> {
     self.userRepository.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
 }

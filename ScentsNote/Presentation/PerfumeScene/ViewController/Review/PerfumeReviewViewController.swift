@@ -40,12 +40,12 @@ final class PerfumeReviewViewController: UIViewController {
     $0.font = .nanumMyeongjo(type: .regular, size: 14)
   }
   private let scoreLabel = UILabel().then {
-    $0.text = "별점."
+    $0.text = "별점. (필수)"
     $0.textColor = .blackText
     $0.font = .nanumMyeongjo(type: .regular, size: 14)
   }
   private let expressLabel = UILabel().then {
-    $0.text = "향에 대한 기록."
+    $0.text = "향을 자유롭게 표현해보세요. (필수)"
     $0.textColor = .blackText
     $0.font = .nanumMyeongjo(type: .regular, size: 14)
   }
@@ -132,8 +132,8 @@ final class PerfumeReviewViewController: UIViewController {
     $0.setBackgroundColor(color: .darkGray7d)
   }
   private let updateButton = DoneButton(title: "수정 완료")
-
-
+  
+  
   // CollectionView
   private let keywordCollectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewKeywordLayout).then {
     $0.backgroundColor = .lightGray
@@ -182,7 +182,7 @@ final class PerfumeReviewViewController: UIViewController {
   private let dividerViewUnderKeyword = UIView().then { $0.backgroundColor = .blackText }
   private let dividerViewUnderSillage = UIView().then { $0.backgroundColor = .blackText }
   private let dividerViewUnderGender = UIView().then { $0.backgroundColor = .blackText }
- 
+  
   
   // MARK: - Vars & Lets
   var viewModel: PerfumeReviewViewModel?
@@ -192,6 +192,7 @@ final class PerfumeReviewViewController: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    self.addTapGesture()
     self.configureUI()
     self.bindViewModel()
   }
@@ -206,10 +207,26 @@ final class PerfumeReviewViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+    self.view.endEditing(true)
+  }
+  
+  private func addTapGesture() {
+    let singleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.MyTapMethod))
+    singleTapGestureRecognizer.numberOfTapsRequired = 1
+    singleTapGestureRecognizer.isEnabled = true
+    singleTapGestureRecognizer.cancelsTouchesInView = false
+    self.scrollView.addGestureRecognizer(singleTapGestureRecognizer)
+  }
+  
+  @objc func MyTapMethod(sender: UITapGestureRecognizer) {
+    self.view.endEditing(true)
+  }
   
   // MARK: - Configure UI
   private func configureUI() {
     self.configureNavigation()
+    self.scrollView.delegate = self
     self.keywordCollectionView.delegate = self
     self.view.backgroundColor = .lightGray
     
@@ -300,7 +317,7 @@ final class PerfumeReviewViewController: UIViewController {
     self.noteTextField.snp.makeConstraints {
       $0.top.equalTo(self.expressLabel.snp.bottom).offset(16)
       $0.left.right.equalToSuperview().inset(16)
-      $0.height.equalTo(100)
+      $0.height.greaterThanOrEqualTo(100)
     }
     
     self.containerView.addSubview(self.dividerViewUnderExpress)
@@ -477,9 +494,10 @@ final class PerfumeReviewViewController: UIViewController {
     starView.didFinishTouchingCosmos = { rating in
       starViewUpdated.accept(rating)
     }
-
+    
     let input = PerfumeReviewViewModel.Input(
-      imageContainerDidTapEvent: imageContainerView.rx.tapGesture().when(.recognized).asObservable(),
+      imageContainerDidTapEvent: self.imageContainerView.rx.tapGesture().when(.recognized).asObservable(),
+      detailStackViewDidTapEvent: self.detailStackView.rx.tapGesture().when(.recognized).asObservable().map { _ in},
       starViewDidUpdateEvent: starViewUpdated,
       noteTextFieldDidEditEvent: self.noteTextField.rx.text.orEmpty.asObservable(),
       keywordAddButtonDidTapEvent: self.keywordAddButton.rx.tap.asObservable(),
@@ -510,7 +528,7 @@ final class PerfumeReviewViewController: UIViewController {
         self?.popViewController()
       })
       .disposed(by: self.disposeBag)
-
+    
     output?.reviewDetail
       .asDriver()
       .drive(onNext: { [weak self] reviewDetail in
@@ -527,50 +545,44 @@ final class PerfumeReviewViewController: UIViewController {
   }
   
   private func bindKeyword(output: PerfumeReviewViewModel.Output?) {
-//    rx.methodInvoked(#selector(viewWillLayoutSubviews))
-//      .subscribe(onNext: { [weak self] _ in
-//        self?.updateViewHeight()
-//      })
-//      .disposed(by: self.disposeBag)
-    
     output?.keywords
       .observe(on: MainScheduler.instance)
       .bind(to: self.keywordCollectionView.rx.items(cellIdentifier: "SurveyKeywordCollectionViewCell", cellType: SurveyKeywordCollectionViewCell.self)) { _, keyword, cell in
-      cell.updateUI(keyword: keyword)
-    }
-    .disposed(by: self.disposeBag)
+        cell.updateUI(keyword: keyword)
+      }
+      .disposed(by: self.disposeBag)
   }
   
   private func bindLongevity(output: PerfumeReviewViewModel.Output?) {
     output?.longevities
       .bind(to: self.longevityCollectionView.rx.items(cellIdentifier: "ReviewLongevityCell", cellType: ReviewLongevityCell.self)) { _, longevity, cell in
-      cell.updateUI(longevity: longevity)
-    }
-    .disposed(by: self.disposeBag)
+        cell.updateUI(longevity: longevity)
+      }
+      .disposed(by: self.disposeBag)
   }
- 
+  
   private func bindSillage(output: PerfumeReviewViewModel.Output?) {
     output?.sillages
       .bind(to: self.sillageCollectionView.rx.items(cellIdentifier: "ReviewGenderCell", cellType: ReviewGenderCell.self)) { _, sillage, cell in
-      cell.updateUI(sillage: sillage)
-    }
-    .disposed(by: self.disposeBag)
+        cell.updateUI(sillage: sillage)
+      }
+      .disposed(by: self.disposeBag)
   }
   
   private func bindSeasonal(output: PerfumeReviewViewModel.Output?) {
     output?.seasonals
       .bind(to: self.seasonalCollectionView.rx.items(cellIdentifier: "ReviewSeasonalCell", cellType: ReviewSeasonalCell.self)) { _, seasonal, cell in
-      cell.updateUI(seasonal: seasonal)
-    }
-    .disposed(by: self.disposeBag)
+        cell.updateUI(seasonal: seasonal)
+      }
+      .disposed(by: self.disposeBag)
   }
   
   private func bindGender(output: PerfumeReviewViewModel.Output?) {
     output?.genders
       .bind(to: self.genderCollectionView.rx.items(cellIdentifier: "ReviewGenderCell", cellType: ReviewGenderCell.self)) { _, gender, cell in
-      cell.updateUI(gender: gender)
-    }
-    .disposed(by: self.disposeBag)
+        cell.updateUI(gender: gender)
+      }
+      .disposed(by: self.disposeBag)
   }
   
   private func bindShareButton(output: PerfumeReviewViewModel.Output?) {
@@ -651,3 +663,8 @@ extension PerfumeReviewViewController: UICollectionViewDelegateFlowLayout {
   }
 }
 
+extension PerfumeReviewViewController: UIScrollViewDelegate {
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView){
+    self.view.endEditing(true)
+  }
+}

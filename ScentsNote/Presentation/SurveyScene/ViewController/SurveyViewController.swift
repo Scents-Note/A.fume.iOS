@@ -246,7 +246,7 @@ extension SurveyViewController {
   
 }
 extension SurveyViewController: UICollectionViewDataSource {
-
+  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     if collectionView.frame.origin.x == 0 {
       return self.viewModel?.perfumes.count ?? 0
@@ -256,7 +256,15 @@ extension SurveyViewController: UICollectionViewDataSource {
       return self.viewModel?.series.count ?? 0
     }
   }
-
+  
+//  func collectionView(_ collectionView: UICollectionView, observedEvent: Event<Element>) {
+//    UIView.performWithoutAnimation {
+//      super.collectionView(collectionView, observedEvent: observedEvent)
+//    }
+//  }
+  
+  
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     if collectionView.frame.origin.x == 0 {
       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SurveyPerfumeCollectionViewCell.identifier, for: indexPath) as? SurveyPerfumeCollectionViewCell else {
@@ -264,9 +272,11 @@ extension SurveyViewController: UICollectionViewDataSource {
       }
       let perfume = self.viewModel?.perfumes[indexPath.row]
       cell.updateUI(perfume: perfume)
-      cell.clickPerfume = {
-        self.viewModel?.perfumes[indexPath.row].isLiked.toggle()
-        self.surveyScrollView.surveyPerfumeView.reloadItems(at: [indexPath])
+      cell.clickPerfume = { [weak self] in
+        self?.viewModel?.perfumes[indexPath.row].isLiked.toggle()
+        UIView.performWithoutAnimation {
+          self?.surveyScrollView.surveyPerfumeView.reloadItems(at: [indexPath])
+        }
       }
       return cell
     } else if collectionView.frame.origin.x == UIScreen.main.bounds.width {
@@ -278,7 +288,9 @@ extension SurveyViewController: UICollectionViewDataSource {
       cell.clickKeyword()
         .subscribe(onNext: { [weak self] _ in
           self?.viewModel?.keywords[indexPath.row].isSelected.toggle()
-          self?.surveyScrollView.surveyKeywordView.reloadItems(at: [indexPath])
+          UIView.performWithoutAnimation {
+            self?.surveyScrollView.surveyKeywordView.reloadItems(at: [indexPath])
+          }
         })
         .disposed(by: cell.disposeBag)
       return cell
@@ -288,9 +300,11 @@ extension SurveyViewController: UICollectionViewDataSource {
       }
       let series = self.viewModel?.series[indexPath.row]
       cell.updateUI(series: series)
-      cell.clickSeries = {
-        self.viewModel?.series[indexPath.row].isLiked!.toggle()
-        self.surveyScrollView.surveySeriesView.reloadItems(at: [indexPath])
+      cell.clickSeries = { [weak self] in
+        self?.viewModel?.series[indexPath.row].isLiked!.toggle()
+        UIView.performWithoutAnimation {
+          self?.surveyScrollView.surveySeriesView.reloadItems(at: [indexPath])
+        }
       }
       return cell
     }
@@ -298,9 +312,23 @@ extension SurveyViewController: UICollectionViewDataSource {
 }
 
 extension SurveyViewController: UICollectionViewDelegateFlowLayout {
-
+  
+  
+  
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    return CGSize(width: self.view.frame.width, height: SurveyPerfumeCollectionViewCell.height)
+    
+    guard let _ = collectionView.dequeueReusableCell(withReuseIdentifier: SurveyKeywordCollectionViewCell.identifier, for: indexPath) as? SurveyKeywordCollectionViewCell else {
+      return CGSize(width: self.view.frame.width, height: SurveyPerfumeCollectionViewCell.height)
+    }
+    
+    let label = UILabel().then {
+      $0.font = .notoSans(type: .regular, size: 15)
+      $0.text = self.viewModel?.keywords[indexPath.row].name ?? ""
+      $0.sizeToFit()
+    }
+    let size = label.frame.size
+    
+    return CGSize(width: size.width + 50, height: 42)
   }
 }
 

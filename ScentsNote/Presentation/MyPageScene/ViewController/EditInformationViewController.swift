@@ -38,7 +38,7 @@ final class EditInformationViewController: UIViewController {
   
   private let withdrawalButton = UIButton().then {
     $0.semanticContentAttribute = .forceRightToLeft
-    $0.setImage(.searchInactive, for: .normal)
+    $0.setImage(.arrowRight, for: .normal)
     $0.setTitle("회원 탈퇴", for: .normal)
     $0.setTitleColor(.darkGray7d, for: .normal)
     $0.titleLabel?.font = .notoSans(type: .regular, size: 14)
@@ -116,6 +116,7 @@ final class EditInformationViewController: UIViewController {
   }
   
   private func configureNavigation() {
+    self.setBackButton()
     self.setNavigationTitle(title: "내 정보 수정")
   }
   
@@ -127,7 +128,8 @@ final class EditInformationViewController: UIViewController {
       manButtonDidTapEvent: self.genderView.clickManButton(),
       womanButtonDidTapEvent: self.genderView.clickWomanButton(),
       birthButtonDidTapEvent: self.birthButton.rx.tap.asObservable(),
-      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable()
+      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
+      withdrawalButtonDidTapEvent: self.withdrawalButton.rx.tap.asObservable()
     )
     let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
     self.bindNickname(output: output)

@@ -44,6 +44,7 @@ class PerfumeDetailStoryContentView: UIView, UIContentView {
   init(_ configuration: UIContentConfiguration) {
     self.configuration = configuration
     super.init(frame: .zero)
+    self.backgroundColor = .white
     
     self.addSubview(self.emptyLabel)
     self.emptyLabel.snp.makeConstraints {
@@ -63,7 +64,6 @@ class PerfumeDetailStoryContentView: UIView, UIContentView {
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
     self.contentLabel.text = configuration.text
-    Log(configuration.text)
     if configuration.text?.isEmpty == true {
       self.emptyLabel.text = "정보를 준비 중입니다."
     } else {

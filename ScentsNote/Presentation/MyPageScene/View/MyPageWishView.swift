@@ -148,6 +148,12 @@ final class MyPageWishView: UIView {
             self?.viewModel.scrollInput.perfumeCellDidTapEvent.accept(perfume.idx)
           })
           .disposed(by: cell.disposeBag)
+        cell.clickReview()
+          .subscribe(onNext: { [weak self] _ in
+            self?.viewModel.scrollInput.reviewButtonDidTapEvent.accept(perfume)
+          })
+          .disposed(by: cell.disposeBag)
+
       }
       .disposed(by: self.disposeBag)
   }

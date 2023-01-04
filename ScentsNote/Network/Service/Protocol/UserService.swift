@@ -19,7 +19,7 @@ protocol UserService {
   func checkDuplicateNickname(nickname: String) -> Observable<Bool>
   
   // MARK: - Survey
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool>
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<String>
   
   // MARK: - My Page
   func fetchPerfumesInMyPage(userIdx: Int) -> Observable<ListInfo<PerfumeInMyPageResponseDTO>>

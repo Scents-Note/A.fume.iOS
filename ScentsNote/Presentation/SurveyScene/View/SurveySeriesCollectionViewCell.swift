@@ -60,6 +60,11 @@ final class SurveySeriesCollectionViewCell: UICollectionViewCell {
     self.bindUI()
   }
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    self.imageView.image = nil
+  }
+  
   func configureUI(){
     
     self.contentView.addSubview(self.imageBackground)

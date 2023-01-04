@@ -31,12 +31,18 @@ final class HomeHeaderView: UICollectionReusableView {
     super.init(frame: frame)
     self.configureUI()
   }
+  
   required init?(coder: NSCoder) {
     fatalError()
   }
   
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    self.underLineView.isHidden = false
+    self.contentLabel.isHidden = false
+  }
+  
   private func configureUI() {
-    
     self.addSubview(self.underLineView)
     self.underLineView.snp.makeConstraints {
       $0.top.equalToSuperview()
@@ -47,7 +53,7 @@ final class HomeHeaderView: UICollectionReusableView {
     
     self.addSubview(self.titleLabel)
     self.titleLabel.snp.makeConstraints {
-      $0.top.equalTo(self.underLineView.snp.bottom).offset(12)
+      $0.top.equalToSuperview().offset(12)
       $0.left.equalToSuperview().offset(20)
     }
     
@@ -63,15 +69,17 @@ final class HomeHeaderView: UICollectionReusableView {
   func updateUI(title: String, content: String?) {
     self.titleLabel.text = title
     guard let content = content else {
-      self.titleLabel.snp.makeConstraints{
+      self.titleLabel.snp.updateConstraints {
         $0.top.equalToSuperview().offset(24)
+        $0.left.equalToSuperview().offset(0)
       }
       self.underLineView.isHidden = true
       self.contentLabel.isHidden = true
       return
     }
-    self.titleLabel.snp.makeConstraints{
-      $0.top.equalTo(self.underLineView.snp.bottom).offset(12)
+    self.titleLabel.snp.updateConstraints {
+      $0.top.equalToSuperview().offset(12)
+      $0.left.equalToSuperview().offset(20)
     }
     self.contentLabel.text = content
     

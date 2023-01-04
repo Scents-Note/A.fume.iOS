@@ -178,7 +178,6 @@ final class HomeViewModel {
     .disposed(by: disposeBag)
     
     perfumesRecent.skip(1).withLatestFrom(output.homeDatas){ [weak self] perfumes, homeDatas in
-      Log(perfumes)
       if self?.isLoggedIn == true && perfumes.count != 0 {
         let updatedDatas = homeDatas.map {
           if case .recent = $0.model {

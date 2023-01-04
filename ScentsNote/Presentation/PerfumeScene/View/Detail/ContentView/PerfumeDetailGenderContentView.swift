@@ -61,7 +61,7 @@ class PerfumeDetailGenderContentView: UIView, UIContentView {
     guard let configuration = configuration as? Configuration else { return }
     
     let genders = configuration.genders
-    let degrees = genders.map { CGFloat($0.percent) }.map {$0 * 36 / 10}
+    let degrees = self.getDegrees(genders: genders)
     self.genders.accept(genders)
     self.seasonalPieChartView.drawPieChart(degrees: degrees)
   }
@@ -90,6 +90,24 @@ class PerfumeDetailGenderContentView: UIView, UIContentView {
         cell.updateUI(gender: gender)
       }
       .disposed(by: self.disposeBag)
+  }
+  
+  func getDegrees(genders: [Gender]) -> [CGFloat] {
+    var list: [CGFloat] = []
+    var total = 0
+    for (idx, gender) in genders.enumerated() {
+      if idx == genders.count - 1 {
+        if gender.percent != 0 || total != 0 {
+          list += [CGFloat(100 - total) * 36 / 10]
+        } else {
+          list += [CGFloat(0)]
+        }
+      } else {
+        total += gender.percent
+        list += [CGFloat(gender.percent) * 36 / 10]
+      }
+    }
+    return list
   }
 }
 

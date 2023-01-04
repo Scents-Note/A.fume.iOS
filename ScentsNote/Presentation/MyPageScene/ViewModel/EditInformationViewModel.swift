@@ -17,6 +17,7 @@ final class EditInformationViewModel {
     let womanButtonDidTapEvent: Observable<Void>
     let birthButtonDidTapEvent: Observable<Void>
     let doneButtonDidTapEvent: Observable<Void>
+    let withdrawalButtonDidTapEvent: Observable<Void>
   }
   
   struct Output {
@@ -135,6 +136,12 @@ final class EditInformationViewModel {
                                                 gender: gender.value,
                                                 birth: birth.value),
                              disposeBag: disposeBag)
+      })
+      .disposed(by: disposeBag)
+    
+    input.withdrawalButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.showWebViewController(with: WebURL.withdrawal)
       })
       .disposed(by: disposeBag)
 

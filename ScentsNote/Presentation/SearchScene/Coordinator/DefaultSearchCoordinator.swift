@@ -31,7 +31,36 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
     coordinator.runOnboardingFlow = runOnboardingFlow
+    coordinator.runPerfumeDetailFlow = { [unowned self] perfumeIdx in
+      self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
+    }
+    coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
+      self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
+    }
+    coordinator.runPerfumeReviewFlowWithReviewIdx = { [unowned self] reviewIdx in
+      self.runPerfumeReviewFlow(reviewIdx: reviewIdx)
+    }
     coordinator.start(perfumeIdx: perfumeIdx)
+    self.addDependency(coordinator)
+  }
+  
+  func runPerfumeReviewFlow(perfumeDetail: PerfumeDetail) {
+    let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(perfumeDetail: perfumeDetail)
+    self.addDependency(coordinator)
+  }
+  
+  func runPerfumeReviewFlow(reviewIdx: Int) {
+    let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(reviewIdx: reviewIdx)
     self.addDependency(coordinator)
   }
   

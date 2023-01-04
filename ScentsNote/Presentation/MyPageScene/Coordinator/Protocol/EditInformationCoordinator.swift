@@ -13,4 +13,5 @@ protocol EditInformationCoordinator: AnyObject {
   
   func showBirthPopupViewController(with birth: Int)
   func hideBirthPopupViewController()
+  func showWebViewController(with url: String)
 }

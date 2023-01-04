@@ -8,7 +8,6 @@
 import UIKit
 
 final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationCoordinator {
-  
   var finishFlow: (() -> Void)?
   
   var editInfoViewController: EditInformationViewController
@@ -51,5 +50,15 @@ final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationC
   
   func hideBirthPopupViewController() {
     self.navigationController.dismiss(animated: false)
+  }
+  
+  func showWebViewController(with url: String) {
+    let coordinator = DefaultWebCoordinator(self.navigationController)
+    coordinator.finishFlow = { [unowned self, unowned coordinator] in
+      self.navigationController.popViewController(animated: true)
+      self.removeDependency(coordinator)
+    }
+    coordinator.start(with: url)
+    self.addDependency(coordinator)
   }
 }

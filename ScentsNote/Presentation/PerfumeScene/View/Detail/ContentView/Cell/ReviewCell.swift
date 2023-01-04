@@ -151,6 +151,7 @@ final class ReviewCell: UICollectionViewCell {
     self.contentLabel.snp.makeConstraints {
       $0.top.equalTo(self.ageAndGenderLabel.snp.bottom).offset(12)
       $0.left.equalTo(self.quotesImageView)
+      $0.right.equalToSuperview().offset(-16)
     }
     
     self.containerView.addSubview(self.starView)

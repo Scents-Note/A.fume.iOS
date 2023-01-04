@@ -47,7 +47,13 @@ final class SignUpBirthViewModel {
         self.signUpInfo.birth = self.birth.value
         self.signUpUseCase.execute(signUpInfo: self.signUpInfo)
           .subscribe { loginInfo in
-            self.saveLoginInfoUseCase.execute(loginInfo: loginInfo)
+            let modified = LoginInfo(userIdx: loginInfo.userIdx,
+                                     nickname: self.signUpInfo.nickname,
+                                     gender: self.signUpInfo.gender,
+                                     birth: self.signUpInfo.birth,
+                                     token: loginInfo.token,
+                                     refreshToken: loginInfo.refreshToken)
+            self.saveLoginInfoUseCase.execute(loginInfo: modified, email: self.signUpInfo.email!, password: self.signUpInfo.password!)
             self.coordinator?.finishFlow?()
           } onError: { error in
             Log(error)

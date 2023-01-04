@@ -23,6 +23,7 @@ final class PerfumeReviewViewModel {
   
   struct Input {
     let imageContainerDidTapEvent: Observable<UITapGestureRecognizer>
+    let detailStackViewDidTapEvent: Observable<Void>
     let starViewDidUpdateEvent: PublishRelay<Double>
     let noteTextFieldDidEditEvent: Observable<String>
     let keywordAddButtonDidTapEvent: Observable<Void>
@@ -165,7 +166,19 @@ final class PerfumeReviewViewModel {
                          pop: PublishRelay<Void>,
                          disposeBag: DisposeBag) {
     
+    // TODO: 통일
     input.imageContainerDidTapEvent
+      .subscribe(onNext: { [weak self] _ in
+        if self?.isPerfumeDetailPushed() == true {
+          self?.coordinator?.finishFlow?()
+        } else {
+          self?.coordinator?.runPerfumeDetailFlow?(self?.perfumeIdx ?? 0)
+          pop.accept(())
+        }
+      })
+      .disposed(by: disposeBag)
+    
+    input.detailStackViewDidTapEvent
       .subscribe(onNext: { [weak self] _ in
         if self?.isPerfumeDetailPushed() == true {
           self?.coordinator?.finishFlow?()

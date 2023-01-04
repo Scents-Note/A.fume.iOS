@@ -66,6 +66,8 @@ final class SurveyPerfumeCollectionViewCell: UICollectionViewCell {
   }
   
   override func prepareForReuse() {
+    super.prepareForReuse()
+    self.imageView.image = nil
     self.selectedBackground.isHidden = true
     self.heartImageView.isHidden = true
   }

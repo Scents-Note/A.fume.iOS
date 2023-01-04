@@ -108,6 +108,7 @@ struct CollectionViewLayoutFactory {
     
     let section = NSCollectionLayoutSection(group: group)
     section.contentInsets = NSDirectionalEdgeInsets(top: 34, leading: 16, bottom: 34, trailing: 16)
+    section.interGroupSpacing = 16
     
     return UICollectionViewCompositionalLayout(section: section)
   }

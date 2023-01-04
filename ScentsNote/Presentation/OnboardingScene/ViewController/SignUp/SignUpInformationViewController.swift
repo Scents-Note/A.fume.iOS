@@ -47,6 +47,10 @@ final class SignUpInformationViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?){
+    self.view.endEditing(true)
+  }
+  
 }
 
 extension SignUpInformationViewController {

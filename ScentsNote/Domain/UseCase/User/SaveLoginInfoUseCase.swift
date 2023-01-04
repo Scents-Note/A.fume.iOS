@@ -12,7 +12,7 @@ final class SaveLoginInfoUseCase {
     self.userRepository = userRepository
   }
   
-  func execute(loginInfo: LoginInfo) {
-    self.userRepository.saveLoginInfo(loginInfo: loginInfo)
+  func execute(loginInfo: LoginInfo, email: String?, password: String?) {
+    self.userRepository.saveLoginInfo(loginInfo: loginInfo, email: email, password: password)
   }
 }

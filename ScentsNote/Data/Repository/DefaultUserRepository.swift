@@ -45,7 +45,7 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.checkDuplicateNickname(nickname: nickname)
   }
   
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool> {
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<String> {
     return self.userService.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList)
   }
   
@@ -70,7 +70,7 @@ final class DefaultUserRepository: UserRepository {
       .map { $0.map {$0.toDomain() }}
   }
   
-  func saveLoginInfo(loginInfo: LoginInfo) {
+  func saveLoginInfo(loginInfo: LoginInfo, email: String?, password: String?) {
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.token, value: loginInfo.token)
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.refreshToken, value: loginInfo.refreshToken)
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.userIdx, value: loginInfo.userIdx)
@@ -78,6 +78,13 @@ final class DefaultUserRepository: UserRepository {
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.gender, value: loginInfo.gender)
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.birth, value: loginInfo.birth)
     self.userDefaultsPersitenceService.set(key: UserDefaultKey.isLoggedIn, value: true)
+    if let email = email {
+      self.userDefaultsPersitenceService.set(key: UserDefaultKey.email, value: email)
+    }
+    if let password = password {
+      self.userDefaultsPersitenceService.set(key: UserDefaultKey.password, value: password)
+    }
+    
   }
   
   func set(key: String, value: Any?) {

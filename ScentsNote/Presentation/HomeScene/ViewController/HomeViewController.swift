@@ -164,7 +164,6 @@ final class HomeViewController: UIViewController {
       if kind == UICollectionView.elementKindSectionHeader {
         let section = collectionView.dequeueReusableHeaderView(HomeHeaderView.self, for: indexPath)
         switch self.dataSource.sectionModels[indexPath.section].model {
-          
         case let .recommendation(data):
           section.updateUI(title: data.title, content: data.content)
         case let .popularity(data):

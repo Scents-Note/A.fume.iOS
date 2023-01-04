@@ -61,7 +61,7 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
     guard let configuration = configuration as? Configuration else { return }
     
     let seasonals = configuration.seasonals
-    let degrees = seasonals.map { CGFloat($0.percent) }.map {$0 * 36 / 10}
+    let degrees = self.getDegrees(seasonals: seasonals)
     self.seasonals.accept(seasonals)
     self.seasonalPieChartView.drawPieChart(degrees: degrees)
   }
@@ -90,6 +90,25 @@ class PerfumeDetailSeasonalContentView: UIView, UIContentView {
         cell.updateUI(seasonal: seasonal)
       }
       .disposed(by: self.disposeBag)
+  }
+  
+  func getDegrees(seasonals: [Seasonal]) -> [CGFloat] {
+    var list: [CGFloat] = []
+    var total = 0
+    for (idx, seasonal) in seasonals.enumerated() {
+      if idx == seasonals.count - 1 {
+        /// 마지막 index제외 0이 아닌게 있거나, 마지막 인덱스가 0이 아니거나
+        if seasonal.percent != 0 || total != 0 {
+          list += [CGFloat(100 - total) * 36 / 10]
+        } else {
+          list += [CGFloat(0)]
+        }
+      } else {
+        total += seasonal.percent
+        list += [CGFloat(seasonal.percent) * 36 / 10]
+      }
+    }
+    return list
   }
 }
 

@@ -29,8 +29,8 @@ final class DefaultUserService: ScentsNoteService, UserService {
     requestObject(.checkDuplicateNickname(nickname: nickname))
   }
   
-  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<Bool> {
-    requestObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList))
+  func registerSurvey(perfumeList: [Int], keywordList: [Int], seriesList: [Int]) -> Observable<String> {
+    requestPlainObject(.registerSurvey(perfumeList: perfumeList, keywordList: keywordList, seriesList: seriesList))
   }
   
   func fetchPerfumesInMyPage(userIdx: Int) -> Observable<ListInfo<PerfumeInMyPageResponseDTO>> {
