@@ -9,7 +9,7 @@ import Foundation
 
 struct ReviewInPerfumeDetailResponseDTO: Decodable {
   let reviewIdx: Int
-  let score: Float
+  let score: Double
   let access: Bool
   let content: String
   let likeCount: Int
@@ -31,6 +31,7 @@ extension ReviewInPerfumeDetailResponseDTO {
                           isLiked: self.isLiked,
                           gender: self.userGender,
                           age: self.age,
-                          nickname: self.nickname)
+                          nickname: self.nickname,
+                          isReported: self.isReported)
   }
 }

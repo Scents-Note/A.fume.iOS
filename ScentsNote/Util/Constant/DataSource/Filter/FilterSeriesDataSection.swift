@@ -10,7 +10,7 @@ import RxDataSources
 struct FilterSeriesDataSection {
   typealias Model = AnimatableSectionModel<String, Item>
   
-  struct Item: Equatable, Hashable, IdentifiableType {
+  struct Item: Hashable, IdentifiableType {
     var identity: String {
       self.ingredient.id
     }

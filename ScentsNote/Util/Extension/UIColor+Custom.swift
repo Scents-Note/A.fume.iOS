@@ -14,8 +14,11 @@ extension UIColor {
   static var bgSurveySelected: UIColor { return UIColor(red: 200 / 255, green: 187 / 255, blue: 182 / 255, alpha: 0.9) }
   
   static var black1d: UIColor { return UIColor(white: 29 / 255, alpha: 1) }
+  static var black42: UIColor { return UIColor(white: 42 / 255, alpha: 1) }
   static var darkGray7d: UIColor { return UIColor(white: 125 / 255, alpha: 1) }
   static var grayCd: UIColor { return UIColor(white: 205 / 255, alpha: 1) }
+  static var lightGray185: UIColor { return UIColor(white: 185 / 255, alpha: 1) }
+  static var lightGray171: UIColor { return UIColor(white: 171 / 255, alpha: 1) }
   static var lightGray219: UIColor { return UIColor(white: 219 / 255, alpha: 1) }
   static var lightGray: UIColor { return UIColor(white: 249 / 255, alpha: 1) }
   static var lightGray2: UIColor { return UIColor(white: 246 / 255, alpha: 1) }
@@ -23,6 +26,7 @@ extension UIColor {
   
   static var SNLightBeige1: UIColor { return UIColor(red: 200 / 255, green: 187 / 255, blue: 182 / 255, alpha: 1) }
   static var SNLightBeige2: UIColor { return UIColor(red: 215 / 255, green: 204 / 255, blue: 200 / 255, alpha: 1) }
+  static var SNLightBeige239: UIColor { return UIColor(red: 239 / 255, green: 235 / 255, blue: 233 / 255, alpha: 1) }
   static var SNDarkBeige1: UIColor { return UIColor(red: 161 / 255, green: 136 / 255, blue: 127 / 255, alpha: 1) }
   static var SNDarkBeige2: UIColor { return UIColor(red: 117 / 255, green: 99 / 255, blue: 93 / 255, alpha: 1) }
 }

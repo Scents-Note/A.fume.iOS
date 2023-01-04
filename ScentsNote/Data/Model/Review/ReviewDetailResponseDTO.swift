@@ -31,7 +31,7 @@ extension ReviewDetailResponseDTO {
                  content: self.content,
                  reviewIdx: self.reviewIdx,
                  perfume: self.Perfume.toDomain(),
-                 keywords: self.KeywordList.map{ $0.toDomain() },
+                 keywords: self.KeywordList.map{ $0.toDomain() }.map { Keyword(idx: $0.idx, name: $0.name, isSelected: true) },
                  brand: self.Brand.toDomain(),
                  access: self.access)
   }

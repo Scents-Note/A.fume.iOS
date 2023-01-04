@@ -12,6 +12,7 @@ import Then
 final class Tabview: UIView {
   
   // MARK: - UI
+  private let tabCnt: Int
   private lazy var tabStackView = UIStackView().then {
     $0.alignment = .fill
     $0.axis = .horizontal
@@ -22,6 +23,7 @@ final class Tabview: UIView {
   
   // MARK: - Life Cycle
   init(buttons: [UIButton], highlight: UIView) {
+    self.tabCnt = buttons.count
     super.init(frame: .zero)
     self.setupView(buttons: buttons)
     self.configureUI(buttons: buttons, highlightView: highlight)
@@ -56,11 +58,9 @@ final class Tabview: UIView {
     
     self.addSubview(highlightView)
     highlightView.snp.makeConstraints {
-      $0.width.equalTo(Int(UIScreen.main.bounds.width) / buttons.count)
+      $0.width.equalTo(Int(UIScreen.main.bounds.width) / self.tabCnt)
       $0.bottom.equalTo(self.tabStackView)
       $0.height.equalTo(4)
     }
-    
   }
-  
 }

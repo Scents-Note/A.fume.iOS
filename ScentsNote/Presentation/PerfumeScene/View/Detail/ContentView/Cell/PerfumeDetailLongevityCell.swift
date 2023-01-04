@@ -14,14 +14,21 @@ import Then
 final class PerfumeDetailLongevityCell: UICollectionViewCell {
   
   // MARK: - Var $ Let
-  static let height: CGFloat = 200
+  static let height: CGFloat = 160
   let disposeBag = DisposeBag()
   
   // MARK: - UI
-  private let percentLabel = UILabel()
+  private let percentLabel = UILabel().then {
+    $0.textAlignment = .center
+  }
+  private let longevityLabel = UILabel().then {
+    $0.textAlignment = .center
+  }
+  private let durationLabel = UILabel().then {
+    $0.textAlignment = .center
+  }
+  
   private let barView = UIView()
-  private let longevityLabel = UILabel()
-  private let durationLabel = UILabel()
   
   // MARK: - Life Cycle
   override init(frame: CGRect) {
@@ -50,26 +57,39 @@ final class PerfumeDetailLongevityCell: UICollectionViewCell {
     
     self.contentView.addSubview(self.barView)
     self.barView.snp.makeConstraints {
-      $0.bottom.equalTo(self.longevityLabel.snp.top)
+      $0.bottom.equalTo(self.longevityLabel.snp.top).offset(-8)
       $0.centerX.equalToSuperview()
       $0.width.equalTo(25)
-      $0.height.equalTo(50)
     }
     
     self.contentView.addSubview(self.percentLabel)
     self.percentLabel.snp.makeConstraints {
-      $0.bottom.equalTo(self.barView.snp.top)
+      $0.bottom.equalTo(self.barView.snp.top).offset(-3)
       $0.left.right.equalToSuperview()
     }
   }
     
   func updateUI(longevity: Longevity) {
+    let isAccent = longevity.isAccent
     self.percentLabel.text = String(longevity.percent) + "%"
-    self.barView.snp.updateConstraints {
-      $0.height.equalTo(longevity.percent * 2)
-    }
-    self.barView.backgroundColor = longevity.isAccent ? .SNDarkBeige1 : .SNLightBeige1
+    self.percentLabel.textColor = isAccent ? .blackText : .darkGray7d
+    self.percentLabel.font = .systemFont(ofSize: 14, weight: isAccent ? .bold : .regular)
     self.longevityLabel.text = longevity.longevity
+    self.longevityLabel.textColor = isAccent ? .blackText : .darkGray7d
+    self.longevityLabel.font = .systemFont(ofSize: 14, weight: isAccent ? .bold : .regular)
     self.durationLabel.text = longevity.duration
+    self.durationLabel.textColor = isAccent ? .blackText : .darkGray7d
+    self.durationLabel.font = .systemFont(ofSize: 11, weight: isAccent ? .bold : .regular)
+    self.barView.backgroundColor = longevity.isAccent ? .SNDarkBeige1 : .pointBeige
+    if longevity.isEmpty {
+      self.barView.snp.makeConstraints {
+        $0.height.equalTo(100)
+      }
+      self.percentLabel.isHidden = true
+    } else {
+      self.barView.snp.makeConstraints {
+        $0.height.equalTo(longevity.percent)
+      }
+    }
   }
 }

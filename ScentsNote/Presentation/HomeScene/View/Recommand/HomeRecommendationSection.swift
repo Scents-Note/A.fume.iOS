@@ -12,6 +12,8 @@ import Then
 
 final class HomeRecommendationSection: UICollectionViewCell {
   
+  var clickPerfume: ((Perfume) -> Void)?
+  
   private let collectionView: UICollectionView
   private let flowLayout = UICollectionViewFlowLayout()
   private let pageControl = UIPageControl().then {
@@ -32,8 +34,6 @@ final class HomeRecommendationSection: UICollectionViewCell {
     self.configureUI()
     
     self.backgroundColor = .white
-    
-    
   }
   
   private func configureUI() {
@@ -61,8 +61,8 @@ final class HomeRecommendationSection: UICollectionViewCell {
     self.contentView.addSubview(self.pageControl)
     self.pageControl.snp.makeConstraints {
       $0.top.equalTo(self.collectionView.snp.bottom).offset(4)
-      $0.left.equalTo(self.collectionView.snp.left)
-      $0.right.bottom.equalToSuperview()
+      $0.left.equalTo(self.collectionView.snp.left).offset(-6)
+      $0.bottom.equalToSuperview()
     }
   }
   
@@ -73,8 +73,6 @@ final class HomeRecommendationSection: UICollectionViewCell {
 
     self.setNeedsLayout()
     self.collectionView.reloadData()
-    //    self.collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
   }
   
 }
@@ -92,6 +90,9 @@ extension HomeRecommendationSection: UICollectionViewDataSource {
 }
 
 extension HomeRecommendationSection: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate {
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    self.clickPerfume?(self.perfumes[indexPath.row])
+  }
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
     return 0
   }
@@ -121,7 +122,5 @@ extension HomeRecommendationSection: UIScrollViewDelegate {
     self.pageControl.currentPage = index
     
     targetContentOffset.pointee = CGPoint(x: CGFloat(index) * cellWidth, y: 0)
-    
-    
   }
 }

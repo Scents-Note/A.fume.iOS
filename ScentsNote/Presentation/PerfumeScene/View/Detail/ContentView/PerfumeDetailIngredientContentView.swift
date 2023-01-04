@@ -29,8 +29,9 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
   let disposeBag = DisposeBag()
   var ingredients = BehaviorRelay<[Ingredient]>(value: [])
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
+  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
     $0.register(PerfumeDetailCommonCell.self)
+    $0.isScrollEnabled = false
   }
   
   var configuration: UIContentConfiguration {
@@ -43,13 +44,16 @@ class PerfumeDetailIngredientContentView: UIView, UIContentView {
     CGSize(width: 0, height: ingredients.value.count * 20)
   }
   
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    self.invalidateIntrinsicContentSize()
+  }
+  
   init(_ configuration: UIContentConfiguration) {
     self.configuration = configuration
     super.init(frame: .zero)
     
-    self.collectionView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.collectionView)
-    
     self.collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }

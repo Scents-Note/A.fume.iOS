@@ -21,7 +21,7 @@ final class FilterSeriesHeaderView: UICollectionReusableView {
   }
   
   private let moreButton = UIButton().then {
-    $0.setImage(.checkmark, for: .normal)
+    $0.setImage(.arrowDown, for: .normal)
   }
   
   private let dividerView = UIView().then { $0.backgroundColor = .lightGray }

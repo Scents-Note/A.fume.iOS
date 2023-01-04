@@ -12,8 +12,8 @@ import Then
 final class ReviewLongevityCell: UICollectionViewCell {
   
   private let roundView = UIView().then {
-    $0.backgroundColor = .grayCd
-    $0.layer.cornerRadius = 4
+    $0.layer.borderColor = UIColor.white.cgColor
+    $0.layer.borderWidth = 1
   }
   
   private let longevityLabel = UILabel().then {
@@ -60,9 +60,12 @@ final class ReviewLongevityCell: UICollectionViewCell {
   func updateUI(longevity: Longevity) {
     let isAccent = longevity.isAccent
     self.longevityLabel.text = longevity.longevity
+    self.longevityLabel.textColor = isAccent ? .blackText : .darkGray7d
     self.longevityLabel.font = .notoSans(type: isAccent ? .bold : .regular, size: 14)
     self.durationLabel.text = longevity.duration
+    self.durationLabel.textColor = isAccent ? .blackText : .darkGray7d
     self.durationLabel.font = .notoSans(type: isAccent ? .bold : .regular, size: 11)
+    self.roundView.backgroundColor = isAccent ? .pointBeige : .grayCd
     self.roundView.layer.cornerRadius = isAccent ? 8 : 4
     self.roundView.snp.updateConstraints {
       $0.top.equalToSuperview().offset(isAccent ? 6 : 10)

@@ -25,7 +25,7 @@ class PerfumeDetailHeaderContentView: UIView, UIContentView {
   }
   
   let titleLabel = UILabel().then {
-    $0.font = .notoSans(type: .regular, size: 14)
+    $0.font = .nanumMyeongjo(type: .regular, size: 16)
     $0.textColor = .darkGray7d
   }
   var configuration: UIContentConfiguration {
@@ -38,9 +38,13 @@ class PerfumeDetailHeaderContentView: UIView, UIContentView {
     self.configuration = configuration
     super.init(frame: .zero)
     
+    self.backgroundColor = .white
+    
     self.addSubview(self.titleLabel)
     self.titleLabel.snp.makeConstraints {
-      $0.edges.equalToSuperview()
+      $0.top.equalToSuperview().offset(24)
+      $0.bottom.equalToSuperview().inset(16)
+      $0.left.right.equalToSuperview()
     }
   }
   
@@ -50,7 +54,7 @@ class PerfumeDetailHeaderContentView: UIView, UIContentView {
   
   func configure(configuration: UIContentConfiguration) {
     guard let configuration = configuration as? Configuration else { return }
-    titleLabel.text = configuration.title ?? "" + "."
+    titleLabel.text = "\(configuration.title ?? "")."
   }
 
 }

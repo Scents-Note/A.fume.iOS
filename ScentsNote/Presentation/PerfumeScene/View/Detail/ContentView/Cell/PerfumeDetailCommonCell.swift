@@ -17,11 +17,12 @@ final class PerfumeDetailCommonCell: UICollectionViewCell {
   let disposeBag = DisposeBag()
   
   private let typeLabel = UILabel().then {
-    $0.textColor = .blackText
+    $0.textColor = .darkGray7d
     $0.font = .notoSans(type: .regular, size: 14)
   }
   
   private let contentLabel = UILabel().then {
+    $0.textColor = .blackText
     $0.font = .notoSans(type: .medium, size: 14)
     $0.numberOfLines = 0
     $0.textAlignment = .right
@@ -48,25 +49,25 @@ final class PerfumeDetailCommonCell: UICollectionViewCell {
     self.contentView.addSubview(self.contentLabel)
     self.contentLabel.snp.makeConstraints {
       $0.top.bottom.right.equalToSuperview()
-      $0.left.equalToSuperview()
-
-//      $0.left.equalTo(self.typeLabel.snp.right).offset(20)
+      $0.left.equalToSuperview().offset(75)
     }
   }
     
   /// ingredient : type != nil
   /// abundant / price : type == nil
-  func updateUI(type: String? = nil, content: String) {
+  func updateUI(type: String, content: String) {
     self.contentLabel.text = content
-    guard let type = type else {
-//      self.contentLabel.snp.updateConstraints {
-//      }
-      self.typeLabel.isHidden = true
-      return
+    if type != "empty" {
+      self.typeLabel.text = type
+    } else {
+      self.contentLabel.textColor = .lightGray185
     }
-    self.typeLabel.text = type
-//    self.contentLabel.snp.updateConstraints {
-//      $0.left.equalTo(self.typeLabel.snp.right).offset(20)
-//    }
+  }
+  
+  func updateUI(content: String) {
+    if content.isEmpty {
+      self.contentLabel.textColor = .lightGray185
+    }
+    self.contentLabel.text = content
   }
 }

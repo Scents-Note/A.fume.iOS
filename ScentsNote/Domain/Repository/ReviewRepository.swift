@@ -10,5 +10,7 @@ import RxSwift
 protocol ReviewRepository {
   func fetchReviewDetail(reviewIdx: Int) -> Observable<ReviewDetail>
   func updateReview(reviewDetail: ReviewDetail) -> Observable<String>
-  func reportReview(reviewIdx: Int, reason: String) -> Observable<String> 
+  func reportReview(reviewIdx: Int, reason: String) -> Observable<String>
+  func updateReviewLike(reviewIdx: Int) -> Observable<Bool>
+  func deleteReview(reviewIdx: Int) -> Observable<String>
 }

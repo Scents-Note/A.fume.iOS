@@ -18,6 +18,6 @@ enum PerfumeDetailInfoItem: Hashable {
   case seasonal([Seasonal])
   case longevity([Longevity])
   case sillage([Sillage])
-  case gender(Gender)
+  case gender([Gender])
   case similarity([Perfume]?)
 }

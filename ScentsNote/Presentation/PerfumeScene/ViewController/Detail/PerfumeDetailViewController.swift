@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
-import RxRelay
+import RxGesture
 import SnapKit
 import Then
 import Toast_Swift
@@ -18,11 +18,17 @@ final class PerfumeDetailViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDetailDataSection.Model>
   
   var updatePageView: ((Int, Int) -> Void)?
+  var updateTabView: ((PerfumeDetailTabCell.TabType) -> Void)?
+  
   // MARK: - Vars & Lets
   var viewModel: PerfumeDetailViewModel?
   var dataSource: DataSource!
   let disposeBag = DisposeBag()
   
+  
+  deinit {
+    Log("deinit")
+  }
   // MARK: - Input
   private let pageViewState = BehaviorRelay<Int>(value: 0)
   
@@ -36,6 +42,7 @@ final class PerfumeDetailViewController: UIViewController {
   }
   
   private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.collectionViewLayout).then {
+    $0.showsVerticalScrollIndicator = false
     $0.register(PerfumeDetailTabCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader)
     $0.register(PerfumeDetailTitleCell.self)
     $0.register(PerfumeDetailContentCell.self)
@@ -44,6 +51,8 @@ final class PerfumeDetailViewController: UIViewController {
   private let dividerView = UIView().then { $0.backgroundColor = .lightGray }
   private let bottomView = UIView()
   private let wishView = UIView().then {
+    $0.backgroundColor = .white
+    $0.layer.cornerRadius = 2
     $0.layer.borderColor = UIColor.grayCd.cgColor
     $0.layer.borderWidth = 0.5
   }
@@ -51,8 +60,9 @@ final class PerfumeDetailViewController: UIViewController {
   private let wishLabel = UILabel().then {
     $0.text = "위시"
     $0.textColor = .blackText
-    $0.font = .notoSans(type: .regular, size: 11)
+    $0.font = .systemFont(ofSize: 12, weight: .regular)
   }
+  
   private let reviewButton = UIButton().then {
     $0.setTitle("시향 노트 쓰기", for: .normal)
     $0.setTitleColor(.white, for: .normal)
@@ -91,46 +101,55 @@ final class PerfumeDetailViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
+  
 }
 
 extension PerfumeDetailViewController {
   
   private func configureCollectionView() {
     self.dataSource = DataSource(
-      configureCell: { dataSource, tableView, indexPath, item in
+      configureCell: { [weak self] dataSource, tableView, indexPath, item in
         switch item {
         case .title(let perfumeDetail):
-          let cell = self.collectionView.dequeueReusableCell(PerfumeDetailTitleCell.self, for: indexPath)
+          let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailTitleCell.self, for: indexPath)
+          guard let cell = cell else { return UICollectionViewCell()}
           cell.updateUI(perfumeDetail: perfumeDetail)
           return cell
         case .content(let perfumeDetail):
-          let cell = self.collectionView.dequeueReusableCell(PerfumeDetailContentCell.self, for: indexPath)
+          let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailContentCell.self, for: indexPath)
+          guard let cell = cell else { return UICollectionViewCell()}
           cell.updateUI(perfuemDetail: perfumeDetail)
           cell.onUpdateHeight = { [weak self] in
             self?.reload()
           }
           cell.clickPerfume = { [weak self] perfume in
-            self?.viewModel?.cellInput.perfumeDidTapEvent.accept(perfume)
+            self?.viewModel?.infoInput.perfumeDidTapEvent.accept(perfume)
           }
-          cell.setViewModel(viewModel: self.viewModel)
-          self.updatePageView = { oldValue, newValue in
+          cell.clickSuggestion = { [weak self] in
+            self?.viewModel?.infoInput.suggestionDidTapEvent.accept(())
+          }
+          cell.setViewModel(viewModel: self?.viewModel)
+          self?.updatePageView = { oldValue, newValue in
             cell.updatePageView(oldValue: oldValue, newValue: newValue)
           }
           return cell
         }
-      }, configureSupplementaryView: { dataSource, collectionView, kind, indexPath in
+      }, configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
         if kind == UICollectionView.elementKindSectionHeader {
           let section = collectionView.dequeueReusableHeaderView(PerfumeDetailTabCell.self, for: indexPath)
           section.clickInfoButton()
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: {
               self?.viewModel?.input.tabButtonTapEvent.accept(0)
             })
             .disposed(by: section.disposeBag)
           section.clickReviewButton()
-            .subscribe(onNext: { [weak self] in
+            .subscribe(onNext: {
               self?.viewModel?.input.tabButtonTapEvent.accept(1)
             })
             .disposed(by: section.disposeBag)
+          self?.updateTabView = { type in
+            section.updateUI(type: type)
+          }
           return section
         } else {
           return UICollectionReusableView()
@@ -174,6 +193,7 @@ extension PerfumeDetailViewController {
     self.wishHeartView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview().offset(4)
+      $0.size.equalTo(24)
     }
     
     self.wishView.addSubview(self.wishLabel)
@@ -196,12 +216,16 @@ extension PerfumeDetailViewController {
   }
   
   private func bindViewModel() {
-    let input = PerfumeDetailViewModel.Input(reviewButtonDidTapEvent: self.reviewButton.rx.tap.asObservable())
+    let input = PerfumeDetailViewModel.Input(viewWillAppearEvent: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in },
+                                             viewDidDisappearEvent: self.rx.methodInvoked(#selector(UIViewController.viewDidDisappear)).map { _ in},
+                                             likeButtonDidTapEvent: self.wishView.rx.tapGesture().when(.recognized).asObservable().map { _ in},
+                                             reviewButtonDidTapEvent: self.reviewButton.rx.tap.asObservable())
     self.viewModel?.transform(input: input, disposeBag: disposeBag)
     
     // TODO: 필드에 직접 접근하는게 맞는건지?
     let output = self.viewModel?.output
     self.bindContent(output: output)
+    self.bindBottomView(output: output)
     self.bindToast(output: output)
   }
   
@@ -213,8 +237,26 @@ extension PerfumeDetailViewController {
       .disposed(by: self.disposeBag)
     
     Observable.zip(output.pageViewPosition, output.pageViewPosition.skip(1))
-      .subscribe(onNext: { [weak self] oldValue, newValue in
+      .asDriver(onErrorJustReturn: (0,1))
+      .drive(onNext: { [weak self] oldValue, newValue in
         self?.updatePageView?(oldValue, newValue)
+        self?.updateTabView?(PerfumeDetailTabCell.TabType(rawValue: newValue) ?? .info)
+      })
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindBottomView(output: PerfumeDetailViewModel.Output?) {
+    output?.perfumeDetail
+      .asDriver()
+      .drive(onNext: { [weak self] detail in
+        self?.setReviewState(detail: detail)
+      })
+      .disposed(by: self.disposeBag)
+    
+    output?.updatePerfumeLike
+      .asDriver(onErrorJustReturn: false)
+      .drive(onNext: { [weak self] isLike in
+        self?.updatePerfumeLike(isLike: isLike)
       })
       .disposed(by: self.disposeBag)
   }
@@ -227,6 +269,16 @@ extension PerfumeDetailViewController {
       })
       .disposed(by: self.disposeBag)
     
+  }
+  
+  private func setReviewState(detail: PerfumeDetail?) {
+    guard let detail = detail else { return }
+    self.reviewButton.setTitle(detail.reviewIdx != 0 ? "시향 노트 수정" : "시향 노트 쓰기", for: .normal)
+    self.wishHeartView.image = detail.isLiked ? .favoriteActive : .favoriteInactive
+  }
+  
+  private func updatePerfumeLike(isLike: Bool) {
+    self.wishHeartView.image = isLike ? .favoriteActive : .favoriteInactive
   }
   
   private func reload() {

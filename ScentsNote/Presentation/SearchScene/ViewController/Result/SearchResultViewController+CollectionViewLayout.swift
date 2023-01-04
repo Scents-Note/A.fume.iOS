@@ -10,14 +10,16 @@ import UIKit
 extension SearchResultViewController {
   func keywordCompositionalLayout() -> UICollectionViewCompositionalLayout {
     
-    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(200), heightDimension: .fractionalHeight(1))
+    let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .fractionalHeight(1))
     let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
-    let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(200), heightDimension: .absolute(32))
+    let groupSize = NSCollectionLayoutSize(widthDimension: itemSize.widthDimension, heightDimension: .absolute(32))
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
 
     let section = NSCollectionLayoutSection(group: group)
     section.orthogonalScrollingBehavior = .continuous
+    section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20)
+    section.interGroupSpacing = 12
     
     return UICollectionViewCompositionalLayout(section: section)
   }
@@ -27,7 +29,7 @@ extension SearchResultViewController {
     let brandNameOffset: CGFloat = 10
     let brandNameHeight: CGFloat = 18
     let nameHeight: CGFloat = 24
-    let height: CGFloat = imageHeight + brandNameOffset + brandNameHeight + brandNameHeight + nameHeight
+    let height: CGFloat = imageHeight + brandNameOffset + brandNameHeight + nameHeight
     let fraction: CGFloat = 1 / 2
     
     let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(fraction), heightDimension: .fractionalHeight(1))
@@ -45,4 +47,5 @@ extension SearchResultViewController {
     
     return UICollectionViewCompositionalLayout(section: section)
   }
+  
 }

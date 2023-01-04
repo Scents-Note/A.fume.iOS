@@ -24,17 +24,17 @@ final class PerfumeNewViewController: UIViewController {
   private let reportView = UIView().then { $0.backgroundColor = .lightGray }
   private let reportLabel = UILabel().then {
     $0.text = "원하는 향수가 없으신가요?"
-    $0.textColor = .blackText
+    $0.textColor = .darkGray7d
     $0.font = .notoSans(type: .regular, size: 12)
   }
   
   private let reportButton = UIButton().then {
     $0.setTitle("향수 및 브랜드 제보하기", for: .normal)
-    $0.setTitleColor(.blackText, for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
     $0.titleLabel?.font = .notoSans(type: .regular, size: 12)
     $0.setImage(.btnNext?.withRenderingMode(.alwaysTemplate), for: .normal)
     $0.semanticContentAttribute = .forceRightToLeft
-    $0.tintColor = .blackText
+    $0.tintColor = .darkGray7d
   }
   
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.gridCompositionalLayout()).then {
@@ -126,7 +126,9 @@ final class PerfumeNewViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel(cellInput: PerfumeNewViewModel.CellInput) {
-    let input = PerfumeNewViewModel.Input()
+    let input = PerfumeNewViewModel.Input(
+      reportButtonDidTapEvent: self.reportButton.rx.tap.asObservable()
+    )
     let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
     self.bindPerfumesNew(output: output)
   }

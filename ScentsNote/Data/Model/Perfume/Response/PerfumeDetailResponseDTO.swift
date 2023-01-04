@@ -15,7 +15,7 @@ struct PerfumeDetailResponseDTO: Decodable, Hashable {
   let abundanceRate: String
   let volumeAndPrice: [String]
   let imageUrls: [String]
-  let score: Float
+  let score: Double
   let seasonal: SeasonalResponseDTO
   let sillage: SillageResponseDTO
   let longevity: LongevityResponseDTO

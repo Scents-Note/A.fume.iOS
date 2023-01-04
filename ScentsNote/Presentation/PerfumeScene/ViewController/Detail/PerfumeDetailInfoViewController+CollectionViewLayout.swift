@@ -14,8 +14,9 @@ extension UIView {
 
     let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: itemSize.heightDimension)
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+    
     let section = NSCollectionLayoutSection(group: group)
+    section.interGroupSpacing = 10
     
     return UICollectionViewCompositionalLayout(section: section)
   }
@@ -28,7 +29,8 @@ extension UIView {
     let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
     
     let section = NSCollectionLayoutSection(group: group)
-    
+    section.interGroupSpacing = 10
+
     return UICollectionViewCompositionalLayout(section: section)
   }
   

@@ -11,4 +11,6 @@ protocol ReviewService {
   func fetchReviewDetail(reviewIdx: Int) -> Observable<ReviewDetailResponseDTO>
   func updateReview(reviewIdx: Int, reviewDetail: ReviewDetailRequestDTO) -> Observable<String>
   func reportReview(reviewIdx: Int, reason: ReviewReportRequestDTO) -> Observable<String>
+  func updateReviewLike(reviewIdx: Int) -> Observable<Bool>
+  func deleteReview(reviewIdx: Int) -> Observable<String>
 }

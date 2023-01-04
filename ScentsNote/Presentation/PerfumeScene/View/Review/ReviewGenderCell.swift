@@ -12,8 +12,8 @@ import Then
 final class ReviewGenderCell: UICollectionViewCell {
   
   private let roundView = UIView().then {
-    $0.backgroundColor = .grayCd
-    $0.layer.cornerRadius = 4
+    $0.layer.borderColor = UIColor.white.cgColor
+    $0.layer.borderWidth = 1
   }
   
   private let desciptionLabel = UILabel().then {
@@ -49,7 +49,10 @@ final class ReviewGenderCell: UICollectionViewCell {
   func updateUI(gender: Gender) {
     let isAccent = gender.isAccent
     self.desciptionLabel.text = gender.gender
+    self.desciptionLabel.textColor = isAccent ? .blackText : .darkGray7d
     self.desciptionLabel.font = .notoSans(type: isAccent ? .bold : .regular, size: 14)
+    self.roundView.isHidden = gender.gender.count == 0
+    self.roundView.backgroundColor = isAccent ? .pointBeige : .grayCd
     self.roundView.layer.cornerRadius = isAccent ? 8 : 4
     self.roundView.snp.updateConstraints {
       $0.top.equalToSuperview().offset(isAccent ? 6 : 10)
@@ -60,8 +63,10 @@ final class ReviewGenderCell: UICollectionViewCell {
   func updateUI(sillage: Sillage) {
     let isAccent = sillage.isAccent
     self.desciptionLabel.text = sillage.sillage
+    self.desciptionLabel.textColor = isAccent ? .blackText : .darkGray7d
     self.desciptionLabel.font = .notoSans(type: isAccent ? .bold : .regular, size: 14)
     self.roundView.isHidden = sillage.sillage.count == 0
+    self.roundView.backgroundColor = isAccent ? .pointBeige : .grayCd
     self.roundView.layer.cornerRadius = isAccent ? 8 : 4
     self.roundView.snp.updateConstraints {
       $0.top.equalToSuperview().offset(isAccent ? 6 : 10)

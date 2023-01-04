@@ -10,6 +10,7 @@ import UIKit
 final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoordinator {
   
   var finishFlow: (() -> Void)?
+  var runPerfumeDetailFlow: ((Int) -> Void)?
   var perfumeReviewViewController: PerfumeReviewViewController
   
   override init(_ navigationController: UINavigationController) {
@@ -36,7 +37,8 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
       reviewIdx: reviewIdx,
       fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: reviewRepository),
       updateReviewUseCase: UpdateReviewUseCase(reviewRepository: reviewRepository),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared))
+      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
+      deleteReviewUseCase: DeleteReviewUseCase(reviewRepository: reviewRepository)
     )
     self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
@@ -57,5 +59,22 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
   
   func hideKeywordBottomSheetViewController(keywords: [Keyword]) {
     
+  }
+  
+  func showPopup() {
+    let vc = LabelPopupViewController()
+    vc.setLabel(content: "정말로 삭제하실 건가요?")
+    vc.viewModel = LabelPopupViewModel(
+      coordinator: self,
+      delegate: self.perfumeReviewViewController.viewModel!
+    )
+    
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+  }
+  
+  func hidePopup() {
+    self.navigationController.dismiss(animated: false)
   }
 }

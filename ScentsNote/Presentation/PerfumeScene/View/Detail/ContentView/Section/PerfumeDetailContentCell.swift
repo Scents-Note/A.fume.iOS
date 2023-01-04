@@ -17,9 +17,15 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
   // MARK: - Output
   var onUpdateHeight: (() -> Void)?
   
+  var clickSuggestion: (() -> Void)? {
+    didSet {
+      self.bindClickSuggestion(clickSuggestion: clickSuggestion)
+    }
+  }
+  
   var clickPerfume: ((Perfume) -> Void)? {
     didSet {
-      self.bindAction(clickPerfume: clickPerfume)
+      self.bindClickPerfume(clickPerfume: clickPerfume)
     }
   }
   
@@ -63,7 +69,7 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
     self.contentView.addSubview(self.pageViewController.view)
     self.pageViewController.view.snp.makeConstraints {
       $0.edges.equalToSuperview()
-      $0.height.equalTo(2000)
+      $0.height.equalTo(2500)
     }
   }
   
@@ -90,7 +96,11 @@ final class PerfumeDetailContentCell: UICollectionViewCell {
     self.pageViewController.setViewControllers([self.dataSourceVC[newValue]], direction: .forward, animated: false, completion: nil)
   }
   
-  func bindAction(clickPerfume: ((Perfume) -> Void)?) {
+  func bindClickSuggestion(clickSuggestion: (() -> Void)?) {
+    (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).clickSuggestion = clickSuggestion
+  }
+  
+  func bindClickPerfume(clickPerfume: ((Perfume) -> Void)?) {
     (self.dataSourceVC[0] as! PerfumeDetailInfoViewController).clickPerfume = clickPerfume
   }
 }

@@ -22,6 +22,7 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
                                                userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     
     self.myPageViewController.viewModel = MyPageViewModel(coordinator: self,
+                                                          fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
                                                           fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase(userRepository: userRepository),
                                                           fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase(userRepository: userRepository))
     
@@ -30,6 +31,9 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   
   func runPerfumeReviewFlow(reviewIdx: Int) {
     let coordinator = DefaultPerfumeReviewCoordinator(self.navigationController)
+    coordinator.runPerfumeDetailFlow = { [unowned self] perfumeIdx in
+      self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
+    }
     coordinator.finishFlow = { [unowned self, unowned coordinator] in
       self.navigationController.popViewController(animated: true)
       self.removeDependency(coordinator)
@@ -52,6 +56,9 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
     coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
       self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
+    }
+    coordinator.runPerfumeReviewFlowWithReviewIdx = { [unowned self] reviewIdx in
+      self.runPerfumeReviewFlow(reviewIdx: reviewIdx)
     }
     coordinator.runPerfumeDetailFlow = { perfumeIdx in
       self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)

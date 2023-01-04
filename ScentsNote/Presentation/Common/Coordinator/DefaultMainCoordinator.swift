@@ -43,7 +43,6 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
       UITabBar.appearance().standardAppearance = appearance
       UITabBar.appearance().scrollEdgeAppearance = UITabBar.appearance().standardAppearance
     }
-    //    self.navigationController.pushViewController(self.tabBarController, animated: true)
   }
   
   private func createTabNavigationController(of page: TabBarPage) -> UINavigationController {
@@ -66,10 +65,12 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
     switch page {
     case .home:
       let homeCoordinator = DefaultHomeCoordinator(tabNavigationController)
+      homeCoordinator.runOnboardingFlow = onOnboardingFlow
       self.addDependency(homeCoordinator)
       homeCoordinator.start()
     case .search:
       let searchCoordinator = DefaultSearchCoordinator(tabNavigationController)
+      searchCoordinator.runOnboardingFlow = onOnboardingFlow
       self.addDependency(searchCoordinator)
       searchCoordinator.start()
     case .mypage:

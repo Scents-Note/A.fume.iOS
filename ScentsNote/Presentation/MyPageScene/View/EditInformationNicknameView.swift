@@ -22,7 +22,7 @@ final class EditInformationNicknameView: UIView {
   
   private let checkImage = UIImageView().then {
     $0.contentMode = .scaleAspectFill
-    $0.image = .check
+    $0.image = .checkBeige
   }
   
   private let nicknameDividerView = UIView().then { $0.backgroundColor = .blackText }

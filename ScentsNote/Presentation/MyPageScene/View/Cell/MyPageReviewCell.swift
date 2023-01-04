@@ -11,6 +11,7 @@ import RxCocoa
 import RxGesture
 import SnapKit
 import Then
+import Cosmos
 import Kingfisher
 
 final class MyPageReviewCell: UICollectionViewCell {
@@ -28,15 +29,24 @@ final class MyPageReviewCell: UICollectionViewCell {
   }
 
   private let brandLabel = UILabel().then {
+    $0.textAlignment = .center
     $0.textColor = .darkGray7d
     $0.font = .notoSans(type: .regular, size: 12)
   }
   
   private let nameLabel = UILabel().then {
+    $0.textAlignment = .center
     $0.textColor = .black1d
     $0.font = .notoSans(type: .medium, size: 15)
   }
-
+  
+  private let starView = CosmosView().then {
+    $0.settings.starSize = 12
+    $0.settings.fillMode = .half
+    $0.settings.emptyImage = .starUnfilled
+    $0.settings.filledImage = .starFilled
+    $0.settings.starMargin = 2
+  }
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -50,6 +60,7 @@ final class MyPageReviewCell: UICollectionViewCell {
   
   override func prepareForReuse() {
     self.disposeBag = DisposeBag()
+    self.bindUI()
     self.reviewIdx = 0
   }
    
@@ -60,7 +71,7 @@ final class MyPageReviewCell: UICollectionViewCell {
     self.imageView.snp.makeConstraints {
       $0.centerX.equalToSuperview()
       $0.top.equalToSuperview()
-      $0.width.height.equalTo(100)
+      $0.width.height.equalTo(101)
     }
     
     self.contentView.addSubview(self.brandLabel)
@@ -71,9 +82,15 @@ final class MyPageReviewCell: UICollectionViewCell {
     
     self.contentView.addSubview(self.nameLabel)
     self.nameLabel.snp.makeConstraints {
-      $0.top.equalTo(self.brandLabel.snp.bottom)
-      $0.bottom.equalToSuperview()
+      $0.top.equalTo(self.brandLabel.snp.bottom).offset(4)
       $0.left.right.equalToSuperview().inset(7)
+    }
+    
+    self.contentView.addSubview(self.starView)
+    self.starView.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.top.equalTo(self.nameLabel.snp.bottom).offset(6)
+      $0.bottom.equalToSuperview()
     }
   }
     
@@ -82,6 +99,7 @@ final class MyPageReviewCell: UICollectionViewCell {
     self.brandLabel.text = review.brand
     self.nameLabel.text = review.perfume
     self.reviewIdx = review.reviewIdx
+    self.starView.rating = review.score
   }
   
   private func bindUI() {

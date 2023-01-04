@@ -45,6 +45,8 @@ enum ScentsNoteAPI {
   case fetchReviewDetail(reviewIdx: Int)
   case updateReview(reviewIdx: Int, reviewDetail: ReviewDetailRequestDTO)
   case reportReview(reviewIdx: Int, reason: ReviewReportRequestDTO)
+  case updateReviewLike(reviewIdx: Int)
+  case deleteReview(reviewIdx: Int)
 
 }
 
@@ -60,7 +62,7 @@ extension ScentsNoteAPI: TargetType {
       base += "/perfume"
     case .fetchSeriesForFilter, .fetchBrandForFilter:
       base += "/filter"
-    case .fetchReviewDetail, .updateReview, .reportReview:
+    case .fetchReviewDetail, .updateReview, .reportReview, .updateReviewLike, .deleteReview:
       base += "/review"
     default:
       break
@@ -134,6 +136,10 @@ extension ScentsNoteAPI: TargetType {
       return "/\(reviewIdx)"
     case .reportReview(let reviewIdx, _):
       return "/\(reviewIdx)/report"
+    case .updateReviewLike(let reviewIdx):
+      return "/\(reviewIdx)/like"
+    case .deleteReview(let reviewIdx):
+      return "/\(reviewIdx)"
       
       // MARK: - User
     case .fetchPerfumesInMyPage(let userIdx):
@@ -147,10 +153,12 @@ extension ScentsNoteAPI: TargetType {
   
   var method: Moya.Method {
     switch self {
-    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike, .addReview, .reportReview:
+    case .login, .signUp, .registerSurvey, .fetchPerfumesSearched, .updatePerfumeLike, .addReview, .reportReview, .updateReviewLike:
       return .post
     case .updateUserInfo, .changePassword, .updateReview:
       return .put
+    case .deleteReview:
+      return .delete
     default:
       return .get
     }
@@ -230,8 +238,8 @@ extension ScentsNoteAPI: TargetType {
       if let gender = perfumeReview.gender {
         params["gender"] = gender
       }
-      if let keywordsList = perfumeReview.keywordsList {
-        params["keywordsList"] = keywordsList
+      if let keywordList = perfumeReview.keywordList {
+        params["keywordList"] = keywordList
       }
     case let .reportReview(_, reason):
       params["reason"] = reason.reason

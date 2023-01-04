@@ -33,7 +33,7 @@ class CommonInputSection: UIView {
   
   private let checkImage = UIImageView().then {
     $0.contentMode = .scaleAspectFill
-    $0.image = .check
+    $0.image = .checkBeige
   }
   
   private let textField = InputField().then { $0.setPlaceholder(string: "scents@email.com") }

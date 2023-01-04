@@ -28,13 +28,39 @@ extension UIImage {
   static let btnBack = UIImage(systemName: "btnBack")
   static let btnNext = UIImage(named: "btnNext")
   static let btnClose = UIImage(named: "btnClose")
+  static let arrowRight = UIImage(named: "arrowRight")
+  static let arrowDown = UIImage(named: "arrowDown")
+  static let checkBeige = UIImage(named: "icCheckBeige")
+  static let checkWhite = UIImage(named: "icCheckWhite")
+  static let checkGray = UIImage(named: "icCheckGray")
+
+  // MARK: - Home
+  static let logoHome = UIImage(named: "logoHome")
+  static let time = UIImage(named: "time")
+  
+  // MARK: - Search
+  static let btnSearch = UIImage(named: "btnSearch")
+  static let btnCancelWhite = UIImage(named: "btnCancelWhite")
+  
+  // MARK: - My Page
+  static let bgMypageReview = UIImage(named: "bgMypageReview")
+  static let emptyMypageReview = UIImage(named: "emptyMypageReview")
+  static let btnSidebar = UIImage(named: "btnSidebar")
   
   // MARK: - Sign Up
-  static let check = UIImage(named: "icCheck")
   static let btnManInactive = UIImage(named: "btnManInactive")
   static let btnWomanInactive = UIImage(named: "btnWomanInactive")
   static let btnManActive = UIImage(named: "btnManActive")
   static let btnWomanActive = UIImage(named: "btnWomanActive")
   
+  // MARK: - Tab
   static let searchInactive = UIImage(named: "searchInactive")
+  
+  // MARK: - Star
+  static let starFilled = UIImage(named: "starFilled")
+  static let starUnfilled = UIImage(named: "starUnfilled")
+  
+  // MARK: - Perfume Detail
+  static let pen = UIImage(named: "pen")
+  static let quotes = UIImage(named: "icQuotes")
 }

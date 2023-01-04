@@ -22,12 +22,16 @@ final class SearchResultViewController: UIViewController {
   var perfumeDataSource: PerfumeDataSource!
   
   // MARK: - UI
-  private lazy var searchButton = UIBarButtonItem(image: .checkmark, style: .plain, target: self, action: nil)
+  private lazy var searchButton = UIBarButtonItem(image: .btnSearch, style: .plain, target: self, action: nil).then {
+    $0.tintColor = .blackText
+  }
+  
   private lazy var keywordCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.keywordCompositionalLayout()).then {
     $0.showsHorizontalScrollIndicator = false
     $0.backgroundColor = .lightGray
     $0.register(KeywordCell.self)
   }
+  
   private lazy var perfumeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.gridCompositionalLayout()).then {
     $0.showsVerticalScrollIndicator = false
     $0.backgroundColor = .white
@@ -43,7 +47,8 @@ final class SearchResultViewController: UIViewController {
   
   private let emptyLabel = UILabel().then {
     $0.text = "검색 결과가 없습니다.\n해당 향수의 정보를 보고 싶다면\n어퓸에게 제보해주세요."
-    $0.textColor = .black
+    $0.textColor = .lightGray
+    $0.font = .systemFont(ofSize: 16, weight: .regular)
     $0.textAlignment = .center
     $0.numberOfLines = 3
   }
@@ -51,7 +56,7 @@ final class SearchResultViewController: UIViewController {
   private let reportButton = UIButton().then {
     $0.setTitle("제보하기", for: .normal)
     $0.setTitleColor(.blackText, for: .normal)
-    $0.titleLabel?.font = .notoSans(type: .regular, size: 20)
+    $0.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
     $0.layer.borderWidth = 1
     $0.layer.cornerRadius = 2
     $0.layer.borderColor = UIColor.blackText.cgColor
@@ -86,6 +91,7 @@ final class SearchResultViewController: UIViewController {
   private func configureUI() {
     self.configureNavigation()
     
+    self.keywordCollectionView.delegate = self
     self.view.addSubview(self.keywordCollectionView)
     self.keywordCollectionView.snp.makeConstraints {
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -108,6 +114,7 @@ final class SearchResultViewController: UIViewController {
     
     self.reportButton.snp.makeConstraints {
       $0.left.right.equalToSuperview().inset(26)
+      $0.height.equalTo(52)
     }
     
     self.view.addSubview(self.filterButton)
@@ -165,9 +172,9 @@ final class SearchResultViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel(cellInput: SearchResultViewModel.CellInput) {
-    let input = SearchResultViewModel.Input(
-      searchButtonDidTapEvent: searchButton.rx.tap.asObservable(),
-      filterButtonDidTapEvent: self.filterButton.rx.tap.asObservable())
+    let input = SearchResultViewModel.Input(searchButtonDidTapEvent: self.searchButton.rx.tap.asObservable(),
+                                            filterButtonDidTapEvent: self.filterButton.rx.tap.asObservable(),
+                                            reportButtonDidTapEvent: self.reportButton.rx.tap.asObservable())
     let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
     self.bindKeywords(output: output)
     self.bindPerfumes(output: output)
@@ -209,5 +216,17 @@ final class SearchResultViewController: UIViewController {
   
   private func updateEmptyView(isHidden: Bool) {
     self.emptyView.isHidden = isHidden
+  }
+}
+
+extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    guard let cell = cell as? KeywordCell else { return }
+    if cell.frame.size.width == KeywordCell.width {
+      DispatchQueue.main.async {
+        collectionView.collectionViewLayout.invalidateLayout()
+        collectionView.layoutIfNeeded()
+      }
+    }
   }
 }

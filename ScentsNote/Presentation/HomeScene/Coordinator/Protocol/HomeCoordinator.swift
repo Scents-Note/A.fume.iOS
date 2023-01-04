@@ -7,7 +7,9 @@
 
 import Foundation
 
-protocol HomeCoordinator: AnyObject {
+protocol HomeCoordinator: PopUpCoordinator {
+  var runOnboardingFlow: (() -> Void)? { get set }
+  
   func runPerfumeDetailFlow(perfumeIdx: Int)
   func runPerfumeNewFlow()
 }

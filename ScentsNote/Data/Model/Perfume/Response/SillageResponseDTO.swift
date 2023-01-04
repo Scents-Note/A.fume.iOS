@@ -17,9 +17,9 @@ extension SillageResponseDTO {
     let percentList = [self.light, self.medium, self.heavy]
     let max = percentList.max()
     var list: [Sillage] = []
-    list.append(Sillage(sillage: "가벼움", percent: percentList[0], isAccent: percentList[0] == max))
-    list.append(Sillage(sillage: "보통", percent: percentList[1], isAccent: percentList[1] == max))
-    list.append(Sillage(sillage: "무거움", percent: percentList[2], isAccent: percentList[2] == max))
+    list.append(Sillage(sillage: "가벼움", percent: percentList[0], isAccent: percentList[0] == max && percentList[0] != 0))
+    list.append(Sillage(sillage: "보통", percent: percentList[1], isAccent: percentList[1] == max && percentList[1] != 0))
+    list.append(Sillage(sillage: "무거움", percent: percentList[2], isAccent: percentList[2] == max && percentList[2] != 0))
     return list
   }
 }

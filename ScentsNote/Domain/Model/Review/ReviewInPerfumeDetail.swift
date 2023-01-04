@@ -5,14 +5,15 @@
 //  Created by 황득연 on 2022/11/29.
 //
 
-struct ReviewInPerfumeDetail {
+struct ReviewInPerfumeDetail: Equatable {
   let idx: Int
-  let score: Float
+  let score: Double
   let access: Bool
   let content: String
-  let likeCount: Int
-  let isLiked: Bool
+  var likeCount: Int
+  var isLiked: Bool
   let gender: Int
   let age: String
   let nickname: String
+  let isReported: Bool
 }

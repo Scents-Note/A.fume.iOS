@@ -31,6 +31,7 @@ class PerfumeDetailAbundanceContentView: UIView, UIContentView {
   
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.perfumeDetailCommonCompositionalLayout()).then {
     $0.register(PerfumeDetailCommonCell.self)
+    $0.isScrollEnabled = false
   }
   
   var configuration: UIContentConfiguration {
@@ -46,7 +47,6 @@ class PerfumeDetailAbundanceContentView: UIView, UIContentView {
     self.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
-      $0.height.equalTo(20)
     }
     
     self.bindUI()
@@ -54,6 +54,15 @@ class PerfumeDetailAbundanceContentView: UIView, UIContentView {
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  override var intrinsicContentSize: CGSize {
+    CGSize(width: 0, height: 20)
+  }
+  
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    self.invalidateIntrinsicContentSize()
   }
   
   func configure(configuration: UIContentConfiguration) {

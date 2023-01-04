@@ -14,6 +14,7 @@ import Then
 final class KeywordCell: UICollectionViewCell {
     
   static let height: CGFloat = 32
+  static let width: CGFloat = 100
   var disposeBag = DisposeBag()
   
   private let containerView = UIView().then {
@@ -27,7 +28,7 @@ final class KeywordCell: UICollectionViewCell {
   }
   
   private let deleteButton = UIButton().then {
-    $0.setImage(.checkmark, for: .normal)
+    $0.setImage(.btnCancelWhite, for: .normal)
   }
   
   override init(frame: CGRect) {
@@ -65,8 +66,8 @@ final class KeywordCell: UICollectionViewCell {
     self.containerView.addSubview(self.deleteButton)
     self.deleteButton.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.left.equalTo(self.keywordLabel.snp.right)
-      $0.right.equalToSuperview().offset(-6)
+      $0.left.equalTo(self.keywordLabel.snp.right).offset(5)
+      $0.right.equalToSuperview().offset(-12)
     }
   }
     

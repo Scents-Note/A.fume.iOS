@@ -12,14 +12,13 @@ import Then
 final class PerfumeNewHeaderView: UICollectionReusableView {
   
   private let clockImageView = UIImageView().then {
-    $0.tintColor = .black
-    $0.image = .btnNext
+    $0.image = .time
   }
   
   private let updateLabel = UILabel().then {
     $0.text = "매주 수요일 업데이트"
-    $0.textColor = .black
-    $0.font = .notoSans(type: .regular, size: 14)
+    $0.textColor = .grayCd
+    $0.font = .systemFont(ofSize: 14, weight: .regular)
   }
   
   override init(frame: CGRect) {

@@ -21,12 +21,15 @@ final class SearchKeywordViewController: UIViewController {
   private let titleLabel = UILabel().then {
     $0.text = "무엇을 찾으시나요?"
     $0.textColor = .blackText
-    $0.font = .nanumMyeongjo(type: .extraBold, size: 22)
+    $0.font = .nanumMyeongjo(type: .bold, size: 22)
   }
   
-  private let searchButton = UIButton().then { $0.setImage(.checkmark, for: .normal) }
+  private let searchButton = UIButton().then {
+    $0.setImage(.btnSearch, for: .normal)
+    $0.tintColor = .blackText
+  }
   private let keywordTextField = InputField().then { $0.setPlaceholder(string: "브랜드 혹은 제품명을 검색해주세요.") }
-  private lazy var keywordSection = InputSection(title: "사용하실 닉네임을 입력해주세요.", textField: self.keywordTextField, button: self.searchButton)
+  private lazy var keywordSection = InputSection(title: "", textField: self.keywordTextField, button: self.searchButton)
 
   
   // MARK: - Life Cycle
@@ -48,14 +51,14 @@ final class SearchKeywordViewController: UIViewController {
     
     self.view.addSubview(self.titleLabel)
     self.titleLabel.snp.makeConstraints {
-      $0.top.equalTo(self.view.safeAreaLayoutGuide)
-      $0.left.equalToSuperview()
+      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(24)
+      $0.left.equalToSuperview().offset(16)
     }
     
     self.view.addSubview(self.keywordSection)
     self.keywordSection.snp.makeConstraints {
-      $0.top.equalTo(self.titleLabel.snp.bottom)
-      $0.left.right.equalToSuperview()
+      $0.top.equalTo(self.titleLabel.snp.bottom).offset(12)
+      $0.left.right.equalToSuperview().inset(16)
     }
   }
   

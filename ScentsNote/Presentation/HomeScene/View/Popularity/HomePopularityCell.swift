@@ -104,4 +104,8 @@ final class HomePopularityCell: UICollectionViewCell {
   func onPerfumeClick() -> Observable<UITapGestureRecognizer> {
     return self.contentView.rx.tapGesture().when(.recognized)
   }
+  
+  func hideHeart() {
+    self.heartButton.isHidden = true
+  }
 }

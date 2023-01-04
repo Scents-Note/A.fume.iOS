@@ -29,10 +29,12 @@ class PerfumeDetailFooterContentView: UIView, UIContentView {
     self.configuration = configuration
     super.init(frame: .zero)
     
+    self.backgroundColor = .white
     self.addSubview(self.dividerView)
     self.dividerView.snp.makeConstraints {
-      $0.top.bottom.equalToSuperview()
-      $0.left.right.equalToSuperview().inset(18)
+      $0.top.equalToSuperview().offset(24)
+      $0.bottom.equalToSuperview()
+      $0.left.right.equalToSuperview()
       $0.height.equalTo(1)
     }
   }

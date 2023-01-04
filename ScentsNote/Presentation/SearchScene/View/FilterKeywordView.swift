@@ -28,7 +28,14 @@ final class FilterKeywordView: UIView {
     $0.font = .notoSans(type: .regular, size: 12)
   }
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.keywordLayout).then {
+  let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init()).then {
+    let layout = LeftAlignedCollectionViewFlowLayout()
+    layout.minimumLineSpacing = 16
+    layout.minimumInteritemSpacing = 16
+    layout.sectionInset = UIEdgeInsets(top: 24, left: 20, bottom: 24, right: 20)
+    
+    $0.collectionViewLayout = layout
+    $0.backgroundColor = .white
     $0.register(SurveyKeywordCollectionViewCell.self)
   }
   
@@ -74,6 +81,7 @@ final class FilterKeywordView: UIView {
       cell.updateUI(keyword: item.keyword)
       return cell
     }
+    self.collectionView.delegate = self
   }
   
   // MARK: - Bind ViewModel
@@ -87,5 +95,18 @@ final class FilterKeywordView: UIView {
     self.viewModel.keywordDataSource
       .bind(to: self.collectionView.rx.items(dataSource: self.dataSource))
       .disposed(by: self.disposeBag)
+  }
+}
+extension FilterKeywordView: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    
+    let label = UILabel().then {
+      $0.font = .notoSans(type: .regular, size: 15)
+      $0.text = self.viewModel.keywordDataSource.value[0].items[indexPath.row].keyword.name
+      $0.sizeToFit()
+    }
+    let size = label.frame.size
+    
+    return CGSize(width: size.width + 50, height: 42)
   }
 }

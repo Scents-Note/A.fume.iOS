@@ -137,8 +137,7 @@ final class KeywordBottomSheetViewModel {
   }
   
   func updateKeywords(keywords: [Keyword]) {
-    let keywordsSelected = keywords.filter { $0.isSelected }
-    self.delegate?.setKeywordsFromBottomSheet(keywords: keywordsSelected)
+    self.delegate?.setKeywordsFromBottomSheet(keywords: keywords)
   }
 }
 

@@ -21,11 +21,19 @@ final class DefaultReviewRepository: ReviewRepository {
   }
   
   func updateReview(reviewDetail: ReviewDetail) -> Observable<String> {
-    self.reviewService.updateReview(reviewIdx: reviewDetail.reviewIdx!, reviewDetail: reviewDetail.toEntity())
+    self.reviewService.updateReview(reviewIdx: reviewDetail.reviewIdx, reviewDetail: reviewDetail.toEntity())
   }
   
   func reportReview(reviewIdx: Int, reason: String) -> Observable<String> {
     let requestDTO = ReviewReportRequestDTO(reason: reason)
     return self.reviewService.reportReview(reviewIdx: reviewIdx, reason: requestDTO)
+  }
+  
+  func updateReviewLike(reviewIdx: Int) -> Observable<Bool> {
+    self.reviewService.updateReviewLike(reviewIdx: reviewIdx)
+  }
+  
+  func deleteReview(reviewIdx: Int) -> Observable<String> {
+    self.reviewService.deleteReview(reviewIdx: reviewIdx)
   }
 }

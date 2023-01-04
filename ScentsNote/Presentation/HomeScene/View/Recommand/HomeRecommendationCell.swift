@@ -11,7 +11,7 @@ import Then
 
 final class HomeRecommendationCell: UICollectionViewCell {
   
-  static let width: CGFloat = 262
+  static let width: CGFloat = UIScreen.main.bounds.width - 120
   static let height: CGFloat = 297
   
   var keywords = [String]()

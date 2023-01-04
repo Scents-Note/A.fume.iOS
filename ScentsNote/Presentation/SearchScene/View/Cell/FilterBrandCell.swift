@@ -15,9 +15,19 @@ final class FilterBrandCell: UICollectionViewCell {
   
   var disposeBag = DisposeBag()
 
-  private let brandLabel = UILabel().then { $0.textAlignment = .center}
+  private let brandLabel = UILabel().then {
+    $0.textAlignment = .center
+    $0.textColor = .blackText
+    $0.font = .systemFont(ofSize: 15, weight: .regular)
+  }
   private let checkButton = UIButton()
-  private let dividerView = UIView().then { $0.backgroundColor = .black}
+  
+  private let checkView = UIView()
+  private let checkImageView = UIImageView().then {
+    $0.image = .checkWhite
+  }
+  
+  private let dividerView = UIView().then { $0.backgroundColor = .bgTabBar}
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -42,10 +52,16 @@ final class FilterBrandCell: UICollectionViewCell {
       $0.left.equalToSuperview().offset(18)
     }
     
-    self.contentView.addSubview(self.checkButton)
-    self.checkButton.snp.makeConstraints {
+    self.contentView.addSubview(self.checkView)
+    self.checkView.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.right.equalToSuperview().offset(-18)
+      $0.size.equalTo(22)
+    }
+    
+    self.checkView.addSubview(self.checkImageView)
+    self.checkImageView.snp.makeConstraints {
+      $0.center.equalToSuperview()
     }
     
     self.contentView.addSubview(self.dividerView)
@@ -57,7 +73,7 @@ final class FilterBrandCell: UICollectionViewCell {
   
   func updateUI(brand: FilterBrand) {
     self.brandLabel.text = brand.name
-    self.checkButton.setImage(brand.isSelected ? .checkmark : .btnNext, for: .normal)
+    self.checkView.backgroundColor = brand.isSelected ? .pointBeige : .bgTabBar
   }
   
 }

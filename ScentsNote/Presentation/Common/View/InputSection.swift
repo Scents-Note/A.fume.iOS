@@ -13,7 +13,7 @@ class InputSection: UIView {
   
   private let checkImage = UIImageView().then {
     $0.contentMode = .scaleAspectFill
-    $0.image = .check
+    $0.image = .checkBeige
   }
   
   required init(title: String, textField: UITextField, button: UIButton? = nil, warningLabel: UILabel? = nil){

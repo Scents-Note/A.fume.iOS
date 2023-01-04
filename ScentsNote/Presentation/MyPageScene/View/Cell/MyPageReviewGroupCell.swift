@@ -22,7 +22,11 @@ final class MyPageReviewGroupCell: UICollectionViewCell {
   var reviews = BehaviorRelay<[ReviewInMyPage]>(value: [])
   
   // MARK: - UI
+  private let bgView = UIImageView().then {
+    $0.image = .bgMypageReview
+  }
   private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.reviewInMyPageLayout).then {
+    $0.backgroundColor = .clear
     $0.isScrollEnabled = false
     $0.register(MyPageReviewCell.self)
   }
@@ -46,6 +50,12 @@ final class MyPageReviewGroupCell: UICollectionViewCell {
   
   // MARK: Configure
   func configureUI() {
+    self.contentView.addSubview(self.bgView)
+    self.bgView.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(86)
+      $0.left.right.equalToSuperview()
+    }
+    
     self.contentView.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()

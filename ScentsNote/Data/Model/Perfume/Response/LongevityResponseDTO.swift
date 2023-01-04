@@ -17,14 +17,16 @@ struct LongevityResponseDTO: Decodable, Hashable {
 
 extension LongevityResponseDTO {
   func toDomain() -> [Longevity] {
+    Log(self)
     let longevityList = [self.veryWeak, self.weak, self.medium, self.strong, self.veryStrong]
     let maxPercent = longevityList.max()
+    let isEmpty = maxPercent == 0
     var list: [Longevity] = []
-    list.append(Longevity(longevity: "매우 약함", duration: "1시간 이내", percent: longevityList[0], isAccent: longevityList[0] == maxPercent))
-    list.append(Longevity(longevity: "약함", duration: "1~3시간", percent: longevityList[1], isAccent: longevityList[1] == maxPercent))
-    list.append(Longevity(longevity: "보통", duration: "3~5시간", percent: longevityList[2], isAccent: longevityList[2] == maxPercent))
-    list.append(Longevity(longevity: "강함", duration: "5~7시간", percent: longevityList[3], isAccent: longevityList[3] == maxPercent))
-    list.append(Longevity(longevity: "매우 강함", duration: "7시간 이상", percent: longevityList[4], isAccent: longevityList[4] == maxPercent))
+    list.append(Longevity(longevity: "매우 약함", duration: "1시간 이내", percent: longevityList[0], isAccent: longevityList[0] == maxPercent && !isEmpty, isEmpty: isEmpty))
+    list.append(Longevity(longevity: "약함", duration: "1~3시간", percent: longevityList[1], isAccent: longevityList[1] == maxPercent && !isEmpty, isEmpty: isEmpty))
+    list.append(Longevity(longevity: "보통", duration: "3~5시간", percent: longevityList[2], isAccent: longevityList[2] == maxPercent && !isEmpty, isEmpty: isEmpty))
+    list.append(Longevity(longevity: "강함", duration: "5~7시간", percent: longevityList[3], isAccent: longevityList[3] == maxPercent && !isEmpty, isEmpty: isEmpty))
+    list.append(Longevity(longevity: "매우 강함", duration: "7시간 이상", percent: longevityList[4], isAccent: longevityList[4] == maxPercent && !isEmpty, isEmpty: isEmpty))
     return list
   }
 }

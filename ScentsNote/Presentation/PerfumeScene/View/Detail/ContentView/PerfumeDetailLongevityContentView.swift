@@ -31,7 +31,6 @@ class PerfumeDetailLongevityContentView: UIView, UIContentView {
   
   private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: self.longevityCompositionalLayout()).then {
     $0.isUserInteractionEnabled = false
-    $0.translatesAutoresizingMaskIntoConstraints = false
     $0.register(PerfumeDetailLongevityCell.self)
   }
   
@@ -53,8 +52,6 @@ class PerfumeDetailLongevityContentView: UIView, UIContentView {
     self.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
-      $0.width.equalTo(400)
-      $0.height.equalTo(200)
     }
     
     self.bindUI()
@@ -65,9 +62,8 @@ class PerfumeDetailLongevityContentView: UIView, UIContentView {
   }
   
   override func layoutSubviews() {
-    invalidateIntrinsicContentSize()
+    self.invalidateIntrinsicContentSize()
     super.layoutSubviews()
-    self.systemLayoutSizeFitting(UIView.layoutFittingExpandedSize)
   }
   
   func configure(configuration: UIContentConfiguration) {
