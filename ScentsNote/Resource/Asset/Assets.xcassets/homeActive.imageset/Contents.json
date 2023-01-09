@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "homeInactive.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

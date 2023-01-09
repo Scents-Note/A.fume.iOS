@@ -1,22 +1,37 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'Scentsnote' do
+target 'ScentsNote' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for Scentsnote
-  pod 'RxSwift'
-  pod 'RxCocoa'
-  pod 'SnapKit'
-  pod 'Then'
+  # Pods for ScentsNote
 
-  target 'ScentsnoteTests' do
+  pod 'RxSwift', '6.5.0'
+  pod 'RxCocoa', '6.5.0'
+  pod 'RxGesture'
+  pod 'RxDataSources', '~> 5.0'
+  pod 'Moya/RxSwift'
+  pod 'Alamofire', '5.3'
+  pod 'SnapKit', '~> 5.6.0'
+  pod 'Then', '3.0.0'
+  pod 'Kingfisher', '7.0'
+  pod 'Cosmos', '~> 23.0'
+  pod 'Toast-Swift', '~> 5.0.1'
+
+  target 'ScentsNoteTests' do
     inherit! :search_paths
+    pod 'RxSwift'
+    pod 'RxRelay'
+    pod 'RxTest'
     # Pods for testing
   end
 
-  target 'ScentsnoteUITests' do
+  target 'ScentsNoteUITests' do
+    inherit! :search_paths
+    pod 'RxSwift'
+    pod 'RxRelay'
+    pod 'RxTest'
     # Pods for testing
   end
 
