@@ -21,7 +21,8 @@
 
 # 🦉Developer
 |                            황득연                            |
-| :----------------------------------------------------------: |
-| <img src="https://user-images.githubusercontent.com/51378843/157241242-65b69f4a-e1f4-4775-b02c-8aa94b3326af.jpg" width="350" height="350"> |
-|         [EuneeChung](https://github.com/EuneeChung)          |
+| :-----------![4]()
+-----------------------------------------------: |
+| <img src="https://user-images.githubusercontent.com/33554016/211432204-12b9ed7a-8d97-4a20-bedf-1838f93f8155.jpeg" width="350" height="350"> |
+|         (https://github.com/ghkdemrdus)          |
 | **검색** <br />• 필터로 검색    <br />◦ 계열/ 브랜드/ 키워드 <br />• 검색 결과 <br /><br />**마이** <br />• 마이 퍼퓸 선반 뷰<br /> • 위시리스트 <br /><br />**향수 상세 뷰** <br />• 향수 정보 <br /><br />**유저** <br />• 설문조사   <br />◦ 선호 취향 <br /><br />**스플래시**<br /> | **홈** <br />• 추천 향수 <br />• 새로운 향수 <br /><br />**마이** <br />• 시향 노트 작성    <br />◦ 평점/ 메모/ 지속감/ 잔향감/ 계절감 <br /><br />**향수 상세 뷰** <br />• 시향 노트 <br />• 향수 정보 - 그래프 수정 <br /><br />**유저** <br />• 회원가입 <br />• 로그인 <br />• 정보 수정 |
