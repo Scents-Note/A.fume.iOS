@@ -21,7 +21,7 @@
 
 # 🦉Developer
 |                            황득연                            |
-| :-----------![4]()
+| :-----------![4] |
 -----------------------------------------------: |
 | <img src="https://user-images.githubusercontent.com/33554016/211432204-12b9ed7a-8d97-4a20-bedf-1838f93f8155.jpeg" width="350" height="350"> |
 |         (https://github.com/ghkdemrdus)          |
