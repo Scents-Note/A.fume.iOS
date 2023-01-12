@@ -24,12 +24,10 @@ final class DefaultChangePasswordCoordinator: BaseCoordinator, ChangePasswordCoo
   
   private func showChangePasswordViewController() {
     let vc = self.changePasswordViewController
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     vc.viewModel = ChangePasswordViewModel(coordinator: self,
-                                           fetchUserPasswordUseCase: FetchUserPasswordUseCase(userRepository: userRepository),
-                                           changePasswordUseCase: ChangePasswordUseCase(userRepository: userRepository),
-                                           savePasswordUseCase: SavePasswordUseCase(userRepository: userRepository))
+                                           fetchUserPasswordUseCase: FetchUserPasswordUseCase(userRepository: DefaultUserRepository.shared),
+                                           changePasswordUseCase: ChangePasswordUseCase(userRepository: DefaultUserRepository.shared),
+                                           savePasswordUseCase: SavePasswordUseCase(userRepository: DefaultUserRepository.shared))
     vc.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(vc, animated: true)
   }

@@ -18,13 +18,10 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   }
   
   override func start() {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
-    
     self.myPageViewController.viewModel = MyPageViewModel(coordinator: self,
-                                                          fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
-                                                          fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase(userRepository: userRepository),
-                                                          fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase(userRepository: userRepository))
+                                                          fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                          fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase(userRepository: DefaultUserRepository.shared),
+                                                          fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase(userRepository: DefaultUserRepository.shared))
     
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
   }
@@ -105,12 +102,10 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
       return
     }
     
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     let vc = MyPageMenuViewController()
     vc.viewModel = MyPageMenuViewModel(coordinator: self,
-                                       fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
-                                       logoutUseCase: LogoutUseCase(userRepository: userRepository))
+                                       fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                       logoutUseCase: LogoutUseCase(userRepository: DefaultUserRepository.shared))
     vc.viewModel?.delegate = pvc.viewModel
     
     vc.modalTransitionStyle = .crossDissolve

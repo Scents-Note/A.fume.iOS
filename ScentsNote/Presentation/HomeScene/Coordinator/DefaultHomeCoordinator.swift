@@ -19,14 +19,13 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   }
   
   override func start() {
-    let perfumeRepository = DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)
     self.viewController.viewModel = HomeViewModel(coordinator: self,
-                                                  fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared, userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)),
-                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: perfumeRepository))
+                                                  fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared))
     self.navigationController.pushViewController(self.viewController, animated: true)
   }
   

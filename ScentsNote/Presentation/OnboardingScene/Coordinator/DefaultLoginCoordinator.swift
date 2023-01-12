@@ -24,11 +24,9 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   }
   
   func showLoginViewController() {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     self.loginViewController.viewModel = LoginViewModel(coordinator: self,
-                                                        loginUseCase: LoginUseCase(userRepository: userRepository),
-                                                        saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: userRepository))
+                                                        loginUseCase: LoginUseCase(userRepository: DefaultUserRepository.shared),
+                                                        saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared))
     
     self.navigationController.pushViewController(self.loginViewController, animated: true)
   }

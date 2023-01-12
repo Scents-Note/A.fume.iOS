@@ -24,11 +24,11 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   func start(perfumeIdx: Int) {
     perfumeDetailViewController.viewModel = PerfumeDetailViewModel(
       coordinator: self,
-      fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-      fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-      updateReviewLikeUseCase: UpdateReviewLikeUseCase(reviewRepository: DefaultReviewRepository(reviewService: DefaultReviewService.shared)),
-      fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared, userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)),
+      fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      updateReviewLikeUseCase: UpdateReviewLikeUseCase(reviewRepository: DefaultReviewRepository.shared),
+      fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
       perfumeIdx: perfumeIdx
     )
     perfumeDetailViewController.hidesBottomBarWhenPushed = true
@@ -48,7 +48,7 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   func showReviewReportPopupViewController(reviewIdx: Int) {
     let vc = ReviewReportPopupViewController()
     vc.viewModel = ReviewReportPopupViewModel(coordinator: self,
-                                              reportReviewUseCase: ReportReviewUseCase(reviewRepository: DefaultReviewRepository(reviewService: DefaultReviewService.shared)),
+                                              reportReviewUseCase: ReportReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
                                               reviewIdx: reviewIdx)
     vc.modalPresentationStyle = .overFullScreen
     self.navigationController.present(vc, animated: false, completion: nil)

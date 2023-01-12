@@ -11,10 +11,12 @@ import Then
 
 final class DefaultUserRepository: UserRepository {
   
+  static let shared = DefaultUserRepository(userService: DefaultUserService.shared, userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
+  
   private let userService: UserService
   private let userDefaultsPersitenceService: UserDefaultsPersitenceService
   
-  init(userService: UserService, userDefaultsPersitenceService: UserDefaultsPersitenceService){
+  private init(userService: UserService, userDefaultsPersitenceService: UserDefaultsPersitenceService){
     self.userService = userService
     self.userDefaultsPersitenceService = userDefaultsPersitenceService
   }
@@ -24,6 +26,7 @@ final class DefaultUserRepository: UserRepository {
   }
   
   func logout() {
+    
     self.userDefaultsPersitenceService.remove(key: UserDefaultKey.token)
     self.userDefaultsPersitenceService.remove(key: UserDefaultKey.refreshToken)
     self.userDefaultsPersitenceService.remove(key: UserDefaultKey.userIdx)

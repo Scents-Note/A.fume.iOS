@@ -22,23 +22,21 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       perfumeDetail: perfumeDetail,
-      addReviewUseCase: AddReviewUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared))
+      addReviewUseCase: AddReviewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared)
     )
     self.navigationController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
   }
   
   func start(reviewIdx: Int) {
-    let reviewRepository = DefaultReviewRepository(reviewService: DefaultReviewService.shared)
-    
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       reviewIdx: reviewIdx,
-      fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: reviewRepository),
-      updateReviewUseCase: UpdateReviewUseCase(reviewRepository: reviewRepository),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
-      deleteReviewUseCase: DeleteReviewUseCase(reviewRepository: reviewRepository)
+      fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: DefaultReviewRepository.shared),
+      updateReviewUseCase: UpdateReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
+      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared),
+      deleteReviewUseCase: DeleteReviewUseCase(reviewRepository: DefaultReviewRepository.shared)
     )
     self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)

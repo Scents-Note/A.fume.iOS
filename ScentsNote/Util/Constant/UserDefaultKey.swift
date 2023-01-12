@@ -16,4 +16,7 @@ enum UserDefaultKey {
   static let isLoggedIn = "isLoggedIn"
   static let email = "email"
   static let password = "password"
+  
+  // 로그아웃 시 모두 삭제하기 위한 list
+  static let list: [UserDefaultKey] = [.token, .refreshToken, nickname, .userIdx, gender, birth, isLoggedIn, email, password]
 }
