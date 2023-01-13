@@ -15,10 +15,6 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     self.navigationController.setNavigationBarHidden(true, animated: true)
   }
   
-  override func start() {
-    self.runSplashFlow()
-  }
-  
   func runSplashFlow() {
     let coordinator = DefaultSplashCoordinator(navigationController)
     coordinator.finishFlow = { [unowned self, unowned coordinator] in
@@ -33,7 +29,6 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
     let coordinator = DefaultOnboardingCoordinator(navigationController)
     coordinator.finishFlow = { [unowned self, unowned coordinator] type in
       self.removeDependency(coordinator)
-      self.navigationController.dismiss(animated: true)
       switch type {
       case .main:
         self.runMainFlow()
@@ -49,7 +44,7 @@ final class DefaultApplicationCoordinator: BaseCoordinator, ApplicationCoordinat
   
   func runMainFlow() {
     let coordinator = DefaultMainCoordinator(self.navigationController)
-    coordinator.onOnboardingFlow = { [unowned self] in
+    coordinator.runOnboardingFlow = { [unowned self] in
       self.runOnboardingFlow()
     }
     self.addDependency(coordinator)

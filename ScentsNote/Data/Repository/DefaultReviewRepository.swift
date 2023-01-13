@@ -9,9 +9,11 @@ import RxSwift
 
 final class DefaultReviewRepository: ReviewRepository {
   
+  static let shared = DefaultReviewRepository(reviewService: DefaultReviewService.shared)
+
   private let reviewService: ReviewService
   
-  init(reviewService: ReviewService) {
+  private init(reviewService: ReviewService) {
     self.reviewService = reviewService
   }
   

@@ -37,17 +37,17 @@ final class EditInformationViewModel {
   private let fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase
   private let checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase
   private let updateUserInformationUseCase: UpdateUserInformationUseCase
-  private let saveUserInfoUseCase: SaveUserInfoUseCase
+  private let saveUserInfoUseCase: SaveEditUserInfoUseCase
   
   private let popupInput = PopupInput()
-  private var oldUserInfo = UserInfo.default
+  private var oldUserInfo = EditUserInfo.default
   
   // MARK: - Life Cycle
   init(coordinator: EditInformationCoordinator,
        fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase,
        checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase,
        updateUserInformationUseCase: UpdateUserInformationUseCase,
-       saveUserInfoUseCase: SaveUserInfoUseCase) {
+       saveUserInfoUseCase: SaveEditUserInfoUseCase) {
     self.coordinator = coordinator
     self.fetchUserInfoForEditUseCase = fetchUserInfoForEditUseCase
     self.checkDuplicateNicknameUseCase = checkDuplicateNicknameUseCase
@@ -132,9 +132,9 @@ final class EditInformationViewModel {
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.updateUserInfo(userInfo: UserInfo(nickname: nickname.value,
-                                                gender: gender.value,
-                                                birth: birth.value),
+        self?.updateUserInfo(userInfo: EditUserInfo(nickname: nickname.value,
+                                                    gender: gender.value,
+                                                    birth: birth.value),
                              disposeBag: disposeBag)
       })
       .disposed(by: disposeBag)
@@ -144,7 +144,7 @@ final class EditInformationViewModel {
         self?.coordinator?.showWebViewController(with: WebURL.withdrawal)
       })
       .disposed(by: disposeBag)
-
+    
   }
   
   private func bindPopupInput(input: PopupInput,
@@ -210,10 +210,10 @@ final class EditInformationViewModel {
   }
   
   // MARK: - Action
-  private func setOldValue(userInfo: UserInfo) {
-    self.oldUserInfo = UserInfo(nickname: userInfo.nickname,
-                                gender: userInfo.gender,
-                                birth: userInfo.birth)
+  private func setOldValue(userInfo: EditUserInfo) {
+    self.oldUserInfo = EditUserInfo(nickname: userInfo.nickname,
+                                    gender: userInfo.gender,
+                                    birth: userInfo.birth)
   }
   
   private func updateNicknameState(nickname: String, nicknameState: BehaviorRelay<InputState>) {
@@ -239,14 +239,14 @@ final class EditInformationViewModel {
       .disposed(by: disposeBag)
   }
   
-  private func updateUserInfo(userInfo: UserInfo, disposeBag: DisposeBag) {
+  private func updateUserInfo(userInfo: EditUserInfo, disposeBag: DisposeBag) {
     self.updateUserInformationUseCase.execute(userInfo: userInfo)
       .subscribe(onNext: { [weak self] result in
         self?.saveUserInfoUseCase.execute(userInfo: result)
         self?.coordinator?.finishFlow?()
       })
       .disposed(by: disposeBag)
-
+    
   }
   
   func updateBirth(birth: Int) {

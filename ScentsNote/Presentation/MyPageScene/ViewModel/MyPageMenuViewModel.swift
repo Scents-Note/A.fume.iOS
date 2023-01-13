@@ -101,7 +101,7 @@ final class MyPageMenuViewModel {
       self.loadData.accept(())
       self.delegate?.reloadData()
     case .login:
-      self.coordinator?.onOnboardingFlow?()
+      self.coordinator?.runOnboardingFlow?()
     }
     self.coordinator?.hideMyPageMenuViewController()
   }

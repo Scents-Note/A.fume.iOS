@@ -23,13 +23,11 @@ final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationC
   
   private func showEditInfoController() {
     let vc = self.editInfoViewController
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     vc.viewModel = EditInformationViewModel(coordinator: self,
-                                     fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase(userRepository: userRepository),
-                                     checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: userRepository),
-                                     updateUserInformationUseCase: UpdateUserInformationUseCase(userRepository: userRepository),
-                                     saveUserInfoUseCase: SaveUserInfoUseCase(userRepository: userRepository))
+                                     fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase(userRepository: DefaultUserRepository.shared),
+                                     checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared),
+                                     updateUserInformationUseCase: UpdateUserInformationUseCase(userRepository: DefaultUserRepository.shared),
+                                     saveUserInfoUseCase: SaveEditUserInfoUseCase(userRepository: DefaultUserRepository.shared))
     vc.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(vc, animated: true)
   }

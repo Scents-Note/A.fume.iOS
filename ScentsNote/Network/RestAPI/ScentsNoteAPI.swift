@@ -15,7 +15,7 @@ enum ScentsNoteAPI {
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
   case fetchPerfumesInMyPage(userIdx: Int)
-  case updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO)
+  case updateUserInfo(userIdx: Int, userInfo: EditUserInfoRequestDTO)
   case changePassword(password: PasswordRequestDTO)
   
   // MARK: - Perfume

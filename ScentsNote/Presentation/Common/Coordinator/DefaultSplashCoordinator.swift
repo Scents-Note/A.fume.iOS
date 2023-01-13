@@ -9,24 +9,28 @@ import UIKit
 
 final class DefaultSplashCoordinator: BaseCoordinator, SplashCoordinator {
   
+  // MARK: - Navigate
   var finishFlow: (() -> Void)?
-  var viewController: SplashViewController
+  
+  // MARK: - ViewController
+  var splashViewController: SplashViewController
   
   override init(_ navigationController: UINavigationController) {
-    self.viewController = SplashViewController()
+    self.splashViewController = SplashViewController()
     super.init(navigationController)
   }
   
   override func start() {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
-    self.viewController.viewModel = SplashViewModel(
-      coordinator: self,
-      loginUseCase: LoginUseCase(userRepository: userRepository),
-      logoutUseCase: LogoutUseCase(userRepository: userRepository),
-      saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: userRepository)
+    self.showSplashViewController()
+  }
+  
+  func showSplashViewController() {
+    self.splashViewController.viewModel = SplashViewModel(coordinator: self,
+                                                          loginUseCase: LoginUseCase(userRepository: DefaultUserRepository.shared),
+                                                          logoutUseCase: LogoutUseCase(userRepository: DefaultUserRepository.shared),
+                                                          saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared)
     )
-    self.navigationController.pushViewController(viewController, animated: false)
+    self.navigationController.pushViewController(splashViewController, animated: false)
   }
   
 }

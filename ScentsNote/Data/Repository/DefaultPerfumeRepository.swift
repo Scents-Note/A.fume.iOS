@@ -9,9 +9,11 @@ import RxSwift
 
 final class DefaultPerfumeRepository: PerfumeRepository {
   
+  static let shared = DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)
+  
   private let perfumeService: PerfumeService
   
-  init(perfumeService: PerfumeService){
+  private init(perfumeService: PerfumeService){
     self.perfumeService = perfumeService
   }
   

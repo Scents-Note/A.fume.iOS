@@ -12,5 +12,4 @@ protocol ApplicationCoordinator {
   func runOnboardingFlow()
   func runMainFlow()
   func runSurveyFlow()
-  
 }

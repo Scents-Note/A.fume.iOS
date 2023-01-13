@@ -9,9 +9,11 @@ import RxSwift
 
 final class DefaultKeywordRepository: KeywordRepository {
   
+  static let shared: DefaultKeywordRepository = DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)
+  
   private let keywordService: KeywordService
   
-  init(keywordService: KeywordService){
+  private init(keywordService: KeywordService){
     self.keywordService = keywordService
   }
   

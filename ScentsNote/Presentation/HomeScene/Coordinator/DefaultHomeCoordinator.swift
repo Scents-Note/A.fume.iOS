@@ -11,26 +11,27 @@ import Then
 final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   var runOnboardingFlow: (() -> Void)?
-  var viewController: HomeViewController
+  var homeViewController: HomeViewController
   
   override init(_ navigationController: UINavigationController) {
-    self.viewController = HomeViewController()
+    self.homeViewController = HomeViewController()
     super.init(navigationController)
   }
   
   override func start() {
-    let perfumeRepository = DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)
-    self.viewController.viewModel = HomeViewModel(coordinator: self,
-                                                  fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared, userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)),
-                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: perfumeRepository))
-    self.navigationController.pushViewController(self.viewController, animated: true)
+    self.showHomeViewController()
   }
   
-  
+  private func showHomeViewController() {
+    self.homeViewController.viewModel = HomeViewModel(coordinator: self,
+                                                  fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared))
+    self.navigationController.pushViewController(self.viewController, animated: true)
+  }
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
@@ -87,7 +88,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     }
     vc.viewModel = LabelPopupViewModel(
       coordinator: self,
-      delegate: self.viewController.viewModel!
+      delegate: self.homeViewController.viewModel!
     )
     
     vc.modalTransitionStyle = .crossDissolve

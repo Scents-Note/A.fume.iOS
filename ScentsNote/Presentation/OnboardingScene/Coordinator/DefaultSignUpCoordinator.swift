@@ -20,13 +20,11 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   }
   
   func showSignUpInformationViewController() {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                                       userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     let vc = SignUpInformationViewController()
     vc.viewModel = SignUpInformationViewModel(
       coordinator: self,
-      checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase(userRepository: userRepository),
-      checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: userRepository)
+      checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase(userRepository: DefaultUserRepository.shared),
+      checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared)
     )
     self.navigationController.pushViewController(vc, animated: true)
   }
@@ -50,14 +48,11 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   }
   
   func showSignUpBirthViewController(with signUpInfo: SignUpInfo) {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                                       userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
-    
     let vc = SignUpBirthViewController()
     vc.viewModel = SignUpBirthViewModel(
       coordinator: self,
-      signUpUseCase: SignUpUseCase(userRepository: userRepository),
-      saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: userRepository),
+      signUpUseCase: SignUpUseCase(userRepository: DefaultUserRepository.shared),
+      saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared),
       signUpInfo: signUpInfo
     )
     self.navigationController.pushViewController(vc, animated: true)
