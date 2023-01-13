@@ -9,4 +9,5 @@ import Foundation
 
 protocol SplashCoordinator: AnyObject {
   var finishFlow: (() -> Void)? { get set }
+  func showSplashViewController()
 }

@@ -9,9 +9,11 @@ import UIKit
 
 final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   
+  // MARK: Navigate
   var finishFlow: ((CoordinatorType) -> Void)?
-  var onOnboardingFlow: (() -> Void)?
+  var runOnboardingFlow: (() -> Void)?
   
+  // MARK: - ViewController
   var tabBarController: UITabBarController
   
   override init(_ navigationController: UINavigationController) {
@@ -20,10 +22,14 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
   }
   
   override func start() {
+    self.showTabBarController()
+  }
+  
+  func showTabBarController() {
     let pages: [TabBarPage] = TabBarPage.allCases
-    let controllers: [UINavigationController] = pages.map({
-      self.createTabNavigationController(of: $0)
-    })
+    let controllers: [UINavigationController] = pages.map {
+      self.setTabNavigationController(of: $0)
+    }
     self.configureTabBarController(with: controllers)
   }
   
@@ -45,7 +51,7 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
     }
   }
   
-  private func createTabNavigationController(of page: TabBarPage) -> UINavigationController {
+  private func setTabNavigationController(of page: TabBarPage) -> UINavigationController {
     let tabNavigationController = BaseNavigationController()
     tabNavigationController.setNavigationBarHidden(false, animated: false)
     tabNavigationController.tabBarItem = self.configureTabBarItem(of: page)
@@ -59,24 +65,22 @@ final class DefaultMainCoordinator: BaseCoordinator, MainCoordinator {
                         selectedImage: UIImage(named: page.tabIconSelected()))
   }
   
-  
-  
   private func startTabCoordinator(of page: TabBarPage, to tabNavigationController: UINavigationController) {
     switch page {
     case .home:
       let homeCoordinator = DefaultHomeCoordinator(tabNavigationController)
-      homeCoordinator.runOnboardingFlow = onOnboardingFlow
       self.addDependency(homeCoordinator)
+      homeCoordinator.runOnboardingFlow = runOnboardingFlow
       homeCoordinator.start()
     case .search:
       let searchCoordinator = DefaultSearchCoordinator(tabNavigationController)
-      searchCoordinator.runOnboardingFlow = onOnboardingFlow
       self.addDependency(searchCoordinator)
+      searchCoordinator.runOnboardingFlow = runOnboardingFlow
       searchCoordinator.start()
     case .mypage:
       let myPageCoordinator = DefaultMyPageCoordinator(tabNavigationController)
-      myPageCoordinator.onOnboardingFlow = onOnboardingFlow
       self.addDependency(myPageCoordinator)
+      myPageCoordinator.runOnboardingFlow = runOnboardingFlow
       myPageCoordinator.start()
     }
   }

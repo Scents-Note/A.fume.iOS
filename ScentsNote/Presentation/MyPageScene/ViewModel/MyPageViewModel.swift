@@ -105,7 +105,7 @@ final class MyPageViewModel {
     
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.onOnboardingFlow?()
+        self?.coordinator?.runOnboardingFlow?()
       })
       .disposed(by: disposeBag)
     
@@ -141,7 +141,7 @@ final class MyPageViewModel {
     
     scrollInput.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.onOnboardingFlow?()
+        self?.coordinator?.runOnboardingFlow?()
       })
       .disposed(by: disposeBag)
   }

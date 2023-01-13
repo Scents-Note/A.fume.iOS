@@ -9,15 +9,13 @@ import UIKit
 
 class BaseCoordinator: Coordinator {
   
-  init(_ navigationController: UINavigationController) {
-    self.navigationController = navigationController
-  }
-  
   // MARK: - Vars & Lets
   var navigationController: UINavigationController
   var childCoordinators = [Coordinator]()
-
-  // MARK: - Public methods
+  
+  init(_ navigationController: UINavigationController) {
+    self.navigationController = navigationController
+  }
   
   func addDependency(_ coordinator: Coordinator) {
     for element in childCoordinators {
@@ -45,8 +43,6 @@ class BaseCoordinator: Coordinator {
     }
     return nil
   }
-  
-  
   
   // MARK: - Coordinator
   func start() {}

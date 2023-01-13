@@ -25,17 +25,6 @@ final class DefaultUserRepository: UserRepository {
     return self.userService.login(email: email, password: password)
   }
   
-  func logout() {
-    
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.token)
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.refreshToken)
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.userIdx)
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.nickname)
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.gender)
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.birth)
-    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.isLoggedIn)
-  }
-  
   func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
     return self.userService.signUp(signUpInfo: signUpInfo)
   }
@@ -57,7 +46,7 @@ final class DefaultUserRepository: UserRepository {
       .map { $0.rows.map { $0.toDomain() } }
   }
   
-  func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo> {
+  func updateUserInfo(userIdx: Int, userInfo: EditUserInfo) -> Observable<EditUserInfo> {
     let requestDTO = userInfo.toEntity()
     return self.userService.updateUserInfo(userIdx: userIdx, userInfo: requestDTO)
       .map { $0.toDomain() }
@@ -73,44 +62,17 @@ final class DefaultUserRepository: UserRepository {
       .map { $0.map {$0.toDomain() }}
   }
   
-  func saveLoginInfo(loginInfo: LoginInfo, email: String?, password: String?) {
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.token, value: loginInfo.token)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.refreshToken, value: loginInfo.refreshToken)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.userIdx, value: loginInfo.userIdx)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.nickname, value: loginInfo.nickname)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.gender, value: loginInfo.gender)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.birth, value: loginInfo.birth)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.isLoggedIn, value: true)
-    if let email = email {
-      self.userDefaultsPersitenceService.set(key: UserDefaultKey.email, value: email)
-    }
-    if let password = password {
-      self.userDefaultsPersitenceService.set(key: UserDefaultKey.password, value: password)
-    }
-    
-  }
-  
-  func set(key: String, value: Any?) {
-      UserDefaults.standard.set(value, forKey: key)
-  }
-  
   func fetchUserDefaults<T>(key: String) -> T? {
     let value: T? = self.userDefaultsPersitenceService.get(key: key)
     return value
   }
   
-  func saveUserInfo(userInfo: UserInfo) {
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.nickname, value: userInfo.nickname)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.gender, value: userInfo.gender)
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.birth, value: userInfo.birth)
+  func setUserDefault(key: String, value: Any?) {
+    self.userDefaultsPersitenceService.set(key: UserDefaultKey.nickname, value: value)
   }
   
-  func savePassword(password: String) {
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.password, value: password)
+  func removeUserDefault(key: String) {
+    self.userDefaultsPersitenceService.remove(key: key)
   }
-  
-//  func clearUserInfo() {
-//    self.userDefaultsPersitenceService.remove(key: UserDefaultKey.token)
-//  }
 }
 

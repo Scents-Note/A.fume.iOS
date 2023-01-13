@@ -27,7 +27,7 @@ final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationC
                                      fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase(userRepository: DefaultUserRepository.shared),
                                      checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared),
                                      updateUserInformationUseCase: UpdateUserInformationUseCase(userRepository: DefaultUserRepository.shared),
-                                     saveUserInfoUseCase: SaveUserInfoUseCase(userRepository: DefaultUserRepository.shared))
+                                     saveUserInfoUseCase: SaveEditUserInfoUseCase(userRepository: DefaultUserRepository.shared))
     vc.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(vc, animated: true)
   }

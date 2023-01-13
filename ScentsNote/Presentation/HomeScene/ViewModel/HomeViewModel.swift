@@ -12,7 +12,6 @@ import Moya
 final class HomeViewModel {
   
   // MARK: - Input & Output
-  
   struct Input {
     let viewWillAppearEvent: Observable<Void>
   }

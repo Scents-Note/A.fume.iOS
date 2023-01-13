@@ -15,11 +15,11 @@ final class FetchUserInfoForEditUseCase {
     self.userRepository = userRepository
   }
   
-  func execute() -> Observable<UserInfo> {
+  func execute() -> Observable<EditUserInfo> {
     let nickname = self.userRepository.fetchUserDefaults(key: UserDefaultKey.nickname) ?? ""
     let gender = self.userRepository.fetchUserDefaults(key: UserDefaultKey.gender) ?? "MAN"
     let birth = self.userRepository.fetchUserDefaults(key: UserDefaultKey.birth) ?? 1990
-    let userInfo = UserInfo(nickname: nickname, gender: gender, birth: birth)
+    let userInfo = EditUserInfo(nickname: nickname, gender: gender, birth: birth)
     return Observable.just(userInfo)
   }
 }

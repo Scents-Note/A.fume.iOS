@@ -7,4 +7,5 @@
 
 protocol WebCoordinator {
   var finishFlow: (() -> Void)? { get set }
+  func showWebController(url: String)
 }

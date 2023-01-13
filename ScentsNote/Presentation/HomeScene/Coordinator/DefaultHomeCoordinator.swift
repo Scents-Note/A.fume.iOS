@@ -11,15 +11,19 @@ import Then
 final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   var runOnboardingFlow: (() -> Void)?
-  var viewController: HomeViewController
+  var homeViewController: HomeViewController
   
   override init(_ navigationController: UINavigationController) {
-    self.viewController = HomeViewController()
+    self.homeViewController = HomeViewController()
     super.init(navigationController)
   }
   
   override func start() {
-    self.viewController.viewModel = HomeViewModel(coordinator: self,
+    self.showHomeViewController()
+  }
+  
+  private func showHomeViewController() {
+    self.homeViewController.viewModel = HomeViewModel(coordinator: self,
                                                   fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
                                                   updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
                                                   fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
@@ -28,8 +32,6 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
                                                   fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared))
     self.navigationController.pushViewController(self.viewController, animated: true)
   }
-  
-  
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
@@ -86,7 +88,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     }
     vc.viewModel = LabelPopupViewModel(
       coordinator: self,
-      delegate: self.viewController.viewModel!
+      delegate: self.homeViewController.viewModel!
     )
     
     vc.modalTransitionStyle = .crossDissolve

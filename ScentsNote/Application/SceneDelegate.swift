@@ -10,7 +10,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
-  var applicationCoordinator: Coordinator?
+  var applicationCoordinator: ApplicationCoordinator?
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     
@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     self.window?.overrideUserInterfaceStyle = .light
     
     self.applicationCoordinator = DefaultApplicationCoordinator(navigationController)
-    self.applicationCoordinator?.start()
+    self.applicationCoordinator?.runSplashFlow()
     
     return
   }

@@ -15,6 +15,8 @@ final class LogoutUseCase {
   }
   
   func execute() {
-    self.userRepository.logout()
+    for key in UserDefaultKey.list {
+      self.userRepository.removeUserDefault(key: key)
+    }
   }
 }

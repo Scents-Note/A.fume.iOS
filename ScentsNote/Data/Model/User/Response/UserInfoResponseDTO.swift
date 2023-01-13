@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/12/01.
 //
 
-struct UserInfoResponseDTO: Decodable {
+struct EditUserInfoResponseDTO: Decodable {
   let userIdx: Int
   let nickname: String
   let gender: String
@@ -13,10 +13,10 @@ struct UserInfoResponseDTO: Decodable {
   let birth: Int
 }
 
-extension UserInfoResponseDTO {
-  func toDomain() -> UserInfo {
-    UserInfo(nickname: nickname,
-             gender: gender,
-             birth: birth)
+extension EditUserInfoResponseDTO {
+  func toDomain() -> EditUserInfo {
+    EditUserInfo(nickname: nickname,
+                 gender: gender,
+                 birth: birth)
   }
 }

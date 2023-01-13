@@ -14,6 +14,7 @@ protocol PerfumeDetailCoordinator: PopUpCoordinator {
   var runPerfumeReviewFlowWithReviewIdx: ((Int) -> Void)? { get set }
   var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
   
+  func showPerfumeDetailViewController(perfumeIdx: Int)
   func runWebFlow(with url: String)
   func showReviewReportPopupViewController(reviewIdx: Int)
   func hideReviewReportPopupViewController()

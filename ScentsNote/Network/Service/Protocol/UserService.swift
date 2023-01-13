@@ -23,7 +23,7 @@ protocol UserService {
   
   // MARK: - My Page
   func fetchPerfumesInMyPage(userIdx: Int) -> Observable<ListInfo<PerfumeInMyPageResponseDTO>>
-  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO>
+  func updateUserInfo(userIdx: Int, userInfo: EditUserInfoRequestDTO) -> Observable<EditUserInfoResponseDTO>
   func changePassword(password: PasswordRequestDTO) -> Observable<String>
   func fetchReviewsInMyPage() -> Observable<[ReviewInMyPageResponseDTO]>
 }

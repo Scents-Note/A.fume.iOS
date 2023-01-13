@@ -126,14 +126,14 @@
 		4A4F6A3C2938673A006BBF0B /* EditInformationNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3B2938673A006BBF0B /* EditInformationNicknameView.swift */; };
 		4A4F6A3E29386ECF006BBF0B /* EditInformationGenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3D29386ECF006BBF0B /* EditInformationGenderView.swift */; };
 		4A4F6A4029387852006BBF0B /* FetchUserInfoForEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A3F29387852006BBF0B /* FetchUserInfoForEditUseCase.swift */; };
-		4A4F6A43293878DD006BBF0B /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A42293878DD006BBF0B /* UserInfo.swift */; };
+		4A4F6A43293878DD006BBF0B /* EditUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A42293878DD006BBF0B /* EditUserInfo.swift */; };
 		4A4F6A4529388C29006BBF0B /* CheckDuplicateNicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4429388C29006BBF0B /* CheckDuplicateNicknameUseCase.swift */; };
 		4A4F6A472938A766006BBF0B /* UpdateUserInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A462938A766006BBF0B /* UpdateUserInformationUseCase.swift */; };
-		4A4F6A492938AA81006BBF0B /* UserInfoRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A482938AA81006BBF0B /* UserInfoRequestDTO.swift */; };
+		4A4F6A492938AA81006BBF0B /* EditUserInfoRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A482938AA81006BBF0B /* EditUserInfoRequestDTO.swift */; };
 		4A4F6A4B2938AF27006BBF0B /* UserInfoResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4A2938AF27006BBF0B /* UserInfoResponseDTO.swift */; };
 		4A4F6A4D2938B626006BBF0B /* EditInformationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4C2938B626006BBF0B /* EditInformationCoordinator.swift */; };
 		4A4F6A4F2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A4E2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift */; };
-		4A4F6A512938BAB3006BBF0B /* SaveUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A502938BAB3006BBF0B /* SaveUserInfoUseCase.swift */; };
+		4A4F6A512938BAB3006BBF0B /* SaveEditUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A502938BAB3006BBF0B /* SaveEditUserInfoUseCase.swift */; };
 		4A4F6A532938CB1C006BBF0B /* ChangePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A522938CB1C006BBF0B /* ChangePasswordCoordinator.swift */; };
 		4A4F6A552938D084006BBF0B /* DefaultChangePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A542938D084006BBF0B /* DefaultChangePasswordCoordinator.swift */; };
 		4A4F6A5729397F07006BBF0B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4F6A5629397F07006BBF0B /* ChangePasswordViewController.swift */; };
@@ -501,14 +501,14 @@
 		4A4F6A3B2938673A006BBF0B /* EditInformationNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationNicknameView.swift; sourceTree = "<group>"; };
 		4A4F6A3D29386ECF006BBF0B /* EditInformationGenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationGenderView.swift; sourceTree = "<group>"; };
 		4A4F6A3F29387852006BBF0B /* FetchUserInfoForEditUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserInfoForEditUseCase.swift; sourceTree = "<group>"; };
-		4A4F6A42293878DD006BBF0B /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		4A4F6A42293878DD006BBF0B /* EditUserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserInfo.swift; sourceTree = "<group>"; };
 		4A4F6A4429388C29006BBF0B /* CheckDuplicateNicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplicateNicknameUseCase.swift; sourceTree = "<group>"; };
 		4A4F6A462938A766006BBF0B /* UpdateUserInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUserInformationUseCase.swift; sourceTree = "<group>"; };
-		4A4F6A482938AA81006BBF0B /* UserInfoRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoRequestDTO.swift; sourceTree = "<group>"; };
+		4A4F6A482938AA81006BBF0B /* EditUserInfoRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserInfoRequestDTO.swift; sourceTree = "<group>"; };
 		4A4F6A4A2938AF27006BBF0B /* UserInfoResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoResponseDTO.swift; sourceTree = "<group>"; };
 		4A4F6A4C2938B626006BBF0B /* EditInformationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationCoordinator.swift; sourceTree = "<group>"; };
 		4A4F6A4E2938B66B006BBF0B /* DefaultEditInformationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultEditInformationCoordinator.swift; sourceTree = "<group>"; };
-		4A4F6A502938BAB3006BBF0B /* SaveUserInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveUserInfoUseCase.swift; sourceTree = "<group>"; };
+		4A4F6A502938BAB3006BBF0B /* SaveEditUserInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveEditUserInfoUseCase.swift; sourceTree = "<group>"; };
 		4A4F6A522938CB1C006BBF0B /* ChangePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordCoordinator.swift; sourceTree = "<group>"; };
 		4A4F6A542938D084006BBF0B /* DefaultChangePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultChangePasswordCoordinator.swift; sourceTree = "<group>"; };
 		4A4F6A5629397F07006BBF0B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
@@ -1084,7 +1084,7 @@
 				4A4F6A2D2937574D006BBF0B /* FetchPerfumesInMyPageUseCase.swift */,
 				4A4F6A3F29387852006BBF0B /* FetchUserInfoForEditUseCase.swift */,
 				4A4F6A4429388C29006BBF0B /* CheckDuplicateNicknameUseCase.swift */,
-				4A4F6A502938BAB3006BBF0B /* SaveUserInfoUseCase.swift */,
+				4A4F6A502938BAB3006BBF0B /* SaveEditUserInfoUseCase.swift */,
 				4A4F6A5D2939A9E8006BBF0B /* FetchUserPasswordUseCase.swift */,
 				4A4F6A672939C2C3006BBF0B /* ChangePasswordUseCase.swift */,
 				4A4F6A6B2939CAAA006BBF0B /* SavePasswordUseCase.swift */,
@@ -1103,7 +1103,7 @@
 		4A4F6A41293878D7006BBF0B /* User */ = {
 			isa = PBXGroup;
 			children = (
-				4A4F6A42293878DD006BBF0B /* UserInfo.swift */,
+				4A4F6A42293878DD006BBF0B /* EditUserInfo.swift */,
 				4A4F6A652939C27F006BBF0B /* Password.swift */,
 			);
 			path = User;
@@ -1596,7 +1596,7 @@
 			isa = PBXGroup;
 			children = (
 				4A9D915E28FFFBE2001551A8 /* LoginRequestDTO.swift */,
-				4A4F6A482938AA81006BBF0B /* UserInfoRequestDTO.swift */,
+				4A4F6A482938AA81006BBF0B /* EditUserInfoRequestDTO.swift */,
 				4A4F6A632939C1B0006BBF0B /* PasswordRequestDTO.swift */,
 			);
 			path = Request;
@@ -2601,7 +2601,7 @@
 				4A4F6A002934C684006BBF0B /* KeywordRepository.swift in Sources */,
 				4A4DF5F629290A340066792D /* LongevityResponseDTO.swift in Sources */,
 				4A3B041529239316004F155D /* PerfumeDetailViewController.swift in Sources */,
-				4A4F6A512938BAB3006BBF0B /* SaveUserInfoUseCase.swift in Sources */,
+				4A4F6A512938BAB3006BBF0B /* SaveEditUserInfoUseCase.swift in Sources */,
 				4A6F989E292EF5A50085EBE7 /* PerfumeKeyword.swift in Sources */,
 				4A4F6A662939C27F006BBF0B /* Password.swift in Sources */,
 				4AAFE82728FE368100EA6FB4 /* UIViewController+Extension.swift in Sources */,
@@ -2723,7 +2723,7 @@
 				4A6F98AA292F0A900085EBE7 /* SearchResultViewModel.swift in Sources */,
 				4A5A94E72929E9FC00B4197D /* GenderResponseDTO.swift in Sources */,
 				4A6F98BF292F93090085EBE7 /* TabCell.swift in Sources */,
-				4A4F6A43293878DD006BBF0B /* UserInfo.swift in Sources */,
+				4A4F6A43293878DD006BBF0B /* EditUserInfo.swift in Sources */,
 				4A4F6A342938420B006BBF0B /* MenuCell.swift in Sources */,
 				4A8F89C828F4F91A00ACE0F1 /* AppDelegate.swift in Sources */,
 				4A6F98B9292F8D670085EBE7 /* SearchFilterViewController.swift in Sources */,
@@ -2827,7 +2827,7 @@
 				4A4F6A4B2938AF27006BBF0B /* UserInfoResponseDTO.swift in Sources */,
 				4A6F98C1292F95CE0085EBE7 /* SearchTab.swift in Sources */,
 				4A4F6A8A293B7095006BBF0B /* KeywordBottomSheetViewController.swift in Sources */,
-				4A4F6A492938AA81006BBF0B /* UserInfoRequestDTO.swift in Sources */,
+				4A4F6A492938AA81006BBF0B /* EditUserInfoRequestDTO.swift in Sources */,
 				4A4F6A4029387852006BBF0B /* FetchUserInfoForEditUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

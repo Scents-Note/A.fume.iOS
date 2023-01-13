@@ -37,7 +37,7 @@ final class DefaultUserService: ScentsNoteService, UserService {
     requestObject(.fetchPerfumesInMyPage(userIdx: userIdx))
   }
   
-  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO> {
+  func updateUserInfo(userIdx: Int, userInfo: EditUserInfoRequestDTO) -> Observable<EditUserInfoResponseDTO> {
     requestObject(.updateUserInfo(userIdx: userIdx, userInfo: userInfo))
   }
   

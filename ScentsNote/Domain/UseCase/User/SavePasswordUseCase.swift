@@ -13,6 +13,6 @@ final class SavePasswordUseCase {
   }
   
   func execute(password: String) {
-    self.userRepository.savePassword(password: password)
+    self.userRepository.setUserDefault(key: UserDefaultKey.password, value: password)
   }
 }

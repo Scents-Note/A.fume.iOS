@@ -9,7 +9,7 @@ import UIKit
 
 final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   
-  var onOnboardingFlow: (() -> Void)?
+  var runOnboardingFlow: (() -> Void)?
   
   var myPageViewController: MyPageViewController
   override init(_ navigationController: UINavigationController) {

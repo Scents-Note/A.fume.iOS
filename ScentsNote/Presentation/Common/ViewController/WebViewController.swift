@@ -13,7 +13,7 @@ import SnapKit
 final class WebViewController: UIViewController {
   
   let webView = WKWebView()
-  var urlString: String?
+  var url: String?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,7 +41,7 @@ final class WebViewController: UIViewController {
   }
   
   func loadUrl() {
-    guard let urlString = self.urlString, let url = URL(string: urlString) else { return }
+    guard let url = self.url, let url = URL(string: url) else { return }
     self.webView.load(URLRequest(url: url))
   }
 }
