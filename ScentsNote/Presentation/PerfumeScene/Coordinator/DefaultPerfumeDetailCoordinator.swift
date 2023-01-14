@@ -30,11 +30,11 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   
   func showPerfumeDetailViewController(perfumeIdx: Int) {
     self.perfumeDetailViewController.viewModel = PerfumeDetailViewModel(coordinator: self,
-                                                                        fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                                        fetchReviewsInPerfumeDetailUseCase: FetchReviewsInPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                                        updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                                        updateReviewLikeUseCase: UpdateReviewLikeUseCase(reviewRepository: DefaultReviewRepository.shared),
-                                                                        fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                                        fetchPerfumeDetailUseCase: DefaultFetchPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                                        fetchReviewsInPerfumeDetailUseCase: DefaultFetchReviewsInPerfumeDetailUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                                        updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                                        updateReviewLikeUseCase: DefaultUpdateReviewLikeUseCase(reviewRepository: DefaultReviewRepository.shared),
+                                                                        fetchUserDefaultUseCase: DefaultFetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
                                                                         perfumeIdx: perfumeIdx
     )
     self.perfumeDetailViewController.hidesBottomBarWhenPushed = true
@@ -54,7 +54,7 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
   func showReviewReportPopupViewController(reviewIdx: Int) {
     let vc = ReviewReportPopupViewController()
     vc.viewModel = ReviewReportPopupViewModel(coordinator: self,
-                                              reportReviewUseCase: ReportReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
+                                              reportReviewUseCase: DefaultReportReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
                                               reviewIdx: reviewIdx)
     vc.modalPresentationStyle = .overFullScreen
     self.navigationController.present(vc, animated: false, completion: nil)

@@ -26,9 +26,9 @@ final class DefaultSplashCoordinator: BaseCoordinator, SplashCoordinator {
   
   func showSplashViewController() {
     self.splashViewController.viewModel = SplashViewModel(coordinator: self,
-                                                          loginUseCase: LoginUseCase(userRepository: DefaultUserRepository.shared),
-                                                          logoutUseCase: LogoutUseCase(userRepository: DefaultUserRepository.shared),
-                                                          saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared)
+                                                          loginUseCase: DefaultLoginUseCase(userRepository: DefaultUserRepository.shared),
+                                                          logoutUseCase: DefaultLogoutUseCase(userRepository: DefaultUserRepository.shared),
+                                                          saveLoginInfoUseCase: DefaultSaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared)
     )
     self.navigationController.pushViewController(splashViewController, animated: false)
   }

@@ -21,8 +21,8 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   override func start() {
     self.searchViewController.viewModel = SearchViewModel(
       coordinator: self,
-      fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
+      fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
     )
     self.navigationController.pushViewController(self.searchViewController, animated: true)
   }

@@ -23,8 +23,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     let vc = SignUpInformationViewController()
     vc.viewModel = SignUpInformationViewModel(
       coordinator: self,
-      checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase(userRepository: DefaultUserRepository.shared),
-      checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared)
+      checkDuplcateEmailUseCase: DefaultCheckDuplcateEmailUseCase(userRepository: DefaultUserRepository.shared),
+      checkDuplicateNicknameUseCase: DefaultCheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared)
     )
     self.navigationController.pushViewController(vc, animated: true)
   }
@@ -51,8 +51,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     let vc = SignUpBirthViewController()
     vc.viewModel = SignUpBirthViewModel(
       coordinator: self,
-      signUpUseCase: SignUpUseCase(userRepository: DefaultUserRepository.shared),
-      saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared),
+      signUpUseCase: DefaultSignUpUseCase(userRepository: DefaultUserRepository.shared),
+      saveLoginInfoUseCase: DefaultSaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared),
       signUpInfo: signUpInfo
     )
     self.navigationController.pushViewController(vc, animated: true)

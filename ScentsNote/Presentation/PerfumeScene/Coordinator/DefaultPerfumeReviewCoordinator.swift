@@ -22,8 +22,8 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       perfumeDetail: perfumeDetail,
-      addReviewUseCase: AddReviewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared)
+      addReviewUseCase: DefaultAddReviewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared)
     )
     self.navigationController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
@@ -33,10 +33,10 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       reviewIdx: reviewIdx,
-      fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: DefaultReviewRepository.shared),
-      updateReviewUseCase: UpdateReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared),
-      deleteReviewUseCase: DeleteReviewUseCase(reviewRepository: DefaultReviewRepository.shared)
+      fetchReviewDetailUseCase: DefaultFetchReviewDetailUseCase(reviewRepository: DefaultReviewRepository.shared),
+      updateReviewUseCase: DefaultUpdateReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
+      fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared),
+      deleteReviewUseCase: DefaultDeleteReviewUseCase(reviewRepository: DefaultReviewRepository.shared)
     )
     self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)

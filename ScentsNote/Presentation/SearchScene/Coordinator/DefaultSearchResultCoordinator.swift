@@ -24,8 +24,8 @@ final class DefaultSearchResultCoordinator: BaseCoordinator, SearchResultCoordin
   
   func start(perfumeSearch: PerfumeSearch) {
     self.searchResultViewController.viewModel = SearchResultViewModel(coordinator: self,
-                                                                      fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                                      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                                      fetchPerfumeSearchedUseCase: DefaultFetchPerfumeSearchedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                                      updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
                                                                       perfumeSearch: perfumeSearch)
     
 //    self.searchResultViewController.hidesBottomBarWhenPushed = false
