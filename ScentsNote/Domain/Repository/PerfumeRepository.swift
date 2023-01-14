@@ -16,7 +16,7 @@ protocol PerfumeRepository {
   
   // MARK: - Survey
   func fetchPerfumesInSurvey() -> Observable<[Perfume]>
-  func fetchSeries() -> Observable<ListInfo<SurveySeries>>
+  func fetchSeries() -> Observable<[SurveySeries]>
   
   // MARK: - Home
   func fetchPerfumesRecommended() -> Observable<[Perfume]>

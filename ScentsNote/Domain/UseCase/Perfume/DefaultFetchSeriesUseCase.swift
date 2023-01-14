@@ -1,5 +1,5 @@
 //
-//  DefaultFetchSeriesUseCase.swift
+//  FetchSeriesUseCase.swift
 //  ScentsNote
 //
 //  Created by 황득연 on 2022/12/20.
@@ -8,7 +8,7 @@
 import RxSwift
 
 protocol FetchSeriesUseCase {
-  func execute() -> Observable<ListInfo<SurveySeries>>
+  func execute() -> Observable<[SurveySeries]>
 }
 
 final class DefaultFetchSeriesUseCase: FetchSeriesUseCase {
@@ -19,7 +19,7 @@ final class DefaultFetchSeriesUseCase: FetchSeriesUseCase {
     self.perfumeRepository = perfumeRepository
   }
   
-  func execute() -> Observable<ListInfo<SurveySeries>> {
+  func execute() -> Observable<[SurveySeries]> {
     self.perfumeRepository.fetchSeries()
   }
 }

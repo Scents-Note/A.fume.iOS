@@ -16,7 +16,7 @@ final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
     requestObject(.fetchPerfumesInSurvey)
   }
   
-  func fetchSeries() -> Observable<ListInfo<SurveySeries>> {
+  func fetchSeries() -> Observable<ListInfo<SurveySeriesResponseDTO>> {
     requestObject(.fetchSeries)
   }
   

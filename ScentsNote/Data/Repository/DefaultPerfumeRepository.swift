@@ -22,8 +22,9 @@ final class DefaultPerfumeRepository: PerfumeRepository {
       .map { $0.rows.map { $0.toDomain()} }
   }
   
-  func fetchSeries() -> Observable<ListInfo<SurveySeries>> {
+  func fetchSeries() -> Observable<[SurveySeries]> {
     self.perfumeService.fetchSeries()
+      .map { $0.rows.map { $0.toDomain()}}
   }
   
   func fetchPerfumesRecommended() -> Observable<[Perfume]> {
