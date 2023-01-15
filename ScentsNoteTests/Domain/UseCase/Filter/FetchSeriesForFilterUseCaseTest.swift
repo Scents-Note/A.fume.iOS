@@ -18,7 +18,7 @@ final class FetchSeriesForFilterUseCaseTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.fetchSeriesForFilterUseCase = DefaultFetchSeriesForFilterUseCase(filterRepository: FilterRepositoryMock())
+    self.fetchSeriesForFilterUseCase = DefaultFetchSeriesForFilterUseCase(filterRepository: MockFilterRepository())
     self.disposeBag = DisposeBag()
     
   }
@@ -29,7 +29,7 @@ final class FetchSeriesForFilterUseCaseTest: XCTestCase {
     self.disposeBag = nil
   }
   
-  func testExecute_fetch_success() throws {
+  func testExecute_fetchSeriesForFilter() throws {
     
     // Given
     let series = [FilterSeries(idx: 0, name: "가", ingredients: [FilterIngredient(idx: 0, name: "ㄱ", isSelected: false),

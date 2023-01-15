@@ -15,6 +15,8 @@ struct SurveySeriesResponseDTO: Decodable {
 
 extension SurveySeriesResponseDTO {
   func toDomain() -> SurveySeries {
-    SurveySeries(seriesIdx: self.seriesIdx, name: self.name, imageUrl: self.imageUrl)
+    SurveySeries(seriesIdx: self.seriesIdx,
+                 name: self.name,
+                 imageUrl: self.imageUrl)
   }
 }

@@ -8,7 +8,7 @@
 import RxSwift
 @testable import ScentsNote
 
-final class FilterRepositoryMock: FilterRepository {
+final class MockFilterRepository: FilterRepository {
   
   func fetchSeriesForFilter() -> Observable<[FilterSeries]> {
     let series = [FilterSeries(idx: 0, name: "가", ingredients: [FilterIngredient(idx: 0, name: "ㄱ", isSelected: false),
@@ -17,6 +17,7 @@ final class FilterRepositoryMock: FilterRepository {
                   FilterSeries(idx: 1, name: "나", ingredients: [FilterIngredient(idx: 3, name: "ㄹ", isSelected: false),
                                                                 FilterIngredient(idx: 4, name: "ㅁ", isSelected: false),
                                                                 FilterIngredient(idx: 5, name: "ㅂ", isSelected: false)])]
+    
     return Observable.create { observer in
       observer.onNext(series)
       return Disposables.create()
@@ -34,6 +35,4 @@ final class FilterRepositoryMock: FilterRepository {
       return Disposables.create()
     }
   }
-  
-  
 }

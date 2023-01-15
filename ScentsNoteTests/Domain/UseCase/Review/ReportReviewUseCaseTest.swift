@@ -1,49 +1,48 @@
 //
-//  AddReviewUseCaseTest.swift
+//  ReportReviewUseCaseTest.swift
 //  ScentsNoteTests
 //
 //  Created by 황득연 on 2023/01/15.
 //
 
 import XCTest
-
-import XCTest
 import RxSwift
 import RxTest
 @testable import ScentsNote
 
-final class AddReviewUseCaseTest: XCTestCase {
+final class ReportReviewUseCaseTest: XCTestCase {
   
-  private var addReviewUseCase: AddReviewUseCase!
+  private var reportReviewUseCase: ReportReviewUseCase!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.addReviewUseCase = DefaultAddReviewUseCase(perfumeRepository: MockPerfumeRepository())
+    self.reportReviewUseCase = DefaultReportReviewUseCase(reviewRepository: MockReviewRepository())
     self.disposeBag = DisposeBag()
+    
   }
   
   override func tearDownWithError() throws {
     self.scheduler = nil
-    self.addReviewUseCase = nil
+    self.reportReviewUseCase = nil
     self.disposeBag = nil
   }
   
-  func testExecute_addReview() throws {
+  func testExecute_reportReview() throws {
     
     // Given
-    let perfumeIdx = 0
-    let reviewDetail = ReviewDetail.default
-    let expected = "노트 작성에 성공하였습니다."
-    
+    let reviewIdx = 0
+    let reason = "욕설"
+    let expected = "신고 되었습니다."
+
     // When
     let stringObserver = self.scheduler.createObserver(String.self)
     self.scheduler.createColdObservable([
       .next(10, ())
     ])
     .subscribe(onNext: { [weak self] in
-      self?.addReviewUseCase.execute(perfumeIdx: perfumeIdx, perfumeReview: reviewDetail)
+      self?.reportReviewUseCase.execute(reviewIdx: reviewIdx, reason: reason)
         .subscribe(stringObserver)
         .disposed(by: self?.disposeBag ?? DisposeBag())
     })
@@ -51,8 +50,7 @@ final class AddReviewUseCaseTest: XCTestCase {
     
     // Then
     self.scheduler.start()
-    
     XCTAssertEqual(stringObserver.events, [.next(10, expected)])
+    
   }
 }
-

@@ -18,7 +18,7 @@ final class FetchSeriesUseCaseTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.fetchSeriesUseCase = DefaultFetchSeriesUseCase(perfumeRepository: PerfumeRepositoryMock())
+    self.fetchSeriesUseCase = DefaultFetchSeriesUseCase(perfumeRepository: MockPerfumeRepository())
     self.disposeBag = DisposeBag()
     
   }
@@ -29,13 +29,13 @@ final class FetchSeriesUseCaseTest: XCTestCase {
     self.scheduler = nil
   }
   
-  func testExecute_fetch_success() throws {
+  func testExecute_fetchSurveySeries() throws {
     
     // Given
     let series = [SurveySeries(seriesIdx: 0, name: "가", imageUrl: ""),
-                   SurveySeries(seriesIdx: 1, name: "나", imageUrl: ""),
-                   SurveySeries(seriesIdx: 2, name: "다", imageUrl: ""),
-                   SurveySeries(seriesIdx: 3, name: "라", imageUrl: "")]
+                  SurveySeries(seriesIdx: 1, name: "나", imageUrl: ""),
+                  SurveySeries(seriesIdx: 2, name: "다", imageUrl: ""),
+                  SurveySeries(seriesIdx: 3, name: "라", imageUrl: "")]
     
     // When
     let surveysObserver = self.scheduler.createObserver([SurveySeries].self)

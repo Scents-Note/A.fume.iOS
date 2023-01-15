@@ -18,7 +18,7 @@ final class FetchFilterBrandInitialUseCaseTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.fetchFilterBrandInitialUseCase = DefaultFetchFilterBrandInitialUseCase(filterRepository: FilterRepositoryMock())
+    self.fetchFilterBrandInitialUseCase = DefaultFetchFilterBrandInitialUseCase(filterRepository: MockFilterRepository())
     self.disposeBag = DisposeBag()
     
   }
@@ -29,7 +29,7 @@ final class FetchFilterBrandInitialUseCaseTest: XCTestCase {
     self.disposeBag = nil
   }
   
-  func testExecute_fetch_success() throws {
+  func testExecute_fetchFilterBrandInitial() throws {
     
     // Given
     let brands = [FilterBrandInitial(text: "ㄱ", isSelected: false),

@@ -18,7 +18,7 @@ final class FetchPerfumeDetailUseCaseTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.fetchPerfumeDetailUseCase = DefaultFetchPerfumeDetailUseCase(perfumeRepository: PerfumeRepositoryMock())
+    self.fetchPerfumeDetailUseCase = DefaultFetchPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
     self.disposeBag = DisposeBag()
     
   }
@@ -29,7 +29,7 @@ final class FetchPerfumeDetailUseCaseTest: XCTestCase {
     self.disposeBag = nil
   }
   
-  func testExecute_fetch_success() throws {
+  func testExecute_fetchPerfumeDetail() throws {
     
     // Given
     let perfumeDetail = PerfumeDetail(perfumeIdx: 0, name: "가", brandName: "ㄱ", story: "story", abundanceRate: "풍부", volumeAndPrice: ["90ml, 50,000원"], imageUrls: [], score: 5.0, seasonal: [], sillage: [], longevity: [], gender: [], isLiked: false, Keywords: [], noteType: 0, ingredients: [], reviewIdx: 0, similarPerfumes: [Perfume(perfumeIdx: 0, brandName: "가", name: "ㄱ", imageUrl: "", keywordList: ["향기로움"], isLiked: false), Perfume(perfumeIdx: 1, brandName: "나", name: "ㄴ", imageUrl: "", keywordList: ["향기로움"], isLiked: false), Perfume(perfumeIdx: 2, brandName: "다", name: "ㄷ", imageUrl: "", keywordList: ["향기로움"], isLiked: false), Perfume(perfumeIdx: 3, brandName: "라", name: "ㄹ", imageUrl: "", keywordList: ["향기로움"], isLiked: false), Perfume(perfumeIdx: 4, brandName: "마", name: "ㅁ", imageUrl: "", keywordList: ["향기로움"], isLiked: false)])

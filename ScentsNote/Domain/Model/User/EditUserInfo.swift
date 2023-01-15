@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EditUserInfo {
+struct EditUserInfo: Equatable {
   let nickname: String
   let gender: String
   let birth: Int

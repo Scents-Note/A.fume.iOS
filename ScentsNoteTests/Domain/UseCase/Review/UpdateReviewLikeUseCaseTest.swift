@@ -1,5 +1,5 @@
 //
-//  AddReviewUseCaseTest.swift
+//  UpdateReviewLikeUseCaseTest.swift
 //  ScentsNoteTests
 //
 //  Created by 황득연 on 2023/01/15.
@@ -12,47 +12,47 @@ import RxSwift
 import RxTest
 @testable import ScentsNote
 
-final class AddReviewUseCaseTest: XCTestCase {
+final class UpdateReviewLikeUseCaseTest: XCTestCase {
   
-  private var addReviewUseCase: AddReviewUseCase!
+  private var updateReviewLikeUseCase: UpdateReviewLikeUseCase!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.addReviewUseCase = DefaultAddReviewUseCase(perfumeRepository: MockPerfumeRepository())
+    self.updateReviewLikeUseCase = DefaultUpdateReviewLikeUseCase(reviewRepository: MockReviewRepository())
     self.disposeBag = DisposeBag()
+    
   }
   
   override func tearDownWithError() throws {
     self.scheduler = nil
-    self.addReviewUseCase = nil
+    self.updateReviewLikeUseCase = nil
     self.disposeBag = nil
   }
   
-  func testExecute_addReview() throws {
+  func testExecute_reportReview() throws {
     
     // Given
-    let perfumeIdx = 0
-    let reviewDetail = ReviewDetail.default
-    let expected = "노트 작성에 성공하였습니다."
-    
+    let reviewIdx = 0
+    let expected = true
+
     // When
-    let stringObserver = self.scheduler.createObserver(String.self)
+    let boolObserver = self.scheduler.createObserver(Bool.self)
     self.scheduler.createColdObservable([
       .next(10, ())
     ])
     .subscribe(onNext: { [weak self] in
-      self?.addReviewUseCase.execute(perfumeIdx: perfumeIdx, perfumeReview: reviewDetail)
-        .subscribe(stringObserver)
+      self?.updateReviewLikeUseCase.execute(reviewIdx: reviewIdx)
+        .subscribe(boolObserver)
         .disposed(by: self?.disposeBag ?? DisposeBag())
     })
     .disposed(by: self.disposeBag)
     
     // Then
     self.scheduler.start()
+    XCTAssertEqual(boolObserver.events, [.next(10, expected)])
     
-    XCTAssertEqual(stringObserver.events, [.next(10, expected)])
   }
 }
 

@@ -18,7 +18,7 @@ final class UpdatePerfumeLikeUseCaseTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.updatePerfumeLikeUseCase = DefaultUpdatePerfumeLikeUseCase(perfumeRepository: PerfumeRepositoryMock())
+    self.updatePerfumeLikeUseCase = DefaultUpdatePerfumeLikeUseCase(perfumeRepository: MockPerfumeRepository())
     self.disposeBag = DisposeBag()
   }
   
@@ -28,7 +28,7 @@ final class UpdatePerfumeLikeUseCaseTest: XCTestCase {
     self.disposeBag = nil
   }
   
-  func testExecute_fetch_success() throws {
+  func testExecute_updatePerfumeLike() throws {
     
     // Given
     let perfumeIdx = 0

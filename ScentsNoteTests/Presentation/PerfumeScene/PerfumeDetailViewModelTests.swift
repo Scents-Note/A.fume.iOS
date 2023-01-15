@@ -23,8 +23,8 @@ final class PerfumeDetailViewModelTests: XCTestCase {
                                                        ReviewInPerfumeDetail(idx: 1, score: 4.5, access: true, content: "나", likeCount: 0, isLiked: false, gender: 1, age: "30", nickname: "득연2", isReported: false)]
   
   override func setUpWithError() throws {
-    self.fetchPerfumeDetailUseCase = DefaultFetchPerfumeDetailUseCase(perfumeRepository: PerfumeRepositoryMock())
-    self.fetchReviewsInPerfumeDetailUseCase = DefaultFetchReviewsInPerfumeDetailUseCase(perfumeRepository: PerfumeRepositoryMock())
+    self.fetchPerfumeDetailUseCase = DefaultFetchPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
+    self.fetchReviewsInPerfumeDetailUseCase = DefaultFetchReviewsInPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
 //    self.viewModel = PerfumeDetailViewModel(coordinator: nil,
 //                                            fetchPerfumeDetailUseCase: self.fetchPerfumeDetailUseCase,
 //                                            fetchReviewsInPerfumeDetailUseCase: self.fetchReviewsInPerfumeDetailUseCase,

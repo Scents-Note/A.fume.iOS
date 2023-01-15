@@ -18,7 +18,7 @@ final class FetchPerfumesInSurveyUseCaseTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.fetchPerfumesInSurveyUseCase = DefaultFetchPerfumesInSurveyUseCase(perfumeRepository: PerfumeRepositoryMock())
+    self.fetchPerfumesInSurveyUseCase = DefaultFetchPerfumesInSurveyUseCase(perfumeRepository: MockPerfumeRepository())
     self.disposeBag = DisposeBag()
     
   }
@@ -29,7 +29,7 @@ final class FetchPerfumesInSurveyUseCaseTest: XCTestCase {
     self.disposeBag = nil
   }
   
-  func testExecute_fetch_success() throws {
+  func testExecute_fetchPerfumesInSurvey() throws {
     
     // Given
     let perfumes = [Perfume(perfumeIdx: 0, brandName: "가", name: "ㄱ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),

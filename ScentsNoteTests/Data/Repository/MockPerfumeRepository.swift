@@ -8,7 +8,7 @@
 import RxSwift
 @testable import ScentsNote
 
-final class PerfumeRepositoryMock: PerfumeRepository {
+final class MockPerfumeRepository: PerfumeRepository {
   
   private let perfumes: [Perfume] = [Perfume(perfumeIdx: 0, brandName: "가", name: "ㄱ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),
                                      Perfume(perfumeIdx: 1, brandName: "나", name: "ㄴ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),

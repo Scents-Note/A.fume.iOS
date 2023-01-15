@@ -13,11 +13,11 @@ final class DefaultUserService: ScentsNoteService, UserService {
   
   static let shared: DefaultUserService = DefaultUserService()
   
-  func login(email: String, password: String) -> Observable<LoginInfo> {
+  func login(email: String, password: String) -> Observable<LoginInfoResponseDTO> {
     return requestObject(.login(email: email, password: password))
   }
   
-  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfoResponseDTO> {
     requestObject(.signUp(signUpInfo: signUpInfo))
   }
   

@@ -1,58 +1,55 @@
 //
-//  AddReviewUseCaseTest.swift
+//  SignUpUseCaseTest.swift
 //  ScentsNoteTests
 //
 //  Created by 황득연 on 2023/01/15.
 //
 
 import XCTest
-
-import XCTest
 import RxSwift
 import RxTest
 @testable import ScentsNote
 
-final class AddReviewUseCaseTest: XCTestCase {
+final class SignUpUseCaseTest: XCTestCase {
   
-  private var addReviewUseCase: AddReviewUseCase!
+  private var signUpUseCase: SignUpUseCase!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
   override func setUpWithError() throws {
     self.scheduler = TestScheduler(initialClock: 0)
-    self.addReviewUseCase = DefaultAddReviewUseCase(perfumeRepository: MockPerfumeRepository())
+    self.signUpUseCase = DefaultSignUpUseCase(userRepository: MockUserRepository())
     self.disposeBag = DisposeBag()
+    
   }
   
   override func tearDownWithError() throws {
     self.scheduler = nil
-    self.addReviewUseCase = nil
+    self.signUpUseCase = nil
     self.disposeBag = nil
   }
   
-  func testExecute_addReview() throws {
+  func testExecute_fetchUserInfoForEdit() throws {
     
     // Given
-    let perfumeIdx = 0
-    let reviewDetail = ReviewDetail.default
-    let expected = "노트 작성에 성공하였습니다."
+    let signUpInfo = SignUpInfo()
+    let expected = true
+    let loginInfo = LoginInfo(userIdx: 0, nickname: "Testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
     
     // When
-    let stringObserver = self.scheduler.createObserver(String.self)
+    let signUpInfoObserver = self.scheduler.createObserver(LoginInfo.self)
     self.scheduler.createColdObservable([
       .next(10, ())
     ])
     .subscribe(onNext: { [weak self] in
-      self?.addReviewUseCase.execute(perfumeIdx: perfumeIdx, perfumeReview: reviewDetail)
-        .subscribe(stringObserver)
+      self?.signUpUseCase.execute(signUpInfo: signUpInfo)
+        .subscribe(signUpInfoObserver)
         .disposed(by: self?.disposeBag ?? DisposeBag())
     })
     .disposed(by: self.disposeBag)
-    
+
     // Then
     self.scheduler.start()
-    
-    XCTAssertEqual(stringObserver.events, [.next(10, expected)])
+    XCTAssertEqual(signUpInfoObserver.events, [.next(10, loginInfo)])
   }
 }
-
