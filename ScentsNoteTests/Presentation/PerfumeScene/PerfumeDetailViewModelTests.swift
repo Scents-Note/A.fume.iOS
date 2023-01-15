@@ -37,9 +37,8 @@ final class PerfumeDetailViewModelTests: XCTestCase {
   override func tearDownWithError() throws {
     self.viewModel = nil
     self.disposeBag = nil
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
-  
+//  
 //  func test_fetchDatas() {
 //    let viewDidLoadTestableObservable = self.scheduler.createHotObservable([.next(10, ())])
 //

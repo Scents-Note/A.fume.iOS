@@ -23,6 +23,12 @@ final class PerfumeRepositoryMock: PerfumeRepository {
                                      Perfume(perfumeIdx: 10, brandName: "카", name: "ㅋ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),
                                      Perfume(perfumeIdx: 11, brandName: "티", name: "ㅌ", imageUrl: "", keywordList: ["향기로움"], isLiked: false)]
   
+  private let perfumesSimilar: [Perfume] = [Perfume(perfumeIdx: 0, brandName: "가", name: "ㄱ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),
+                                              Perfume(perfumeIdx: 1, brandName: "나", name: "ㄴ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),
+                                              Perfume(perfumeIdx: 2, brandName: "다", name: "ㄷ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),
+                                              Perfume(perfumeIdx: 3, brandName: "라", name: "ㄹ", imageUrl: "", keywordList: ["향기로움"], isLiked: false),
+                                              Perfume(perfumeIdx: 4, brandName: "마", name: "ㅁ", imageUrl: "", keywordList: ["향기로움"], isLiked: false)]
+  
   private let reviews: [ReviewInPerfumeDetail] = [ReviewInPerfumeDetail(idx: 0, score: 5, access: true, content: "가", likeCount: 0, isLiked: false, gender: 1, age: "20", nickname: "득연1", isReported: false),
                                                   ReviewInPerfumeDetail(idx: 1, score: 4.5, access: true, content: "나", likeCount: 0, isLiked: false, gender: 1, age: "30", nickname: "득연2", isReported: false)]
   
@@ -34,52 +40,98 @@ final class PerfumeRepositoryMock: PerfumeRepository {
   private let perfumeDetail: PerfumeDetail = PerfumeDetail(perfumeIdx: 0, name: "가", brandName: "ㄱ", story: "story", abundanceRate: "풍부", volumeAndPrice: ["90ml, 50,000원"], imageUrls: [], score: 5.0, seasonal: [], sillage: [], longevity: [], gender: [], isLiked: false, Keywords: [], noteType: 0, ingredients: [], reviewIdx: 0)
   
   func updatePerfumeLike(perfumeIdx: Int) -> Observable<Bool> {
-    Observable.just(true)
+    Observable.create { observer in
+      observer.onNext(true)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumesInSurvey() -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumes = self?.perfumes else { return Disposables.create()}
+      observer.onNext(perfumes)
+      return Disposables.create()
+    }
   }
   
   func fetchSeries() -> Observable<[SurveySeries]> {
-    Observable.just(series)
+    Observable.create { [weak self] observer in
+      guard let series = self?.series else { return Disposables.create()}
+      observer.onNext(series)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumesRecommended() -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumes = self?.perfumes else { return Disposables.create()}
+      observer.onNext(perfumes)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumesPopular() -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumes = self?.perfumes else { return Disposables.create()}
+      observer.onNext(perfumes)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumesRecent() -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumes = self?.perfumes else { return Disposables.create()}
+      observer.onNext(perfumes)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumesNew(size: Int?) -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumes = self?.perfumes else { return Disposables.create()}
+      observer.onNext(perfumes)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumeDetail(perfumeIdx: Int) -> Observable<PerfumeDetail> {
-    Observable.just(perfumeDetail)
+    Observable.create { [weak self] observer in
+      guard let perfumeDetail = self?.perfumeDetail else {
+        return Disposables.create()
+      }
+      observer.onNext(perfumeDetail)
+      return Disposables.create()
+    }
   }
   
   func fetchSimliarPerfumes(perfumeIdx: Int) -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumesSimilar = self?.perfumesSimilar else { return Disposables.create()}
+      observer.onNext(perfumesSimilar)
+      return Disposables.create()
+    }
   }
   
   func fetchPerfumeSearched(perfumeSearch: PerfumeSearch) -> Observable<[Perfume]> {
-    Observable.just(perfumes)
+    Observable.create { [weak self] observer in
+      guard let perfumes = self?.perfumes else { return Disposables.create()}
+      observer.onNext(perfumes)
+      return Disposables.create()
+    }
   }
   
   func fetchReviewsInPerfumeDetail(perfumeIdx: Int) -> Observable<[ReviewInPerfumeDetail]> {
-    Observable.just(reviews)
+    Observable.create { [weak self] observer in
+      guard let reviews = self?.reviews else { return Disposables.create()}
+      observer.onNext(reviews)
+      return Disposables.create()
+    }
   }
   
   func addReview(perfumeIdx: Int, perfumeReview: ReviewDetail) -> Observable<String> {
-    Observable.just("success")
+    Observable.create { observer in
+      observer.onNext("노트 작성에 성공하였습니다.")
+      return Disposables.create()
+    }
   }
-  
-  
 }
