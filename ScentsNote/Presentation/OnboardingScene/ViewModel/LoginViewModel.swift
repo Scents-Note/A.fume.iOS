@@ -21,9 +21,7 @@ final class LoginViewModel {
   }
   
   struct Output {
-    let emailFieldText = BehaviorRelay<String?>(value: "")
-    let passwordFieldText = BehaviorRelay<String?>(value: "")
-    let doneButtonShouldEnable = BehaviorRelay<Bool>(value: false)
+    let canDone = BehaviorRelay<Bool>(value: false)
     let notCorrect = PublishRelay<Void>()
   }
   
@@ -31,8 +29,8 @@ final class LoginViewModel {
   private let loginUseCase: LoginUseCase
   private let saveLoginInfoUseCase: SaveLoginInfoUseCase
   
-  private var email = ""
-  private var password = ""
+  var email = ""
+  var password = ""
   
   init(coordinator: LoginCoordinator?,
        loginUseCase: LoginUseCase,
@@ -60,11 +58,11 @@ final class LoginViewModel {
     
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.loginUseCase.execute(email: self.email, password: self.password)
+        guard let email = self?.email, let password = self?.password else { return }
+        self?.loginUseCase.execute(email: email, password: password)
           .subscribe { loginInfo in
-            self.saveLoginInfoUseCase.execute(loginInfo: loginInfo, email: self.email, password: self.password)
-            self.coordinator?.finishFlow?()
+            self?.saveLoginInfoUseCase.execute(loginInfo: loginInfo, email: email, password: password)
+            self?.coordinator?.finishFlow?()
           } onError: { error in
             output.notCorrect.accept(())
           }
@@ -83,10 +81,10 @@ final class LoginViewModel {
   
   func updateValidationState(output: Output) {
     guard self.email.isValidEmail(), self.password.isValidPassword() else {
-      output.doneButtonShouldEnable.accept(false)
+      output.canDone.accept(false)
       return
     }
-    output.doneButtonShouldEnable.accept(true)
+    output.canDone.accept(true)
   }
   
   

@@ -140,7 +140,7 @@ extension LoginViewController {
 
 extension LoginViewController {
   func bindLoginButton(output: LoginViewModel.Output?) {
-    output?.doneButtonShouldEnable
+    output?.canDone
       .asDriver(onErrorJustReturn: false)
       .drive(onNext: { [weak self] isValid in
         self?.loginButton.isEnabled = isValid

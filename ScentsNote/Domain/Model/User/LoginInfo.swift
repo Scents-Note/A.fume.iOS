@@ -15,4 +15,5 @@ struct LoginInfo: Equatable {
   var token: String
   var refreshToken: String
   
+  static let `default` = LoginInfo(userIdx: 0, token: "", refreshToken: "")
 }

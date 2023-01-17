@@ -12,8 +12,7 @@ import RxRelay
 
 final class OnboardingViewModel {
   
-  
-  weak var coordinator: OnboardingCoordinator?
+  private weak var coordinator: OnboardingCoordinator?
   private let disposeBag = DisposeBag()
   
   init(coordinator: OnboardingCoordinator) {
