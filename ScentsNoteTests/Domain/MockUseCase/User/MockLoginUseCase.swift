@@ -17,11 +17,11 @@ final class MockLoginUseCase: LoginUseCase {
     case failure
   }
   
-  let state: ResponseState
+  var state: ResponseState? = .success
   var error: Error = NetworkError.restError(statusCode: 403, description: "이메일 또는 비밀번호가 잘못되었습니다")
   let loginInfo = LoginInfo(userIdx: 0, nickname: "testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
   
-  init(state: ResponseState) {
+  func setState(state: ResponseState) {
     self.state = state
   }
   

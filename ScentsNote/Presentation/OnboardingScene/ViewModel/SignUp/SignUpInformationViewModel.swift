@@ -53,8 +53,8 @@ final class SignUpInformationViewModel {
     
     input.emailCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.checkDuplcateEmailUseCase.execute(email: self.email)
+        guard let email = self?.email else { return }
+        self?.checkDuplcateEmailUseCase.execute(email: email)
           .subscribe{ _ in
             output.emailValidationState.accept(.success)
           } onError: { error in
@@ -74,8 +74,8 @@ final class SignUpInformationViewModel {
     
     input.nicknameCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.checkDuplicateNicknameUseCase.execute(nickname: self.nickname)
+        guard let nickname = self?.nickname else { return }
+        self?.checkDuplicateNicknameUseCase.execute(nickname: nickname)
           .subscribe { _ in
             output.nicknameValidationState.accept(.success)
           } onError: { error in

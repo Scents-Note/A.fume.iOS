@@ -11,7 +11,7 @@ import RxGesture
 import SnapKit
 import Then
 
-class KeywordBottomSheetViewController: UIViewController {
+final class KeywordBottomSheetViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<FilterKeywordDataSection.Model>
   
   // MARK: - UI

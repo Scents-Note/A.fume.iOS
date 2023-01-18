@@ -12,7 +12,7 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   var finishFlow: (() -> Void)?
   var runSignUpFlow: (() -> Void)?
   
-  var loginViewController: LoginViewController
+  private let loginViewController: LoginViewController
   
   override init(_ navigationController: UINavigationController) {
     self.loginViewController = LoginViewController()

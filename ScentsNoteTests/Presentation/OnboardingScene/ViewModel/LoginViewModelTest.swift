@@ -12,6 +12,8 @@ import RxTest
 
 final class LoginViewModelTest: XCTestCase {
   private var viewModel: LoginViewModel!
+  private var input: LoginViewModel.Input!
+  private var output: LoginViewModel.Output!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   private var coordinator: LoginCoordinator!
@@ -20,12 +22,15 @@ final class LoginViewModelTest: XCTestCase {
   
   override func setUpWithError() throws {
     self.coordinator = MockLoginCoordinator()
-    self.loginUseCase = MockLoginUseCase(state: .success)
+    self.loginUseCase = MockLoginUseCase()
     self.saveLoginInfoUseCase = MockSaveLoginInfoUseCase()
     
     self.viewModel = LoginViewModel(coordinator: self.coordinator,
                                     loginUseCase: self.loginUseCase,
                                     saveLoginInfoUseCase: self.saveLoginInfoUseCase)
+    
+    self.input = self.viewModel.input
+    self.output = self.viewModel.output
     self.scheduler = TestScheduler(initialClock: 0)
     self.disposeBag = DisposeBag()
     
@@ -38,9 +43,11 @@ final class LoginViewModelTest: XCTestCase {
     self.saveLoginInfoUseCase = nil
     self.scheduler = nil
     self.viewModel = nil
+    self.input = nil
+    self.output = nil
   }
   
-  // Email & Password TextField 입력시 Login Button State 테스트
+  // Email & Password TextField 입력시 Login Button State 업데이트
   func testTransform_inputEmailAndPasswordTextField_updateCanButton() {
     
     // Given
@@ -56,19 +63,21 @@ final class LoginViewModelTest: XCTestCase {
     ])
     
     // When
-    let input = LoginViewModel.Input(emailTextFieldDidEditEvent: emailTextFieldObservable.asObservable(),
-                                     passwordTextFieldDidEditEvent: passwordTextFieldObservable.asObservable(),
-                                     loginButtonDidTapEvent: Observable.just(()),
-                                     signupButtonDidTapEvent: Observable.just(()))
-    
-    let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
-    output.canDone
-      .subscribe(doneButtonObserver)
+    emailTextFieldObservable.asObservable()
+      .bind(to: self.input.emailTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
-    // Then
+    passwordTextFieldObservable.asObservable()
+      .bind(to: self.input.passwordTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    
+    self.output.canDone
+      .subscribe(doneButtonObserver)
+      .disposed(by: self.disposeBag)
     self.scheduler.start()
     
+    // Then
     XCTAssertEqual(doneButtonObserver.events, [.next(0, false),
                                                .next(10, false),
                                                .next(20, false),
@@ -76,54 +85,40 @@ final class LoginViewModelTest: XCTestCase {
                                                .next(40, false)])
   }
 
-  // 최종 email Observable이 email property에 들어갔는지 Test
-  func testTransform_updateEmailTextField_updateEmail() {
+  // 최종 email & password TextField값이 email & password property에 들어갔는지
+  func testTransform_updateEmailAndPasswordTextField_updateEmailAndPassword() {
     
     // Given
     let emailTextFieldObservable = self.scheduler.createHotObservable([
       .next(10, "dyh0624"),
       .next(20, "dyh0624@naver.com"),
     ])
-    let expected = "dyh0624@naver.com"
+    
+    let passwordTextFieldObservable = self.scheduler.createHotObservable([
+      .next(10, "te"),
+      .next(20, "test"),
+    ])
+    
     
     // When
-    let input = LoginViewModel.Input(emailTextFieldDidEditEvent: emailTextFieldObservable.asObservable(),
-                                     passwordTextFieldDidEditEvent: Observable.just(""),
-                                     loginButtonDidTapEvent: Observable.just(()),
-                                     signupButtonDidTapEvent: Observable.just(()))
+    emailTextFieldObservable.asObservable()
+      .bind(to: self.input.emailTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
     
-    let _ = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+    passwordTextFieldObservable.asObservable()
+      .bind(to: self.input.passwordTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
     
-    // Then
     self.scheduler.start()
-    
-    XCTAssertEqual(self.viewModel.email, expected)
+
+    // Then
+    let expectedEmail = "dyh0624@naver.com"
+    let expectedPassword = "test"
+    XCTAssertEqual(self.viewModel.email, expectedEmail)
+    XCTAssertEqual(self.viewModel.password, expectedPassword)
     
   }
   
-  // 최종 password Observable이 password property에 들어갔는지 Test
-  func testTransform_updatePasswordTextField_updatePassword() {
-    
-    // Given
-    let passwordTextFieldObservable = self.scheduler.createHotObservable([
-      .next(10, "t"),
-      .next(20, "test"),
-    ])
-    let expected = "test"
-    
-    // When
-    let input = LoginViewModel.Input(emailTextFieldDidEditEvent:Observable.just(""),
-                                     passwordTextFieldDidEditEvent: passwordTextFieldObservable.asObservable(),
-                                     loginButtonDidTapEvent: Observable.just(()),
-                                     signupButtonDidTapEvent: Observable.just(()))
-    
-    let _ = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
-    
-    // Then
-    self.scheduler.start()
-    
-    XCTAssertEqual(self.viewModel.password, expected)
-  }
   
   // 로그인 버튼 클릭할 때 성공할 때 UseCase Excute & finishFlow 테스트 호출 테스트
   func testTransform_clickLogin_success() {
@@ -134,13 +129,10 @@ final class LoginViewModelTest: XCTestCase {
     ])
     
     // When
-    let input = LoginViewModel.Input(emailTextFieldDidEditEvent: Observable.just("dyh0624@naver.com"),
-                                     passwordTextFieldDidEditEvent: Observable.just("test"),
-                                     loginButtonDidTapEvent: loginButtonObservable.asObservable(),
-                                     signupButtonDidTapEvent: Observable.just(()))
+    loginButtonObservable.asObservable()
+      .bind(to: self.input.loginButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
     
-    
-    let _ = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
     self.scheduler.start()
     
     // Then
@@ -158,27 +150,40 @@ final class LoginViewModelTest: XCTestCase {
   func testTransform_clickLogin_failure() {
     
     // Given
-    self.viewModel = LoginViewModel(coordinator: self.coordinator,
-                                    loginUseCase: MockLoginUseCase(state: .failure),
-                                    saveLoginInfoUseCase: self.saveLoginInfoUseCase)
+    (self.loginUseCase as! MockLoginUseCase).setState(state: .failure)
+    
+    let emailTextFieldObservable = self.scheduler.createHotObservable([
+      .next(10, "dyh0624@naver.com"),
+    ])
+    
+    let passwordTextFieldObservable = self.scheduler.createHotObservable([
+      .next(10, "test"),
+    ])
     
     let loginButtonObservable = self.scheduler.createHotObservable([
       .next(20, ())
     ])
+    
     let notCorrentObserver = self.scheduler.createObserver(Void.self)
     // 실패 조건을 위해 한번 새로운 인스턴스 할당
     
     // When
-    let input = LoginViewModel.Input(emailTextFieldDidEditEvent: Observable.just("dyh0624@naver.com"),
-                                     passwordTextFieldDidEditEvent: Observable.just("test"),
-                                     loginButtonDidTapEvent: loginButtonObservable.asObservable(),
-                                     signupButtonDidTapEvent: Observable.just(()))
+    emailTextFieldObservable.asObservable()
+      .bind(to: self.input.emailTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
     
+    passwordTextFieldObservable.asObservable()
+      .bind(to: self.input.passwordTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
     
-    let output = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
-    output.notCorrect
+    loginButtonObservable.asObservable()
+      .bind(to: self.input.loginButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.output.notCorrect
       .subscribe(notCorrentObserver)
       .disposed(by: self.disposeBag)
+    
     
     self.scheduler.start()
     
@@ -200,12 +205,9 @@ final class LoginViewModelTest: XCTestCase {
     // 실패 조건을 위해 한번 새로운 인스턴스 할당
     
     // When
-    let input = LoginViewModel.Input(emailTextFieldDidEditEvent: Observable.just("dyh0624@naver.com"),
-                                     passwordTextFieldDidEditEvent: Observable.just("test"),
-                                     loginButtonDidTapEvent: Observable.just(()),
-                                     signupButtonDidTapEvent: signUpButtonObservable.asObservable())
-    
-    let _ = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
+    signUpButtonObservable.asObservable()
+      .bind(to: self.input.signupButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
     
     self.scheduler.start()
     
