@@ -9,46 +9,65 @@ import RxSwift
 import RxRelay
 
 final class SignUpGenderViewModel {
-  private weak var coordinator: SignUpCoordinator?
-  private var signUpInfo: SignUpInfo
   
   struct Input {
-    let manButtonDidTapEvent: Observable<Void>
-    let womanButtonDidTapEvent: Observable<Void>
-    let nextButtonDidTapEvent: Observable<Void>
+    let manButtonDidTapEvent = PublishRelay<Void>()
+    let womanButtonDidTapEvent = PublishRelay<Void>()
+    let nextButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
-    var selectedGenderState = BehaviorRelay<GenderState>(value: .none)
+    var genderState = BehaviorRelay<GenderState>(value: .none)
   }
+  
+  private weak var coordinator: SignUpCoordinator?
+  private var signUpInfo: SignUpInfo
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let output = Output()
+  var genderDescription = ""
   
   init(coordinator: SignUpCoordinator?, signUpInfo: SignUpInfo) {
     self.coordinator = coordinator
     self.signUpInfo = signUpInfo
+    
+    self.transform(input: self.input, output: self.output)
   }
   
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(input: Input, output: Output) {
+    let genderState = PublishRelay<GenderState>()
+    
+    self.bindInput(input: input, genderState: genderState)
+    self.bindOutput(output: output, genderState: genderState)
+  }
+  
+  func bindInput(input: Input, genderState: PublishRelay<GenderState>) {
     input.manButtonDidTapEvent
-      .subscribe(onNext: {
-        output.selectedGenderState.accept(.man)
+      .subscribe(onNext: { [weak self] in
+        genderState.accept(.man)
+        self?.genderDescription = GenderState.man.description
       })
       .disposed(by: disposeBag)
     
     input.womanButtonDidTapEvent
-      .subscribe(onNext: {
-        output.selectedGenderState.accept(.woman)
+      .subscribe(onNext: { [weak self] in
+        genderState.accept(.woman)
+        self?.genderDescription = GenderState.woman.description
       })
       .disposed(by: disposeBag)
     
     input.nextButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.signUpInfo.gender = output.selectedGenderState.value.description
-        self.coordinator?.showSignUpBirthViewController(with: self.signUpInfo)
+        self?.signUpInfo.gender = self?.genderDescription
+        self?.coordinator?.showSignUpBirthViewController(with: self?.signUpInfo)
       })
       .disposed(by: disposeBag)
-    
-    return output
   }
+  
+  func bindOutput(output: Output, genderState: PublishRelay<GenderState>) {
+    genderState
+      .bind(to: output.genderState)
+      .disposed(by: self.disposeBag)
+  }
+  
 }

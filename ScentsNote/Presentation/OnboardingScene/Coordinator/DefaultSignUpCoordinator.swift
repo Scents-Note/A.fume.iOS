@@ -38,7 +38,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showSignUpGenderViewController(with signUpInfo: SignUpInfo) {
+  func showSignUpGenderViewController(with signUpInfo: SignUpInfo?) {
+    guard let signUpInfo = signUpInfo else { return }
     let vc = SignUpGenderViewController()
     vc.viewModel = SignUpGenderViewModel(
       coordinator: self,
@@ -47,7 +48,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showSignUpBirthViewController(with signUpInfo: SignUpInfo) {
+  func showSignUpBirthViewController(with signUpInfo: SignUpInfo?) {
+    guard let signUpInfo = signUpInfo else { return }
     let vc = SignUpBirthViewController()
     vc.viewModel = SignUpBirthViewModel(
       coordinator: self,

@@ -11,7 +11,7 @@ import SnapKit
 import Then
 
 final class SignUpGenderViewController: UIViewController {
-  var viewModel: SignUpGenderViewModel?
+  var viewModel: SignUpGenderViewModel!
   private var disposeBag = DisposeBag()
   
   private let container = UIView()
@@ -51,9 +51,7 @@ final class SignUpGenderViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
-}
-
-extension SignUpGenderViewController {
+  // TODO: Custom View로 빼서 코드 길이 줄이기
   private func configureUI() {
     self.view.backgroundColor = .white
     self.setBackButton()
@@ -127,32 +125,43 @@ extension SignUpGenderViewController {
       $0.bottom.equalToSuperview()
     }
   }
-}
-
-extension SignUpGenderViewController {
+  
   private func bindViewModel() {
-    let input = SignUpGenderViewModel.Input(
-      manButtonDidTapEvent: self.manButton.rx.tap.asObservable(),
-      womanButtonDidTapEvent: self.womanButton.rx.tap.asObservable(),
-      nextButtonDidTapEvent: self.nextButton.rx.tap.asObservable()
-    )
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
     
-    let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    self.manButton.rx.tap
+      .bind(to: input.manButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.womanButton.rx.tap
+      .bind(to: input.womanButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.nextButton.rx.tap
+      .bind(to: input.nextButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
     self.bindGenderSection(output: output)
   }
   
-  private func bindGenderSection(output: SignUpGenderViewModel.Output?) {
-    output?.selectedGenderState
-      .asDriver(onErrorJustReturn: .none)
+  private func bindGenderSection(output: SignUpGenderViewModel.Output) {
+    output.genderState
+      .asDriver()
       .drive(onNext: { [weak self] state in
         self?.updateGenderSection(state: state)
         self?.updateNextButton(state: state)
       })
       .disposed(by: disposeBag)
   }
-}
-
-extension SignUpGenderViewController {
+  
   private func updateGenderSection(state: GenderState) {
     self.manButton.setImage(state == .man ? .btnManActive : .btnManInactive, for: .normal)
     self.manLabel.textColor = state == .man ? .blackText : .grayCd
@@ -163,4 +172,5 @@ extension SignUpGenderViewController {
   private func updateNextButton(state: GenderState) {
     self.nextButton.isHidden = state == .none
   }
+  
 }
