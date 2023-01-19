@@ -10,6 +10,7 @@ import RxRelay
 
 final class SignUpPasswordViewModel {
   
+  // MARK: - Input & Output
   struct Input {
     let passwordTextFieldDidEditEvent = PublishRelay<String>()
     let passwordCheckTextFieldDidEditEvent = PublishRelay<String>()
@@ -23,6 +24,7 @@ final class SignUpPasswordViewModel {
     let canDone = BehaviorRelay<Bool>(value: false)
   }
   
+  // MARK: - Vars & Lets
   private weak var coordinator: SignUpCoordinator?
   private var signUpInfo: SignUpInfo
   private let disposeBag = DisposeBag()
@@ -38,6 +40,7 @@ final class SignUpPasswordViewModel {
     self.transform(input: self.input, output: self.output)
   }
   
+  // MARK: - Transform
   func transform(input: Input, output: Output){
     let passwordState = PublishRelay<InputState>()
     let passwordCheckState = PublishRelay<InputState>()
@@ -111,6 +114,7 @@ final class SignUpPasswordViewModel {
       .disposed(by: self.disposeBag)
   }
   
+  // MARK: - Update
   private func updatePasswordState(password: String, passwordState: PublishRelay<InputState>, hidePasswordCheckSection: PublishRelay<Bool>) {
     guard self.password.count > 0 else {
       passwordState.accept(.empty)

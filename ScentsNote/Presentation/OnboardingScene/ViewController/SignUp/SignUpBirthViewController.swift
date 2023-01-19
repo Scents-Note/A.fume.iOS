@@ -11,9 +11,12 @@ import SnapKit
 import Then
 
 final class SignUpBirthViewController: UIViewController {
-  var viewModel: SignUpBirthViewModel?
+  
+  // MARK: - Vars & Lets
+  var viewModel: SignUpBirthViewModel!
   private let disposeBag = DisposeBag()
   
+  // MARK: - UI
   private let container = UIView()
   private let titleLabel = UILabel().then {
     $0.text = "출생연도를 선택해주세요."
@@ -31,6 +34,7 @@ final class SignUpBirthViewController: UIViewController {
   
   private let doneButton = DoneButton(title: "가입 완료")
   
+  //MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -42,9 +46,8 @@ final class SignUpBirthViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
     self.setNavigationTitle(title: "회원가입")
   }
-}
-
-extension SignUpBirthViewController {
+  
+  // MARK: - Configure UI
   private func configureUI() {
     self.view.backgroundColor = .white
     self.setBackButton()
@@ -76,30 +79,35 @@ extension SignUpBirthViewController {
       $0.bottom.equalToSuperview()
     }
   }
-}
-
-extension SignUpBirthViewController {
+  
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = SignUpBirthViewModel.Input(
-      birthButtonDidTapEvent: self.birthButton.rx.tap.asObservable(),
-      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable()
-    )
-    
-    self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    self.bindInput()
+    self.bindOutput()
   }
   
-}
-
-extension SignUpBirthViewController {
-  private func showPopUp(birth: String?, completion: (() -> Void)?) {
-    let birthPopupViewController = BirthPopupViewController()
-    present(birthPopupViewController, animated: false, completion: nil)
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.birthButton.rx.tap
+      .bind(to: input.birthButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.doneButton.rx.tap
+      .bind(to: input.doneButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
+    output.birth
+      .asDriver()
+      .drive(onNext: { [weak self] birth in
+        self?.birthButton.setTitle(String(birth), for: .normal)
+      })
+      .disposed(by: self.disposeBag)
   }
 }
 
-extension SignUpBirthViewController: BirthPopupDismissDelegate {
-  func birthPopupDismiss(with birth: Int) {
-    self.birthButton.setTitle(String(birth), for: .normal)
-    self.viewModel?.birth.accept(birth)    
-  }
-}
+

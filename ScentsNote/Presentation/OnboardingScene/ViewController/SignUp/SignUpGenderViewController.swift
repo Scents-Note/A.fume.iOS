@@ -11,9 +11,12 @@ import SnapKit
 import Then
 
 final class SignUpGenderViewController: UIViewController {
+  
+  // MARK: - Vars & Lets
   var viewModel: SignUpGenderViewModel!
   private var disposeBag = DisposeBag()
   
+  // MARK: - UI
   private let container = UIView()
   private let titleLabel = UILabel().then {
     $0.text = "성별을 선택해주세요."
@@ -40,6 +43,7 @@ final class SignUpGenderViewController: UIViewController {
   
   private let nextButton = NextButton(frame: .zero, title: "다음")
 
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -125,7 +129,7 @@ final class SignUpGenderViewController: UIViewController {
       $0.bottom.equalToSuperview()
     }
   }
-  
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
     self.bindInput()
     self.bindOutput()
@@ -162,6 +166,7 @@ final class SignUpGenderViewController: UIViewController {
       .disposed(by: disposeBag)
   }
   
+  // MARK: - Update UI
   private func updateGenderSection(state: GenderState) {
     self.manButton.setImage(state == .man ? .btnManActive : .btnManInactive, for: .normal)
     self.manLabel.textColor = state == .man ? .blackText : .grayCd

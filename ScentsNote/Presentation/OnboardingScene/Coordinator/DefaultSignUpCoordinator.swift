@@ -60,16 +60,14 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showBirthPopupViewController(with birth: Int) {
-    guard let pvc = self.navigationController.viewControllers.last as? SignUpBirthViewController else {
+  func showBirthPopupViewController(with birth: Int?) {
+    guard let pvc = self.navigationController.viewControllers.last as? SignUpBirthViewController, let birth = birth else {
       return
     }
     
     let vc = BirthPopupViewController()
-    vc.delegate = pvc
-    vc.viewModel = BirthPopupViewModel(signCoordinator: self,
-                                       birth: birth,
-                                       from: .signUp)
+    vc.viewModel = BirthPopupViewModel(birthPopUpCoordinator: self, birth: birth)
+    vc.viewModel?.delegate = pvc.viewModel
     
     vc.modalPresentationStyle = .overFullScreen
     self.navigationController.present(vc, animated: false, completion: nil)

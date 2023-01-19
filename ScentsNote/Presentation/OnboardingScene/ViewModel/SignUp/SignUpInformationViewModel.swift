@@ -46,6 +46,7 @@ final class SignUpInformationViewModel {
     self.transform(input: self.input, output: self.output)
   }
   
+  // MARK: - Transform
   func transform(input: Input, output: Output) {
     let emailState = PublishRelay<InputState>()
     let nicknameState = PublishRelay<InputState>()
@@ -129,6 +130,7 @@ final class SignUpInformationViewModel {
       .disposed(by: disposeBag)
   }
   
+  // MARK: - Update
   func updateEmailState(emailState: PublishRelay<InputState>) {
     guard self.email.count > 0 else {
       emailState.accept(.empty)

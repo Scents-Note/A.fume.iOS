@@ -10,8 +10,6 @@ import Foundation
 
 final class MockSignUpCoordinator: SignUpCoordinator {
 
-  
-  
   var finishFlowCalledCount = 0
   var showSignUpInformationViewControllerCalledCount = 0
   var showSignUpPasswordViewControllerCalledCount = 0
@@ -47,7 +45,7 @@ final class MockSignUpCoordinator: SignUpCoordinator {
     self.showSignUpBirthViewControllerCalledCount += 1
   }
   
-  func showBirthPopupViewController(with birth: Int) {
+  func showBirthPopupViewController(with birth: Int?) {
     self.showBirthPopupViewControllerCalledCount += 1
   }
   

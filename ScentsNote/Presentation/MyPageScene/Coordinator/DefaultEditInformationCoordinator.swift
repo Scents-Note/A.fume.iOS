@@ -32,16 +32,16 @@ final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationC
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showBirthPopupViewController(with birth: Int) {
-    guard let viewController = self.navigationController.viewControllers.last as? EditInformationViewController else {
+  func showBirthPopupViewController(with birth: Int?) {
+    guard let pvc = self.navigationController.viewControllers.last as? EditInformationViewController, let birth = birth else {
       return
     }
     
     let birthPopupViewController = BirthPopupViewController()
-    birthPopupViewController.delegate = viewController
-    birthPopupViewController.viewModel = BirthPopupViewModel(editInfoCoordinator: self,
-                                                             birth: birth,
-                                                             from: .myPage)
+    birthPopupViewController.viewModel = BirthPopupViewModel(birthPopUpCoordinator: self,
+                                                             birth: birth)
+    
+    birthPopupViewController.viewModel?.delegate = pvc.viewModel
     birthPopupViewController.modalPresentationStyle = .overFullScreen
     self.navigationController.present(birthPopupViewController, animated: false, completion: nil)
   }

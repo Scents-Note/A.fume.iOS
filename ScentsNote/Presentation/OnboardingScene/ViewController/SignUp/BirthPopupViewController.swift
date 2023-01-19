@@ -15,7 +15,6 @@ import Then
 final class BirthPopupViewController: UIViewController {
   
   var viewModel: BirthPopupViewModel?
-  weak var delegate: BirthPopupDismissDelegate?
   private var disposeBag = DisposeBag()
   
   private let container = UIView().then {
@@ -92,7 +91,6 @@ extension BirthPopupViewController {
     )
     let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
     self.bindPickerSection(output: output)
-    self.bindFinishSection(output: output)
   }
 }
 
@@ -112,14 +110,5 @@ extension BirthPopupViewController {
       })
       .disposed(by: self.disposeBag)
     
-  }
-  
-  private func bindFinishSection(output: BirthPopupViewModel.Output?) {
-    output?.doneButtonDidTap
-      .asDriver(onErrorJustReturn: false)
-      .drive(onNext: { [weak self] _ in
-        self?.delegate?.birthPopupDismiss(with: output?.birth.value ?? 1990)
-      })
-      .disposed(by: disposeBag)
   }
 }

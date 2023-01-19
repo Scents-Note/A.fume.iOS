@@ -7,11 +7,8 @@
 
 import Foundation
 
-protocol EditInformationCoordinator: AnyObject {
+protocol EditInformationCoordinator: BirthPopUpCoordinator {
 
   var finishFlow: (() -> Void)? { get set }
-  
-  func showBirthPopupViewController(with birth: Int)
-  func hideBirthPopupViewController()
   func showWebViewController(with url: String)
 }

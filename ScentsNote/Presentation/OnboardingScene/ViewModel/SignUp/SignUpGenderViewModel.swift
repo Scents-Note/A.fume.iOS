@@ -10,6 +10,7 @@ import RxRelay
 
 final class SignUpGenderViewModel {
   
+  // MARK: - Input & Output
   struct Input {
     let manButtonDidTapEvent = PublishRelay<Void>()
     let womanButtonDidTapEvent = PublishRelay<Void>()
@@ -20,6 +21,7 @@ final class SignUpGenderViewModel {
     var genderState = BehaviorRelay<GenderState>(value: .none)
   }
   
+  // MARK: - Vars & Lets
   private weak var coordinator: SignUpCoordinator?
   private var signUpInfo: SignUpInfo
   private let disposeBag = DisposeBag()
@@ -34,6 +36,7 @@ final class SignUpGenderViewModel {
     self.transform(input: self.input, output: self.output)
   }
   
+  // MARK: - Transform
   func transform(input: Input, output: Output) {
     let genderState = PublishRelay<GenderState>()
     
