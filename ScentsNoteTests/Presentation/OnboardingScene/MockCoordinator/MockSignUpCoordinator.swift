@@ -40,19 +40,19 @@ final class MockSignUpCoordinator: SignUpCoordinator {
   }
   
   func showSignUpGenderViewController(with signUpInfo: ScentsNote.SignUpInfo) {
-    
+    self.showSignUpGenderViewControllerCalledCount += 1
   }
   
   func showSignUpBirthViewController(with signUpInfo: ScentsNote.SignUpInfo) {
-    
+    self.showSignUpBirthViewControllerCalledCount += 1
   }
   
   func showBirthPopupViewController(with birth: Int) {
-    
+    self.showBirthPopupViewControllerCalledCount += 1
   }
   
   func hideBirthPopupViewController() {
-    
+    self.hideBirthPopupViewControllerCalledCount += 1
   }
   
   func start() {

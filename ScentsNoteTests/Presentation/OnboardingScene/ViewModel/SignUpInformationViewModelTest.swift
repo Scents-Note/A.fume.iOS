@@ -37,12 +37,16 @@ final class SignUpInformationViewModelTest: XCTestCase {
   override func tearDownWithError() throws {
     self.coordinator = nil
     self.viewModel = nil
+    self.checkDuplicateEmailUseCase = nil
+    self.checkDuplicateNicknameUseCase = nil
+    self.input = nil
+    self.output = nil
     self.scheduler = nil
     self.disposeBag = nil
   }
   
   // emailTextField Edit
-  func testTransform_editEmailTextField_updateEmailAndEmailState() {
+  func testTransform_editEmail_updateEmailAndEmailState() {
     
     // Given
     let emailStateObserver = self.scheduler.createObserver(InputState.self)
@@ -76,7 +80,7 @@ final class SignUpInformationViewModelTest: XCTestCase {
   }
   
   // nicknameTextField Edit
-  func testTransform_editNicknameTextField_updateNicknameAndNicknameState() {
+  func testTransform_editNickname_updateNicknameAndNicknameState() {
     
     // Given
     let NicknameStateObserver = self.scheduler.createObserver(InputState.self)

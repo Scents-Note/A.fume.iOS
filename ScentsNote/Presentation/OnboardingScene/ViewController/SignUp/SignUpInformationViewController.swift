@@ -77,7 +77,6 @@ final class SignUpInformationViewController: UIViewController {
       $0.left.right.equalToSuperview()
       $0.top.equalTo(self.emailSection.snp.bottom).offset(42)
     }
-    self.nicknameSection.isHidden = true
     
     self.view.addSubview(self.nextButton)
     self.nextButton.snp.makeConstraints {

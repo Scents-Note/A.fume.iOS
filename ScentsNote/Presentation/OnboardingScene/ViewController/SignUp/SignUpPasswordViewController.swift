@@ -12,12 +12,12 @@ import Then
 
 final class SignUpPasswordViewController: UIViewController {
   
-  var viewModel: SignUpPasswordViewModel?
+  // MARK: - Vars & Lets
+  var viewModel: SignUpPasswordViewModel!
   private var disposeBag = DisposeBag()
-  private var isPasswordCheckSectionShown: Bool?
 
+  // MARK: - UI
   private let container = UIView()
-  
   private let passwordTextField = InputField().then {
     $0.setPlaceholder(string: "최소 4자리 이상 입력해주세요.")
     $0.isSecureTextEntry = true
@@ -40,6 +40,7 @@ final class SignUpPasswordViewController: UIViewController {
 
   private let nextButton = NextButton(frame: .zero, title: "다음")
 
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -50,9 +51,7 @@ final class SignUpPasswordViewController: UIViewController {
     self.view.endEditing(true)
   }
   
-}
-
-extension SignUpPasswordViewController {
+  // MARK: - Configure UI
   private func configureUI() {
     self.view.backgroundColor = .white
     self.setBackButton()
@@ -76,7 +75,6 @@ extension SignUpPasswordViewController {
       $0.left.right.equalToSuperview()
       $0.top.equalTo(self.passwordSection.snp.bottom).offset(42)
     }
-    self.passwordCheckSection.isHidden = true
     
     self.view.addSubview(self.nextButton)
     self.nextButton.snp.makeConstraints {
@@ -86,65 +84,74 @@ extension SignUpPasswordViewController {
     }
   }
   
- 
-}
-
-// MARK: - Input & OutPut
-extension SignUpPasswordViewController {
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = SignUpPasswordViewModel.Input(
-      passwordTextFieldDidEditEvent: self.passwordTextField.rx.text.orEmpty.asObservable(),
-      passwordCheckTextFieldDidEditEvent: self.passwordCheckTextField.rx.text.orEmpty.asObservable(),
-      nextButtonDidTapEvent: self.nextButton.rx.tap.asObservable()
-    )
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
     
-    let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    self.passwordTextField.rx.text.orEmpty
+      .bind(to: input.passwordTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.passwordCheckTextField.rx.text.orEmpty
+      .bind(to: input.passwordCheckTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.nextButton.rx.tap
+      .bind(to: input.nextButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindPasswordSection(output: output)
     self.bindPasswordCheckSection(output: output)
     self.bindNextButton(output: output)
   }
   
-  private func bindPasswordSection(output: SignUpPasswordViewModel.Output?) {
-    output?.passwordValidationState
-      .asDriver(onErrorJustReturn: .empty)
+  private func bindPasswordSection(output: SignUpPasswordViewModel.Output) {
+    output.passwordState
+      .asDriver()
       .drive(onNext: { [weak self] state in
         self?.updatePasswordSection(state: state)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func bindPasswordCheckSection(output: SignUpPasswordViewModel.Output?) {
-    output?.passwordCheckValidationState
-      .asDriver(onErrorJustReturn: .empty)
+  private func bindPasswordCheckSection(output: SignUpPasswordViewModel.Output) {
+    output.hidePasswordCheckSection
+      .asDriver()
+      .drive(onNext: { [weak self] isHidden in
+        self?.passwordCheckSection.isHidden = isHidden
+      })
+      .disposed(by: self.disposeBag)
+    
+    output.passwordCheckState
+      .asDriver()
       .drive(onNext: { [weak self] state in
         self?.updatePasswordCheckSection(state: state)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func bindNextButton(output: SignUpPasswordViewModel.Output?) {
-    guard let output = output else { return }
-    Observable.combineLatest(output.passwordValidationState, output.passwordCheckValidationState)
-      .subscribe(onNext: { [weak self] passwordValidation, passwordCheckValidation in
-        if passwordValidation == .success, passwordCheckValidation == .success {
-          self?.updateNextButton(enable: true)
-        } else {
-          self?.updateNextButton(enable: false)
-        }
+  private func bindNextButton(output: SignUpPasswordViewModel.Output) {
+    output.canDone
+      .asDriver()
+      .drive(onNext: { [weak self] canDone in
+        self?.updateNextButton(canDone: canDone)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
-}
-
-// MARK: - Update UI
-extension SignUpPasswordViewController {
+  
+  // MARK: - Update UI
   private func updatePasswordSection(state: InputState) {
     self.passwordSection.updateUI(state: state)
     self.passwordWarningLabel.text = state.passwordDescription
-    if self.isPasswordCheckSectionShown != true, state == .success {
-      self.passwordCheckSection.isHidden = false
-      self.isPasswordCheckSectionShown = true
-    }
   }
   
   private func updatePasswordCheckSection(state: InputState) {
@@ -152,7 +159,7 @@ extension SignUpPasswordViewController {
     self.passwordCheckWarningLabel.text = state.passwordCheckDescription
   }
   
-  private func updateNextButton(enable: Bool) {
-    self.nextButton.isHidden = !enable
+  private func updateNextButton(canDone: Bool) {
+    self.nextButton.isHidden = !canDone
   }
 }
