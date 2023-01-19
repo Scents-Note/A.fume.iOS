@@ -55,8 +55,6 @@ final class SignUpBirthViewModel {
     
     self.bindInput(input: input, popupInput: popupInput, birth: birth)
     self.bindOutput(output: output, birth: birth)
-    
-    
   }
   
   private func bindInput(input: Input, popupInput: PopupInput, birth: PublishRelay<Int>) {
@@ -69,14 +67,13 @@ final class SignUpBirthViewModel {
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.signUp(signUpInfo: self?.signUpInfo, birth: self?.birth)
-        
       })
       .disposed(by: self.disposeBag)
     
     popupInput.birthDidPickedEvent
-      .subscribe(onNext: { [weak self] _birth in
-        self?.birth = _birth
-        birth.accept(_birth)
+      .subscribe(onNext: { [weak self] updatedBirth in
+        self?.birth = updatedBirth
+        birth.accept(updatedBirth)
       })
       .disposed(by: self.disposeBag)
   }
@@ -95,12 +92,12 @@ final class SignUpBirthViewModel {
     self.signUpUseCase.execute(signUpInfo: updated)
       .subscribe { loginInfo in
         let modified = LoginInfo(userIdx: loginInfo.userIdx,
-                                 nickname: signUpInfo.nickname,
-                                 gender: signUpInfo.gender,
-                                 birth: signUpInfo.birth,
+                                 nickname: updated.nickname,
+                                 gender: updated.gender,
+                                 birth: updated.birth,
                                  token: loginInfo.token,
                                  refreshToken: loginInfo.refreshToken)
-        self.saveLoginInfoUseCase.execute(loginInfo: modified, email: signUpInfo.email!, password: signUpInfo.password!)
+        self.saveLoginInfoUseCase.execute(loginInfo: modified, email: updated.email, password: updated.password)
         self.coordinator?.finishFlow?()
       } onError: { error in
         Log(error)

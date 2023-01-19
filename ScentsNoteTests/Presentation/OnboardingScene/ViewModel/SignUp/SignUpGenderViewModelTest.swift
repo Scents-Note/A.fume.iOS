@@ -6,8 +6,6 @@
 //
 
 import XCTest
-
-import XCTest
 import RxSwift
 import RxTest
 @testable import ScentsNote
