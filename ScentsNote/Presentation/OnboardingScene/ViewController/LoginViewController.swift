@@ -13,10 +13,11 @@ import Then
 
 final class LoginViewController: UIViewController {
   
-  private var disposeBag = DisposeBag()
+  // MARK: - Vars & Lets
   var viewModel: LoginViewModel!
+  private var disposeBag = DisposeBag()
   
-  // MARK: - View
+  // MARK: - UI
   private let container = UIView()
   
   private let emailTextField = InputField().then { $0.setPlaceholder(string: "scents@email.com") }
@@ -61,6 +62,7 @@ final class LoginViewController: UIViewController {
   private lazy var emailSection = InputSection(title: "이메일 주소를 입력해주세요.", textField: self.emailTextField)
   private lazy var passwordSection = InputSection(title: "비밀번호를 입력해주세요.", textField: self.passwordTextField)
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -76,10 +78,7 @@ final class LoginViewController: UIViewController {
     self.view.endEditing(true)
   }
   
-}
-
-extension LoginViewController {
-  
+  // MARK: - Configure UI
   private func configureUI() {
     self.view.backgroundColor = .white
     self.setBackButton()
@@ -123,6 +122,7 @@ extension LoginViewController {
     }
   }
   
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
     self.bindInput()
     self.bindOutput()
@@ -152,6 +152,12 @@ extension LoginViewController {
     let output = self.viewModel.output
     self.bindLoginButton(output: output)
   }
+  
+}
+
+extension LoginViewController {
+  
+  
 }
 
 extension LoginViewController {

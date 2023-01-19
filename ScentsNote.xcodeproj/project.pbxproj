@@ -17,7 +17,7 @@
 		4A05FBD82973F86B00813C71 /* SavePasswordUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBD72973F86B00813C71 /* SavePasswordUseCaseTest.swift */; };
 		4A05FBDA2973F8FC00813C71 /* LoginUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBD92973F8FC00813C71 /* LoginUseCaseTest.swift */; };
 		4A05FBDC297412F400813C71 /* SaveLoginInfoUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBDB297412F400813C71 /* SaveLoginInfoUseCaseTest.swift */; };
-		4A05FBDE2974139A00813C71 /* CheckDuplcateEmailUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBDD2974139A00813C71 /* CheckDuplcateEmailUseCaseTest.swift */; };
+		4A05FBDE2974139A00813C71 /* CheckDuplicateEmailUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBDD2974139A00813C71 /* CheckDuplicateEmailUseCaseTest.swift */; };
 		4A05FBE02974142500813C71 /* SignUpUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBDF2974142500813C71 /* SignUpUseCaseTest.swift */; };
 		4A05FBE2297414D400813C71 /* RegisterSurveyUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBE1297414D400813C71 /* RegisterSurveyUseCaseTest.swift */; };
 		4A05FBE4297415B100813C71 /* LogoutUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBE3297415B100813C71 /* LogoutUseCaseTest.swift */; };
@@ -391,6 +391,9 @@
 		4AE938BC295420DB006A7DAF /* ReviewReportPopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938BB295420DB006A7DAF /* ReviewReportPopupViewModel.swift */; };
 		4AE938BE29543133006A7DAF /* ReviewReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938BD29543133006A7DAF /* ReviewReportCell.swift */; };
 		4AE938C029543318006A7DAF /* Report.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938BF29543318006A7DAF /* Report.swift */; };
+		4AED1EA42978D6D1005E17C2 /* MockCheckDuplicateEmailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED1EA32978D6D1005E17C2 /* MockCheckDuplicateEmailUseCase.swift */; };
+		4AED1EA62978D75D005E17C2 /* ResponseState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED1EA52978D75D005E17C2 /* ResponseState.swift */; };
+		4AED1EA82978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AED1EA72978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift */; };
 		4AF455BD2955B15A00E87A4E /* DefaultReportReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455BC2955B15A00E87A4E /* DefaultReportReviewUseCase.swift */; };
 		4AF455BF2955B1A000E87A4E /* ReviewReportRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455BE2955B1A000E87A4E /* ReviewReportRequestDTO.swift */; };
 		4AF455C429598B2700E87A4E /* PerfumeDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455C329598B2700E87A4E /* PerfumeDetailViewModelTests.swift */; };
@@ -440,7 +443,7 @@
 		4A05FBD72973F86B00813C71 /* SavePasswordUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePasswordUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBD92973F8FC00813C71 /* LoginUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBDB297412F400813C71 /* SaveLoginInfoUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveLoginInfoUseCaseTest.swift; sourceTree = "<group>"; };
-		4A05FBDD2974139A00813C71 /* CheckDuplcateEmailUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplcateEmailUseCaseTest.swift; sourceTree = "<group>"; };
+		4A05FBDD2974139A00813C71 /* CheckDuplicateEmailUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplicateEmailUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBDF2974142500813C71 /* SignUpUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBE1297414D400813C71 /* RegisterSurveyUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSurveyUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBE3297415B100813C71 /* LogoutUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCaseTest.swift; sourceTree = "<group>"; };
@@ -819,6 +822,9 @@
 		4AE938BB295420DB006A7DAF /* ReviewReportPopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportPopupViewModel.swift; sourceTree = "<group>"; };
 		4AE938BD29543133006A7DAF /* ReviewReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportCell.swift; sourceTree = "<group>"; };
 		4AE938BF29543318006A7DAF /* Report.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Report.swift; sourceTree = "<group>"; };
+		4AED1EA32978D6D1005E17C2 /* MockCheckDuplicateEmailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCheckDuplicateEmailUseCase.swift; sourceTree = "<group>"; };
+		4AED1EA52978D75D005E17C2 /* ResponseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseState.swift; sourceTree = "<group>"; };
+		4AED1EA72978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCheckDuplicateNicknameUseCase.swift; sourceTree = "<group>"; };
 		4AF455BC2955B15A00E87A4E /* DefaultReportReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReportReviewUseCase.swift; sourceTree = "<group>"; };
 		4AF455BE2955B1A000E87A4E /* ReviewReportRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportRequestDTO.swift; sourceTree = "<group>"; };
 		4AF455C329598B2700E87A4E /* PerfumeDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeDetailViewModelTests.swift; sourceTree = "<group>"; };
@@ -969,6 +975,8 @@
 			children = (
 				4A39EFB82974F8A300AD2AE7 /* MockLoginUseCase.swift */,
 				4A39EFBC2974FB5700AD2AE7 /* MockSaveLoginInfoUseCase.swift */,
+				4AED1EA32978D6D1005E17C2 /* MockCheckDuplicateEmailUseCase.swift */,
+				4AED1EA72978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2392,6 +2400,7 @@
 			isa = PBXGroup;
 			children = (
 				4AF455C629598FBE00E87A4E /* Repository */,
+				4AED1EA52978D75D005E17C2 /* ResponseState.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -2439,7 +2448,7 @@
 				4A05FBD72973F86B00813C71 /* SavePasswordUseCaseTest.swift */,
 				4A05FBD92973F8FC00813C71 /* LoginUseCaseTest.swift */,
 				4A05FBDB297412F400813C71 /* SaveLoginInfoUseCaseTest.swift */,
-				4A05FBDD2974139A00813C71 /* CheckDuplcateEmailUseCaseTest.swift */,
+				4A05FBDD2974139A00813C71 /* CheckDuplicateEmailUseCaseTest.swift */,
 				4A05FBDF2974142500813C71 /* SignUpUseCaseTest.swift */,
 				4A05FBE1297414D400813C71 /* RegisterSurveyUseCaseTest.swift */,
 				4A05FBE3297415B100813C71 /* LogoutUseCaseTest.swift */,
@@ -3072,6 +3081,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A3A642A29738BA100446565 /* FetchPerfumeDetailUseCaseTest.swift in Sources */,
+				4AED1EA42978D6D1005E17C2 /* MockCheckDuplicateEmailUseCase.swift in Sources */,
 				4AFC7E2B2973B7B900F09E20 /* UpdateUserInformationUseCaseTest.swift in Sources */,
 				4A39EFBD2974FB5700AD2AE7 /* MockSaveLoginInfoUseCase.swift in Sources */,
 				4A39EFA929741C7C00AD2AE7 /* FetchReviewsInMyPageUseCaseTest.swift in Sources */,
@@ -3080,6 +3090,7 @@
 				4A05FBCC2973DA0C00813C71 /* FetchPerfumesInMyPageUseCaseTest.swift in Sources */,
 				4A05FBDC297412F400813C71 /* SaveLoginInfoUseCaseTest.swift in Sources */,
 				4A05FBD82973F86B00813C71 /* SavePasswordUseCaseTest.swift in Sources */,
+				4AED1EA62978D75D005E17C2 /* ResponseState.swift in Sources */,
 				4A05FBD62973F7DD00813C71 /* ChangePasswordUseCaseTest.swift in Sources */,
 				4AAC3D7129764E8F00224D3D /* MockOnboardingCoordinator.swift in Sources */,
 				4A05FBE62974161B00813C71 /* FetchUserDefaultUseCaseTest.swift in Sources */,
@@ -3105,6 +3116,7 @@
 				4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */,
 				4A05FBD22973F63500813C71 /* SaveEditUserInfoUseCaseTest.swift in Sources */,
 				4A3A643F2973ACBA00446565 /* MockFilterRepository.swift in Sources */,
+				4AED1EA82978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift in Sources */,
 				4A3A643A2973AACD00446565 /* UpdatePerfumeLikeUseCaseTest.swift in Sources */,
 				4A05FBE2297414D400813C71 /* RegisterSurveyUseCaseTest.swift in Sources */,
 				4A05FBEB297418AB00813C71 /* MockKeywordRepository.swift in Sources */,
@@ -3115,7 +3127,7 @@
 				4AAC3D6F29764D9B00224D3D /* OnboardingViewModelTest.swift in Sources */,
 				4AAC3D752976530D00224D3D /* MockSignUpCoordinator.swift in Sources */,
 				4A39EFAF2974201600AD2AE7 /* ReportReviewUseCaseTest.swift in Sources */,
-				4A05FBDE2974139A00813C71 /* CheckDuplcateEmailUseCaseTest.swift in Sources */,
+				4A05FBDE2974139A00813C71 /* CheckDuplicateEmailUseCaseTest.swift in Sources */,
 				4AFC7E242973AE5900F09E20 /* FetchFilterBrandInitialUseCaseTest.swift in Sources */,
 				4A05FBE92974185E00813C71 /* FetchKeywordsUseCaseTest.swift in Sources */,
 				4A3A642E2973A55F00446565 /* FetchPerfumesNewUseCaseTest.swift in Sources */,

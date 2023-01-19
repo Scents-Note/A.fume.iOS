@@ -10,9 +10,9 @@ import RxSwift
 import RxTest
 @testable import ScentsNote
 
-final class CheckDuplcateEmailUseCaseTest: XCTestCase {
+final class CheckDuplicateEmailUseCaseTest: XCTestCase {
   
-  private var checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase!
+  private var checkDuplcateEmailUseCase: CheckDuplicateEmailUseCase!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   

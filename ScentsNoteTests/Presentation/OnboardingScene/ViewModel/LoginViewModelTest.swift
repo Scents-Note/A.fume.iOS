@@ -11,14 +11,14 @@ import RxTest
 @testable import ScentsNote
 
 final class LoginViewModelTest: XCTestCase {
+  private var coordinator: LoginCoordinator!
+  private var loginUseCase: LoginUseCase!
+  private var saveLoginInfoUseCase: SaveLoginInfoUseCase!
   private var viewModel: LoginViewModel!
   private var input: LoginViewModel.Input!
   private var output: LoginViewModel.Output!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
-  private var coordinator: LoginCoordinator!
-  private var loginUseCase: LoginUseCase!
-  private var saveLoginInfoUseCase: SaveLoginInfoUseCase!
   
   override func setUpWithError() throws {
     self.coordinator = MockLoginCoordinator()
@@ -63,11 +63,11 @@ final class LoginViewModelTest: XCTestCase {
     ])
     
     // When
-    emailTextFieldObservable.asObservable()
+    emailTextFieldObservable
       .bind(to: self.input.emailTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
-    passwordTextFieldObservable.asObservable()
+    passwordTextFieldObservable
       .bind(to: self.input.passwordTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
@@ -101,11 +101,11 @@ final class LoginViewModelTest: XCTestCase {
     
     
     // When
-    emailTextFieldObservable.asObservable()
+    emailTextFieldObservable
       .bind(to: self.input.emailTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
-    passwordTextFieldObservable.asObservable()
+    passwordTextFieldObservable
       .bind(to: self.input.passwordTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
@@ -129,7 +129,7 @@ final class LoginViewModelTest: XCTestCase {
     ])
     
     // When
-    loginButtonObservable.asObservable()
+    loginButtonObservable
       .bind(to: self.input.loginButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     
@@ -165,25 +165,23 @@ final class LoginViewModelTest: XCTestCase {
     ])
     
     let notCorrentObserver = self.scheduler.createObserver(Void.self)
-    // 실패 조건을 위해 한번 새로운 인스턴스 할당
     
     // When
-    emailTextFieldObservable.asObservable()
+    emailTextFieldObservable
       .bind(to: self.input.emailTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
-    passwordTextFieldObservable.asObservable()
+    passwordTextFieldObservable
       .bind(to: self.input.passwordTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
-    loginButtonObservable.asObservable()
+    loginButtonObservable
       .bind(to: self.input.loginButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     
     self.output.notCorrect
       .subscribe(notCorrentObserver)
       .disposed(by: self.disposeBag)
-    
     
     self.scheduler.start()
     
@@ -198,14 +196,12 @@ final class LoginViewModelTest: XCTestCase {
   func testTransform_clickSignUp_runSignUpFlow() {
     
     // Given
-    
     let signUpButtonObservable = self.scheduler.createHotObservable([
       .next(20, ())
     ])
-    // 실패 조건을 위해 한번 새로운 인스턴스 할당
     
     // When
-    signUpButtonObservable.asObservable()
+    signUpButtonObservable
       .bind(to: self.input.signupButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     

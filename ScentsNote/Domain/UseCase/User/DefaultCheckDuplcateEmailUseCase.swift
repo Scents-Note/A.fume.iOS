@@ -7,11 +7,11 @@
 
 import RxSwift
 
-protocol CheckDuplcateEmailUseCase {
+protocol CheckDuplicateEmailUseCase {
   func execute(email: String) -> Observable<Bool>
 }
 
-final class DefaultCheckDuplcateEmailUseCase: CheckDuplcateEmailUseCase {
+final class DefaultCheckDuplcateEmailUseCase: CheckDuplicateEmailUseCase {
   private let userRepository: UserRepository
   private let disposeBag = DisposeBag()
   

@@ -12,29 +12,33 @@ import RxRelay
 
 final class OnboardingViewModel {
   
+  // MARK: - Input
+  struct Input {
+    let loginButtonDidTapEvent = PublishRelay<Void>()
+    let signUpButtonDidTapEvent = PublishRelay<Void>()
+  }
+  
+  // MARK: - Vars & Lets
   private weak var coordinator: OnboardingCoordinator?
   private let disposeBag = DisposeBag()
+  let input = Input()
   
   init(coordinator: OnboardingCoordinator) {
     self.coordinator = coordinator
+    self.transform(input: self.input)
   }
   
-  struct Input {
-    let loginButtonDidTapEvent: Observable<Void>
-    let signUpButtonDidTapEvent: Observable<Void>
-  }
-  
-  func transform(from input: Input, disposeBag: DisposeBag) {
+  func transform(input: Input) {
     input.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.runLoginFlow() 
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.signUpButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.runSignUpFlow()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
 }

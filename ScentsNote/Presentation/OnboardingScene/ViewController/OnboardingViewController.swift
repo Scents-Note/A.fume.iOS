@@ -13,10 +13,15 @@ import RxCocoa
 import SnapKit
 import Then
 
+
+
 final class OnboardingViewController: UIViewController {
-  var viewModel: OnboardingViewModel?
+  
+  // MARK: - Vars & Lets
+  var viewModel: OnboardingViewModel!
   private let disposeBag = DisposeBag()
   
+  // MARK: - UI
   private let backgroundView = UIImageView().then {
     $0.contentMode = .scaleAspectFill
     $0.image = .imgBg
@@ -41,6 +46,7 @@ final class OnboardingViewController: UIViewController {
     $0.layer.backgroundColor = UIColor.white.cgColor
   }
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -51,10 +57,8 @@ final class OnboardingViewController: UIViewController {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(true, animated: animated)
   }
-    
-}
-
-extension OnboardingViewController {
+  
+  // MARK: - Configure UI
   private func configureUI() {
     self.setBackButton()
     self.view.backgroundColor = .black
@@ -87,11 +91,21 @@ extension OnboardingViewController {
     }
   }
   
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = OnboardingViewModel.Input(
-      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
-      signUpButtonDidTapEvent: self.signInButton.rx.tap.asObservable()
-    )
-    self.viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
   }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.loginButton.rx.tap.asObservable()
+      .bind(to: input.loginButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.signInButton.rx.tap.asObservable()
+      .bind(to: input.signUpButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
 }

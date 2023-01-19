@@ -9,25 +9,7 @@ import Foundation
 @testable import ScentsNote
 
 final class MockSignUpCoordinator: SignUpCoordinator {
-  func showSignUpBirthViewController(with signUpInfo: ScentsNote.SignUpInfo) {
-    
-  }
-  
-  func showBirthPopupViewController(with birth: Int) {
-    
-  }
-  
-  func hideBirthPopupViewController() {
-    
-  }
-  
-  func start() {
-    
-  }
-  
-  func start(from: ScentsNote.CoordinatorType) {
-  }
-  
+
   
   
   var finishFlowCalledCount = 0
@@ -54,11 +36,30 @@ final class MockSignUpCoordinator: SignUpCoordinator {
   }
   
   func showSignUpPasswordViewController(with signUpInfo: ScentsNote.SignUpInfo) {
-    
+    self.showSignUpPasswordViewControllerCalledCount += 1
   }
   
   func showSignUpGenderViewController(with signUpInfo: ScentsNote.SignUpInfo) {
     
+  }
+  
+  func showSignUpBirthViewController(with signUpInfo: ScentsNote.SignUpInfo) {
+    
+  }
+  
+  func showBirthPopupViewController(with birth: Int) {
+    
+  }
+  
+  func hideBirthPopupViewController() {
+    
+  }
+  
+  func start() {
+    
+  }
+  
+  func start(from: ScentsNote.CoordinatorType) {
   }
   
   

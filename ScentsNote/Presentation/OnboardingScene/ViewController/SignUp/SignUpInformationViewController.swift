@@ -12,10 +12,11 @@ import Then
 
 final class SignUpInformationViewController: UIViewController {
   
-  var viewModel: SignUpInformationViewModel?
+  // MARK: - Vars & Lets
+  var viewModel: SignUpInformationViewModel!
   private var disposeBag = DisposeBag()
-  private var isNicknameSectionShown: Bool?
 
+  // MARK: - UI
   private let container = UIView()
   
   private let emailTextField = InputField().then { $0.setPlaceholder(string: "scents@email.com") }
@@ -36,6 +37,7 @@ final class SignUpInformationViewController: UIViewController {
   
   private let nextButton = NextButton(frame: .zero, title: "다음")
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -51,9 +53,7 @@ final class SignUpInformationViewController: UIViewController {
     self.view.endEditing(true)
   }
   
-}
-
-extension SignUpInformationViewController {
+  // MARK: - Configure UI
   func configureUI() {
     self.view.backgroundColor = .white
     self.setBackButton()
@@ -87,77 +87,97 @@ extension SignUpInformationViewController {
     }
   }
   
-}
-
-// MARK: - Input & OutPut
-extension SignUpInformationViewController {
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = SignUpInformationViewModel.Input(
-      emailTextFieldDidEditEvent: self.emailTextField.rx.text.orEmpty.asObservable(),
-      emailCheckButtonDidTapEvent: self.emailCheckButton.rx.tap.asObservable(),
-      nicknameTextFieldDidEditEvent: self.nicknameTextField.rx.text.orEmpty.asObservable(),
-      nicknameCheckButtonDidTapEvent: self.nicknameCheckButton.rx.tap.asObservable(),
-      nextButtonDidTapEvent: self.nextButton.rx.tap.asObservable()
-    )
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
     
-    let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
+    self.emailTextField.rx.text.orEmpty
+      .bind(to: input.emailTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.emailCheckButton.rx.tap
+      .bind(to: input.emailCheckButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.nicknameTextField.rx.text.orEmpty
+      .bind(to: input.nicknameTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.nicknameCheckButton.rx.tap
+      .bind(to: input.nicknameCheckButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.nextButton.rx.tap
+      .bind(to: input.nextButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindEmailSection(output: output)
     self.bindNicknameSection(output: output)
     self.bindNextButton(output: output)
-    
   }
   
-  private func bindEmailSection(output: SignUpInformationViewModel.Output?) {
-    output?.emailValidationState
-      .asDriver(onErrorJustReturn: .empty)
+  private func bindEmailSection(output: SignUpInformationViewModel.Output) {
+    output.emailState
+      .asDriver()
       .drive(onNext: { [weak self] state in
         self?.updateEmailSection(state: state)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func bindNicknameSection(output: SignUpInformationViewModel.Output?) {
-    output?.nicknameValidationState
-      .asDriver(onErrorJustReturn: .empty)
+  private func bindNicknameSection(output: SignUpInformationViewModel.Output) {
+    output.nicknameState
+      .asDriver()
       .drive(onNext: { [weak self] state in
-        self?.updateNicknameValidationButton(state: state)
+        self?.updateNicknameSection(state: state)
+      })
+      .disposed(by: self.disposeBag)
+    
+    output.hideNicknameSection
+      .asDriver()
+      .drive(onNext: { [weak self] isHidden in
+        self?.updateNicknameSection(isHidden: isHidden)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func bindNextButton(output: SignUpInformationViewModel.Output?) {
-    guard let output = output else { return }
-    Observable.combineLatest(output.emailValidationState, output.nicknameValidationState)
-      .subscribe(onNext: { [weak self] emailValidation, nicknameValidation in
-        if emailValidation == .success, nicknameValidation == .success {
-          self?.updateNextButton(enable: true)
-        } else {
-          self?.updateNextButton(enable: false)
-        }
+  private func bindNextButton(output: SignUpInformationViewModel.Output) {
+    output.canDone
+      .asDriver()
+      .drive(onNext: { [weak self] state in
+        self?.updateNextButton(enable: state)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
-}
-
-// MARK: - Update UI
-extension SignUpInformationViewController {
+  
+  // MARK: - Update UI
   private func updateEmailSection(state: InputState) {
     self.emailSection.updateUI(state: state)
     self.emailWarningLabel.text = state.emailDescription
     self.emailCheckButton.isHidden = state != .correctFormat && state != .duplicate
-    if self.isNicknameSectionShown != true, state == .success {
-      self.nicknameSection.isHidden = false
-      self.isNicknameSectionShown = true
-    }
   }
   
-  private func updateNicknameValidationButton(state: InputState) {
+  private func updateNicknameSection(state: InputState) {
     self.nicknameSection.updateUI(state: state)
     self.nicknameWarningLabel.text = state.nicknameDescription
     self.nicknameCheckButton.isHidden = state != .correctFormat && state != .duplicate
   }
   
+  private func updateNicknameSection(isHidden: Bool) {
+    self.nicknameSection.isHidden = isHidden
+  }
+  
   private func updateNextButton(enable: Bool) {
     self.nextButton.isHidden = !enable
   }
+  
 }

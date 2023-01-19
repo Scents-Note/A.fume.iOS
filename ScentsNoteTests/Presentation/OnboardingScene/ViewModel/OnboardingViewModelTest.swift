@@ -11,14 +11,16 @@ import RxTest
 @testable import ScentsNote
 
 final class OnboardingViewModelTest: XCTestCase {
-  private var viewModel: OnboardingViewModel!
   private var coordinator: OnboardingCoordinator!
+  private var viewModel: OnboardingViewModel!
+  private var input: OnboardingViewModel.Input!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
   override func setUpWithError() throws {
     self.coordinator = MockOnboardingCoordinator()
     self.viewModel = OnboardingViewModel(coordinator: self.coordinator)
+    self.input = self.viewModel.input
     self.scheduler = TestScheduler(initialClock: 0)
     self.disposeBag = DisposeBag()
   }
@@ -38,14 +40,13 @@ final class OnboardingViewModelTest: XCTestCase {
     ])
     
     // When
-    let input = OnboardingViewModel.Input(loginButtonDidTapEvent: loginButtonObservable.asObservable(),
-                                          signUpButtonDidTapEvent: Observable.just(()))
+    loginButtonObservable
+      .bind(to: self.input.loginButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
     
-    let _ = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
-    
-    // Then
     self.scheduler.start()
     
+    // Then
     let expected = 1
     let actual = (self.coordinator as! MockOnboardingCoordinator).runLoginFlowCalledCount
     
@@ -54,24 +55,22 @@ final class OnboardingViewModelTest: XCTestCase {
 
   // 회원가입 버튼 누를 시 signUpFlow 동작
   func testTransform_clickLoginButton_runSignUpFlow() {
-    
+
     // Given
     let signUpButtonObservable = self.scheduler.createHotObservable([
       .next(20, ())
     ])
-    
+
     // When
-    let input = OnboardingViewModel.Input(loginButtonDidTapEvent: Observable.just(()),
-                                          signUpButtonDidTapEvent: signUpButtonObservable.asObservable())
-    
-    let _ = self.viewModel.transform(from: input, disposeBag: self.disposeBag)
-    
-    // Then
+    signUpButtonObservable
+      .bind(to: self.input.signUpButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
     self.scheduler.start()
-    
+
+    // Then
     let expected = 1
     let actual = (self.coordinator as! MockOnboardingCoordinator).runSignUpFlowCalledCount
-    
+
     XCTAssertEqual(actual, expected)
   }
 }
