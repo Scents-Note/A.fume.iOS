@@ -21,7 +21,7 @@ final class DefaultPerfumeNewCoordinator: BaseCoordinator, PerfumeNewCoordinator
   override func start() {
     self.perfumeNewViewController.viewModel = PerfumeNewViewModel(
       coordinator: self,
-      fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
+      fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
     )
     self.perfumeNewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeNewViewController, animated: true)

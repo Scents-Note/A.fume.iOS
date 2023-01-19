@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/12/06.
 //
 
-struct ReviewInMyPage {
+struct ReviewInMyPage: Equatable {
   let reviewIdx: Int
   let score: Double
   let perfume: String

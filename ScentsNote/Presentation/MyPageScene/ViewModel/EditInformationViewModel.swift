@@ -253,3 +253,9 @@ final class EditInformationViewModel {
     self.popupInput.birthDidEditEvent.accept(birth)
   }
 }
+
+extension EditInformationViewModel: BirthPopupDismissDelegate{
+  func birthPopupDismiss(with birth: Int) {
+    self.updateBirth(birth: birth)
+  }
+}

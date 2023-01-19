@@ -11,10 +11,10 @@ import Moya
 
 protocol UserService {
   // MARK: - Login
-  func login(email: String, password: String) -> Observable<LoginInfo>
+  func login(email: String, password: String) -> Observable<LoginInfoResponseDTO>
   
   // MARK: - SignUp
-  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo>
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfoResponseDTO>
   func checkDuplicateEmail(email: String) -> Observable<Bool>
   func checkDuplicateNickname(nickname: String) -> Observable<Bool>
   

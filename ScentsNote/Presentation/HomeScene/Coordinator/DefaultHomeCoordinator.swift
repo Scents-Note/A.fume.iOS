@@ -24,13 +24,13 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   private func showHomeViewController() {
     self.homeViewController.viewModel = HomeViewModel(coordinator: self,
-                                                  fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
-                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
-                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared))
-    self.navigationController.pushViewController(self.viewController, animated: true)
+                                                  fetchUserDefaultUseCase: DefaultFetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                  updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecommendedUseCase: DefaultFetchPerfumesRecommendedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesPopularUseCase: DefaultFetchPerfumesPopularUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecentUseCase: DefaultFetchPerfumesRecentUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared))
+    self.navigationController.pushViewController(self.homeViewController, animated: true)
   }
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {

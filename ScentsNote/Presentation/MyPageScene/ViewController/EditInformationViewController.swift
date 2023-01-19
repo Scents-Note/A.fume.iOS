@@ -200,8 +200,4 @@ final class EditInformationViewController: UIViewController {
   }
 }
 
-extension EditInformationViewController: BirthPopupDismissDelegate{
-  func birthPopupDismiss(with birth: Int) {
-    self.viewModel?.updateBirth(birth: birth)
-  }
-}
+

@@ -12,7 +12,7 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   var finishFlow: (() -> Void)?
   var runSignUpFlow: (() -> Void)?
   
-  var loginViewController: LoginViewController
+  private let loginViewController: LoginViewController
   
   override init(_ navigationController: UINavigationController) {
     self.loginViewController = LoginViewController()
@@ -25,8 +25,8 @@ final class DefaultLoginCoordinator: BaseCoordinator, LoginCoordinator {
   
   func showLoginViewController() {
     self.loginViewController.viewModel = LoginViewModel(coordinator: self,
-                                                        loginUseCase: LoginUseCase(userRepository: DefaultUserRepository.shared),
-                                                        saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared))
+                                                        loginUseCase: DefaultLoginUseCase(userRepository: DefaultUserRepository.shared),
+                                                        saveLoginInfoUseCase: DefaultSaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared))
     
     self.navigationController.pushViewController(self.loginViewController, animated: true)
   }

@@ -9,58 +9,75 @@ import RxSwift
 import RxRelay
 
 final class SignUpInformationViewModel {
-
+  
   // MARK: - Input & Output
   struct Input {
-    let emailTextFieldDidEditEvent: Observable<String>
-    let emailCheckButtonDidTapEvent: Observable<Void>
-    let nicknameTextFieldDidEditEvent: Observable<String>
-    let nicknameCheckButtonDidTapEvent: Observable<Void>
-    let nextButtonDidTapEvent: Observable<Void>
+    let emailTextFieldDidEditEvent = PublishRelay<String>()
+    let emailCheckButtonDidTapEvent = PublishRelay<Void>()
+    let nicknameTextFieldDidEditEvent = PublishRelay<String>()
+    let nicknameCheckButtonDidTapEvent = PublishRelay<Void>()
+    let nextButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
-    var emailValidationState = BehaviorRelay<InputState>(value: .empty)
-    var nicknameValidationState = BehaviorRelay<InputState>(value: .empty)
+    let hideNicknameSection = BehaviorRelay<Bool>(value: true)
+    let emailState = BehaviorRelay<InputState>(value: .empty)
+    let nicknameState = BehaviorRelay<InputState>(value: .empty)
+    let canDone = BehaviorRelay<Bool>(value: false)
   }
   
   // MARK: - Vars & Lets
-  
   private weak var coordinator: SignUpCoordinator?
-  private let checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase
+  private let checkDuplcateEmailUseCase: CheckDuplicateEmailUseCase
   private let checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase
-  
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let output = Output()
   var email = ""
   var nickname = ""
   
   init(coordinator: SignUpCoordinator?,
-       checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase,
+       checkDuplcateEmailUseCase: CheckDuplicateEmailUseCase,
        checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase) {
     self.coordinator = coordinator
     self.checkDuplcateEmailUseCase = checkDuplcateEmailUseCase
     self.checkDuplicateNicknameUseCase = checkDuplicateNicknameUseCase
+    
+    self.transform(input: self.input, output: self.output)
   }
   
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  // MARK: - Transform
+  func transform(input: Input, output: Output) {
+    let emailState = PublishRelay<InputState>()
+    let nicknameState = PublishRelay<InputState>()
+    let hideNicknameSection = PublishRelay<Bool>()
+    
+    self.bindInput(input: input,
+                   emailState: emailState,
+                   nicknameState: nicknameState,
+                   hideNicknameSection: hideNicknameSection)
+    self.bindOutput(output: output,
+                    emailState: emailState,
+                    nicknameState: nicknameState,
+                    hideNicknameSection: hideNicknameSection)
+  }
+  
+  func bindInput(input: Input,
+                 emailState: PublishRelay<InputState>,
+                 nicknameState: PublishRelay<InputState>,
+                 hideNicknameSection: PublishRelay<Bool>) {
     input.emailTextFieldDidEditEvent
       .distinctUntilChanged()
-      .subscribe(onNext: { [weak self] string in
-        self?.email = string
-        self?.updateEmailValidationState(output: output)
+      .subscribe(onNext: { [weak self] email in
+        self?.email = email
+        self?.updateEmailState(emailState: emailState)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.emailCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.checkDuplcateEmailUseCase.execute(email: self.email)
-          .subscribe{ _ in
-            output.emailValidationState.accept(.success)
-          } onError: { error in
-            output.emailValidationState.accept(.duplicate)
-          }
-          .disposed(by: disposeBag)
+        guard let email = self?.email else { return }
+        self?.checkDuplcateEmail(email: email, emailState: emailState, hideNicknameSection: hideNicknameSection)
       })
       .disposed(by: disposeBag)
     
@@ -68,20 +85,13 @@ final class SignUpInformationViewModel {
       .distinctUntilChanged()
       .subscribe(onNext: { [weak self] nickname in
         self?.nickname = nickname
-        self?.updateNicknameValidationState(output: output)
+        self?.updateNicknameState(nicknameState: nicknameState)
       })
       .disposed(by: disposeBag)
     
     input.nicknameCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.checkDuplicateNicknameUseCase.execute(nickname: self.nickname)
-          .subscribe { _ in
-            output.nicknameValidationState.accept(.success)
-          } onError: { error in
-              output.nicknameValidationState.accept(.duplicate)
-          }
-          .disposed(by: disposeBag)
+        self?.checkDuplcateNickname(nickname: self?.nickname, nicknameState: nicknameState)
       })
       .disposed(by: disposeBag)
     
@@ -90,32 +100,81 @@ final class SignUpInformationViewModel {
         self?.coordinator?.showSignUpPasswordViewController(with: SignUpInfo(email: self?.email, nickname: self?.nickname))
       })
       .disposed(by: disposeBag)
-    
-    return output
   }
   
-  func updateEmailValidationState(output: Output) {
+  func bindOutput(output: Output,
+                  emailState: PublishRelay<InputState>,
+                  nicknameState: PublishRelay<InputState>,
+                  hideNicknameSection: PublishRelay<Bool>) {
+    
+    hideNicknameSection
+      .bind(to: output.hideNicknameSection)
+      .disposed(by: self.disposeBag)
+    
+    emailState
+      .bind(to: output.emailState)
+      .disposed(by: self.disposeBag)
+    
+    nicknameState
+      .bind(to: output.nicknameState)
+      .disposed(by: self.disposeBag)
+    
+    Observable.combineLatest(emailState, nicknameState)
+      .subscribe(onNext: { emailState, nicknameState in
+        if emailState == .success, nicknameState == .success {
+          output.canDone.accept(true)
+        } else {
+          output.canDone.accept(false)
+        }
+      })
+      .disposed(by: disposeBag)
+  }
+  
+  // MARK: - Update
+  func updateEmailState(emailState: PublishRelay<InputState>) {
     guard self.email.count > 0 else {
-      output.emailValidationState.accept(.empty)
+      emailState.accept(.empty)
       return
     }
     guard self.email.isValidEmail() else {
-      output.emailValidationState.accept(.wrongFormat)
+      emailState.accept(.wrongFormat)
       return
     }
-    output.emailValidationState.accept(.correctFormat)
+    emailState.accept(.correctFormat)
   }
   
-  func updateNicknameValidationState(output: Output) {
+  func updateNicknameState(nicknameState: PublishRelay<InputState>) {
     guard self.nickname.count > 0 else {
-      output.nicknameValidationState.accept(.empty)
+      nicknameState.accept(.empty)
       return
     }
     guard self.nickname.isValidNickname() else {
-      output.nicknameValidationState.accept(.wrongFormat)
+      nicknameState.accept(.wrongFormat)
       return
     }
-    output.nicknameValidationState.accept(.correctFormat)
+    nicknameState.accept(.correctFormat)
   }
   
+  func checkDuplcateEmail(email: String?, emailState: PublishRelay<InputState>, hideNicknameSection: PublishRelay<Bool>) {
+    guard let email = email else { return }
+    self.checkDuplcateEmailUseCase.execute(email: email)
+      .subscribe{ _ in
+        emailState.accept(.success)
+        hideNicknameSection.accept(false)
+      } onError: { error in
+        emailState.accept(.duplicate)
+      }
+      .disposed(by: self.disposeBag)
+  }
+  
+  func checkDuplcateNickname(nickname: String?, nicknameState: PublishRelay<InputState>) {
+    guard let nickname = nickname else { return }
+    self.checkDuplicateNicknameUseCase.execute(nickname: nickname)
+      .subscribe { _ in
+        nicknameState.accept(.success)
+      } onError: { error in
+        nicknameState.accept(.duplicate)
+      }
+      .disposed(by: self.disposeBag)
+  }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FilterBrand {
+struct FilterBrand: Equatable {
   let idx: Int
   let name: String
   var isSelected: Bool

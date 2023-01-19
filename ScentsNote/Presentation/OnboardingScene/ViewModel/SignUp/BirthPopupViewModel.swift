@@ -17,29 +17,19 @@ final class BirthPopupViewModel {
   }
   
   struct Output {
-    var doneButtonDidTap = PublishRelay<Bool>()
     var birthRange = BehaviorRelay<[String]>(value: Birth.range.map {"\($0)"})
     var birth = BehaviorRelay<Int?>(value: nil)
   }
   
   // MARK: - Vars & Lets
-  private weak var signCoordinator: SignUpCoordinator?
-  private weak var editInfoCoordinator: EditInformationCoordinator?
-  var dismissDelegate: BirthPopupDismissDelegate?
+  private weak var birthPopUpCoordinator: BirthPopUpCoordinator?
+  weak var delegate: BirthPopupDismissDelegate?
   var birth : String
-  var from: CoordinatorType
   
   // MARK: - Life Cycle
-  init(signCoordinator: SignUpCoordinator?, birth: Int, from: CoordinatorType) {
-    self.signCoordinator = signCoordinator
+  init(birthPopUpCoordinator: BirthPopUpCoordinator?, birth: Int) {
+    self.birthPopUpCoordinator = birthPopUpCoordinator
     self.birth = String(birth)
-    self.from = from
-  }
-  
-  init(editInfoCoordinator: EditInformationCoordinator?, birth: Int, from: CoordinatorType) {
-    self.editInfoCoordinator = editInfoCoordinator
-    self.birth = String(birth)
-    self.from = from
   }
   
   func transform(from input: Input, disposeBag: DisposeBag) -> Output {
@@ -52,15 +42,8 @@ final class BirthPopupViewModel {
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        output.doneButtonDidTap.accept(true)
-        switch self?.from {
-        case .signUp:
-          self?.signCoordinator?.hideBirthPopupViewController()
-        case .myPage:
-          self?.editInfoCoordinator?.hideBirthPopupViewController()
-        default:
-          break
-        }
+        self?.delegate?.birthPopupDismiss(with: output.birth.value ?? 1990)
+        self?.birthPopUpCoordinator?.hideBirthPopupViewController()
       })
       .disposed(by: disposeBag)
     

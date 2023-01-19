@@ -11,12 +11,13 @@ import RxSwift
 import SnapKit
 import Then
 
-class LoginViewController: UIViewController {
+final class LoginViewController: UIViewController {
   
+  // MARK: - Vars & Lets
+  var viewModel: LoginViewModel!
   private var disposeBag = DisposeBag()
-  var viewModel: LoginViewModel?
   
-  // MARK: - View
+  // MARK: - UI
   private let container = UIView()
   
   private let emailTextField = InputField().then { $0.setPlaceholder(string: "scents@email.com") }
@@ -61,6 +62,7 @@ class LoginViewController: UIViewController {
   private lazy var emailSection = InputSection(title: "이메일 주소를 입력해주세요.", textField: self.emailTextField)
   private lazy var passwordSection = InputSection(title: "비밀번호를 입력해주세요.", textField: self.passwordTextField)
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -76,10 +78,7 @@ class LoginViewController: UIViewController {
     self.view.endEditing(true)
   }
   
-}
-
-extension LoginViewController {
-  
+  // MARK: - Configure UI
   private func configureUI() {
     self.view.backgroundColor = .white
     self.setBackButton()
@@ -121,34 +120,57 @@ extension LoginViewController {
       $0.centerX.equalToSuperview()
       $0.top.equalTo(self.loginButton.snp.bottom).offset(22)
     }
-    
-    
   }
   
+  // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = LoginViewModel.Input(
-      emailTextFieldDidEditEvent: self.emailTextField.rx.text.orEmpty.asObservable(),
-      passwordTextFieldDidEditEvent: self.passwordTextField.rx.text.orEmpty.asObservable(),
-      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
-      signupButtonDidTapEvent: self.signUpButton.rx.tap.asObservable()
-    )
-      
-    let output = self.viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.emailTextField.rx.text.orEmpty.asObservable()
+      .bind(to: input.emailTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.passwordTextField.rx.text.orEmpty.asObservable()
+      .bind(to: input.passwordTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.loginButton.rx.tap.asObservable()
+      .bind(to: input.loginButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.signUpButton.rx.tap.asObservable()
+      .bind(to: input.signupButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
     self.bindLoginButton(output: output)
   }
+  
 }
 
 extension LoginViewController {
-  func bindLoginButton(output: LoginViewModel.Output?) {
-    output?.doneButtonShouldEnable
-      .asDriver(onErrorJustReturn: false)
+  
+  
+}
+
+extension LoginViewController {
+  func bindLoginButton(output: LoginViewModel.Output) {
+    output.canDone
+      .asDriver()
       .drive(onNext: { [weak self] isValid in
         self?.loginButton.isEnabled = isValid
         self?.loginButton.backgroundColor = isValid ? .blackText : .grayCd
       })
       .disposed(by: self.disposeBag)
     
-    output?.notCorrect
+    output.notCorrect
       .asDriver(onErrorJustReturn: ())
       .drive(onNext: { [weak self] in
         self?.notCorrectLabel.text = "입력된 아이디 또는 비밀번호가 올바르지 않습니다."

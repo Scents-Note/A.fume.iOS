@@ -22,24 +22,23 @@ final class PerfumeDetailViewModelTests: XCTestCase {
   private let dummyReviews: [ReviewInPerfumeDetail] = [ReviewInPerfumeDetail(idx: 0, score: 5, access: true, content: "가", likeCount: 0, isLiked: false, gender: 1, age: "20", nickname: "득연1", isReported: false),
                                                        ReviewInPerfumeDetail(idx: 1, score: 4.5, access: true, content: "나", likeCount: 0, isLiked: false, gender: 1, age: "30", nickname: "득연2", isReported: false)]
   
-//  override func setUpWithError() throws {
-//    self.fetchPerfumeDetailUseCase = FetchPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
-//    self.fetchReviewsInPerfumeDetailUseCase = FetchReviewsInPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
+  override func setUpWithError() throws {
+    self.fetchPerfumeDetailUseCase = DefaultFetchPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
+    self.fetchReviewsInPerfumeDetailUseCase = DefaultFetchReviewsInPerfumeDetailUseCase(perfumeRepository: MockPerfumeRepository())
 //    self.viewModel = PerfumeDetailViewModel(coordinator: nil,
 //                                            fetchPerfumeDetailUseCase: self.fetchPerfumeDetailUseCase,
 //                                            fetchReviewsInPerfumeDetailUseCase: self.fetchReviewsInPerfumeDetailUseCase,
 //                                            perfumeIdx: 0)
-//    self.scheduler = TestScheduler(initialClock: 0)
-//    self.disposeBag = DisposeBag()
-//    
-//  }
-//  
+    self.scheduler = TestScheduler(initialClock: 0)
+    self.disposeBag = DisposeBag()
+    
+  }
+  
   override func tearDownWithError() throws {
     self.viewModel = nil
     self.disposeBag = nil
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
   }
-  
+//  
 //  func test_fetchDatas() {
 //    let viewDidLoadTestableObservable = self.scheduler.createHotObservable([.next(10, ())])
 //

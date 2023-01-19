@@ -23,10 +23,12 @@ final class DefaultUserRepository: UserRepository {
   
   func login(email: String, password: String) -> Observable<LoginInfo> {
     return self.userService.login(email: email, password: password)
+      .map { $0.toDomain() }
   }
   
   func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
     return self.userService.signUp(signUpInfo: signUpInfo)
+      .map { $0.toDomain() }
   }
   
   func checkDuplicateEmail(email: String) -> Observable<Bool> {
