@@ -70,7 +70,7 @@ final class DefaultUserRepository: UserRepository {
   }
   
   func setUserDefault(key: String, value: Any?) {
-    self.userDefaultsPersitenceService.set(key: UserDefaultKey.nickname, value: value)
+    self.userDefaultsPersitenceService.set(key: key, value: value)
   }
   
   func removeUserDefault(key: String) {
