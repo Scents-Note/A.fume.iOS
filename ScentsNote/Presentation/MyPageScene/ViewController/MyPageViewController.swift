@@ -106,7 +106,6 @@ final class MyPageViewController: UIViewController {
     self.menuButton.rx.tap
       .bind(to: input.menuButtonDidTapEvent)
       .disposed(by: self.disposeBag)
-    
   }
   
   private func bindOutput() {
