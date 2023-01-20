@@ -8,9 +8,9 @@
 import Foundation
 
 struct EditUserInfo: Equatable {
-  let nickname: String
-  let gender: String
-  let birth: Int
+  var nickname: String
+  var gender: String
+  var birth: Int
   
   static let `default` = EditUserInfo(nickname: "", gender: "", birth: 0)
 }

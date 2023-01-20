@@ -30,8 +30,19 @@ final class MyPageMenuViewModelTest: XCTestCase {
                                          logoutUseCase: self.logoutUseCase)
     self.input = self.viewModel.input
     self.output = self.viewModel.output
-    self.scheduler = TestScheduler(initialClock: 0)
     self.disposeBag = DisposeBag()
+    self.scheduler = TestScheduler(initialClock: 0)
+  }
+  
+  override func tearDownWithError() throws {
+    self.coordinator = nil
+    self.fetchUserDefaultUseCase = nil
+    self.logoutUseCase = nil
+    self.viewModel = nil
+    self.input = nil
+    self.output = nil
+    self.disposeBag = nil
+    self.scheduler = nil
   }
   
   func testTransform_clickEditInfoMenu_runEditInfo() throws {

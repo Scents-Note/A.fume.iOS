@@ -375,6 +375,11 @@
 		4AC7F8EB291905E200A8D032 /* HomeNewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7F8EA291905E200A8D032 /* HomeNewCell.swift */; };
 		4ADC0303297262BC00C9D750 /* SurveySeriesResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADC0302297262BC00C9D750 /* SurveySeriesResponseDTO.swift */; };
 		4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADC03082972663A00C9D750 /* FetchSeriesUseCaseTest.swift */; };
+		4AE29373297A9E7D0011941F /* EditInformationViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE29372297A9E7D0011941F /* EditInformationViewModelTest.swift */; };
+		4AE29375297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE29374297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift */; };
+		4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE29376297AA03E0011941F /* MockUpdateUserInformationUseCase.swift */; };
+		4AE29379297AA0D40011941F /* MockSaveEditUserInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE29378297AA0D40011941F /* MockSaveEditUserInfoUseCase.swift */; };
+		4AE2937B297AA1370011941F /* MockEditInformationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2937A297AA1370011941F /* MockEditInformationCoordinator.swift */; };
 		4AE4A48D290382AA00491246 /* DefaultUserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A48C290382AA00491246 /* DefaultUserService.swift */; };
 		4AE4A4932904D70700491246 /* ErrorBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE4A4922904D70700491246 /* ErrorBody.swift */; };
 		4AE938952951BD47006A7DAF /* DefaultCheckDuplcateEmailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE938942951BD47006A7DAF /* DefaultCheckDuplcateEmailUseCase.swift */; };
@@ -818,6 +823,11 @@
 		4AC7F8EA291905E200A8D032 /* HomeNewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeNewCell.swift; sourceTree = "<group>"; };
 		4ADC0302297262BC00C9D750 /* SurveySeriesResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySeriesResponseDTO.swift; sourceTree = "<group>"; };
 		4ADC03082972663A00C9D750 /* FetchSeriesUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSeriesUseCaseTest.swift; sourceTree = "<group>"; };
+		4AE29372297A9E7D0011941F /* EditInformationViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditInformationViewModelTest.swift; sourceTree = "<group>"; };
+		4AE29374297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchUserInfoForEditUseCase.swift; sourceTree = "<group>"; };
+		4AE29376297AA03E0011941F /* MockUpdateUserInformationUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpdateUserInformationUseCase.swift; sourceTree = "<group>"; };
+		4AE29378297AA0D40011941F /* MockSaveEditUserInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSaveEditUserInfoUseCase.swift; sourceTree = "<group>"; };
+		4AE2937A297AA1370011941F /* MockEditInformationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockEditInformationCoordinator.swift; sourceTree = "<group>"; };
 		4AE4A48C290382AA00491246 /* DefaultUserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserService.swift; sourceTree = "<group>"; };
 		4AE4A4922904D70700491246 /* ErrorBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorBody.swift; sourceTree = "<group>"; };
 		4AE938942951BD47006A7DAF /* DefaultCheckDuplcateEmailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCheckDuplcateEmailUseCase.swift; sourceTree = "<group>"; };
@@ -997,6 +1007,9 @@
 				4A430D3E297A559100FF8DD1 /* MockFetchUserDefaultUseCase.swift */,
 				4A430D43297A57E400FF8DD1 /* MockFetchPerfumesInMyPageUseCase.swift */,
 				4A93A74A297A71F5005CF505 /* MockLogoutUseCase.swift */,
+				4AE29374297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift */,
+				4AE29376297AA03E0011941F /* MockUpdateUserInformationUseCase.swift */,
+				4AE29378297AA0D40011941F /* MockSaveEditUserInfoUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1119,6 +1132,7 @@
 			children = (
 				4A430D35297A535B00FF8DD1 /* MyPageViewModelTest.swift */,
 				4A93A748297A6E60005CF505 /* MyPageMenuViewModelTest.swift */,
+				4AE29372297A9E7D0011941F /* EditInformationViewModelTest.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1135,6 +1149,7 @@
 			isa = PBXGroup;
 			children = (
 				4A430D39297A540300FF8DD1 /* MockMyPageCoordinator.swift */,
+				4AE2937A297AA1370011941F /* MockEditInformationCoordinator.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -3194,6 +3209,7 @@
 				4A05FBDA2973F8FC00813C71 /* LoginUseCaseTest.swift in Sources */,
 				4AFC7E262973B00400F09E20 /* FetchSeriesForFilterUseCaseTest.swift in Sources */,
 				4A05FBE4297415B100813C71 /* LogoutUseCaseTest.swift in Sources */,
+				4AE29375297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift in Sources */,
 				4A05FBD02973F59E00813C71 /* CheckDuplicateNicknameUseCaseTest.swift in Sources */,
 				4A3A64302973A87C00446565 /* FetchPerfumesRecommendedUseCaseTest.swift in Sources */,
 				4AF455C829598FDB00E87A4E /* MockPerfumeRepository.swift in Sources */,
@@ -3207,12 +3223,15 @@
 				4A430D44297A57E400FF8DD1 /* MockFetchPerfumesInMyPageUseCase.swift in Sources */,
 				4A39EFAB29741ECE00AD2AE7 /* FetchReviewDetailUseCaseTest.swift in Sources */,
 				4A39EFAD29741FA800AD2AE7 /* UpdateReviewUseCaseTest.swift in Sources */,
+				4AE29373297A9E7D0011941F /* EditInformationViewModelTest.swift in Sources */,
 				4A3A64342973A92E00446565 /* FetchPerfumesRecentUseCaseTest.swift in Sources */,
 				4A39EFB92974F8A300AD2AE7 /* MockLoginUseCase.swift in Sources */,
 				4A39EFC92976323D00AD2AE7 /* VoidRecord.swift in Sources */,
 				4A39EFB3297420E900AD2AE7 /* DeleteReviewUseCaseTest.swift in Sources */,
 				4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */,
 				4A93A74B297A71F5005CF505 /* MockLogoutUseCase.swift in Sources */,
+				4AE2937B297AA1370011941F /* MockEditInformationCoordinator.swift in Sources */,
+				4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */,
 				4A05FBD22973F63500813C71 /* SaveEditUserInfoUseCaseTest.swift in Sources */,
 				4A3A643F2973ACBA00446565 /* MockFilterRepository.swift in Sources */,
 				4AED1EA82978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift in Sources */,
@@ -3239,6 +3258,7 @@
 				4A05FBCE2973F07500813C71 /* FetchUserInfoForEditUseCaseTest.swift in Sources */,
 				4A430D42297A573100FF8DD1 /* MockFetchReviewsInMyPageUseCase.swift in Sources */,
 				4AAC3D73297651DE00224D3D /* SignUpInformationViewModelTest.swift in Sources */,
+				4AE29379297AA0D40011941F /* MockSaveEditUserInfoUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

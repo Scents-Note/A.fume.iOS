@@ -5,7 +5,6 @@
 //  Created by 황득연 on 2023/01/20.
 //
 
-import Foundation
 @testable import ScentsNote
 
 final class MockMyPageCoordinator: MyPageCoordinator {

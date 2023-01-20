@@ -17,7 +17,6 @@ final class DefaultSaveLoginInfoUseCase: SaveLoginInfoUseCase {
   }
   
   func execute(loginInfo: LoginInfo, email: String?, password: String?) {
-    Log(loginInfo)
     self.userRepository.setUserDefault(key: UserDefaultKey.token, value: loginInfo.token)
     self.userRepository.setUserDefault(key: UserDefaultKey.refreshToken, value: loginInfo.refreshToken)
     self.userRepository.setUserDefault(key: UserDefaultKey.userIdx, value: loginInfo.userIdx)
@@ -27,8 +26,5 @@ final class DefaultSaveLoginInfoUseCase: SaveLoginInfoUseCase {
     self.userRepository.setUserDefault(key: UserDefaultKey.isLoggedIn, value: true)
     self.userRepository.setUserDefault(key: UserDefaultKey.email, value: email)
     self.userRepository.setUserDefault(key: UserDefaultKey.password, value: password)
-    
-    let nick = self.userRepository.fetchUserDefaults(key: UserDefaultKey.isLoggedIn) ?? false
-    Log(nick)
   }
 }
