@@ -9,7 +9,6 @@
 
 final class MockEditInformationCoordinator: EditInformationCoordinator {
   
-  
   var finishFlowCalledCount = 0
   var showWebViewControllerCalledCount = 0
   var showBirthPopupViewControllerCalledCount = 0

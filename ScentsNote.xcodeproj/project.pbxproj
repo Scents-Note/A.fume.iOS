@@ -313,6 +313,11 @@
 		4A9D915A28FFFA5E001551A8 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915928FFFA5E001551A8 /* DefaultUserRepository.swift */; };
 		4A9D915F28FFFBE2001551A8 /* LoginRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D915E28FFFBE2001551A8 /* LoginRequestDTO.swift */; };
 		4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9D9160290000FD001551A8 /* ScentsNoteAPI.swift */; };
+		4A9EB9AE297B710F003FC245 /* ChangePasswordViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9AD297B710F003FC245 /* ChangePasswordViewModelTest.swift */; };
+		4A9EB9B0297B7CE7003FC245 /* MockChangePasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9AF297B7CE7003FC245 /* MockChangePasswordCoordinator.swift */; };
+		4A9EB9B2297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9B1297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift */; };
+		4A9EB9B4297B7D87003FC245 /* MockChangePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9B3297B7D87003FC245 /* MockChangePasswordUseCase.swift */; };
+		4A9EB9B6297B7E06003FC245 /* MockSavePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9B5297B7E06003FC245 /* MockSavePasswordUseCase.swift */; };
 		4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */; };
 		4AA280EC29153E2400D30A99 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280EB29153E2400D30A99 /* MainCoordinator.swift */; };
 		4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280ED2917B0B800D30A99 /* TabBarPage.swift */; };
@@ -761,6 +766,11 @@
 		4A9D915928FFFA5E001551A8 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
 		4A9D915E28FFFBE2001551A8 /* LoginRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequestDTO.swift; sourceTree = "<group>"; };
 		4A9D9160290000FD001551A8 /* ScentsNoteAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScentsNoteAPI.swift; sourceTree = "<group>"; };
+		4A9EB9AD297B710F003FC245 /* ChangePasswordViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewModelTest.swift; sourceTree = "<group>"; };
+		4A9EB9AF297B7CE7003FC245 /* MockChangePasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChangePasswordCoordinator.swift; sourceTree = "<group>"; };
+		4A9EB9B1297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchUserPasswordUseCase.swift; sourceTree = "<group>"; };
+		4A9EB9B3297B7D87003FC245 /* MockChangePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChangePasswordUseCase.swift; sourceTree = "<group>"; };
+		4A9EB9B5297B7E06003FC245 /* MockSavePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSavePasswordUseCase.swift; sourceTree = "<group>"; };
 		4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280EB29153E2400D30A99 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280ED2917B0B800D30A99 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
@@ -1010,6 +1020,9 @@
 				4AE29374297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift */,
 				4AE29376297AA03E0011941F /* MockUpdateUserInformationUseCase.swift */,
 				4AE29378297AA0D40011941F /* MockSaveEditUserInfoUseCase.swift */,
+				4A9EB9B1297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift */,
+				4A9EB9B3297B7D87003FC245 /* MockChangePasswordUseCase.swift */,
+				4A9EB9B5297B7E06003FC245 /* MockSavePasswordUseCase.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1133,6 +1146,7 @@
 				4A430D35297A535B00FF8DD1 /* MyPageViewModelTest.swift */,
 				4A93A748297A6E60005CF505 /* MyPageMenuViewModelTest.swift */,
 				4AE29372297A9E7D0011941F /* EditInformationViewModelTest.swift */,
+				4A9EB9AD297B710F003FC245 /* ChangePasswordViewModelTest.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1150,6 +1164,7 @@
 			children = (
 				4A430D39297A540300FF8DD1 /* MockMyPageCoordinator.swift */,
 				4AE2937A297AA1370011941F /* MockEditInformationCoordinator.swift */,
+				4A9EB9AF297B7CE7003FC245 /* MockChangePasswordCoordinator.swift */,
 			);
 			path = Mock;
 			sourceTree = "<group>";
@@ -3191,6 +3206,7 @@
 				4A3A642A29738BA100446565 /* FetchPerfumeDetailUseCaseTest.swift in Sources */,
 				4AED1EA42978D6D1005E17C2 /* MockCheckDuplicateEmailUseCase.swift in Sources */,
 				4AFC7E2B2973B7B900F09E20 /* UpdateUserInformationUseCaseTest.swift in Sources */,
+				4A9EB9B4297B7D87003FC245 /* MockChangePasswordUseCase.swift in Sources */,
 				4A39EFBD2974FB5700AD2AE7 /* MockSaveLoginInfoUseCase.swift in Sources */,
 				4AED1EB529791B05005E17C2 /* MockSignUpUseCase.swift in Sources */,
 				4A430D3A297A540300FF8DD1 /* MockMyPageCoordinator.swift in Sources */,
@@ -3231,8 +3247,11 @@
 				4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */,
 				4A93A74B297A71F5005CF505 /* MockLogoutUseCase.swift in Sources */,
 				4AE2937B297AA1370011941F /* MockEditInformationCoordinator.swift in Sources */,
+				4A9EB9AE297B710F003FC245 /* ChangePasswordViewModelTest.swift in Sources */,
+				4A9EB9B6297B7E06003FC245 /* MockSavePasswordUseCase.swift in Sources */,
 				4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */,
 				4A05FBD22973F63500813C71 /* SaveEditUserInfoUseCaseTest.swift in Sources */,
+				4A9EB9B2297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift in Sources */,
 				4A3A643F2973ACBA00446565 /* MockFilterRepository.swift in Sources */,
 				4AED1EA82978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift in Sources */,
 				4A3A643A2973AACD00446565 /* UpdatePerfumeLikeUseCaseTest.swift in Sources */,
@@ -3243,6 +3262,7 @@
 				4A93A749297A6E60005CF505 /* MyPageMenuViewModelTest.swift in Sources */,
 				4A3A642C2973A45F00446565 /* FetchPerfumesInSurveyUseCaseTest.swift in Sources */,
 				4A05FBE02974142500813C71 /* SignUpUseCaseTest.swift in Sources */,
+				4A9EB9B0297B7CE7003FC245 /* MockChangePasswordCoordinator.swift in Sources */,
 				4AED1EAC2978FB60005E17C2 /* SignUpPasswordViewModelTest.swift in Sources */,
 				4A05FBD42973F72100813C71 /* FetchUserPasswordUseCaseTest.swift in Sources */,
 				4AAC3D6F29764D9B00224D3D /* OnboardingViewModelTest.swift in Sources */,

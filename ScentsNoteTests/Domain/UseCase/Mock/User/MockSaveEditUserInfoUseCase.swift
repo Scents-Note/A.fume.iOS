@@ -5,7 +5,6 @@
 //  Created by 황득연 on 2023/01/20.
 //
 
-import RxSwift
 @testable import ScentsNote
 
 final class MockSaveEditUserInfoUseCase: SaveEditUserInfoUseCase {
