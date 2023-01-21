@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FilterIngredient: Equatable {
+struct FilterIngredient: Hashable {
   let idx: Int
   let name: String
   var isSelected: Bool

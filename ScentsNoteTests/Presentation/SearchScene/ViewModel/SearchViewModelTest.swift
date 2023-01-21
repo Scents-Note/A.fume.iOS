@@ -175,6 +175,7 @@ final class SearchViewModelTest: XCTestCase {
     // Then
     let actual = (self.coordinator as! MockSearchCoordinator).showPopupCalledCount
     XCTAssertEqual(actual, expected)
+    
   }
   
 }

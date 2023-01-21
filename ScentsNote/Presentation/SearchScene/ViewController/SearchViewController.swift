@@ -111,6 +111,9 @@ final class SearchViewController: UIViewController {
       .bind(to: input.searchButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     
+    self.filterButton.rx.tap
+      .bind(to: input.filterButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
   }
   
   private func bindOutput() {

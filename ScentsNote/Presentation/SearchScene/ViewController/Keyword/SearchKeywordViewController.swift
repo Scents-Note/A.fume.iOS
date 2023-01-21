@@ -14,7 +14,7 @@ import Then
 final class SearchKeywordViewController: UIViewController {
   
   // MARK: - Vars & Lets
-  var viewModel: SearchKeywordViewModel?
+  var viewModel: SearchKeywordViewModel!
   let disposeBag = DisposeBag()
   
   // MARK: - UI
@@ -69,11 +69,26 @@ final class SearchKeywordViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = SearchKeywordViewModel.Input(keywordTextFieldDidEditEvent: self.keywordTextField.rx.text.orEmpty.asObservable(),
-                                             searchButtonDidTapEvent: self.searchButton.rx.tap.asObservable())
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
     
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
-    output?.finish
+    self.keywordTextField.rx.text.orEmpty
+      .bind(to: input.keywordTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.searchButton.rx.tap
+      .bind(to: input.searchButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
+    output.finish
       .asDriver()
       .skip(1)
       .drive(onNext: { [weak self] _ in
