@@ -29,6 +29,12 @@ final class SignUpBirthViewController: UIViewController {
     $0.backgroundColor = .pointBeige
   }
   
+  private let skipButton = UIButton().then {
+    $0.setTitle("건너뛰기", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+  }
+  
   private let doneButton = DoneButton(title: "가입 완료")
   
   override func viewDidLoad() {
@@ -82,6 +88,7 @@ extension SignUpBirthViewController {
   private func bindViewModel() {
     let input = SignUpBirthViewModel.Input(
       birthButtonDidTapEvent: self.birthButton.rx.tap.asObservable(),
+      skipButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
       doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable()
     )
     

@@ -15,6 +15,7 @@ final class SignUpGenderViewModel {
   struct Input {
     let manButtonDidTapEvent: Observable<Void>
     let womanButtonDidTapEvent: Observable<Void>
+    let skipButtonDidTapEvent: Observable<Void>
     let nextButtonDidTapEvent: Observable<Void>
   }
   
@@ -38,6 +39,13 @@ final class SignUpGenderViewModel {
     input.womanButtonDidTapEvent
       .subscribe(onNext: {
         output.selectedGenderState.accept(.woman)
+      })
+      .disposed(by: disposeBag)
+    
+    input.skipButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
+        self.coordinator?.showSignUpBirthViewController(with: self.signUpInfo)
       })
       .disposed(by: disposeBag)
     
