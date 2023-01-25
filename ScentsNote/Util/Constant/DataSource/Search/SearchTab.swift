@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2022/11/24.
 //
 
-struct SearchTab {
+struct SearchTab: Equatable {
   let name: String
   let count: Int
   

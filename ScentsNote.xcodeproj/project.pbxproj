@@ -328,6 +328,8 @@
 		4A9EB9CB297D26C7003FC245 /* SearchFilterSeriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9CA297D26C7003FC245 /* SearchFilterSeriesViewModel.swift */; };
 		4A9EB9CE297E0B29003FC245 /* SearchFilterBrandViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9CD297E0B29003FC245 /* SearchFilterBrandViewModel.swift */; };
 		4A9EB9D0297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9CF297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift */; };
+		4A9EB9D32981241D003FC245 /* SearchFilterViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */; };
+		4A9EB9D6298124EB003FC245 /* MockSearchFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9D5298124EB003FC245 /* MockSearchFilterCoordinator.swift */; };
 		4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */; };
 		4AA280EC29153E2400D30A99 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280EB29153E2400D30A99 /* MainCoordinator.swift */; };
 		4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280ED2917B0B800D30A99 /* TabBarPage.swift */; };
@@ -791,6 +793,8 @@
 		4A9EB9CA297D26C7003FC245 /* SearchFilterSeriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterSeriesViewModel.swift; sourceTree = "<group>"; };
 		4A9EB9CD297E0B29003FC245 /* SearchFilterBrandViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterBrandViewModel.swift; sourceTree = "<group>"; };
 		4A9EB9CF297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterKeywordViewModel.swift; sourceTree = "<group>"; };
+		4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewModelTest.swift; sourceTree = "<group>"; };
+		4A9EB9D5298124EB003FC245 /* MockSearchFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchFilterCoordinator.swift; sourceTree = "<group>"; };
 		4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280EB29153E2400D30A99 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280ED2917B0B800D30A99 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
@@ -1210,6 +1214,7 @@
 		4A430D3D297A552300FF8DD1 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				4A9EB9D4298124DE003FC245 /* Search */,
 				4A9EB9BE297BB5BC003FC245 /* Perfume */,
 				4A430D40297A572900FF8DD1 /* Review */,
 				4A39EFB72974F88000AD2AE7 /* User */,
@@ -1935,6 +1940,7 @@
 		4A9EB9B8297BAC20003FC245 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A9EB9D129812407003FC245 /* Filter */,
 				4A9EB9B9297BAC32003FC245 /* SearchViewModelTest.swift */,
 				4A9EB9C6297BC8A7003FC245 /* SearchKeywordViewModelTest.swift */,
 			);
@@ -1976,6 +1982,22 @@
 				4A9EB9CF297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift */,
 			);
 			path = Filter;
+			sourceTree = "<group>";
+		};
+		4A9EB9D129812407003FC245 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		4A9EB9D4298124DE003FC245 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EB9D5298124EB003FC245 /* MockSearchFilterCoordinator.swift */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		4AA280EF2917B6C000D30A99 /* HomeScene */ = {
@@ -2525,7 +2547,6 @@
 			isa = PBXGroup;
 			children = (
 				4A9EB9C3297BBC5F003FC245 /* Common */,
-				4A430D3D297A552300FF8DD1 /* Mock */,
 				4A05FBEC29741A4700813C71 /* Review */,
 				4A05FBE72974185200813C71 /* Keyword */,
 				4AFC7E292973B7A700F09E20 /* User */,
@@ -2621,6 +2642,7 @@
 		4AF455CA2959952500E87A4E /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				4A430D3D297A552300FF8DD1 /* Mock */,
 				4ADC0304297265EC00C9D750 /* UseCase */,
 			);
 			path = Domain;
@@ -3294,6 +3316,7 @@
 				4A39EFA929741C7C00AD2AE7 /* FetchReviewsInMyPageUseCaseTest.swift in Sources */,
 				4A9EB9C9297BC926003FC245 /* MockSearchKeywordCoordinator.swift in Sources */,
 				4A430D3F297A559100FF8DD1 /* MockFetchUserDefaultUseCase.swift in Sources */,
+				4A9EB9D6298124EB003FC245 /* MockSearchFilterCoordinator.swift in Sources */,
 				4A3A64362973A97900446565 /* FetchPerfumeSearchedUseCaseTest.swift in Sources */,
 				4A39EFC02974FBD500AD2AE7 /* MockLoginCoordinator.swift in Sources */,
 				4A05FBCC2973DA0C00813C71 /* FetchPerfumesInMyPageUseCaseTest.swift in Sources */,
@@ -3338,6 +3361,7 @@
 				4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */,
 				4A05FBD22973F63500813C71 /* SaveEditUserInfoUseCaseTest.swift in Sources */,
 				4A9EB9B2297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift in Sources */,
+				4A9EB9D32981241D003FC245 /* SearchFilterViewModelTest.swift in Sources */,
 				4A3A643F2973ACBA00446565 /* MockFilterRepository.swift in Sources */,
 				4AED1EA82978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift in Sources */,
 				4A3A643A2973AACD00446565 /* UpdatePerfumeLikeUseCaseTest.swift in Sources */,

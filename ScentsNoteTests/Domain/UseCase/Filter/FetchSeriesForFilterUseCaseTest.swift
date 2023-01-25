@@ -32,12 +32,12 @@ final class FetchSeriesForFilterUseCaseTest: XCTestCase {
   func testExecute_fetchSeriesForFilter() throws {
     
     // Given
-    let series = [FilterSeries(idx: 0, name: "가", ingredients: [FilterIngredient(idx: 0, name: "ㄱ", isSelected: false),
-                                                                FilterIngredient(idx: 1, name: "ㄴ", isSelected: false),
-                                                                FilterIngredient(idx: 2, name: "ㄷ", isSelected: false)]),
-                  FilterSeries(idx: 1, name: "나", ingredients: [FilterIngredient(idx: 3, name: "ㄹ", isSelected: false),
-                                                                FilterIngredient(idx: 4, name: "ㅁ", isSelected: false),
-                                                                FilterIngredient(idx: 5, name: "ㅂ", isSelected: false)])]
+    let series = [FilterSeries(idx: 0, name: "가", ingredients: [FilterIngredient(id: "0", idx: 0, name: "ㄱ", isSelected: false),
+                                                                FilterIngredient(id: "1", idx: 1, name: "ㄴ", isSelected: false),
+                                                                FilterIngredient(id: "2", idx: 2, name: "ㄷ", isSelected: false)]),
+                  FilterSeries(idx: 1, name: "나", ingredients: [FilterIngredient(id: "3", idx: 3, name: "ㄹ", isSelected: false),
+                                                                FilterIngredient(id: "4", idx: 4, name: "ㅁ", isSelected: false),
+                                                                FilterIngredient(id: "5", idx: 5, name: "ㅂ", isSelected: false)])]
     
     // When
     let seriesObserver = self.scheduler.createObserver([FilterSeries].self)

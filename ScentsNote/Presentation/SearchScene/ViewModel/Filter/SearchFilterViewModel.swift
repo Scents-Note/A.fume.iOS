@@ -25,7 +25,7 @@ final class SearchFilterViewModel {
     let closeButtonDidTapEvent = PublishRelay<Void>()
   }
   
-  struct ScrollInput {
+  struct ChildInput {
     let ingredientsDidUpdateEvent = PublishRelay<[SearchKeyword]>()
     let brandsDidUpdateEvent = PublishRelay<[SearchKeyword]>()
     let keywordsDidUpdateEvent = PublishRelay<[SearchKeyword]>()
@@ -44,7 +44,7 @@ final class SearchFilterViewModel {
   private let from: CoordinatorType
   private let disposeBag = DisposeBag()
   let input = Input()
-  let scrollInput = ScrollInput()
+  let childInput = ChildInput()
   let output = Output()
   var ingredients: [SearchKeyword] = []
   var brands: [SearchKeyword] = []
@@ -56,18 +56,18 @@ final class SearchFilterViewModel {
     self.coordinator = coordinator
     self.from = from
     
-    self.transform(input: self.input, scrollInput: self.scrollInput, output: self.output)
+    self.transform(input: self.input, childInput: self.childInput, output: self.output)
   }
   
   // MARK: - Binding
-  func transform(input: Input, scrollInput: ScrollInput, output: Output) {
+  func transform(input: Input, childInput: ChildInput, output: Output) {
     let ingredients = BehaviorRelay<[SearchKeyword]>(value: [])
     let brands = BehaviorRelay<[SearchKeyword]>(value: [])
     let keywords = BehaviorRelay<[SearchKeyword]>(value: [])
     let tabSelected = PublishRelay<Int>()
     
     self.bindInput(input: input,
-                   scrollInput: scrollInput,
+                   childInput: childInput,
                    ingredients: ingredients,
                    brands: brands,
                    keywords: keywords,
@@ -82,7 +82,7 @@ final class SearchFilterViewModel {
   }
   
   private func bindInput(input: Input,
-                         scrollInput: ScrollInput,
+                         childInput: ChildInput,
                          ingredients: BehaviorRelay<[SearchKeyword]>,
                          brands: BehaviorRelay<[SearchKeyword]>,
                          keywords: BehaviorRelay<[SearchKeyword]>,
@@ -106,21 +106,21 @@ final class SearchFilterViewModel {
       })
       .disposed(by: disposeBag)
     
-    scrollInput.ingredientsDidUpdateEvent
+    childInput.ingredientsDidUpdateEvent
       .subscribe(onNext: { [weak self] ingredientsUpdated in
         self?.ingredients = ingredientsUpdated
         ingredients.accept(ingredientsUpdated)
       })
       .disposed(by: self.disposeBag)
     
-    scrollInput.brandsDidUpdateEvent
+    childInput.brandsDidUpdateEvent
       .subscribe(onNext: { [weak self] brandsUpdated in
         self?.brands = brandsUpdated
         brands.accept(brandsUpdated)
       })
       .disposed(by: self.disposeBag)
     
-    scrollInput.keywordsDidUpdateEvent
+    childInput.keywordsDidUpdateEvent
       .subscribe(onNext: { [weak self] keywordsUpdated in
         self?.keywords = keywordsUpdated
         keywords.accept(keywordsUpdated)
@@ -196,17 +196,17 @@ final class SearchFilterViewModel {
 extension SearchFilterViewModel: FilterDelegate {
   func updateIngredients(ingredients: [FilterIngredient]) {
     let ingredients = ingredients.map { SearchKeyword(idx: $0.idx, name: $0.name, category: .ingredient) }
-    self.scrollInput.ingredientsDidUpdateEvent.accept(ingredients)
+    self.childInput.ingredientsDidUpdateEvent.accept(ingredients)
   }
   
   func updateBrands(brands: [FilterBrand]) {
     let brands = brands.map { SearchKeyword(idx: $0.idx, name: $0.name, category: .brand) }
-    self.scrollInput.brandsDidUpdateEvent.accept(brands)
+    self.childInput.brandsDidUpdateEvent.accept(brands)
   }
   
   func updateKeywords(keywords: [Keyword]) {
     let brands = keywords.map { SearchKeyword(idx: $0.idx, name: $0.name, category: .keyword) }
-    self.scrollInput.keywordsDidUpdateEvent.accept(brands)
+    self.childInput.keywordsDidUpdateEvent.accept(brands)
   }
 }
 
