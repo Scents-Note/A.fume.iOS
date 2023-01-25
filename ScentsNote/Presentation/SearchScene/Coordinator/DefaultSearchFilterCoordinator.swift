@@ -20,12 +20,8 @@ final class DefaultSearchFilterCoordinator: BaseCoordinator, SearchFilterCoordin
   
   override func start(from: CoordinatorType) {
     self.searchFilterViewController.viewModel = SearchFilterViewModel(coordinator: self,
-                                                                      fetchFilterBrandInitialUseCase: DefaultFetchFilterBrandInitialUseCase(filterRepository: DefaultFilterRepository.shared),
-                                                                      fetchBrandsForFilterUseCase: DefaultFetchBrandsForFilterUseCase(filterRepository: DefaultFilterRepository.shared),
-                                                                      fetchSeriesForFilterUseCase: DefaultFetchSeriesForFilterUseCase(filterRepository: DefaultFilterRepository.shared),
-                                                                      fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared),
                                                                       from: from)
-      
+    
     self.navigationController.present(self.searchFilterViewController, animated: true)
   }
 }

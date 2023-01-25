@@ -11,8 +11,8 @@ struct FilterSeriesDataSection {
   typealias Model = AnimatableSectionModel<String, Item>
   
   struct Item: Equatable, IdentifiableType {
-    var identity: Int {
-      self.ingredient.idx
+    var identity: String {
+      self.ingredient.id
     }
     var ingredient: FilterIngredient
   }

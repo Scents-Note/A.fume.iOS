@@ -8,6 +8,7 @@
 import Foundation
 
 struct FilterIngredient: Hashable {
+  let id: String
   let idx: Int
   let name: String
   var isSelected: Bool
