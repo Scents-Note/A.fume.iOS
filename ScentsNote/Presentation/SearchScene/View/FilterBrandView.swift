@@ -37,8 +37,7 @@ final class FilterBrandView: UIView {
   // MARK: - Life Cycle
   init(viewModel: SearchFilterViewModel) {
     self.viewModel = SearchFilterBrandViewModel(filterDelegate: viewModel,
-                                                fetchBrandsForFilterUseCase: DefaultFetchBrandsForFilterUseCase(filterRepository: DefaultFilterRepository.shared),
-                                                fetchFilterBrandInitialUseCase: DefaultFetchFilterBrandInitialUseCase(filterRepository: DefaultFilterRepository.shared))
+                                                fetchBrandsForFilterUseCase: DefaultFetchBrandsForFilterUseCase(filterRepository: DefaultFilterRepository.shared))
     super.init(frame: .zero)
     self.configureUI()
     self.bindViewModel()

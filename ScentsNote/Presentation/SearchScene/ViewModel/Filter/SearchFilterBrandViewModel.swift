@@ -18,14 +18,12 @@ final class SearchFilterBrandViewModel {
   
   struct Output {
     let brandInitials = BehaviorRelay<[FilterBrandInitial]>(value: [])
-    let brandInitialSelected = BehaviorRelay<Int>(value: 1)
     let brands = BehaviorRelay<[FilterBrand]>(value: [])
   }
   
   // MARK: - Vars & Lets
   private weak var filterDelegate: FilterDelegate?
   private let fetchBrandsForFilterUseCase: FetchBrandsForFilterUseCase
-  private let fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase
   private let disposeBag = DisposeBag()
   let input = Input()
   let output = Output()
@@ -35,11 +33,9 @@ final class SearchFilterBrandViewModel {
   
   // MARK: - Life Cycle
   init(filterDelegate: FilterDelegate,
-       fetchBrandsForFilterUseCase: FetchBrandsForFilterUseCase,
-       fetchFilterBrandInitialUseCase: FetchFilterBrandInitialUseCase) {
+       fetchBrandsForFilterUseCase: FetchBrandsForFilterUseCase) {
     self.filterDelegate = filterDelegate
     self.fetchBrandsForFilterUseCase = fetchBrandsForFilterUseCase
-    self.fetchFilterBrandInitialUseCase = fetchFilterBrandInitialUseCase
     
     self.transform(input: self.input, output: self.output)
   }
@@ -152,9 +148,8 @@ final class SearchFilterBrandViewModel {
         return FilterBrandInitial(text: initial.text, isSelected: false)
       } else if idx == updated, !initial.isSelected {
         return FilterBrandInitial(text: initial.text, isSelected: true)
-      } else {
-        return initial
       }
+      return initial
     }
   }
   

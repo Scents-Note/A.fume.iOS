@@ -333,6 +333,8 @@
 		4A9EB9D829812E06003FC245 /* SearchFilterSeriesViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9D729812E06003FC245 /* SearchFilterSeriesViewModelTest.swift */; };
 		4A9EB9DB29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9DA29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift */; };
 		4A9EB9DE29820B67003FC245 /* MockFilterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9DD29820B67003FC245 /* MockFilterDelegate.swift */; };
+		4A9EB9E029821E32003FC245 /* SearchFilterBrandViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9DF29821E32003FC245 /* SearchFilterBrandViewModelTest.swift */; };
+		4A9EB9E229821EF5003FC245 /* MockFetchBrandsForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9E129821EF5003FC245 /* MockFetchBrandsForFilterUseCase.swift */; };
 		4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */; };
 		4AA280EC29153E2400D30A99 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280EB29153E2400D30A99 /* MainCoordinator.swift */; };
 		4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280ED2917B0B800D30A99 /* TabBarPage.swift */; };
@@ -801,6 +803,8 @@
 		4A9EB9D729812E06003FC245 /* SearchFilterSeriesViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterSeriesViewModelTest.swift; sourceTree = "<group>"; };
 		4A9EB9DA29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchSeriesForFilterUseCase.swift; sourceTree = "<group>"; };
 		4A9EB9DD29820B67003FC245 /* MockFilterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFilterDelegate.swift; sourceTree = "<group>"; };
+		4A9EB9DF29821E32003FC245 /* SearchFilterBrandViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterBrandViewModelTest.swift; sourceTree = "<group>"; };
+		4A9EB9E129821EF5003FC245 /* MockFetchBrandsForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchBrandsForFilterUseCase.swift; sourceTree = "<group>"; };
 		4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280EB29153E2400D30A99 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280ED2917B0B800D30A99 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
@@ -1997,6 +2001,7 @@
 			children = (
 				4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */,
 				4A9EB9D729812E06003FC245 /* SearchFilterSeriesViewModelTest.swift */,
+				4A9EB9DF29821E32003FC245 /* SearchFilterBrandViewModelTest.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -2013,6 +2018,7 @@
 			isa = PBXGroup;
 			children = (
 				4A9EB9DA29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift */,
+				4A9EB9E129821EF5003FC245 /* MockFetchBrandsForFilterUseCase.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -3377,10 +3383,12 @@
 				4AE29373297A9E7D0011941F /* EditInformationViewModelTest.swift in Sources */,
 				4A3A64342973A92E00446565 /* FetchPerfumesRecentUseCaseTest.swift in Sources */,
 				4A39EFB92974F8A300AD2AE7 /* MockLoginUseCase.swift in Sources */,
+				4A9EB9E229821EF5003FC245 /* MockFetchBrandsForFilterUseCase.swift in Sources */,
 				4A39EFC92976323D00AD2AE7 /* VoidRecord.swift in Sources */,
 				4A39EFB3297420E900AD2AE7 /* DeleteReviewUseCaseTest.swift in Sources */,
 				4A9EB9BA297BAC32003FC245 /* SearchViewModelTest.swift in Sources */,
 				4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */,
+				4A9EB9E029821E32003FC245 /* SearchFilterBrandViewModelTest.swift in Sources */,
 				4A93A74B297A71F5005CF505 /* MockLogoutUseCase.swift in Sources */,
 				4AE2937B297AA1370011941F /* MockEditInformationCoordinator.swift in Sources */,
 				4A9EB9AE297B710F003FC245 /* ChangePasswordViewModelTest.swift in Sources */,

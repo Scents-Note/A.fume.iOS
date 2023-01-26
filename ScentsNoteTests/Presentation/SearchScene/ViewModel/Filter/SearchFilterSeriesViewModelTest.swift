@@ -44,7 +44,7 @@ final class SearchFilterSeriesViewModelTest: XCTestCase {
   
   
   // series 데이터가 잘 Fetch 되었는지 확인
-  func testFetchDatas_updateSeries() throws {
+  func testFetchDatas_updateSeries_success() throws {
     
     // Given
     let seriesObserver = self.scheduler.createObserver([FilterSeriesDataSection.Model].self)
