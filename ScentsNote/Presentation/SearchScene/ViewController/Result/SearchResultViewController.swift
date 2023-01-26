@@ -16,7 +16,7 @@ final class SearchResultViewController: UIViewController {
   typealias PerfumeDataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDataSection.Model>
   
   // MARK: - Vars & Lets
-  var viewModel: SearchResultViewModel?
+  var viewModel: SearchResultViewModel!
   let disposeBag = DisposeBag()
   var keywordDataSource: KeywordDataSource!
   var perfumeDataSource: PerfumeDataSource!
@@ -74,8 +74,8 @@ final class SearchResultViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
-    let cellInput = self.configureCollectionView()
-    self.bindViewModel(cellInput: cellInput)
+    self.configureDelegate()
+    self.bindViewModel()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -83,15 +83,12 @@ final class SearchResultViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-  }
-  
   // MARK: - Configure UI
   private func configureUI() {
     self.configureNavigation()
+    self.configureCollectionView()
     
-    self.keywordCollectionView.delegate = self
+    self.view.backgroundColor = .white
     self.view.addSubview(self.keywordCollectionView)
     self.keywordCollectionView.snp.makeConstraints {
       $0.top.equalTo(self.view.safeAreaLayoutGuide)
@@ -127,23 +124,20 @@ final class SearchResultViewController: UIViewController {
   }
   
   private func configureNavigation() {
-    self.view.backgroundColor = .white
     self.setBackButton()
     self.setNavigationTitle(title: "검색 결과")
     self.navigationItem.rightBarButtonItem = self.searchButton
   }
   
-  private func configureCollectionView() -> SearchResultViewModel.CellInput {
-    let keywordDeleted = PublishRelay<SearchKeyword>()
-    let perfumeClicked = PublishRelay<Perfume>()
-    let perfumeHeartClicked = PublishRelay<Perfume>()
+  private func configureCollectionView() {
+    let input = self.viewModel.cellInput
     
     self.keywordDataSource = KeywordDataSource { dataSource, tableView, indexPath, item in
       let cell = self.keywordCollectionView.dequeueReusableCell(KeywordCell.self, for: indexPath)
       cell.updateUI(keyword: item.keyword)
       cell.onDeleteClick()
         .subscribe(onNext: { _ in
-          keywordDeleted.accept(item.keyword)
+          input.keywordDeleteDidTapEvent.accept(item.keyword)
         })
         .disposed(by: cell.disposeBag)
       return cell
@@ -154,38 +148,57 @@ final class SearchResultViewController: UIViewController {
       cell.updateUI(perfume: item.perfume)
       cell.onPerfumeClick()
         .subscribe(onNext: { _ in
-          perfumeClicked.accept(item.perfume)
+          input.perfumeDidTapEvent.accept(item.perfume)
         })
         .disposed(by: cell.disposeBag)
       cell.onHeartClick()
         .subscribe(onNext: {
-          perfumeHeartClicked.accept(item.perfume)
+          input.perfumeHeartDidTapEvent.accept(item.perfume)
         })
         .disposed(by: cell.disposeBag)
       return cell
     }
-    
-    return SearchResultViewModel.CellInput(keywordDeleteDidTapEvent: keywordDeleted,
-                                           perfumeDidTapEvent: perfumeClicked,
-                                           perfumeHeartDidTapEvent: perfumeHeartClicked)
+  }
+  
+  private func configureDelegate() {
+    self.keywordCollectionView.delegate = self
   }
   
   // MARK: - Bind ViewModel
-  private func bindViewModel(cellInput: SearchResultViewModel.CellInput) {
-    let input = SearchResultViewModel.Input(searchButtonDidTapEvent: self.searchButton.rx.tap.asObservable(),
-                                            filterButtonDidTapEvent: self.filterButton.rx.tap.asObservable(),
-                                            reportButtonDidTapEvent: self.reportButton.rx.tap.asObservable())
-    let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
+  private func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.searchButton.rx.tap.asObservable()
+      .bind(to: input.searchButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.filterButton.rx.tap.asObservable()
+      .bind(to: input.filterButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.reportButton.rx.tap.asObservable()
+      .bind(to: input.reportButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindKeywords(output: output)
     self.bindPerfumes(output: output)
   }
   
-  private func bindKeywords(output: SearchResultViewModel.Output?) {
-    output?.keywords
+  private func bindKeywords(output: SearchResultViewModel.Output) {
+    output.keywords
       .bind(to: self.keywordCollectionView.rx.items(dataSource: keywordDataSource))
       .disposed(by: self.disposeBag)
     
-    output?.hideKeywordView
+    output.hideKeywordView
       .asDriver()
       .drive(onNext: { [weak self] isHidden in
         self?.updateKeywordView(isHidden: isHidden)
@@ -193,13 +206,13 @@ final class SearchResultViewController: UIViewController {
       .disposed(by: self.disposeBag)
   }
   
-  private func bindPerfumes(output: SearchResultViewModel.Output?) {
-    output?.perfumes
+  private func bindPerfumes(output: SearchResultViewModel.Output) {
+    output.perfumes
       .observe(on: MainScheduler.instance)
       .bind(to: self.perfumeCollectionView.rx.items(dataSource: perfumeDataSource))
       .disposed(by: self.disposeBag)
 
-    output?.hideEmptyView
+    output.hideEmptyView
       .asDriver()
       .drive(onNext: { [weak self] isHidden in
         self?.updateEmptyView(isHidden: isHidden)

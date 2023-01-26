@@ -95,7 +95,6 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
       case .search:
         self?.runSearchResultFlow(perfumeSearch: perfumeSearch)
       case .searchResult:
-//        self?.navigationController.dismiss(animated: true)
         let vc = self?.findViewController(SearchResultViewController.self) as! SearchResultViewController
         vc.viewModel?.updateSearchWords(perfumeSearch: perfumeSearch)
       default:
