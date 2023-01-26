@@ -303,8 +303,8 @@ final class SearchFilterSeriesViewModelTest: XCTestCase {
     }
   }
   
-  // ingredient Cell을 눌렀을때 updateIngredient 함수 호출 여부
-  func testUpdateIngredient_clickIngredient_called() throws {
+  // ingredient Cell을 눌렀을때 filterDelegate의 updateIngredient 함수 호출 여부
+  func testUpdateIngredient_clickIngredient_CallfilterDelegate() throws {
     
     // Given
     let ingredientObservable = self.scheduler.createColdObservable([.next(10, (0, FilterIngredient(id: "0", idx: 0, name: "오렌지", isSelected: false))),

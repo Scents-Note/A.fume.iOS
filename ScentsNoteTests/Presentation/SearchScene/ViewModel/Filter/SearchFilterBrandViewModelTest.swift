@@ -214,4 +214,36 @@ final class SearchFilterBrandViewModelTest: XCTestCase {
     XCTAssertEqual(actual, expectedOnField)
   }
   
+  // ingredient Cell을 눌렀을때 filterDelegate의 updateIngredient 함수 호출 여부
+  func testUpdateIngredient_clickBrand_updateBrandsInFilterDelegate() throws {
+    
+    // Given
+    let brandObservable = self.scheduler.createHotObservable([.next(10, 0),
+                                                              .next(20, 1)])
+    
+    let expectedAt10 = [FilterBrand(idx: 0, name: "브랜드1", isSelected: false)]
+    
+    let expectedAt20 = [FilterBrand(idx: 0, name: "브랜드1", isSelected: false),
+                        FilterBrand(idx: 1, name: "브랜드2", isSelected: false)]
+    
+    //When
+    brandObservable
+      .bind(to: self.input.brandCellDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.scheduler.start()
+    
+    //Then
+    self.scheduler.scheduleAt(10) {
+      let actualAt10 = (self.filterDelegate as! MockFilterDelegate).brandsUpdated
+      XCTAssertEqual(actualAt10, expectedAt10)
+    }
+    
+    self.scheduler.scheduleAt(20) {
+      let actualAt20 = (self.filterDelegate as! MockFilterDelegate).brandsUpdated
+      XCTAssertEqual(actualAt20, expectedAt20)
+    }
+    
+  }
+  
 }

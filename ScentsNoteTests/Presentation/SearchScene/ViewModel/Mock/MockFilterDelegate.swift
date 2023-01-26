@@ -10,20 +10,18 @@
 final class MockFilterDelegate: FilterDelegate {
   
   var ingredientsUpdated: [FilterIngredient] = []
-  var updateBrandsCalledCount = 0
-  var updateKeywordsCalledCount = 0
+  var brandsUpdated: [FilterBrand] = []
+  var keywordsUpdated: [Keyword] = []
   
   func updateIngredients(ingredients: [FilterIngredient]) {
     self.ingredientsUpdated = ingredients
   }
   
   func updateBrands(brands: [FilterBrand]) {
-    self.updateBrandsCalledCount += 1
+    self.brandsUpdated = brands
   }
   
   func updateKeywords(keywords: [Keyword]) {
-    self.updateKeywordsCalledCount += 1
+    self.keywordsUpdated = keywords
   }
-  
-  
 }
