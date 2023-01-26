@@ -22,9 +22,9 @@ final class SearchFilterSeriesViewModel {
   }
   
   // MARK: - Vars & Lets
-  private weak var filterDelegate: FilterDelegate?
   private let fetchSeriesForFilterUseCase: FetchSeriesForFilterUseCase
   private let disposeBag = DisposeBag()
+  private weak var filterDelegate: FilterDelegate?
   let input = Input()
   let output = Output()
   var ingredients: [FilterIngredient] = []

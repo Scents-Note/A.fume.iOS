@@ -330,6 +330,9 @@
 		4A9EB9D0297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9CF297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift */; };
 		4A9EB9D32981241D003FC245 /* SearchFilterViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */; };
 		4A9EB9D6298124EB003FC245 /* MockSearchFilterCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9D5298124EB003FC245 /* MockSearchFilterCoordinator.swift */; };
+		4A9EB9D829812E06003FC245 /* SearchFilterSeriesViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9D729812E06003FC245 /* SearchFilterSeriesViewModelTest.swift */; };
+		4A9EB9DB29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9DA29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift */; };
+		4A9EB9DE29820B67003FC245 /* MockFilterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9DD29820B67003FC245 /* MockFilterDelegate.swift */; };
 		4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */; };
 		4AA280EC29153E2400D30A99 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280EB29153E2400D30A99 /* MainCoordinator.swift */; };
 		4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280ED2917B0B800D30A99 /* TabBarPage.swift */; };
@@ -795,6 +798,9 @@
 		4A9EB9CF297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterKeywordViewModel.swift; sourceTree = "<group>"; };
 		4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterViewModelTest.swift; sourceTree = "<group>"; };
 		4A9EB9D5298124EB003FC245 /* MockSearchFilterCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchFilterCoordinator.swift; sourceTree = "<group>"; };
+		4A9EB9D729812E06003FC245 /* SearchFilterSeriesViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFilterSeriesViewModelTest.swift; sourceTree = "<group>"; };
+		4A9EB9DA29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchSeriesForFilterUseCase.swift; sourceTree = "<group>"; };
+		4A9EB9DD29820B67003FC245 /* MockFilterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFilterDelegate.swift; sourceTree = "<group>"; };
 		4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280EB29153E2400D30A99 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280ED2917B0B800D30A99 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
@@ -1214,6 +1220,7 @@
 		4A430D3D297A552300FF8DD1 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				4A9EB9D929812F57003FC245 /* Filter */,
 				4A9EB9D4298124DE003FC245 /* Search */,
 				4A9EB9BE297BB5BC003FC245 /* Perfume */,
 				4A430D40297A572900FF8DD1 /* Review */,
@@ -1940,6 +1947,7 @@
 		4A9EB9B8297BAC20003FC245 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A9EB9DC29820B5F003FC245 /* Mock */,
 				4A9EB9D129812407003FC245 /* Filter */,
 				4A9EB9B9297BAC32003FC245 /* SearchViewModelTest.swift */,
 				4A9EB9C6297BC8A7003FC245 /* SearchKeywordViewModelTest.swift */,
@@ -1988,6 +1996,7 @@
 			isa = PBXGroup;
 			children = (
 				4A9EB9D22981241D003FC245 /* SearchFilterViewModelTest.swift */,
+				4A9EB9D729812E06003FC245 /* SearchFilterSeriesViewModelTest.swift */,
 			);
 			path = Filter;
 			sourceTree = "<group>";
@@ -1998,6 +2007,22 @@
 				4A9EB9D5298124EB003FC245 /* MockSearchFilterCoordinator.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		4A9EB9D929812F57003FC245 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EB9DA29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift */,
+			);
+			path = Filter;
+			sourceTree = "<group>";
+		};
+		4A9EB9DC29820B5F003FC245 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EB9DD29820B67003FC245 /* MockFilterDelegate.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		4AA280EF2917B6C000D30A99 /* HomeScene */ = {
@@ -3337,7 +3362,9 @@
 				4AF455C829598FDB00E87A4E /* MockPerfumeRepository.swift in Sources */,
 				4AED1EAE297906DA005E17C2 /* SignUpGenderViewModelTest.swift in Sources */,
 				4AFC7E282973B65E00F09E20 /* FetchBrandsForFilterUseCaseTest.swift in Sources */,
+				4A9EB9D829812E06003FC245 /* SearchFilterSeriesViewModelTest.swift in Sources */,
 				4AFC7E2D2973B7E400F09E20 /* MockUserRepository.swift in Sources */,
+				4A9EB9DB29812F60003FC245 /* MockFetchSeriesForFilterUseCase.swift in Sources */,
 				4A3A643C2973ABAF00446565 /* AddReviewUseCaseTest.swift in Sources */,
 				4A05FBEE29741A6D00813C71 /* MockReviewRepository.swift in Sources */,
 				4A3A64382973A9F800446565 /* FetchReviewsInPerfumeDetailUseCaseTest.swift in Sources */,
@@ -3358,6 +3385,7 @@
 				4AE2937B297AA1370011941F /* MockEditInformationCoordinator.swift in Sources */,
 				4A9EB9AE297B710F003FC245 /* ChangePasswordViewModelTest.swift in Sources */,
 				4A9EB9B6297B7E06003FC245 /* MockSavePasswordUseCase.swift in Sources */,
+				4A9EB9DE29820B67003FC245 /* MockFilterDelegate.swift in Sources */,
 				4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */,
 				4A05FBD22973F63500813C71 /* SaveEditUserInfoUseCaseTest.swift in Sources */,
 				4A9EB9B2297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift in Sources */,
