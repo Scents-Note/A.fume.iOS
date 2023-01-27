@@ -16,7 +16,7 @@ import Then
 final class HomeViewController: UIViewController {
 
   // MARK: - Vars & Lets
-  var viewModel: HomeViewModel?
+  var viewModel: HomeViewModel!
   private let disposeBag = DisposeBag()
   private var dataSource: RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model>!
   
@@ -64,8 +64,7 @@ final class HomeViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
-    let cellInput = self.configureCollectionView()
-    self.bindViewModel(cellInput: cellInput)
+    self.bindViewModel()
     self.loadViewIfNeeded()
   }
   
@@ -82,6 +81,7 @@ final class HomeViewController: UIViewController {
   // MARK: Configure UI
   private func configureUI() {
     self.setBackButton()
+    self.configureCollectionView()
     
     self.view.backgroundColor = .white
     self.view.addSubview(self.collectionView)
@@ -91,15 +91,9 @@ final class HomeViewController: UIViewController {
     }
   }
   
-  private func configureCollectionView() -> HomeViewModel.CellInput {
-    // MARK: - Cell Input
+  private func configureCollectionView() {
     
-    /// Cell 클릭
-    let perfumeClicked = PublishRelay<Perfume>()
-    let moreClicked = PublishRelay<Bool>()
-    
-    /// Cell Heart 클릭
-    let perfumeHeartClicked = PublishRelay<Perfume>()
+    let input = self.viewModel.cellInput
     
     // TODO: 메모리 Leak 나는지 확인해보기
     self.dataSource = RxCollectionViewSectionedNonAnimatedDataSource<HomeDataSection.Model> { dataSource, tableView, indexPath, item in
@@ -110,7 +104,7 @@ final class HomeViewController: UIViewController {
         case .recommendation(let perfumes):
           let cell = self.collectionView.dequeueReusableCell(HomeRecommendationSection.self, for: indexPath)
           cell.clickPerfume = { perfume in
-            perfumeClicked.accept(perfume)
+            input.perfumeCellDidTapEvent.accept(perfume)
           }
           cell.updateUI(perfumes: perfumes)
           return cell
@@ -118,11 +112,11 @@ final class HomeViewController: UIViewController {
           let cell = self.collectionView.dequeueReusableCell(HomePopularityCell.self, for: indexPath)
           cell.updateUI(perfume: perfume)
           cell.onPerfumeClick().subscribe(onNext: { _ in
-            perfumeClicked.accept(perfume)
+            input.perfumeCellDidTapEvent.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeHeartClicked.accept(perfume)
+            input.perfumeHeartButtonDidTapEvent.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -130,11 +124,11 @@ final class HomeViewController: UIViewController {
           let cell = self.collectionView.dequeueReusableCell(HomeRecentCell.self, for: indexPath)
           cell.updateUI(perfume: perfume)
           cell.onPerfumeClick().subscribe(onNext: { _ in
-            perfumeClicked.accept(perfume)
+            input.perfumeCellDidTapEvent.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeHeartClicked.accept(perfume)
+            input.perfumeHeartButtonDidTapEvent.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -142,18 +136,18 @@ final class HomeViewController: UIViewController {
           let cell = self.collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
           cell.updateUI(perfume: perfume)
           cell.onPerfumeClick().subscribe(onNext: { _ in
-            perfumeClicked.accept(perfume)
+            input.perfumeCellDidTapEvent.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           cell.onHeartClick().subscribe(onNext: {
-            perfumeHeartClicked.accept(perfume)
+            input.perfumeHeartButtonDidTapEvent.accept(perfume)
           })
           .disposed(by: cell.disposeBag)
           return cell
         case .more:
           let cell = self.collectionView.dequeueReusableCell(HomeMoreCell.self, for: indexPath)
           cell.onMoreClick().subscribe(onNext : {
-            moreClicked.accept(true)
+            input.moreCellDidTapEvent.accept(())
           })
           .disposed(by: cell.disposeBag)
           return cell
@@ -180,23 +174,26 @@ final class HomeViewController: UIViewController {
         return UICollectionReusableView()
       }
     }
-    
-    return HomeViewModel.CellInput(
-      perfumeCellDidTapEvent: perfumeClicked,
-      perfumeHeartButtonDidTapEvent: perfumeHeartClicked,
-      moreCellDidTapEvent: moreClicked
-    )
   }
   
   // MARK: - Binding ViewMOdel
-  private func bindViewModel(cellInput: HomeViewModel.CellInput) {
-    let input = HomeViewModel.Input(viewWillAppearEvent: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in })
-    let output = viewModel?.transform(from: input, from: cellInput, disposeBag: disposeBag)
-    self.bindSection(output: output)
+  private func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
   }
   
-  private func bindSection(output: HomeViewModel.Output?) {
-    output?.homeDatas
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in }
+      .bind(to: input.viewWillAppearEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
+    output.homeDatas
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
   }

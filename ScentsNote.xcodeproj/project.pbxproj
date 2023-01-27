@@ -341,6 +341,7 @@
 		4A9EB9EB29825686003FC245 /* MockSearchResultCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9EA29825686003FC245 /* MockSearchResultCoordinator.swift */; };
 		4A9EB9ED29825E62003FC245 /* MockFetchPerfumeSearchedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9EC29825E62003FC245 /* MockFetchPerfumeSearchedUseCase.swift */; };
 		4A9EB9EF2983495D003FC245 /* Array+SectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9EE2983495D003FC245 /* Array+SectionModel.swift */; };
+		4A9EB9F42983662C003FC245 /* HomeViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9EB9F32983662C003FC245 /* HomeViewModelTest.swift */; };
 		4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */; };
 		4AA280EC29153E2400D30A99 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280EB29153E2400D30A99 /* MainCoordinator.swift */; };
 		4AA280EE2917B0B800D30A99 /* TabBarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA280ED2917B0B800D30A99 /* TabBarPage.swift */; };
@@ -817,6 +818,7 @@
 		4A9EB9EA29825686003FC245 /* MockSearchResultCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSearchResultCoordinator.swift; sourceTree = "<group>"; };
 		4A9EB9EC29825E62003FC245 /* MockFetchPerfumeSearchedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockFetchPerfumeSearchedUseCase.swift; sourceTree = "<group>"; };
 		4A9EB9EE2983495D003FC245 /* Array+SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+SectionModel.swift"; sourceTree = "<group>"; };
+		4A9EB9F32983662C003FC245 /* HomeViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModelTest.swift; sourceTree = "<group>"; };
 		4AA280E829153E1200D30A99 /* DefaultMainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultMainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280EB29153E2400D30A99 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		4AA280ED2917B0B800D30A99 /* TabBarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarPage.swift; sourceTree = "<group>"; };
@@ -2056,6 +2058,30 @@
 			path = Keyword;
 			sourceTree = "<group>";
 		};
+		4A9EB9F029836609003FC245 /* HomeScene */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EB9F229836620003FC245 /* Coordinator */,
+				4A9EB9F12983661B003FC245 /* ViewModel */,
+			);
+			path = HomeScene;
+			sourceTree = "<group>";
+		};
+		4A9EB9F12983661B003FC245 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A9EB9F32983662C003FC245 /* HomeViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4A9EB9F229836620003FC245 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		4AA280EF2917B6C000D30A99 /* HomeScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -2659,6 +2685,7 @@
 		4AF455C129598ABD00E87A4E /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4A9EB9F029836609003FC245 /* HomeScene */,
 				4A9EB9B7297B8EA5003FC245 /* SearchScene */,
 				4A430D33297A533500FF8DD1 /* MyPageScene */,
 				4A39EFB42974D0B400AD2AE7 /* OnboardingScene */,
@@ -3403,6 +3430,7 @@
 				4A3A643C2973ABAF00446565 /* AddReviewUseCaseTest.swift in Sources */,
 				4A05FBEE29741A6D00813C71 /* MockReviewRepository.swift in Sources */,
 				4A3A64382973A9F800446565 /* FetchReviewsInPerfumeDetailUseCaseTest.swift in Sources */,
+				4A9EB9F42983662C003FC245 /* HomeViewModelTest.swift in Sources */,
 				4A9EB9EB29825686003FC245 /* MockSearchResultCoordinator.swift in Sources */,
 				4A39EFB12974209700AD2AE7 /* UpdateReviewLikeUseCaseTest.swift in Sources */,
 				4A9EB9C7297BC8A7003FC245 /* SearchKeywordViewModelTest.swift in Sources */,
