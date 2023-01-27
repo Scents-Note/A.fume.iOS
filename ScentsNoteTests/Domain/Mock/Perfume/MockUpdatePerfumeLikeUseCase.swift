@@ -20,5 +20,4 @@ final class MockUpdatePerfumeLikeUseCase: TestUseCase, UpdatePerfumeLikeUseCase 
       return Disposables.create()
     }
   }
-
 }

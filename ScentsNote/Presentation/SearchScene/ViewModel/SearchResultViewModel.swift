@@ -72,9 +72,9 @@ final class SearchResultViewModel {
                     disposeBag: disposeBag)
     
     self.fetchDatas(keywords: keywords,
-                     perfumes: perfumes,
+                    perfumes: perfumes,
                     perfumeSearch: perfumeSearch,
-                     disposeBag: disposeBag)
+                    disposeBag: disposeBag)
     
   }
   
@@ -105,7 +105,7 @@ final class SearchResultViewModel {
     input.perfumeSearchUpdateEvent
       .bind(to: perfumeSearch)
       .disposed(by: self.disposeBag)
-
+    
     cellInput.keywordDeleteDidTapEvent.withLatestFrom(perfumeSearch) { [weak self] updated, originals in
       self?.perfumeSearchUpdated(keyword: updated, perfumeSearch: originals) ?? PerfumeSearch.default
     }
@@ -131,36 +131,34 @@ final class SearchResultViewModel {
                           perfumes: BehaviorRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
     
-    keywords.subscribe(onNext: { keywords in
-      let items = keywords.map { KeywordDataSection.Item(keyword: $0) }
-      let model = KeywordDataSection.Model(model: "keyword", items: items)
-      output.hideKeywordView.accept(items.count == 0)
-      output.keywords.accept([model])
-    })
-    .disposed(by: disposeBag)
+    keywords
+      .subscribe(onNext: { keywords in
+        let items = keywords.map { KeywordDataSection.Item(keyword: $0) }
+        let model = KeywordDataSection.Model(model: "keyword", items: items)
+        output.hideKeywordView.accept(items.count == 0)
+        output.keywords.accept([model])
+      })
+      .disposed(by: disposeBag)
     
-    perfumes.subscribe(onNext: { perfumes in
-      if perfumes.count == 0 {
-        output.hideEmptyView.accept(false)
-      } else {
-        output.hideEmptyView.accept(true)
-      }
-      let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
-      let model = PerfumeDataSection.Model(model: "perfume", items: items)
-      output.perfumes.accept([model])
-    })
-    .disposed(by: disposeBag)
+    perfumes
+      .subscribe(onNext: { perfumes in
+        let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
+        let model = PerfumeDataSection.Model(model: "perfume", items: items)
+        output.perfumes.accept([model])
+        output.hideEmptyView.accept(perfumes.count != 0)
+      })
+      .disposed(by: disposeBag)
     
   }
   
   private func fetchDatas(keywords: PublishRelay<[SearchKeyword]>,
-                           perfumes: BehaviorRelay<[Perfume]>,
+                          perfumes: BehaviorRelay<[Perfume]>,
                           perfumeSearch: PublishRelay<PerfumeSearch>,
-                           disposeBag: DisposeBag) {
+                          disposeBag: DisposeBag) {
     
     perfumeSearch
       .subscribe(onNext: { [weak self] data in
-        keywords.accept(data.toKeywordList())
+        keywords.accept(data.toSearchKeywords())
         self?.fetchPerfumes(perfumeSearch: data, perfumes: perfumes, disposeBag: disposeBag)
       })
       .disposed(by: disposeBag)
@@ -208,7 +206,7 @@ final class SearchResultViewModel {
       })
       .disposed(by: self.disposeBag)
   }
-      
+
   private func togglePerfumeLike(perfumeIdx: Int, originals perfumes: [Perfume]) -> [Perfume] {
     perfumes.map {
       guard $0.perfumeIdx != perfumeIdx else {
