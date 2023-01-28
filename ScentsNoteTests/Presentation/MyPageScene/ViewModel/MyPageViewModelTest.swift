@@ -69,11 +69,11 @@ final class MyPageViewModelTest: XCTestCase {
     let perfumesObserver = self.scheduler.createObserver([PerfumeInMyPage].self)
     
     self.scheduler.scheduleAt(20) {
-      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).updateMock(false)
+      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).isLoggedIn = false
     }
     
     self.scheduler.scheduleAt(40) {
-      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).updateMock(true)
+      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).isLoggedIn = false
     }
     
     let expectedPerfumes = [PerfumeInMyPage(idx: 0, name: "가", brandName: "ㄱ", imageUrl: "", reviewIdx: 100),

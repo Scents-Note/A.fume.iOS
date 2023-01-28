@@ -9,34 +9,37 @@
 
 final class MockFetchUserDefaultUseCase: FetchUserDefaultUseCase {
   
-  var mockString = "success"
-  var mockBool = true
-  var mockInt = 1
+  var gender = "MAN"
+  var nickname = "득연"
+  var birth = 1995
+  var isLoggedIn = true
   
   func execute<T>(key: String) -> T? {
-    switch T.self {
-    case is String.Type:
-      return mockString as? T
-    case is Bool.Type:
-      return mockBool as? T
-    case is Int.Type:
-      return mockInt as? T
+    switch key {
+    case UserDefaultKey.gender:
+      return gender as? T
+    case UserDefaultKey.nickname:
+      return nickname as? T
+    case UserDefaultKey.birth:
+      return birth as? T
+    case UserDefaultKey.isLoggedIn:
+      return isLoggedIn as? T
     default:
       return nil
     }
   }
   
-  func updateMock(_ mockString: String) {
-    self.mockString = mockString
-  }
-  
-  func updateMock(_ mockBool: Bool) {
-    self.mockBool = mockBool
-  }
-  
-  func updateMock(_ mockInt: Int) {
-    self.mockInt = mockInt
-  }
+//  func updateMock(_ mockString: String) {
+//    self.mockString = mockString
+//  }
+//
+//  func updateMock(_ mockBool: Bool) {
+//    self.mockBool = mockBool
+//  }
+//
+//  func updateMock(_ mockInt: Int) {
+//    self.mockInt = mockInt
+//  }
   
   
 }

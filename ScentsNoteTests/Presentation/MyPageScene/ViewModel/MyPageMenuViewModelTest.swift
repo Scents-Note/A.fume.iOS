@@ -151,7 +151,7 @@ final class MyPageMenuViewModelTest: XCTestCase {
     
     // 20보다 조금 먼저 일어나야 하므로
     self.scheduler.scheduleAt(19) {
-      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).updateMock(false)
+      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).isLoggedIn = false
     }
     
     let expectedWhenLogin = Menu.loggedIn
@@ -187,7 +187,7 @@ final class MyPageMenuViewModelTest: XCTestCase {
     
     let expected = 1
     
-    (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).updateMock(false)
+    (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).isLoggedIn = false
     // When
     loadMenuObservable
       .bind(to: self.input.loadMenuEvent)

@@ -134,7 +134,8 @@ final class HomeViewModel {
     
     /// 초기값 [] 이 들어가므로 1번 skip
     perfumesRecommended.skip(1).withLatestFrom(output.homeDatas) { perfumes, homeDatas in
-      homeDatas.map { [weak self] in
+      Log(perfumes)
+      return homeDatas.map { [weak self] in
         if case .recommendation = $0.model {
           let item = HomeDataSection.HomeItem.recommendation(perfumes)
           let content = self?.getRecommedationContent(isLoggedIn: self?.isLoggedIn, nickname: self?.nickname) ?? .default
@@ -261,7 +262,6 @@ final class HomeViewModel {
                                  perfumesPopular: BehaviorRelay<[Perfume]>,
                                  perfumesRecent: BehaviorRelay<[Perfume]>,
                                  perfumesNew: BehaviorRelay<[Perfume]>) {
-    
     self.updatePerfumeLikeUseCase.execute(perfumeIdx: perfumeIdx)
       .subscribe(onNext: { [weak self] _ in
         self?.updatePerfumeLikeIfSuccess(perfumeIdx: perfumeIdx,
@@ -313,9 +313,9 @@ final class HomeViewModel {
   private func getRecommedationContent(isLoggedIn: Bool?, nickname: String?) -> HomeDataSection.Content {
     if isLoggedIn == true {
       return HomeDataSection.Content(title: "\(nickname ?? "")님을 위한\n향수 추천", content: "센츠노트를 사용할수록\n더 잘 맞는 향수를 보여드려요.")
-    } else {
-      return HomeDataSection.Content(title: "당신을 위한\n향수 추천", content: "센츠노트를 사용할수록\n더 잘 맞는 향수를 보여드려요.")
     }
+    return HomeDataSection.Content(title: "당신을 위한\n향수 추천", content: "센츠노트를 사용할수록\n더 잘 맞는 향수를 보여드려요.")
+    
   }
   
   private func getPopularContent(isLoggedIn: Bool?, birth: Int?, gender: String?, nickname: String?) -> HomeDataSection.Content {
@@ -325,9 +325,9 @@ final class HomeViewModel {
       let age = (year - birth + 1) / 10 * 10
       let modifiedGender = gender == "MAN" ? "남성" : "여성"
       return HomeDataSection.Content(title: "\(age)대 \(modifiedGender)을 위한\n향수 추천", content: "\(nickname)님 연령대 분들에게 인기 많은 향수 입니다.")
-    } else {
-      return HomeDataSection.Content(title: "20대 여성이\n많이 찾는 향수", content: "20대 분들에게 인기 많은 향수 입니다.")
     }
+    return HomeDataSection.Content(title: "20대 여성이\n많이 찾는 향수", content: "설정에서 연령과 성별을 선택하면 더 잘 맞는 향수를 보여드려요.")
+    
   }
   
 }
