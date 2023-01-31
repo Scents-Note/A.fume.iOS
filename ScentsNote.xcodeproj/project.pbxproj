@@ -1498,7 +1498,6 @@
 			children = (
 				4A4F6A7D2939E8D2006BBF0B /* PerfumeReviewViewController.swift */,
 				4A4F6A89293B7095006BBF0B /* KeywordBottomSheetViewController.swift */,
-				4A828472293B80EF00E37538 /* KeywordBottomSheetViewModel.swift */,
 				4AE938B929542061006A7DAF /* ReviewReportPopupViewController.swift */,
 			);
 			path = Review;
@@ -1508,6 +1507,7 @@
 			isa = PBXGroup;
 			children = (
 				4A4F6A182935F698006BBF0B /* PerfumeReviewViewModel.swift */,
+				4A828472293B80EF00E37538 /* KeywordBottomSheetViewModel.swift */,
 				4AE938BB295420DB006A7DAF /* ReviewReportPopupViewModel.swift */,
 			);
 			path = Review;

@@ -61,7 +61,7 @@ final class KeywordBottomSheetViewController: UIViewController {
     super.viewDidLoad()
     self.bottomHeight = self.view.safeAreaLayoutGuide.layoutFrame.height / 2
     self.configureUI()
-    self.collectionView.delegate = self
+    self.configureDelegate()
     self.bindUI()
     self.bindViewModel()
   }
@@ -105,16 +105,21 @@ final class KeywordBottomSheetViewController: UIViewController {
       $0.top.equalTo(self.titleLabel.snp.bottom).offset(20)
       $0.bottom.left.right.equalToSuperview()
     }
-    
+  }
+  
+  private func configureDelegate() {
+    self.collectionView.delegate = self
   }
   
   private func configureCollectionView() {
+    let input = self.viewModel.input
+    
     self.dataSource = DataSource { dataSource, collectionView, indexPath, item in
       let cell = self.collectionView.dequeueReusableCell(SurveyKeywordCollectionViewCell.self, for: indexPath)
       cell.updateUI(keyword: item.keyword)
       cell.clickKeyword()
-        .subscribe(onNext: { [weak self] _ in
-          self?.viewModel?.cellInput.keywordCellDidTapEvent.accept(item.keyword)
+        .subscribe(onNext: { _ in
+          input.keywordCellDidTapEvent.accept(item.keyword)
         })
         .disposed(by: cell.disposeBag)
       return cell
@@ -122,22 +127,30 @@ final class KeywordBottomSheetViewController: UIViewController {
   }
   
   private func bindViewModel() {
-    let input = KeywordBottomSheetViewModel.Input(
-      confirmButtonDidTapEvent: self.confirmButton.rx.tap.asObservable()
-    )
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
     
-    output?.keywords
+    self.confirmButton.rx.tap
+      .bind(to: input.confirmButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    output.keywords
       .bind(to: self.collectionView.rx.items(dataSource: self.dataSource))
       .disposed(by: self.disposeBag)
     
-    output?.hideBottomSheet
+    output.hideBottomSheet
       .asDriver(onErrorJustReturn: false)
       .drive(onNext: { [weak self] _ in
         self?.hideBottomSheet()
       })
       .disposed(by: self.disposeBag)
-    
   }
   
   private func bindUI() {
@@ -158,7 +171,7 @@ final class KeywordBottomSheetViewController: UIViewController {
   }
   
   private func showHalfBottomSheet() {
-    self.viewModel?.setState(state: .half)
+    self.viewModel.setState(state: .half)
     let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
     self.bottomHeight = safeAreaHeight / 2 + self.view.safeAreaInsets.bottom
     self.bottomSheetView.snp.updateConstraints {
@@ -172,7 +185,7 @@ final class KeywordBottomSheetViewController: UIViewController {
   }
   
   private func showFullBottomSheet() {
-    self.viewModel?.setState(state: .fill)
+    self.viewModel.setState(state: .fill)
     let safeAreaHeight: CGFloat = view.safeAreaLayoutGuide.layoutFrame.height
     self.bottomHeight = safeAreaHeight
     self.bottomSheetView.snp.updateConstraints {
@@ -202,7 +215,7 @@ final class KeywordBottomSheetViewController: UIViewController {
   private func handlePanGesture(pan: UIPanGestureRecognizer) {
     let offsetY = pan.translation(in: self.bottomSheetView).y
     let safeAreaHeight: CGFloat = self.view.safeAreaLayoutGuide.layoutFrame.height
-    let state = self.viewModel?.state ?? .half
+    let state = self.viewModel.state
     switch pan.state {
     case .changed:
       self.bottomSheetView.snp.updateConstraints {
@@ -211,7 +224,6 @@ final class KeywordBottomSheetViewController: UIViewController {
     case .ended:
       switch state {
       case .half:
-        Log(offsetY)
         if offsetY > 30.0 {
           self.hideBottomSheet()
         } else if offsetY < -30.0 {
@@ -220,7 +232,6 @@ final class KeywordBottomSheetViewController: UIViewController {
           self.showHalfBottomSheet()
         }
       case .fill:
-        Log(offsetY)
         if offsetY > 500.0 {
           self.hideBottomSheet()
         } else if offsetY > 200 {

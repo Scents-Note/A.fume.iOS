@@ -662,7 +662,6 @@ final class PerfumeReviewViewController: UIViewController {
     output.canUpdate
       .asDriver()
       .drive(onNext: { [weak self] canUpdate in
-        Log(canUpdate)
         self?.updateButton.backgroundColor = canUpdate ? .blackText : .grayCd
         self?.updateButton.isEnabled = canUpdate ? true : false
       })
