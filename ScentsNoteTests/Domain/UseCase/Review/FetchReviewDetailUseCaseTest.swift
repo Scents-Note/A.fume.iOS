@@ -32,7 +32,17 @@ final class FetchReviewDetailUseCaseTest: XCTestCase {
   func testExecute_fetchReviewDetail() throws {
     
     // Given
-    let reviewDetail = ReviewDetail(score: 5.0, sillage: 1, longevity: 1, seasonal: ["여름"], gender: 1, content: "향이 좋네여", reviewIdx: 0, perfume: PerfumeInReviewDetail(idx: 0, name: "가", imageUrl: ""), keywords: [Keyword(idx: 0, name: "고",isSelected: false)], brand: BrandInReviewDetail(idx: 0, name: "ㄱ"), access: true)
+    let reviewDetail = ReviewDetail(score: 5.0,
+                                    sillage: 1,
+                                    longevity: 1,
+                                    seasonal: ["여름"],
+                                    gender: 1,
+                                    content: "향이 좋네여",
+                                    reviewIdx: 0,
+                                    perfume: PerfumeInReviewDetail(idx: 0, name: "가", imageUrl: ""),
+                                    keywords: [Keyword(idx: 0, name: "고",isSelected: false)],
+                                    brand: BrandInReviewDetail(idx: 0, name: "ㄱ"),
+                                    isShared: true)
    
     let reviewIdx = 0
     // When

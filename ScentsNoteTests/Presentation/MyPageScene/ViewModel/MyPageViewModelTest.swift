@@ -73,7 +73,7 @@ final class MyPageViewModelTest: XCTestCase {
     }
     
     self.scheduler.scheduleAt(40) {
-      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).isLoggedIn = false
+      (self.fetchUserDefaultUseCase as! MockFetchUserDefaultUseCase).isLoggedIn = true
     }
     
     let expectedPerfumes = [PerfumeInMyPage(idx: 0, name: "가", brandName: "ㄱ", imageUrl: "", reviewIdx: 100),

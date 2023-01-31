@@ -15,6 +15,7 @@ final class SurveyKeywordCollectionViewCell: UICollectionViewCell {
   
   static let identifier = "SurveyKeywordCollectionViewCell"
   static let height: CGFloat = 42
+  static let width: CGFloat = 100
   var disposeBag = DisposeBag()
   
   let keywordLabel = UILabel().then {

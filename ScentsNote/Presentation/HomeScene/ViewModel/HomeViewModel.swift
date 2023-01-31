@@ -134,7 +134,6 @@ final class HomeViewModel {
     
     /// 초기값 [] 이 들어가므로 1번 skip
     perfumesRecommended.skip(1).withLatestFrom(output.homeDatas) { perfumes, homeDatas in
-      Log(perfumes)
       return homeDatas.map { [weak self] in
         if case .recommendation = $0.model {
           let item = HomeDataSection.HomeItem.recommendation(perfumes)

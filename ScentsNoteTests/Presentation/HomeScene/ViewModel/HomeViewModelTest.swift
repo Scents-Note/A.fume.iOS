@@ -408,6 +408,31 @@ final class HomeViewModelTest: XCTestCase {
     XCTAssertEqual(actual, expected)
   }
   
+  // more cell 클릭시 perfumeNew 실행
+  func testTransform_clickMore_runPerfumeNew() throws {
+
+    // Given
+    let viewWillAppearObservable = self.scheduler.createHotObservable([.next(5, ())])
+    let moreButtonObservable = self.scheduler.createHotObservable([.next(10, ())])
+    
+    let expected = 1
+    // When
+    viewWillAppearObservable
+      .bind(to: self.input.viewWillAppearEvent)
+      .disposed(by: self.disposeBag)
+    
+    moreButtonObservable
+      .bind(to: self.cellInput.moreCellDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.scheduler.start()
+
+    // Then
+    let actual = (self.coordinator as! MockHomeCoordinator).runPerfumeNewFlowCalledCount
+    XCTAssertEqual(actual, expected)
+  }
+  
+  // 팝업에서 Delegate로 confirm 실행됐을 때 runOnboarding 실행
   func testConfirm_runOnboardingFlow() throws {
 
     // Given

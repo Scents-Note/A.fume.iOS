@@ -16,9 +16,9 @@ struct ReviewDetail: Equatable {
   let perfume: PerfumeInReviewDetail?
   var keywords: [Keyword]
   let brand: BrandInReviewDetail?
-  var access: Bool
+  var isShared: Bool
   
-  static let `default` = ReviewDetail(score: 0, sillage: -1, longevity: -1, seasonal: [], gender: -1, content: "", reviewIdx: 0, perfume: nil, keywords: [], brand: nil, access: false)
+  static let `default` = ReviewDetail(score: 0, sillage: -1, longevity: -1, seasonal: [], gender: -1, content: "", reviewIdx: 0, perfume: nil, keywords: [], brand: nil, isShared: false)
 }
 
 
@@ -29,13 +29,13 @@ extension ReviewDetail {
                             longevity: self.longevity,
                             seasonal: self.seasonal,
                             gender: self.gender,
-                            access: self.access,
+                            access: self.isShared,
                             content: self.content,
                             keywordList: self.keywords.map{ $0.idx })
   }
   
   static func == (lhs: ReviewDetail, rhs: ReviewDetail) -> Bool {
-    if lhs.access == rhs.access,
+    if lhs.isShared == rhs.isShared,
        lhs.score == rhs.score,
        lhs.sillage == rhs.sillage,
        lhs.longevity == rhs.longevity,
