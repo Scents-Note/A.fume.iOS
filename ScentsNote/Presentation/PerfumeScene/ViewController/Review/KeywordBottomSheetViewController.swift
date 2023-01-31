@@ -119,7 +119,7 @@ final class KeywordBottomSheetViewController: UIViewController {
       cell.updateUI(keyword: item.keyword)
       cell.clickKeyword()
         .subscribe(onNext: { _ in
-          input.keywordCellDidTapEvent.accept(item.keyword)
+          input.keywordCellDidTapEvent.accept(item.keyword.idx)
         })
         .disposed(by: cell.disposeBag)
       return cell

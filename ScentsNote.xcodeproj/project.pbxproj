@@ -411,6 +411,8 @@
 		4ABF6D5D2988C99A0044E8FC /* ReviewReportPopupViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF6D5C2988C99A0044E8FC /* ReviewReportPopupViewModelTest.swift */; };
 		4ABF6D5F2988D0C70044E8FC /* MockPerfumeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF6D5E2988D0C70044E8FC /* MockPerfumeDetailCoordinator.swift */; };
 		4ABF6D612988D3810044E8FC /* MockReportReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF6D602988D3810044E8FC /* MockReportReviewUseCase.swift */; };
+		4ABF6D6329890E670044E8FC /* KeywordBottomSheetViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF6D6229890E670044E8FC /* KeywordBottomSheetViewModelTest.swift */; };
+		4ABF6D6629890F5A0044E8FC /* MockBottomSheetDismissDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABF6D6529890F5A0044E8FC /* MockBottomSheetDismissDelegate.swift */; };
 		4AC7F8DB2918B01300A8D032 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7F8DA2918B01300A8D032 /* UICollectionView+Extension.swift */; };
 		4AC7F8E02918C7E600A8D032 /* HomePopularityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7F8DF2918C7E600A8D032 /* HomePopularityCell.swift */; };
 		4AC7F8E32918DE7C00A8D032 /* HomeRecentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7F8E22918DE7C00A8D032 /* HomeRecentCell.swift */; };
@@ -902,6 +904,8 @@
 		4ABF6D5C2988C99A0044E8FC /* ReviewReportPopupViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportPopupViewModelTest.swift; sourceTree = "<group>"; };
 		4ABF6D5E2988D0C70044E8FC /* MockPerfumeDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPerfumeDetailCoordinator.swift; sourceTree = "<group>"; };
 		4ABF6D602988D3810044E8FC /* MockReportReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockReportReviewUseCase.swift; sourceTree = "<group>"; };
+		4ABF6D6229890E670044E8FC /* KeywordBottomSheetViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordBottomSheetViewModelTest.swift; sourceTree = "<group>"; };
+		4ABF6D6529890F5A0044E8FC /* MockBottomSheetDismissDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBottomSheetDismissDelegate.swift; sourceTree = "<group>"; };
 		4AC7F8DA2918B01300A8D032 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		4AC7F8DF2918C7E600A8D032 /* HomePopularityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePopularityCell.swift; sourceTree = "<group>"; };
 		4AC7F8E22918DE7C00A8D032 /* HomeRecentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecentCell.swift; sourceTree = "<group>"; };
@@ -2637,6 +2641,7 @@
 				4ABF6D0E298649B80044E8FC /* PerfumeReviewViewModelTestIfReviewIsExisted.swift */,
 				4ABF6D1C2987A4AE0044E8FC /* PerfumeReviewViewModelTestIfReviewIsNotExisted.swift */,
 				4ABF6D5C2988C99A0044E8FC /* ReviewReportPopupViewModelTest.swift */,
+				4ABF6D6229890E670044E8FC /* KeywordBottomSheetViewModelTest.swift */,
 			);
 			path = Review;
 			sourceTree = "<group>";
@@ -2644,6 +2649,7 @@
 		4ABF6D10298797D20044E8FC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4ABF6D6429890F480044E8FC /* Mock */,
 				4ABF6D0D298649A70044E8FC /* Review */,
 			);
 			path = ViewModel;
@@ -2656,6 +2662,14 @@
 				4ABF6D5E2988D0C70044E8FC /* MockPerfumeDetailCoordinator.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		4ABF6D6429890F480044E8FC /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				4ABF6D6529890F5A0044E8FC /* MockBottomSheetDismissDelegate.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 		4AC7F8DD2918B49E00A8D032 /* Header */ = {
@@ -3493,6 +3507,7 @@
 				4A3A64322973A8E400446565 /* FetchPerfumesPopularUseCaseTest.swift in Sources */,
 				4A05FBDA2973F8FC00813C71 /* LoginUseCaseTest.swift in Sources */,
 				4A9EB9E9298255A9003FC245 /* SearchResultViewModelTest.swift in Sources */,
+				4ABF6D6329890E670044E8FC /* KeywordBottomSheetViewModelTest.swift in Sources */,
 				4AFC7E262973B00400F09E20 /* FetchSeriesForFilterUseCaseTest.swift in Sources */,
 				4A05FBE4297415B100813C71 /* LogoutUseCaseTest.swift in Sources */,
 				4AE29375297A9FD20011941F /* MockFetchUserInfoForEditUseCase.swift in Sources */,
@@ -3526,6 +3541,7 @@
 				4A9EB9E229821EF5003FC245 /* MockFetchBrandsForFilterUseCase.swift in Sources */,
 				4A39EFC92976323D00AD2AE7 /* VoidRecord.swift in Sources */,
 				4A9EB9E429823DC8003FC245 /* SearchFilterKeywordViewModelTest.swift in Sources */,
+				4ABF6D6629890F5A0044E8FC /* MockBottomSheetDismissDelegate.swift in Sources */,
 				4A39EFB3297420E900AD2AE7 /* DeleteReviewUseCaseTest.swift in Sources */,
 				4A9EB9BA297BAC32003FC245 /* SearchViewModelTest.swift in Sources */,
 				4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */,

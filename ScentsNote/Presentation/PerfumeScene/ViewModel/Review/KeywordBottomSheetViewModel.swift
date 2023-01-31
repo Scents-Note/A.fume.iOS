@@ -19,8 +19,7 @@ final class KeywordBottomSheetViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let keywordCellDidTapEvent = PublishRelay<Keyword>()
-    let hideBottomSheetEvent = PublishRelay<Void>()
+    let keywordCellDidTapEvent = PublishRelay<Int>()
     let confirmButtonDidTapEvent = PublishRelay<Void>()
   }
   
@@ -37,7 +36,6 @@ final class KeywordBottomSheetViewModel {
   let input = Input()
   let output = Output()
   var state: State = .half
-  
   var keywords: [Keyword] = []
   
   // MARK: - Life Cycle
@@ -67,25 +65,24 @@ final class KeywordBottomSheetViewModel {
                          keywords: BehaviorRelay<[Keyword]>,
                          close: PublishRelay<Bool>) {
     
-    input.confirmButtonDidTapEvent
-      .subscribe(onNext: { [weak self] in
-        close.accept(true)
-        self?.updateKeywords(keywords: keywords.value)
-      })
-      .disposed(by: self.disposeBag)
-    
     input.keywordCellDidTapEvent.withLatestFrom(keywords) { updated, originals in
       return originals.map { original in
-        guard original.idx != updated.idx else {
-          return Keyword(idx: updated.idx, name: updated.name, isSelected: !updated.isSelected)
+        guard original.idx != updated else {
+          return Keyword(idx: updated, name: original.name, isSelected: !original.isSelected)
         }
         return original
       }
     }
     .bind(to: keywords)
     .disposed(by: self.disposeBag)
+    
+    input.confirmButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        close.accept(true)
+        self?.updateKeywords(keywords: keywords.value)
+      })
+      .disposed(by: self.disposeBag)
   }
-  
   
   private func bindOutput(output: Output,
                           keywords: BehaviorRelay<[Keyword]>,
@@ -104,10 +101,6 @@ final class KeywordBottomSheetViewModel {
       })
       .disposed(by: self.disposeBag)
     
-  }
-  
-  private func fetchDatas(keywords: BehaviorRelay<[Keyword]>) {
-    keywords.accept(self.keywords)
   }
   
   func setState(state: State) {
