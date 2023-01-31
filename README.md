@@ -28,6 +28,7 @@
 - MVVM-C with Clean Architecture
 - Reactive
 - Async
+- Unit Test (Code Coverage 30%)
 
 # Skill
 
