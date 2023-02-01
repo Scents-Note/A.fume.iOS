@@ -254,6 +254,7 @@
 		4A6F98E8293080F50085EBE7 /* FilterScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6F98E7293080F50085EBE7 /* FilterScrollView.swift */; };
 		4A6F98ED29309E7D0085EBE7 /* CollectionViewLayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6F98EC29309E7D0085EBE7 /* CollectionViewLayoutFactory.swift */; };
 		4A6F98F02931D9270085EBE7 /* FilterSeriesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6F98EF2931D9270085EBE7 /* FilterSeriesHeaderView.swift */; };
+		4A7A62F0298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A62EF298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift */; };
 		4A80A4E12917EC02009F83B9 /* HomeRecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */; };
 		4A80A4E42918982C009F83B9 /* HomeRecommendationKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */; };
 		4A80A4E7291898E2009F83B9 /* HomeRecommendationKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */; };
@@ -743,6 +744,7 @@
 		4A6F98E7293080F50085EBE7 /* FilterScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterScrollView.swift; sourceTree = "<group>"; };
 		4A6F98EC29309E7D0085EBE7 /* CollectionViewLayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutFactory.swift; sourceTree = "<group>"; };
 		4A6F98EF2931D9270085EBE7 /* FilterSeriesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSeriesHeaderView.swift; sourceTree = "<group>"; };
+		4A7A62EF298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeNewViewModelTest.swift; sourceTree = "<group>"; };
 		4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationSection.swift; sourceTree = "<group>"; };
 		4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordView.swift; sourceTree = "<group>"; };
 		4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordCell.swift; sourceTree = "<group>"; };
@@ -1744,6 +1746,14 @@
 			path = Factory;
 			sourceTree = "<group>";
 		};
+		4A7A62EE298A6B0800EAC5C7 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				4A7A62EF298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
 		4A80A4E5291898B6009F83B9 /* Recommand */ = {
 			isa = PBXGroup;
 			children = (
@@ -2649,6 +2659,7 @@
 		4ABF6D10298797D20044E8FC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A7A62EE298A6B0800EAC5C7 /* New */,
 				4ABF6D6429890F480044E8FC /* Mock */,
 				4ABF6D0D298649A70044E8FC /* Review */,
 			);
@@ -3554,6 +3565,7 @@
 				4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */,
 				4A05FBD22973F63500813C71 /* SaveEditUserInfoUseCaseTest.swift in Sources */,
 				4A9EB9B2297B7D59003FC245 /* MockFetchUserPasswordUseCase.swift in Sources */,
+				4A7A62F0298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift in Sources */,
 				4A9EB9D32981241D003FC245 /* SearchFilterViewModelTest.swift in Sources */,
 				4A3A643F2973ACBA00446565 /* MockFilterRepository.swift in Sources */,
 				4AED1EA82978D7F8005E17C2 /* MockCheckDuplicateNicknameUseCase.swift in Sources */,
