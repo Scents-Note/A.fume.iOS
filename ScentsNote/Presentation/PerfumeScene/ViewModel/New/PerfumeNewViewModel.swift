@@ -37,6 +37,8 @@ final class PerfumeNewViewModel {
   init(coordinator: PerfumeNewCoordinator, fetchPerfumesNewUseCase: FetchPerfumesNewUseCase) {
     self.coordinator = coordinator
     self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
+    
+    self.transform(input: self.input, cellInput: self.cellInput, output: self.output)
   }
   
   

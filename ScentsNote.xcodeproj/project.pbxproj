@@ -255,6 +255,7 @@
 		4A6F98ED29309E7D0085EBE7 /* CollectionViewLayoutFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6F98EC29309E7D0085EBE7 /* CollectionViewLayoutFactory.swift */; };
 		4A6F98F02931D9270085EBE7 /* FilterSeriesHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6F98EF2931D9270085EBE7 /* FilterSeriesHeaderView.swift */; };
 		4A7A62F0298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A62EF298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift */; };
+		4A7A62F2298A6D9200EAC5C7 /* MockPerfumeNewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7A62F1298A6D9200EAC5C7 /* MockPerfumeNewCoordinator.swift */; };
 		4A80A4E12917EC02009F83B9 /* HomeRecommendationSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */; };
 		4A80A4E42918982C009F83B9 /* HomeRecommendationKeywordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */; };
 		4A80A4E7291898E2009F83B9 /* HomeRecommendationKeywordCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */; };
@@ -745,6 +746,7 @@
 		4A6F98EC29309E7D0085EBE7 /* CollectionViewLayoutFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayoutFactory.swift; sourceTree = "<group>"; };
 		4A6F98EF2931D9270085EBE7 /* FilterSeriesHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSeriesHeaderView.swift; sourceTree = "<group>"; };
 		4A7A62EF298A6B1B00EAC5C7 /* PerfumeNewViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeNewViewModelTest.swift; sourceTree = "<group>"; };
+		4A7A62F1298A6D9200EAC5C7 /* MockPerfumeNewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPerfumeNewCoordinator.swift; sourceTree = "<group>"; };
 		4A80A4E02917EC02009F83B9 /* HomeRecommendationSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationSection.swift; sourceTree = "<group>"; };
 		4A80A4E32918982C009F83B9 /* HomeRecommendationKeywordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordView.swift; sourceTree = "<group>"; };
 		4A80A4E6291898E2009F83B9 /* HomeRecommendationKeywordCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRecommendationKeywordCell.swift; sourceTree = "<group>"; };
@@ -2671,6 +2673,7 @@
 			children = (
 				4ABF6D12298797EC0044E8FC /* MockPerfumeReviewCoordinator.swift */,
 				4ABF6D5E2988D0C70044E8FC /* MockPerfumeDetailCoordinator.swift */,
+				4A7A62F1298A6D9200EAC5C7 /* MockPerfumeNewCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -3560,6 +3563,7 @@
 				4A93A74B297A71F5005CF505 /* MockLogoutUseCase.swift in Sources */,
 				4AE2937B297AA1370011941F /* MockEditInformationCoordinator.swift in Sources */,
 				4A9EB9AE297B710F003FC245 /* ChangePasswordViewModelTest.swift in Sources */,
+				4A7A62F2298A6D9200EAC5C7 /* MockPerfumeNewCoordinator.swift in Sources */,
 				4A9EB9B6297B7E06003FC245 /* MockSavePasswordUseCase.swift in Sources */,
 				4A9EB9DE29820B67003FC245 /* MockFilterDelegate.swift in Sources */,
 				4AE29377297AA03E0011941F /* MockUpdateUserInformationUseCase.swift in Sources */,
