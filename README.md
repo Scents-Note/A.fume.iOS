@@ -32,7 +32,7 @@
 
 # Skill
 
-- RxSwift, SnapKit, Then, KingFisher, Cosmos, Toast-Swift
+- RxSwift, SnapKit, Moya
 
 # Developer
 | 황득연 |
