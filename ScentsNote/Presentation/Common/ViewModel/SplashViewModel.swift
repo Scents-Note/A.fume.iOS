@@ -13,10 +13,11 @@ import RxRelay
 final class SplashViewModel {
   
   // MARK: - Vars & Lets
-  weak var coordinator: SplashCoordinator?
+  private weak var coordinator: SplashCoordinator?
   private let loginUseCase: LoginUseCase
   private let logoutUseCase: LogoutUseCase
   private let saveLoginInfoUseCase: SaveLoginInfoUseCase
+  private let disposeBag = DisposeBag()
   
   // MARK: - Life Cycle
   init(coordinator: SplashCoordinator,
@@ -27,16 +28,17 @@ final class SplashViewModel {
     self.loginUseCase = loginUseCase
     self.logoutUseCase = logoutUseCase
     self.saveLoginInfoUseCase = saveLoginInfoUseCase
+    
+    self.login()
   }
   
   
   // MARK: - Binding
   // TODO: - 로그인 로직 뺄 것(차후 업데이트)
-  func transform(disposeBag: DisposeBag) {
+  func login() {
     self.loginUseCase.execute()
       .subscribe(onNext: { [weak self] loginInfo in
         if loginInfo.userIdx != -1 {
-          Log(loginInfo.token)
           self?.saveLoginInfoUseCase.execute(loginInfo: loginInfo, email: nil, password: nil)
         }
         self?.coordinator?.finishFlow?()
@@ -45,6 +47,6 @@ final class SplashViewModel {
         self?.logoutUseCase.execute()
         self?.coordinator?.finishFlow?()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
 }
