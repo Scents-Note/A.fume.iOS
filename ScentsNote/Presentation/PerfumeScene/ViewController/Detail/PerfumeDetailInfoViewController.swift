@@ -148,8 +148,14 @@ final class PerfumeDetailInfoViewController: UIViewController {
     }
   }
   
+  /// 똑같은 Layout Height 일 때 다시 측정되어 스크롤이 상단으로 움직이는 것을 방지
   private func updateViewHeight() {
-    self.onUpdateHeight?(self.collectionView.contentSize.height)
+    let heightUpdated = self.collectionView.contentSize.height
+    if heightUpdated == 0 || heightUpdated == self.height {
+      return
+    }
+    Log(heightUpdated)
+    self.onUpdateHeight?(heightUpdated)
   }
   
 }

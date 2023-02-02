@@ -21,17 +21,14 @@ final class PerfumeDetailViewController: UIViewController {
   var updateTabView: ((PerfumeDetailTabCell.TabType) -> Void)?
   
   // MARK: - Vars & Lets
-  var viewModel: PerfumeDetailViewModel?
+  var viewModel: PerfumeDetailViewModel!
   var dataSource: DataSource!
   let disposeBag = DisposeBag()
-  
   
   deinit {
     Log("deinit")
   }
-  // MARK: - Input
-  private let pageViewState = BehaviorRelay<Int>(value: 0)
-  
+
   // MARK: - UI
   private let mainImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
@@ -73,7 +70,6 @@ final class PerfumeDetailViewController: UIViewController {
   
   private let dividerViewOfBottomView = UIView().then { $0.backgroundColor = .lightGray }
   
-  
   private lazy var collectionViewLayout = UICollectionViewCompositionalLayout (sectionProvider: { section, env -> NSCollectionLayoutSection? in
     let section = self.dataSource.sectionModels[section].model
     switch section {
@@ -92,7 +88,6 @@ final class PerfumeDetailViewController: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.configureCollectionView()
     self.configureUI()
     self.bindViewModel()
   }
@@ -102,64 +97,10 @@ final class PerfumeDetailViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
-}
-
-extension PerfumeDetailViewController {
-  
-  private func configureCollectionView() {
-    self.dataSource = DataSource(
-      configureCell: { [weak self] dataSource, tableView, indexPath, item in
-        switch item {
-        case .title(let perfumeDetail):
-          let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailTitleCell.self, for: indexPath)
-          guard let cell = cell else { return UICollectionViewCell()}
-          cell.updateUI(perfumeDetail: perfumeDetail)
-          return cell
-        case .content(let perfumeDetail):
-          let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailContentCell.self, for: indexPath)
-          guard let cell = cell else { return UICollectionViewCell()}
-          cell.updateUI(perfuemDetail: perfumeDetail)
-          cell.onUpdateHeight = { [weak self] in
-            self?.reload()
-          }
-          cell.clickPerfume = { [weak self] perfume in
-            self?.viewModel?.infoInput.perfumeDidTapEvent.accept(perfume)
-          }
-          cell.clickSuggestion = { [weak self] in
-            self?.viewModel?.infoInput.suggestionDidTapEvent.accept(())
-          }
-          cell.setViewModel(viewModel: self?.viewModel)
-          self?.updatePageView = { oldValue, newValue in
-            cell.updatePageView(oldValue: oldValue, newValue: newValue)
-          }
-          return cell
-        }
-      }, configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
-        if kind == UICollectionView.elementKindSectionHeader {
-          let section = collectionView.dequeueReusableHeaderView(PerfumeDetailTabCell.self, for: indexPath)
-          section.clickInfoButton()
-            .subscribe(onNext: {
-              self?.viewModel?.input.tabButtonTapEvent.accept(0)
-            })
-            .disposed(by: section.disposeBag)
-          section.clickReviewButton()
-            .subscribe(onNext: {
-              self?.viewModel?.input.tabButtonTapEvent.accept(1)
-            })
-            .disposed(by: section.disposeBag)
-          self?.updateTabView = { type in
-            section.updateUI(type: type)
-          }
-          return section
-        } else {
-          return UICollectionReusableView()
-        }
-      })
-  }
-  
   private func configureUI() {
     self.configureNavigation()
-    
+    self.configureCollectionView()
+
     self.view.backgroundColor = .white
     self.view.addSubview(self.collectionView)
     self.view.addSubview(self.bottomView)
@@ -211,28 +152,92 @@ extension PerfumeDetailViewController {
     }
   }
   
+  private func configureCollectionView() {
+    let input = self.viewModel.input
+    let childInput = self.viewModel.childInput
+    
+    self.dataSource = DataSource(
+      configureCell: { [weak self] dataSource, tableView, indexPath, item in
+        switch item {
+        case .title(let perfumeDetail):
+          let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailTitleCell.self, for: indexPath)
+          guard let cell = cell else { return UICollectionViewCell()}
+          cell.updateUI(perfumeDetail: perfumeDetail)
+          return cell
+        case .content(let perfumeDetail):
+          let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailContentCell.self, for: indexPath)
+          guard let cell = cell else { return UICollectionViewCell()}
+          cell.updateUI(perfuemDetail: perfumeDetail)
+          cell.onUpdateHeight = {
+            self?.reload()
+          }
+          cell.clickPerfume = { perfume in
+            childInput.perfumeDidTapEvent.accept(perfume.perfumeIdx)
+          }
+          cell.clickSuggestion = {
+            childInput.suggestionDidTapEvent.accept(())
+          }
+          cell.setViewModel(viewModel: self?.viewModel)
+          self?.updatePageView = { oldValue, newValue in
+            cell.updatePageView(oldValue: oldValue, newValue: newValue)
+          }
+          return cell
+        }
+      }, configureSupplementaryView: { [weak self] dataSource, collectionView, kind, indexPath in
+        if kind == UICollectionView.elementKindSectionHeader {
+          let section = collectionView.dequeueReusableHeaderView(PerfumeDetailTabCell.self, for: indexPath)
+          section.clickInfoButton()
+            .subscribe(onNext: {
+              input.tabButtonTapEvent.accept(0)
+            })
+            .disposed(by: section.disposeBag)
+          section.clickReviewButton()
+            .subscribe(onNext: {
+              input.tabButtonTapEvent.accept(1)
+            })
+            .disposed(by: section.disposeBag)
+          self?.updateTabView = { type in
+            section.updateUI(type: type)
+          }
+          return section
+        } else {
+          return UICollectionReusableView()
+        }
+      })
+  }
+  
   private func configureNavigation() {
     self.setBackButton()
   }
   
   private func bindViewModel() {
-    let input = PerfumeDetailViewModel.Input(viewWillAppearEvent: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in },
-                                             viewDidDisappearEvent: self.rx.methodInvoked(#selector(UIViewController.viewDidDisappear)).map { _ in},
-                                             likeButtonDidTapEvent: self.wishView.rx.tapGesture().when(.recognized).asObservable().map { _ in},
-                                             reviewButtonDidTapEvent: self.reviewButton.rx.tap.asObservable())
-    self.viewModel?.transform(input: input, disposeBag: disposeBag)
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
     
-    // TODO: 필드에 직접 접근하는게 맞는건지?
-    let output = self.viewModel?.output
+    self.wishView.rx.tapGesture().when(.recognized).map { _ in}
+      .bind(to: input.likeButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.reviewButton.rx.tap
+      .bind(to: input.reviewButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindContent(output: output)
     self.bindBottomView(output: output)
     self.bindToast(output: output)
   }
   
-  private func bindContent(output: PerfumeDetailViewModel.Output?) {
-    guard let output = output else { return }
-    
-    output.models
+  private func bindContent(output: PerfumeDetailViewModel.Output) {
+    output.perfumeDetailDatas
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
     
@@ -245,15 +250,15 @@ extension PerfumeDetailViewController {
       .disposed(by: self.disposeBag)
   }
   
-  private func bindBottomView(output: PerfumeDetailViewModel.Output?) {
-    output?.perfumeDetail
+  private func bindBottomView(output: PerfumeDetailViewModel.Output) {
+    output.perfumeDetail
       .asDriver()
       .drive(onNext: { [weak self] detail in
         self?.setReviewState(detail: detail)
       })
       .disposed(by: self.disposeBag)
     
-    output?.updatePerfumeLike
+    output.updatePerfumeLike
       .asDriver(onErrorJustReturn: false)
       .drive(onNext: { [weak self] isLike in
         self?.updatePerfumeLike(isLike: isLike)
@@ -261,8 +266,8 @@ extension PerfumeDetailViewController {
       .disposed(by: self.disposeBag)
   }
   
-  private func bindToast(output: PerfumeDetailViewModel.Output?) {
-    output?.toast
+  private func bindToast(output: PerfumeDetailViewModel.Output) {
+    output.showToast
       .asDriver(onErrorJustReturn: ())
       .drive(onNext: { [weak self] in
         self?.view.makeToast("신고 되었습니다.")

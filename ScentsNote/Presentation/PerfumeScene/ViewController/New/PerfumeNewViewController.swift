@@ -56,7 +56,6 @@ final class PerfumeNewViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
-  
   // MARK: - Configure UI
   private func configureCollectionView() {
     let input = self.viewModel.cellInput
