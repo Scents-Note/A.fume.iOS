@@ -12,34 +12,31 @@ final class LabelPopupViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let cancelButtonDidTapEvent: Observable<Void>
-    let confirmButtonDidTapEvent: Observable<Void>
-    let dimmedViewDidTapEvent: Observable<Void>
-  }
-  
-  struct Output {
+    let cancelButtonDidTapEvent = PublishRelay<Void>()
+    let confirmButtonDidTapEvent = PublishRelay<Void>()
+    let dimmedViewDidTapEvent = PublishRelay<Void>()
   }
   
   // MARK: - Vars & Lets
   private weak var coordinator: PopUpCoordinator?
   private weak var delegate: LabelPopupDelegate?
+  private let disposeBag = DisposeBag()
+  let input = Input()
   
   // MARK: - Life Cycle
   init(coordinator: PopUpCoordinator, delegate: LabelPopupDelegate) {
     self.coordinator = coordinator
     self.delegate = delegate
+    
+    self.transform(input: self.input)
   }
   
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
-    
-    self.bindInput(input: input, disposeBag: disposeBag)
-    return output
+  func transform(input: Input) {
+    self.bindInput(input: input)
   }
   
-  private func bindInput(input: Input, disposeBag: DisposeBag) {
-    
+  private func bindInput(input: Input) {
     input.dimmedViewDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.hidePopup()
@@ -58,7 +55,6 @@ final class LabelPopupViewModel {
         self?.coordinator?.hidePopup()
       })
       .disposed(by: disposeBag)
-
   }
 }
 
