@@ -23,7 +23,7 @@ struct PerfumeDetail: Hashable {
   let Keywords: [String]
   let noteType: Int
   let ingredients: [Ingredient]
-  let reviewIdx: Int
+  var reviewIdx: Int
   var similarPerfumes: [Perfume]? = nil
 }
 

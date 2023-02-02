@@ -22,6 +22,7 @@ final class PerfumeDetailViewModel {
     let suggestionDidTapEvent = PublishRelay<Void>()
     let perfumeDidTapEvent = PublishRelay<Int>()
     let reviewCellHeartTapEvent = PublishRelay<Int>()
+    let reviewCellReportTapEvent = PublishRelay<Int>()
   }
   
   struct Output {
@@ -29,7 +30,7 @@ final class PerfumeDetailViewModel {
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
     let reviews = BehaviorRelay<[ReviewInPerfumeDetail]>(value: [])
     let pageViewPosition = BehaviorRelay<Int>(value: 0)
-    let updatePerfumeLike = PublishRelay<Bool>()
+    let isLiked = PublishRelay<Bool>()
     let showToast = PublishRelay<Void>()
   }
   
@@ -66,9 +67,8 @@ final class PerfumeDetailViewModel {
   }
   
   func transform(input: Input, childInput: ChildInput, output: Output) {
-    let loadView = PublishRelay<Void>()
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
-    let updatePerfumeLike = BehaviorRelay<Bool>(value: false)
+    let isLiked = BehaviorRelay<Bool>(value: true)
     let reviews = BehaviorRelay<[ReviewInPerfumeDetail]>(value: [])
     let pageViewPosition = PublishRelay<Int>()
     let showToast = PublishRelay<Void>()
@@ -77,38 +77,39 @@ final class PerfumeDetailViewModel {
                    childInput: childInput,
                    pageViewPosition: pageViewPosition,
                    perfumeDetail: perfumeDetail,
-                   updatePerfumeLike: updatePerfumeLike,
+                   isLiked: isLiked,
                    reviews: reviews,
                    showToast: showToast)
     
     self.bindOutput(output: output,
                     pageViewPosition: pageViewPosition,
                     perfumeDetail: perfumeDetail,
-                    updatePerfumeLike: updatePerfumeLike,
+                    isLiked: isLiked,
                     reviews: reviews,
                     showToast: showToast)
     
     self.fetchDatas(perfumeDetail: perfumeDetail,
-                    reviews: reviews)
+                    reviews: reviews,
+                    isLiked: isLiked)
   }
   
   private func bindInput(input: Input,
                          childInput: ChildInput,
                          pageViewPosition: PublishRelay<Int>,
                          perfumeDetail: BehaviorRelay<PerfumeDetail?>,
-                         updatePerfumeLike: BehaviorRelay<Bool>,
+                         isLiked: BehaviorRelay<Bool>,
                          reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
                          showToast: PublishRelay<Void>) {
     
     input.likeButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.updatePerfumeLike(updatePerfumeLike: updatePerfumeLike)
+        self?.handlePerfumeLike(isLiked: isLiked)
       })
       .disposed(by: self.disposeBag)
     
     input.reviewButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.handleReviewButton(perfumeDetail: perfumeDetail.value!)
+        self?.handleReviewButton()
       })
       .disposed(by: self.disposeBag)
     
@@ -116,6 +117,10 @@ final class PerfumeDetailViewModel {
       .subscribe(onNext: { idx in
         pageViewPosition.accept(idx)
       })
+      .disposed(by: self.disposeBag)
+    
+    input.showToastEvent
+      .bind(to: showToast)
       .disposed(by: self.disposeBag)
     
     childInput.suggestionDidTapEvent
@@ -133,17 +138,22 @@ final class PerfumeDetailViewModel {
     
     childInput.reviewCellHeartTapEvent
       .subscribe(onNext: { [weak self] reviewIdx in
-        self?.updateReviewLike(reviewIdx: reviewIdx, reviews: reviews)
+        self?.handleReviewLike(reviewIdx: reviewIdx, reviews: reviews)
       })
       .disposed(by: self.disposeBag)
     
+    childInput.reviewCellReportTapEvent
+      .subscribe(onNext: { [weak self] reviewIdx in
+        self?.handleReviewReport(reviewIdx: reviewIdx)
+      })
+      .disposed(by: self.disposeBag)
     
   }
   
   private func bindOutput(output: Output,
                           pageViewPosition: PublishRelay<Int>,
                           perfumeDetail: BehaviorRelay<PerfumeDetail?>,
-                          updatePerfumeLike: BehaviorRelay<Bool>,
+                          isLiked: BehaviorRelay<Bool>,
                           reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
                           showToast: PublishRelay<Void>) {
     
@@ -159,8 +169,8 @@ final class PerfumeDetailViewModel {
       })
       .disposed(by: disposeBag)
     
-    updatePerfumeLike
-      .bind(to: output.updatePerfumeLike)
+    isLiked
+      .bind(to: output.isLiked)
       .disposed(by: disposeBag)
     
     reviews
@@ -174,7 +184,8 @@ final class PerfumeDetailViewModel {
   }
   
   private func fetchDatas(perfumeDetail: BehaviorRelay<PerfumeDetail?>,
-                          reviews: BehaviorRelay<[ReviewInPerfumeDetail]>) {
+                          reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
+                          isLiked: BehaviorRelay<Bool>) {
     
     self.isLoggedIn = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn)
     
@@ -182,6 +193,7 @@ final class PerfumeDetailViewModel {
       .subscribe(onNext: { [weak self] perfumeDetailFetched in
         self?.perfumeDetail = perfumeDetailFetched
         perfumeDetail.accept(perfumeDetailFetched)
+        isLiked.accept(perfumeDetailFetched.isLiked)
       })
       .disposed(by: self.disposeBag)
     
@@ -195,7 +207,8 @@ final class PerfumeDetailViewModel {
     
   }
   
-  func runPerfumeReview(perfumeDetail: PerfumeDetail) {
+  func runPerfumeReview() {
+    guard let perfumeDetail = self.perfumeDetail else { return }
     if perfumeDetail.reviewIdx == 0 {
       self.coordinator?.runPerfumeReviewFlow?(perfumeDetail)
     } else {
@@ -203,41 +216,54 @@ final class PerfumeDetailViewModel {
     }
   }
   
-  func updatePerfumeLike(updatePerfumeLike: BehaviorRelay<Bool>) {
-    self.updatePerfumeLikeUseCase.execute(perfumeIdx: self.perfumeIdx)
-      .subscribe(onNext: { _ in
-        let isLiked = updatePerfumeLike.value
-        updatePerfumeLike.accept(!isLiked)
-      }, onError: { [weak self] error in
-        self?.coordinator?.showPopup()
-        Log(error)
-      })
-      .disposed(by: self.disposeBag)
-  }
-  
-  func updateReviewLike(reviewIdx: Int,
-                        reviews: BehaviorRelay<[ReviewInPerfumeDetail]>) {
-    self.updateReviewLikeUseCase.execute(reviewIdx: reviewIdx)
-      .subscribe(onNext: { [weak self] _ in
-        let updated = self?.toggleReviewLike(reviewIdx: reviewIdx, reviews: reviews.value)
-        guard let updated = updated else { return }
-        reviews.accept(updated)
-      }) { [weak self] error in
-        self?.coordinator?.showPopup()
-        Log(error)
-      }
-      .disposed(by: self.disposeBag)
-  }
-  
-  func handleReviewButton(perfumeDetail: PerfumeDetail) {
+  func handlePerfumeLike(isLiked: BehaviorRelay<Bool>) {
     if self.isLoggedIn == true {
-      self.runPerfumeReview(perfumeDetail: perfumeDetail)
+      self.updatePerfumeLike(isLiked: isLiked)
     } else {
       self.coordinator?.showPopup()
     }
   }
   
-  func toggleReviewLike(reviewIdx: Int, reviews: [ReviewInPerfumeDetail]) -> [ReviewInPerfumeDetail] {
+  
+  func updatePerfumeLike(isLiked: BehaviorRelay<Bool>) {
+    self.updatePerfumeLikeUseCase.execute(perfumeIdx: self.perfumeIdx)
+      .subscribe(onNext: { _ in
+        isLiked.accept(!isLiked.value)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: self.disposeBag)
+  }
+  
+  func handleReviewButton() {
+    if self.isLoggedIn == true {
+      self.runPerfumeReview()
+    } else {
+      self.coordinator?.showPopup()
+    }
+  }
+  
+  func handleReviewLike(reviewIdx: Int, reviews: BehaviorRelay<[ReviewInPerfumeDetail]>) {
+    if self.isLoggedIn == true {
+      self.updateReviewLike(reviewIdx: reviewIdx, reviews: reviews)
+    } else {
+      self.coordinator?.showPopup()
+    }
+  }
+  
+  func updateReviewLike(reviewIdx: Int, reviews: BehaviorRelay<[ReviewInPerfumeDetail]>) {
+    self.updateReviewLikeUseCase.execute(reviewIdx: reviewIdx)
+      .subscribe(onNext: { [weak self] _ in
+        let updated = self?.reviewsUpdated(reviewIdx: reviewIdx, reviews: reviews.value)
+        guard let updated = updated else { return }
+        reviews.accept(updated)
+      }) { error in
+        Log(error)
+      }
+      .disposed(by: self.disposeBag)
+  }
+  
+  func reviewsUpdated(reviewIdx: Int, reviews: [ReviewInPerfumeDetail]) -> [ReviewInPerfumeDetail] {
     reviews.map {
       guard $0.idx != reviewIdx else {
         var review = $0
@@ -253,16 +279,12 @@ final class PerfumeDetailViewModel {
     }
   }
   
-  func clickReport(reviewIdx: Int) {
+  func handleReviewReport(reviewIdx: Int) {
     if self.isLoggedIn == true {
       self.coordinator?.showReviewReportPopupViewController(reviewIdx: reviewIdx)
     } else {
       self.coordinator?.showPopup()
     }
-  }
-  
-  func clickHeart(reviewIdx: Int) {
-    self.childInput.reviewCellHeartTapEvent.accept(reviewIdx)
   }
   
   func showToast() {

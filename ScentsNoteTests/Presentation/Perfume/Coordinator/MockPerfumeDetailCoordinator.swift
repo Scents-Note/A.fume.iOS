@@ -12,9 +12,6 @@ final class MockPerfumeDetailCoordinator: PerfumeDetailCoordinator {
   
   var finishFlowCalledCount = 0
   var runOnboardingFlowCalledCount = 0
-  var runPerfumeReviewFlowCalledCount = 0
-  var runPerfumeReviewFlowWithReviewIdxCalledCount = 0
-  var runPerfumeDetailFlowCalledCount = 0
   var showPerfumeDetailViewControllerCalledCount = 0
   var runWebFlowCalledCount = 0
   var showReviewReportPopupViewControllerCalledCount = 0
@@ -45,12 +42,14 @@ final class MockPerfumeDetailCoordinator: PerfumeDetailCoordinator {
     
     self.runPerfumeReviewFlow = { [weak self] perfumeDetail in
       self?.perfumeDetail = perfumeDetail
-      self?.runPerfumeReviewFlowCalledCount += 1
     }
     
     self.runPerfumeReviewFlowWithReviewIdx = { [weak self] reviewIdx in
       self?.reviewIdx = reviewIdx
-      self?.runPerfumeReviewFlowWithReviewIdxCalledCount += 1
+    }
+    
+    self.runPerfumeDetailFlow = { [weak self] perfumeIdx in
+      self?.perfumeIdx = perfumeIdx
     }
   }
   

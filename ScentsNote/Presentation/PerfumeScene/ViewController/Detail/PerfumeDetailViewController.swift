@@ -258,7 +258,7 @@ final class PerfumeDetailViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
     
-    output.updatePerfumeLike
+    output.isLiked
       .asDriver(onErrorJustReturn: false)
       .drive(onNext: { [weak self] isLike in
         self?.updatePerfumeLike(isLike: isLike)
@@ -279,7 +279,6 @@ final class PerfumeDetailViewController: UIViewController {
   private func setReviewState(detail: PerfumeDetail?) {
     guard let detail = detail else { return }
     self.reviewButton.setTitle(detail.reviewIdx != 0 ? "시향 노트 수정" : "시향 노트 쓰기", for: .normal)
-    self.wishHeartView.image = detail.isLiked ? .favoriteActive : .favoriteInactive
   }
   
   private func updatePerfumeLike(isLike: Bool) {
