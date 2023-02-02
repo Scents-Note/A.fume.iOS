@@ -12,9 +12,9 @@ final class LabelPopupViewModel {
   
   // MARK: - Input & Output
   struct Input {
+    let dimmedViewDidTapEvent = PublishRelay<Void>()
     let cancelButtonDidTapEvent = PublishRelay<Void>()
     let confirmButtonDidTapEvent = PublishRelay<Void>()
-    let dimmedViewDidTapEvent = PublishRelay<Void>()
   }
   
   // MARK: - Vars & Lets
