@@ -14,7 +14,11 @@ final class MockLoginUseCase: LoginUseCase {
   
   var state: ResponseState? = .success
   var error: Error = NetworkError.restError(statusCode: 403, description: "이메일 또는 비밀번호가 잘못되었습니다")
+  
+  var excuteCalledCount = 0
   let loginInfo = LoginInfo(userIdx: 0, nickname: "testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
+  
+  let failureLoginInfo =  LoginInfo(userIdx: -1, token: "", refreshToken: "")
   
   func setState(state: ResponseState) {
     self.state = state
@@ -36,6 +40,7 @@ final class MockLoginUseCase: LoginUseCase {
   }
   
   func execute() -> Observable<LoginInfo> {
+    self.excuteCalledCount += 1
     if state == .success {
       return Observable.create { [unowned self] observer in
         observer.onNext(self.loginInfo)
@@ -43,7 +48,7 @@ final class MockLoginUseCase: LoginUseCase {
       }
     } else {
       return Observable.create { [unowned self] observer in
-        observer.onError(self.error)
+        observer.onNext(self.failureLoginInfo)
         return Disposables.create()
       }
     }
