@@ -59,6 +59,13 @@ final class SignUpGenderViewModel {
       })
       .disposed(by: disposeBag)
     
+    input.skipButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
+        self.coordinator?.showSignUpBirthViewController(with: self.signUpInfo)
+      })
+      .disposed(by: disposeBag)
+    
     input.nextButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.signUpInfo.gender = self?.genderDescription

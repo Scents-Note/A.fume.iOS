@@ -64,6 +64,27 @@ final class SignUpBirthViewModel {
       })
       .disposed(by: self.disposeBag)
     
+    input.skipButtonDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        guard let self = self else { return }
+        self.signUpUseCase.execute(signUpInfo: self.signUpInfo)
+          .subscribe { loginInfo in
+            let modified = LoginInfo(userIdx: loginInfo.userIdx,
+                                     nickname: self.signUpInfo.nickname,
+                                     gender: self.signUpInfo.gender,
+                                     birth: self.signUpInfo.birth,
+                                     token: loginInfo.token,
+                                     refreshToken: loginInfo.refreshToken)
+            self.saveLoginInfoUseCase.execute(loginInfo: modified, email: self.signUpInfo.email!, password: self.signUpInfo.password!)
+            self.coordinator?.finishFlow?()
+          } onError: { error in
+            Log(error)
+          }
+          .disposed(by: disposeBag)
+      })
+      .disposed(by: disposeBag)
+    
+    
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.signUp(signUpInfo: self?.signUpInfo, birth: self?.birth)

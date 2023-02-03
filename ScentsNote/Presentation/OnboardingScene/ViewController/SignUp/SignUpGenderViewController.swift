@@ -41,6 +41,11 @@ final class SignUpGenderViewController: UIViewController {
   private let dividerCenter = UIView().then { $0.backgroundColor = .blackText }
   private let dividerBottom = UIView().then { $0.backgroundColor = .blackText }
   
+  private let skipButton = UIButton().then {
+    $0.setTitle("건너뛰기", for: .normal)
+    $0.setTitleColor(.darkGray7d, for: .normal)
+    $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
+  }
   private let nextButton = NextButton(frame: .zero, title: "다음")
 
   // MARK: - Life Cycle
@@ -122,7 +127,13 @@ final class SignUpGenderViewController: UIViewController {
       $0.top.equalTo(self.womanButton.snp.bottom).offset(8)
     }
     
+    self.view.addSubview(self.skipButton)
     self.view.addSubview(self.nextButton)
+    self.skipButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(self.nextButton.snp.top).offset(40)
+    }
+    
     self.nextButton.snp.makeConstraints {
       $0.left.right.equalToSuperview()
       $0.height.equalTo(86)
@@ -161,6 +172,7 @@ final class SignUpGenderViewController: UIViewController {
       .asDriver()
       .drive(onNext: { [weak self] state in
         self?.updateGenderSection(state: state)
+        self?.updateSkipButton(state: state)
         self?.updateNextButton(state: state)
       })
       .disposed(by: disposeBag)
@@ -174,8 +186,22 @@ final class SignUpGenderViewController: UIViewController {
     self.womanLabel.textColor = state == .woman ? .blackText : .grayCd
   }
   
+  private func updateSkipButton(state: GenderState) {
+    self.skipButton.snp.updateConstraints {
+      if state == .none {
+        $0.bottom.equalTo(self.nextButton.snp.top).offset(40)
+      } else {
+        $0.bottom.equalTo(self.nextButton.snp.top).offset(-20)
+      }
+    }
+  }
+  
   private func updateNextButton(state: GenderState) {
     self.nextButton.isHidden = state == .none
   }
   
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 88bdc3abe9911c139c4c85b2cfc7e442188d5c0c
 }
