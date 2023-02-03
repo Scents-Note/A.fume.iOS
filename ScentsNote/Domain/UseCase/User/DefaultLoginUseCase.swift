@@ -29,6 +29,8 @@ final class DefaultLoginUseCase: LoginUseCase {
     if isLoggedIn {
       let email = self.userRepository.fetchUserDefaults(key: UserDefaultKey.email) ?? ""
       let password = self.userRepository.fetchUserDefaults(key: UserDefaultKey.password) ?? ""
+      Log(email)
+      Log(password)
       return self.userRepository.login(email: email, password: password)
     } else {
       return Observable.just(LoginInfo(userIdx: -1, token: "", refreshToken: ""))

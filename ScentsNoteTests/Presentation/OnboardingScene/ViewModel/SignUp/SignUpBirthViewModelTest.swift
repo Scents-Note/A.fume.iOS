@@ -90,7 +90,7 @@ final class SignUpBirthViewModelTest: XCTestCase {
     
 
     // When
-    self.viewModel.birthPopupDismiss(with: 1995)
+    self.viewModel.confirm(with: 1995)
     
     self.output.birth
       .bind(to: birthObserver)

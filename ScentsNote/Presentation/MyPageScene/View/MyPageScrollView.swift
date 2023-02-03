@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Then
 import SnapKit
 import RxRelay
 
@@ -30,17 +31,17 @@ final class MyPageScrollView: UIScrollView {
     let width = self.frame.width
     let height = self.frame.height
     
-    self.contentSize = CGSize(width: width * CGFloat(2), height: 0)
+    self.contentSize = CGSize(width: width * CGFloat(2), height: height)
     self.myReviewView.frame = CGRect(x: width * CGFloat(0), y: 0, width: width, height: height)
     self.myWishView.frame = CGRect(x: width * CGFloat(1), y: 0, width: width, height: height)
+    
+    self.addSubview(self.myReviewView)
+    self.addSubview(self.myWishView)
   }
   
   private func configureUI() {
     self.isPagingEnabled = true
     self.showsHorizontalScrollIndicator = false
-    
-    self.addSubview(self.myReviewView)
-    self.addSubview(self.myWishView)
   }
   
   

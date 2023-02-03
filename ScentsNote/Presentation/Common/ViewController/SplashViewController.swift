@@ -33,6 +33,7 @@ final class SplashViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
+    self.login()
   }
   
   private func configureUI() {
@@ -48,5 +49,9 @@ final class SplashViewController: UIViewController {
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-22)
       $0.centerX.equalToSuperview()
     }
+  }
+  
+  private func login() {
+    self.viewModel.login()
   }
 }

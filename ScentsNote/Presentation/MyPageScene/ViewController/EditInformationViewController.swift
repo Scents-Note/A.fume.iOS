@@ -215,12 +215,12 @@ final class EditInformationViewController: UIViewController {
     self.nicknameWarningLabel.text = state.nicknameDescription
   }
   
-  private func updateGender(gender: String) {
+  private func updateGender(gender: String?) {
     self.genderView.updateGenderSection(gender: gender)
   }
   
-  private func updateBirth(birth: Int) {
-    self.birthButton.setTitle("\(birth)", for: .normal)
+  private func updateBirth(birth: Int?) {
+    self.birthButton.setTitle("\(birth ?? 2023)", for: .normal)
   }
   
   private func updateDoneButton(canDone: Bool) {

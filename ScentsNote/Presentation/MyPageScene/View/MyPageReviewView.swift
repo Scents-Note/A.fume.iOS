@@ -112,6 +112,12 @@ final class MyPageReviewView: UIView {
   
   // MARK: - Bind ViewModel
   func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  func bindInput() {
+    
     let input = self.viewModel.scrollInput
     self.loginButton.rx.tap.asObservable()
       .subscribe(onNext: {
@@ -119,23 +125,20 @@ final class MyPageReviewView: UIView {
       })
       .disposed(by: self.disposeBag)
     
+  }
+  
+  func bindOutput() {
     let output = self.viewModel.output
 
-    output.loginState
-      .asDriver()
-      .drive(onNext: { [weak self] isLoggedIn in
+    Observable.combineLatest(output.loginState, output.reviews)
+      .asDriver(onErrorJustReturn: (false, []))
+      .drive(onNext: { [weak self] isLoggedIn, reviews in
         self?.collectionView.isHidden = !isLoggedIn
-        self?.emptyView.isHidden = !isLoggedIn
+        self?.emptyView.isHidden = !isLoggedIn || !reviews.isEmpty
         self?.loginView.isHidden = isLoggedIn
       })
       .disposed(by: self.disposeBag)
 
-    output.reviews
-      .subscribe(onNext: { [weak self] reviews in
-        self?.emptyView.isHidden = !reviews.isEmpty
-      })
-      .disposed(by: self.disposeBag)
-    
     output.reviews
       .bind(to: self.collectionView.rx.items(cellIdentifier: "MyPageReviewGroupCell", cellType: MyPageReviewGroupCell.self)) { _, reviews, cell in
         cell.updateUI(reviews: reviews)

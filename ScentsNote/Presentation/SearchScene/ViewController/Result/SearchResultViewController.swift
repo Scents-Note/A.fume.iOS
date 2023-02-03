@@ -47,7 +47,7 @@ final class SearchResultViewController: UIViewController {
   
   private let emptyLabel = UILabel().then {
     $0.text = "검색 결과가 없습니다.\n해당 향수의 정보를 보고 싶다면\n어퓸에게 제보해주세요."
-    $0.textColor = .lightGray
+    $0.textColor = .lightGray185
     $0.font = .systemFont(ofSize: 16, weight: .regular)
     $0.textAlignment = .center
     $0.numberOfLines = 3

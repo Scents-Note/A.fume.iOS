@@ -41,8 +41,8 @@ final class HomeViewModel {
   
   var isLoggedIn: Bool?
   var oldIsLoggedIn: Bool?
-  var birth = 1990
-  var gender = "남"
+  var birth: Int?
+  var gender: String?
   var nickname = ""
   
   init(coordinator: HomeCoordinator,
@@ -304,8 +304,8 @@ final class HomeViewModel {
   
   private func setUserInfo() {
     self.isLoggedIn = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
-    self.birth = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.birth) ?? 1990
-    self.gender = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.gender) ?? ""
+    self.birth = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.birth)
+    self.gender = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.gender)
     self.nickname = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.nickname) ?? ""
   }
   
@@ -319,11 +319,12 @@ final class HomeViewModel {
   
   private func getPopularContent(isLoggedIn: Bool?, birth: Int?, gender: String?, nickname: String?) -> HomeDataSection.Content {
     if isLoggedIn == true {
-      guard let birth = birth, let gender = gender, let nickname = nickname else { return .default }
+      guard let nickname = nickname else { return .default }
       let year = Calendar.current.component(.year, from: Date())
-      let age = (year - birth + 1) / 10 * 10
-      let modifiedGender = gender == "MAN" ? "남성" : "여성"
-      return HomeDataSection.Content(title: "\(age)대 \(modifiedGender)을 위한\n향수 추천", content: "\(nickname)님 연령대 분들에게 인기 많은 향수 입니다.")
+      let genderModified = gender == nil ? "여성" : gender == "MAN" ? "남성" : "여성"
+      let ageModified = birth == nil ? 20 : (year - birth! + 1) / 10 * 10
+      let contentModified = birth != nil && gender != nil ? "\(nickname)님 연령대 분들에게 인기 많은 향수 입니다." : "설정에서 연령과 성별을 선택하면 더 잘 맞는 향수를 보여드려요."
+      return HomeDataSection.Content(title: "\(ageModified)대 \(genderModified)을 위한\n향수 추천", content: contentModified)
     }
     return HomeDataSection.Content(title: "20대 여성이\n많이 찾는 향수", content: "설정에서 연령과 성별을 선택하면 더 잘 맞는 향수를 보여드려요.")
     

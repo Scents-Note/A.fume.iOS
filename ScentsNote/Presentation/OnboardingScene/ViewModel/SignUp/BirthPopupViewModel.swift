@@ -42,7 +42,7 @@ final class BirthPopupViewModel {
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.delegate?.birthPopupDismiss(with: output.birth.value ?? 1990)
+        self?.delegate?.confirm(with: output.birth.value ?? 1990)
         self?.birthPopUpCoordinator?.hideBirthPopupViewController()
       })
       .disposed(by: disposeBag)

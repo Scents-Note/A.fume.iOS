@@ -38,7 +38,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     coordinator.finishFlow = { [unowned self] in
       self.removeDependency(coordinator)
     }
-    coordinator.runOnboardingFlow = runOnboardingFlow
+    coordinator.runOnboardingFlow = self.runOnboardingFlow
     coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
       self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
     }
@@ -54,6 +54,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   func runPerfumeNewFlow() {
     let coordinator = DefaultPerfumeNewCoordinator(self.navigationController)
+    coordinator.runOnboardingFlow = self.runOnboardingFlow
     coordinator.runPerfumeDetailFlow = { perfumeIdx in
       self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
     }

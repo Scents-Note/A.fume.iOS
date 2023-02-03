@@ -250,7 +250,7 @@ final class EditInformationViewModelTest: XCTestCase {
     let birthObserver = self.scheduler.createObserver(Int.self)
     
     self.scheduler.scheduleAt(10) {
-      self.viewModel.birthPopupDismiss(with: 1990)
+      self.viewModel.confirm(with: 1990)
     }
     
     // When

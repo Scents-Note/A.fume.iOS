@@ -78,7 +78,13 @@ final class SignUpBirthViewController: UIViewController {
       $0.height.equalTo(48)
     }
     
+    self.view.addSubview(self.skipButton)
     self.view.addSubview(self.doneButton)
+    self.skipButton.snp.makeConstraints {
+      $0.centerX.equalToSuperview()
+      $0.bottom.equalTo(self.doneButton.snp.top).offset(-20)
+    }
+    
     self.doneButton.snp.makeConstraints {
       $0.left.right.equalToSuperview()
       $0.height.equalTo(86)
@@ -99,6 +105,10 @@ final class SignUpBirthViewController: UIViewController {
       .bind(to: input.birthButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     
+    self.skipButton.rx.tap
+      .bind(to: input.skipButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
     self.doneButton.rx.tap
       .bind(to: input.doneButtonDidTapEvent)
       .disposed(by: self.disposeBag)
@@ -114,6 +124,7 @@ final class SignUpBirthViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
   }
+  
 }
 
 

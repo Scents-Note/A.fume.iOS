@@ -118,7 +118,6 @@ final class SearchViewModel {
     perfumes.map {
       guard $0.perfumeIdx != perfumeIdx else {
         var updatePerfume = $0
-        Log(!updatePerfume.isLiked)
         updatePerfume.isLiked = !updatePerfume.isLiked
         return updatePerfume
       }

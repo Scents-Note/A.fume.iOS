@@ -13,6 +13,7 @@ final class SignUpBirthViewModel {
   // MARK: - Input & Output
   struct Input {
     let birthButtonDidTapEvent = PublishRelay<Void>()
+    let skipButtonDidTapEvent = PublishRelay<Void>()
     let doneButtonDidTapEvent = PublishRelay<Void>()
   }
   
@@ -66,23 +67,9 @@ final class SignUpBirthViewModel {
     
     input.skipButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.signUpUseCase.execute(signUpInfo: self.signUpInfo)
-          .subscribe { loginInfo in
-            let modified = LoginInfo(userIdx: loginInfo.userIdx,
-                                     nickname: self.signUpInfo.nickname,
-                                     gender: self.signUpInfo.gender,
-                                     birth: self.signUpInfo.birth,
-                                     token: loginInfo.token,
-                                     refreshToken: loginInfo.refreshToken)
-            self.saveLoginInfoUseCase.execute(loginInfo: modified, email: self.signUpInfo.email!, password: self.signUpInfo.password!)
-            self.coordinator?.finishFlow?()
-          } onError: { error in
-            Log(error)
-          }
-          .disposed(by: disposeBag)
+        self?.signUp(signUpInfo: self?.signUpInfo, birth: nil)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     
     input.doneButtonDidTapEvent
@@ -106,7 +93,7 @@ final class SignUpBirthViewModel {
   }
   
   private func signUp(signUpInfo: SignUpInfo?, birth: Int?) {
-    guard let signUpInfo = signUpInfo, let birth = birth else { return }
+    guard let signUpInfo = signUpInfo else { return }
     
     var updated = signUpInfo
     updated.birth = birth
@@ -123,12 +110,12 @@ final class SignUpBirthViewModel {
       } onError: { error in
         Log(error)
       }
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
 }
 
 extension SignUpBirthViewModel: BirthPopupDismissDelegate {
-  func birthPopupDismiss(with birth: Int) {
+  func confirm(with birth: Int) {
     self.popupInput.birthDidPickedEvent.accept(birth)
   }
 }

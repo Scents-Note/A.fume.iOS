@@ -9,14 +9,14 @@ import Foundation
 
 struct EditUserInfo: Equatable {
   var nickname: String
-  var gender: String
-  var birth: Int
+  var gender: String?
+  var birth: Int?
   
   static let `default` = EditUserInfo(nickname: "", gender: "", birth: 0)
 }
 
 extension EditUserInfo {
   func toEntity() -> EditUserInfoRequestDTO {
-    EditUserInfoRequestDTO(email: nil, nickname: nickname, gender: gender, birth: birth, grade: "USER")
+    return EditUserInfoRequestDTO(email: nil, nickname: nickname, gender: gender, birth: birth, grade: "USER")
   }
 }

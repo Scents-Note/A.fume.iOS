@@ -157,6 +157,10 @@ final class SignUpGenderViewController: UIViewController {
       .bind(to: input.womanButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     
+    self.skipButton.rx.tap
+      .bind(to: input.skipButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
     self.nextButton.rx.tap
       .bind(to: input.nextButtonDidTapEvent)
       .disposed(by: self.disposeBag)
@@ -199,9 +203,4 @@ final class SignUpGenderViewController: UIViewController {
   private func updateNextButton(state: GenderState) {
     self.nextButton.isHidden = state == .none
   }
-  
-<<<<<<< HEAD
-=======
-  
->>>>>>> 88bdc3abe9911c139c4c85b2cfc7e442188d5c0c
 }

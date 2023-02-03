@@ -9,6 +9,8 @@ import UIKit
 
 final class DefaultPerfumeNewCoordinator: BaseCoordinator, PerfumeNewCoordinator {
   
+  var runOnboardingFlow: (() -> Void)?
+  
   var runPerfumeDetailFlow: ((Int) -> Void)?
 
   var perfumeNewViewController: PerfumeNewViewController
@@ -21,7 +23,8 @@ final class DefaultPerfumeNewCoordinator: BaseCoordinator, PerfumeNewCoordinator
   override func start() {
     self.perfumeNewViewController.viewModel = PerfumeNewViewModel(
       coordinator: self,
-      fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
+      fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
     )
     self.perfumeNewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeNewViewController, animated: true)
@@ -36,4 +39,22 @@ final class DefaultPerfumeNewCoordinator: BaseCoordinator, PerfumeNewCoordinator
     coordinator.start(with: url)
     self.addDependency(coordinator)
   }
+  
+  func showPopup() {
+    let vc = LabelPopupViewController().then {
+      $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
+      $0.setConfirmLabel(content: "로그인 하기")
+    }
+    vc.viewModel = LabelPopupViewModel(coordinator: self,
+                                       delegate: self.perfumeNewViewController.viewModel!)
+    
+    vc.modalTransitionStyle = .crossDissolve
+    vc.modalPresentationStyle = .overCurrentContext
+    self.navigationController.present(vc, animated: false)
+  }
+  
+  func hidePopup() {
+    self.navigationController.dismiss(animated: false)
+  }
+  
 }

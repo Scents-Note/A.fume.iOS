@@ -25,7 +25,7 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
       addReviewUseCase: DefaultAddReviewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
       fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared)
     )
-    self.navigationController.hidesBottomBarWhenPushed = true
+    self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
   }
   

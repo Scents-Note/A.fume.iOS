@@ -43,7 +43,7 @@ final class MyPageWishView: UIView {
     $0.backgroundColor = .blackText
   }
   
-  private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.wishLayout).then {
+  private lazy var collectionView = DynamicCollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.wishLayout).then {
     $0.register(MyPageWishCell.self)
   }
   
@@ -125,18 +125,12 @@ final class MyPageWishView: UIView {
   }
   
   private func bindPerfumes(output: MyPageViewModel.Output) {
-    output.loginState
-      .asDriver()
-      .drive(onNext: { [weak self] isLoggedIn in
+    Observable.combineLatest(output.loginState, output.perfumes)
+      .asDriver(onErrorJustReturn: (false, []))
+      .drive(onNext: { [weak self] isLoggedIn, perfumes in
         self?.collectionView.isHidden = !isLoggedIn
-        self?.emptyView.isHidden = !isLoggedIn
+        self?.emptyView.isHidden = !isLoggedIn || !perfumes.isEmpty
         self?.loginView.isHidden = isLoggedIn
-      })
-      .disposed(by: self.disposeBag)
-    
-    output.perfumes
-      .subscribe(onNext: { [weak self] perfumes in
-        self?.emptyView.isHidden = !perfumes.isEmpty
       })
       .disposed(by: self.disposeBag)
     

@@ -62,9 +62,9 @@ final class MyPageWishCell: UICollectionViewCell {
   func configureUI() {
     self.contentView.addSubview(self.imageContainerView)
     self.imageContainerView.snp.makeConstraints {
-      $0.centerY.equalToSuperview()
+      $0.top.equalToSuperview().offset(16)
       $0.left.equalToSuperview().offset(16)
-      $0.width.height.equalTo(86)
+      $0.width.equalTo(86)
     }
     
     self.imageContainerView.addSubview(self.imageView)

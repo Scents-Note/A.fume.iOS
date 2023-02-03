@@ -50,6 +50,7 @@ final class DefaultUserRepository: UserRepository {
   
   func updateUserInfo(userIdx: Int, userInfo: EditUserInfo) -> Observable<EditUserInfo> {
     let requestDTO = userInfo.toEntity()
+    Log(requestDTO)
     return self.userService.updateUserInfo(userIdx: userIdx, userInfo: requestDTO)
       .map { $0.toDomain() }
   }

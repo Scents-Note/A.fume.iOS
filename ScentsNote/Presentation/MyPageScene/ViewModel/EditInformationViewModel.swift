@@ -28,8 +28,8 @@ final class EditInformationViewModel {
   struct Output {
     let nickname = BehaviorRelay<String>(value: "")
     let nicknameState = BehaviorRelay<InputState>(value: .empty)
-    let gender = BehaviorRelay<String>(value: "")
-    let birth = BehaviorRelay<Int>(value: 1990)
+    let gender = BehaviorRelay<String?>(value: nil)
+    let birth = BehaviorRelay<Int?>(value: nil)
     let canDone = BehaviorRelay<Bool>(value: false)
   }
   
@@ -66,8 +66,8 @@ final class EditInformationViewModel {
   func transform(input: Input, popupInput: PopupInput, output: Output) {
     let nickname = PublishRelay<String>()
     let nicknameState = PublishRelay<InputState>()
-    let gender = PublishRelay<String>()
-    let birth = PublishRelay<Int>()
+    let gender = PublishRelay<String?>()
+    let birth = PublishRelay<Int?>()
     let canDone = PublishRelay<Bool>()
     
     self.bindInput(input: input,
@@ -95,11 +95,13 @@ final class EditInformationViewModel {
   private func bindInput(input: Input,
                          nickname: PublishRelay<String>,
                          nicknameState: PublishRelay<InputState>,
-                         gender: PublishRelay<String>,
+                         gender: PublishRelay<String?>,
                          canDone: PublishRelay<Bool>) {
     
     input.nicknameTextFieldDidEditEvent
+      .skip(1)
       .subscribe(onNext: { [weak self] text in
+        Log(text)
         self?.newUserInfo.nickname = text
         self?.updateNicknameState(nickname: text, nicknameState: nicknameState)
       })
@@ -146,7 +148,7 @@ final class EditInformationViewModel {
   }
   
   private func bindPopupInput(input: PopupInput,
-                              birth: PublishRelay<Int>) {
+                              birth: PublishRelay<Int?>) {
     input.birthDidEditEvent
       .subscribe(onNext: { [weak self] year in
         self?.newUserInfo.birth = year
@@ -159,8 +161,8 @@ final class EditInformationViewModel {
   private func bindOutput(output: Output,
                           nickname: PublishRelay<String>,
                           nicknameState: PublishRelay<InputState>,
-                          gender: PublishRelay<String>,
-                          birth: PublishRelay<Int>,
+                          gender: PublishRelay<String?>,
+                          birth: PublishRelay<Int?>,
                           canDone: PublishRelay<Bool>) {
     nickname
       .bind(to: output.nickname)
@@ -180,7 +182,6 @@ final class EditInformationViewModel {
     
     Observable.combineLatest(nicknameState, gender, birth)
       .subscribe(onNext: { [weak self] nicknameState, gender, birth in
-        Log(gender)
         guard let new = self?.newUserInfo, let old = self?.oldUserInfo else { return }
         if new == old {
           output.canDone.accept(false)
@@ -197,15 +198,16 @@ final class EditInformationViewModel {
   
   private func fetchDatas(nickname: PublishRelay<String>,
                           nicknameState: PublishRelay<InputState>,
-                          gender: PublishRelay<String>,
-                          birth: PublishRelay<Int>) {
+                          gender: PublishRelay<String?>,
+                          birth: PublishRelay<Int?>) {
     
     self.fetchUserInfoForEditUseCase.execute()
       .subscribe(onNext: { [weak self] userInfo in
+        Log(userInfo)
         self?.oldUserInfo = userInfo
         self?.newUserInfo = userInfo
         nickname.accept(userInfo.nickname)
-        nicknameState.accept(.empty)
+        nicknameState.accept(.success)
         gender.accept(userInfo.gender)
         birth.accept(userInfo.birth)
       })
@@ -243,17 +245,16 @@ final class EditInformationViewModel {
       .subscribe(onNext: { [weak self] result in
         self?.saveEditUserInfoUseCase.execute(userInfo: result)
         self?.coordinator?.finishFlow?()
+      }, onError: { error in
+        Log(userInfo)
+        Log(error)
       })
       .disposed(by: disposeBag)
   }
 }
 
 extension EditInformationViewModel: BirthPopupDismissDelegate {
-  func birthPopupDismiss(with birth: Int) {
-    self.updateBirth(birth: birth)
-  }
-  
-  func updateBirth(birth: Int) {
+  func confirm(with birth: Int) {
     self.popupInput.birthDidEditEvent.accept(birth)
   }
 }

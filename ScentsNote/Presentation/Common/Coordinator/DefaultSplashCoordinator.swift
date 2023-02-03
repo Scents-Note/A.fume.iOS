@@ -30,7 +30,8 @@ final class DefaultSplashCoordinator: BaseCoordinator, SplashCoordinator {
                                                           logoutUseCase: DefaultLogoutUseCase(userRepository: DefaultUserRepository.shared),
                                                           saveLoginInfoUseCase: DefaultSaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared)
     )
-    self.navigationController.pushViewController(splashViewController, animated: false)
+    self.navigationController.pushViewController(self.splashViewController, animated: false)
+    
   }
   
 }

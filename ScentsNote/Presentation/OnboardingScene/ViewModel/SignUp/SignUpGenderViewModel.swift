@@ -14,6 +14,7 @@ final class SignUpGenderViewModel {
   struct Input {
     let manButtonDidTapEvent = PublishRelay<Void>()
     let womanButtonDidTapEvent = PublishRelay<Void>()
+    let skipButtonDidTapEvent = PublishRelay<Void>()
     let nextButtonDidTapEvent = PublishRelay<Void>()
   }
   
@@ -61,8 +62,7 @@ final class SignUpGenderViewModel {
     
     input.skipButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.coordinator?.showSignUpBirthViewController(with: self.signUpInfo)
+        self?.coordinator?.showSignUpBirthViewController(with: self?.signUpInfo)
       })
       .disposed(by: disposeBag)
     

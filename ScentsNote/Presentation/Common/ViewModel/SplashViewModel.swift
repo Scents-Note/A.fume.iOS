@@ -28,8 +28,6 @@ final class SplashViewModel {
     self.loginUseCase = loginUseCase
     self.logoutUseCase = logoutUseCase
     self.saveLoginInfoUseCase = saveLoginInfoUseCase
-    
-    self.login()
   }
   
   // TODO: - 로그인 로직 뺄 것(차후 업데이트)
@@ -40,7 +38,8 @@ final class SplashViewModel {
           self?.saveLoginInfoUseCase.execute(loginInfo: loginInfo, email: nil, password: nil)
         }
         self?.coordinator?.finishFlow?()
-      }, onError: { error in
+      }, onError: { [weak self] error in
+        self?.coordinator?.finishFlow?()
         Log(error)
       })
       .disposed(by: self.disposeBag)
