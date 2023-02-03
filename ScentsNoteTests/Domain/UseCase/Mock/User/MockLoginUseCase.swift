@@ -16,7 +16,7 @@ final class MockLoginUseCase: LoginUseCase {
   var error: Error = NetworkError.restError(statusCode: 403, description: "이메일 또는 비밀번호가 잘못되었습니다")
   
   var excuteCalledCount = 0
-  let loginInfo = LoginInfo(userIdx: 0, nickname: "testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
+  let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
   
   let failureLoginInfo =  LoginInfo(userIdx: -1, token: "", refreshToken: "")
   

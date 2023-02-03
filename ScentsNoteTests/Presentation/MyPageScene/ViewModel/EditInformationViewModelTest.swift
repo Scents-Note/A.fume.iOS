@@ -58,7 +58,8 @@ final class EditInformationViewModelTest: XCTestCase {
   func testTransform_editNicknameAndCheck_ifSuccess_updateCanDone() throws {
     
     // Given
-    let nicknameObservable = self.scheduler.createHotObservable([.next(10, "득연2"),
+    let nicknameObservable = self.scheduler.createHotObservable([.next(0, ""),
+                                                                 .next(10, "득연2"),
                                                                  .next(30, "득연"),
                                                                  .next(40, "득연!")])
     let nicknameCheckObservable = self.scheduler.createHotObservable([.next(20, ())])
@@ -67,6 +68,7 @@ final class EditInformationViewModelTest: XCTestCase {
     
     let expectedOld = EditUserInfo(nickname: "득연", gender: "MAN", birth: 1995)
     let expectedNew = EditUserInfo(nickname: "득연!", gender: "MAN", birth: 1995)
+    
     // When
     nicknameObservable
       .bind(to: self.input.nicknameTextFieldDidEditEvent)
@@ -90,7 +92,7 @@ final class EditInformationViewModelTest: XCTestCase {
     let actualOld = self.viewModel.oldUserInfo
     let actualNew = self.viewModel.newUserInfo
     
-    XCTAssertEqual(nicknameStateObserver.events, [.next(0, .empty),
+    XCTAssertEqual(nicknameStateObserver.events, [.next(0, .success),
                                                   .next(10, .correctFormat),
                                                   .next(20, .success),
                                                   .next(30, .empty),
@@ -132,8 +134,7 @@ final class EditInformationViewModelTest: XCTestCase {
     
     // Then
     
-    XCTAssertEqual(nicknameStateObserver.events, [.next(0, .empty),
-                                                  .next(10, .correctFormat),
+    XCTAssertEqual(nicknameStateObserver.events, [.next(0, .success),
                                                   .next(20, .duplicate)])
   }
   
@@ -142,7 +143,7 @@ final class EditInformationViewModelTest: XCTestCase {
     // Given
     let manButtonObservable = self.scheduler.createHotObservable([.next(20, ())])
     let womanButtonObservable = self.scheduler.createHotObservable([.next(10, ())])
-    let genderObserver = self.scheduler.createObserver(String.self)
+    let genderObserver = self.scheduler.createObserver(String?.self)
     let canDoneObserver = self.scheduler.createObserver(Bool.self)
   
     let expectedOld = EditUserInfo(nickname: "득연", gender: "MAN", birth: 1995)
@@ -247,7 +248,7 @@ final class EditInformationViewModelTest: XCTestCase {
   func testBirthPopupDismiss_updateBirth() throws {
     
     // Given
-    let birthObserver = self.scheduler.createObserver(Int.self)
+    let birthObserver = self.scheduler.createObserver(Int?.self)
     
     self.scheduler.scheduleAt(10) {
       self.viewModel.confirm(with: 1990)

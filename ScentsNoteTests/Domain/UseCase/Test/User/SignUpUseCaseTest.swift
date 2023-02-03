@@ -34,7 +34,7 @@ final class SignUpUseCaseTest: XCTestCase {
     // Given
     let signUpInfo = SignUpInfo()
     let expected = true
-    let loginInfo = LoginInfo(userIdx: 0, nickname: "Testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
+    let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
     
     // When
     let signUpInfoObserver = self.scheduler.createObserver(LoginInfo.self)

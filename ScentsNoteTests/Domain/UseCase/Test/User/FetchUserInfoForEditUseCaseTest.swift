@@ -32,7 +32,7 @@ final class FetchUserInfoForEditUseCaseTest: XCTestCase {
   func testExecute_fetchUserInfoForEdit() throws {
     
     // Given
-    let editUserInfo = EditUserInfo(nickname: "test", gender: "test", birth: 1990)
+    let editUserInfo = EditUserInfo(nickname: "득연", gender: "MAN", birth: 1995)
     
     // When
     let perfumesObserver = self.scheduler.createObserver(EditUserInfo.self)

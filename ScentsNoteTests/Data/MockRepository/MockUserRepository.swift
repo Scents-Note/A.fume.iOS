@@ -11,7 +11,7 @@ import RxSwift
 final class MockUserRepository: UserRepository {
   
   func login(email: String, password: String) -> Observable<LoginInfo> {
-    let loginInfo = LoginInfo(userIdx: 0, nickname: "Testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
+    let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
     return Observable.create { observer in
       observer.onNext(loginInfo)
       return Disposables.create()
@@ -19,7 +19,7 @@ final class MockUserRepository: UserRepository {
   }
   
   func signUp(signUpInfo: ScentsNote.SignUpInfo) -> Observable<LoginInfo> {
-    let loginInfo = LoginInfo(userIdx: 0, nickname: "Testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
+    let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
     return Observable.create { observer in
       observer.onNext(loginInfo)
       return Disposables.create()
@@ -90,8 +90,23 @@ final class MockUserRepository: UserRepository {
   }
   
   func fetchUserDefaults<T>(key: String) -> T? {
-    let value = "test"
-    return value as? T
+    let gender = "MAN"
+    let nickname = "득연"
+    let birth = 1995
+    let isLoggedIn = true
+    
+    switch key {
+    case UserDefaultKey.gender:
+      return gender as? T
+    case UserDefaultKey.nickname:
+      return nickname as? T
+    case UserDefaultKey.birth:
+      return birth as? T
+    case UserDefaultKey.isLoggedIn:
+      return isLoggedIn as? T
+    default:
+      return nil
+    }
   }
   
   func setUserDefault(key: String, value: Any?) {}

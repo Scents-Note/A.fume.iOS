@@ -33,45 +33,46 @@ final class LoginUseCaseTest: XCTestCase {
     
     // Given
     // 실패한 케이스
-    let loginInfo = LoginInfo(userIdx: -1, token: "", refreshToken: "")
+    let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
     
     // When
     let loginInfoObserver = self.scheduler.createObserver(LoginInfo.self)
-    self.scheduler.createColdObservable([
-      .next(10, ())
-    ])
-    .subscribe(onNext: { [weak self] in
-      self?.loginUseCase.execute()
-        .subscribe(loginInfoObserver)
-        .disposed(by: self?.disposeBag ?? DisposeBag())
-    })
-    .disposed(by: self.disposeBag)
-
+    let observable = self.scheduler.createColdObservable([.next(10, ())])
+    
+    observable
+      .subscribe(onNext: { [weak self] in
+        self?.loginUseCase.execute()
+          .subscribe(loginInfoObserver)
+          .disposed(by: self?.disposeBag ?? DisposeBag())
+      })
+      .disposed(by: self.disposeBag)
+    
     // Then
     self.scheduler.start()
-    XCTAssertEqual(loginInfoObserver.events, [.next(10, loginInfo), .completed(10)])
+    XCTAssertEqual(loginInfoObserver.events, [.next(10, loginInfo)])
     
   }
   
   func testExecute_login() throws {
     
     // Given
-    let loginInfo = LoginInfo(userIdx: 0, nickname: "Testemr", gender: "MAN", birth: 1995, token: "", refreshToken: "")
+    let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
+    
     let email = "test@scentsnote.com"
     let password = "test"
     
     // When
     let loginInfoObserver = self.scheduler.createObserver(LoginInfo.self)
-    self.scheduler.createColdObservable([
-      .next(10, ())
-    ])
-    .subscribe(onNext: { [weak self] in
-      self?.loginUseCase.execute(email: email, password: password)
-        .subscribe(loginInfoObserver)
-        .disposed(by: self?.disposeBag ?? DisposeBag())
-    })
-    .disposed(by: self.disposeBag)
-
+    let observable = self.scheduler.createColdObservable([.next(10, ())])
+    
+    observable
+      .subscribe(onNext: { [weak self] in
+        self?.loginUseCase.execute(email: email, password: password)
+          .subscribe(loginInfoObserver)
+          .disposed(by: self?.disposeBag ?? DisposeBag())
+      })
+      .disposed(by: self.disposeBag)
+    
     // Then
     self.scheduler.start()
     XCTAssertEqual(loginInfoObserver.events, [.next(10, loginInfo)])

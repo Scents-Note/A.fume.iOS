@@ -43,10 +43,11 @@ final class SplashViewModelTest: XCTestCase {
     
     // Given
     // TODO: 이런 경우에 그냥 ViewModel을 분리해서 Test를 하는 것이 더 깔끔한지?
-    let _ = SplashViewModel(coordinator: self.coordinator,
+    let viewModel = SplashViewModel(coordinator: self.coordinator,
                                     loginUseCase: self.loginUseCase,
                                     logoutUseCase: self.logoutUseCase,
                                     saveLoginInfoUseCase: self.saveLoginInfoUseCase)
+    viewModel.login()
     
     let expectedLoginCalledCount = 1
     let expectedSaveLoginCalledCount = 1
@@ -68,11 +69,12 @@ final class SplashViewModelTest: XCTestCase {
     
     // Given
     (self.loginUseCase as! MockLoginUseCase).setState(state: .failure)
-    let _ = SplashViewModel(coordinator: self.coordinator,
+    let viewModel = SplashViewModel(coordinator: self.coordinator,
                                     loginUseCase: self.loginUseCase,
                                     logoutUseCase: self.logoutUseCase,
                                     saveLoginInfoUseCase: self.saveLoginInfoUseCase)
     
+    viewModel.login()
     
     let expectedLoginCalledCount = 1
     let expectedSaveLoginCalledCount = 0

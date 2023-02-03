@@ -13,6 +13,7 @@ import RxTest
 final class PerfumeNewViewModelTest: XCTestCase {
   private var coordinator: PerfumeNewCoordinator!
   private var fetchPerfumesNewUseCase: FetchPerfumesNewUseCase!
+  private var updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase!
   private var viewModel: PerfumeNewViewModel!
   private var input: PerfumeNewViewModel.Input!
   private var cellInput: PerfumeNewViewModel.CellInput!
@@ -23,8 +24,10 @@ final class PerfumeNewViewModelTest: XCTestCase {
   override func setUpWithError() throws {
     self.coordinator = MockPerfumeNewCoordinator()
     self.fetchPerfumesNewUseCase = MockFetchPerfumesNewUseCase()
+    self.updatePerfumeLikeUseCase = MockUpdatePerfumeLikeUseCase()
     self.viewModel = PerfumeNewViewModel(coordinator: self.coordinator,
-                                         fetchPerfumesNewUseCase: self.fetchPerfumesNewUseCase)
+                                         fetchPerfumesNewUseCase: self.fetchPerfumesNewUseCase,
+                                         updatePerfumeLikeUseCase: self.updatePerfumeLikeUseCase)
     
     self.input = self.viewModel.input
     self.cellInput = self.viewModel.cellInput
