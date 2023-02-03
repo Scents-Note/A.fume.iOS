@@ -11,7 +11,7 @@ struct FilterIngredientResponseDTO: Decodable {
 }
 
 extension FilterIngredientResponseDTO {
-  func toDomain() -> FilterIngredient {
-    FilterIngredient(idx: self.ingredientIdx, name: self.name, isSelected: false)
+  func toDomain(with series :String) -> FilterIngredient {
+    FilterIngredient(id: "\(series)\(self.ingredientIdx)",idx: self.ingredientIdx, name: self.name, isSelected: false)
   }
 }

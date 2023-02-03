@@ -13,12 +13,12 @@ final class PerfumeNewViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let reportButtonDidTapEvent: Observable<Void>
+    let reportButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct CellInput {
-    let perfumeDidTapEvent: PublishRelay<Perfume>
-    let perfumeHeartDidTapEvent: PublishRelay<Perfume>
+    let perfumeDidTapEvent = PublishRelay<Int>()
+    let perfumeHeartDidTapEvent = PublishRelay<Int>()
   }
   
   struct Output {
@@ -28,23 +28,27 @@ final class PerfumeNewViewModel {
   // MARK: - Vars & Lets
   private weak var coordinator: PerfumeNewCoordinator?
   private let fetchPerfumesNewUseCase: FetchPerfumesNewUseCase
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let cellInput = CellInput()
+  let output = Output()
   
   // MARK: - Life Cycle
   init(coordinator: PerfumeNewCoordinator, fetchPerfumesNewUseCase: FetchPerfumesNewUseCase) {
     self.coordinator = coordinator
     self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
+    
+    self.transform(input: self.input, cellInput: self.cellInput, output: self.output)
   }
   
   
   // MARK: - Binding
-  func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(input: Input, cellInput: CellInput, output: Output) {
     let perfumes = PublishRelay<[Perfume]>()
     
     self.bindInput(input: input, cellInput: cellInput, perfumes: perfumes, disposeBag: disposeBag)
     self.bindOutput(output: output, perfumes: perfumes, disposeBag: disposeBag)
     self.fetchDatas(perfumes: perfumes, disposeBag: disposeBag)
-    return output
   }
   
   private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
@@ -55,15 +59,15 @@ final class PerfumeNewViewModel {
       .disposed(by: disposeBag)
     
     cellInput.perfumeDidTapEvent
-      .subscribe(onNext: { [weak self] perfume in
-        self?.coordinator?.runPerfumeDetailFlow?(perfume.perfumeIdx)
+      .subscribe(onNext: { [weak self] perfumeIdx in
+        self?.coordinator?.runPerfumeDetailFlow?(perfumeIdx)
       })
       .disposed(by: disposeBag)
     
     cellInput.perfumeHeartDidTapEvent.withLatestFrom(perfumes) { updated, originals in
       originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
+        guard $0.perfumeIdx != updated else {
+          var item = $0
           item.isLiked.toggle()
           return item
         }

@@ -13,6 +13,7 @@ struct Gender: Hashable {
   let color: UIColor
   let isAccent: Bool
   
+  // idx 1, 3은 더미 데이터
   static let `default`: [Gender] = [Gender(gender: "남성",
                                            percent: 33,
                                            color: .clear,

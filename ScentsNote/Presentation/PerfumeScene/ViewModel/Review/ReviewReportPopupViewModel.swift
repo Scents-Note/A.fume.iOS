@@ -12,9 +12,9 @@ final class ReviewReportPopupViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let reportCellDidTapEvent: Observable<Int>
-    let cancelButtonDidTapEvent: Observable<Void>
-    let reportButtonDidTapEvent: Observable<Void>
+    let reportCellDidTapEvent = PublishRelay<Int>()
+    let cancelButtonDidTapEvent = PublishRelay<Void>()
+    let reportButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
@@ -25,9 +25,12 @@ final class ReviewReportPopupViewModel {
   // MARK: - Vars & Lets
   private weak var coordinator: PerfumeDetailCoordinator?
   private let reportReviewUseCase: ReportReviewUseCase
-  private let reviewIdx: Int
+  private let disposeBag = DisposeBag()
   
-  private var reason: String?
+  let input = Input()
+  let output = Output()
+  let reviewIdx: Int
+  var reason: String?
   
   // MARK: - Life Cycle
   init(coordinator: PerfumeDetailCoordinator,
@@ -36,29 +39,22 @@ final class ReviewReportPopupViewModel {
     self.coordinator = coordinator
     self.reportReviewUseCase = reportReviewUseCase
     self.reviewIdx = reviewIdx
+    
+    self.transform(input: self.input, output: self.output)
   }
   
-  
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
-    let reports = PublishRelay<[ReportType.Report]>()
+  func transform(input: Input, output: Output) {
+    let reports = BehaviorRelay<[ReportType.Report]>(value: ReportType.Report.default)
     
     self.bindInput(input: input,
-                   reports: reports,
-                   disposeBag: disposeBag)
+                   reports: reports)
     self.bindOutput(output: output,
-                    reports: reports,
-                    disposeBag: disposeBag)
-    
-    reports.accept(ReportType.Report.default)
-
-    return output
+                    reports: reports)
   }
   
   private func bindInput(input: Input,
-                         reports: PublishRelay<[ReportType.Report]>,
-                         disposeBag: DisposeBag) {
+                         reports: BehaviorRelay<[ReportType.Report]>) {
     
     input.reportCellDidTapEvent.withLatestFrom(reports) { updated, originals in
       originals.enumerated().map { [weak self] idx, report in
@@ -71,13 +67,13 @@ final class ReviewReportPopupViewModel {
       }
     }
     .bind(to: reports)
-    .disposed(by: disposeBag)
+    .disposed(by: self.disposeBag)
     
     input.cancelButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.hideReviewReportPopupViewController()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.reportButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
@@ -88,21 +84,20 @@ final class ReviewReportPopupViewModel {
           }, onError: { error in
             Log(error)
           })
-          .disposed(by: disposeBag)
+          .disposed(by: self?.disposeBag ?? DisposeBag())
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
 
   }
   
   private func bindOutput(output: Output,
-                          reports: PublishRelay<[ReportType.Report]>,
-                          disposeBag: DisposeBag) {
+                          reports: BehaviorRelay<[ReportType.Report]>) {
     reports
       .subscribe(onNext: { reports in
         output.reports.accept(reports)
         output.isSelected.accept(())
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
 
   }
   

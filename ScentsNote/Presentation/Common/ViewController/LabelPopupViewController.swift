@@ -13,8 +13,9 @@ import SnapKit
 import Then
 
 final class LabelPopupViewController: UIViewController {
+  
   // MARK: - Vars & Lets
-  var viewModel: LabelPopupViewModel?
+  var viewModel: LabelPopupViewModel!
   let disposeBag = DisposeBag()
   
   // MARK: - UI
@@ -115,9 +116,22 @@ final class LabelPopupViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = LabelPopupViewModel.Input(cancelButtonDidTapEvent: self.cancelButton.rx.tap.asObservable(),
-                                          confirmButtonDidTapEvent: self.confirmButton.rx.tap.asObservable(),
-                                          dimmedViewDidTapEvent: self.dimmedView.rx.tapGesture().when(.recognized).map { _ in } )
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.cancelButton.rx.tap
+      .bind(to: input.cancelButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.confirmButton.rx.tap
+      .bind(to: input.confirmButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.dimmedView.rx.tapGesture().when(.recognized).map{ _ in }
+      .bind(to: input.dimmedViewDidTapEvent)
+      .disposed(by: self.disposeBag)
   }
 }

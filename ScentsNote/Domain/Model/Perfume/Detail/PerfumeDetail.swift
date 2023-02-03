@@ -23,6 +23,17 @@ struct PerfumeDetail: Hashable {
   let Keywords: [String]
   let noteType: Int
   let ingredients: [Ingredient]
-  let reviewIdx: Int
+  var reviewIdx: Int
   var similarPerfumes: [Perfume]? = nil
 }
+
+extension PerfumeDetail {
+  func toDataSources() -> [PerfumeDetailDataSection.Model] {
+    let titleItems = PerfumeDetailDataSection.Item.title(self)
+    let titleSection = PerfumeDetailDataSection.Model(model: .title, items: [titleItems])
+    let contentItems = PerfumeDetailDataSection.Item.content(self)
+    let contentSection = PerfumeDetailDataSection.Model(model: .content, items: [contentItems])
+    return [titleSection, contentSection]
+  }
+}
+

@@ -11,15 +11,16 @@ import RxRelay
 final class SearchResultViewModel {
   // MARK: - Input & Output
   struct Input {
-    let searchButtonDidTapEvent: Observable<Void>
-    let filterButtonDidTapEvent: Observable<Void>
-    let reportButtonDidTapEvent: Observable<Void>
+    let searchButtonDidTapEvent = PublishRelay<Void>()
+    let filterButtonDidTapEvent = PublishRelay<Void>()
+    let reportButtonDidTapEvent = PublishRelay<Void>()
+    let perfumeSearchUpdateEvent = PublishRelay<PerfumeSearch>()
   }
   
   struct CellInput {
-    let keywordDeleteDidTapEvent: PublishRelay<SearchKeyword>
-    let perfumeDidTapEvent: PublishRelay<Perfume>
-    let perfumeHeartDidTapEvent: PublishRelay<Perfume>
+    let keywordDeleteDidTapEvent = PublishRelay<SearchKeyword>()
+    let perfumeDidTapEvent = PublishRelay<Perfume>()
+    let perfumeHeartDidTapEvent = PublishRelay<Perfume>()
   }
   
   struct Output {
@@ -33,8 +34,11 @@ final class SearchResultViewModel {
   private weak var coordinator: SearchResultCoordinator?
   private let fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase
   private let updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase
-  
-  let perfumeSearch = BehaviorRelay<PerfumeSearch>(value: PerfumeSearch.default)
+  private let perfumeSearch: PerfumeSearch
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let cellInput = CellInput()
+  let output = Output()
   
   // MARK: - Life Cycle
   init(coordinator: SearchResultCoordinator,
@@ -44,19 +48,22 @@ final class SearchResultViewModel {
     self.coordinator = coordinator
     self.fetchPerfumeSearchedUseCase = fetchPerfumeSearchedUseCase
     self.updatePerfumeLikeUseCase = updatePerfumeLikeUseCase
-    self.perfumeSearch.accept(perfumeSearch)
+    self.perfumeSearch = perfumeSearch
+    
+    self.transform(input: self.input, cellInput: self.cellInput, output: self.output)
   }
   
   
   // MARK: - Binding
-  func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(input: Input, cellInput: CellInput, output: Output) {
     let keywords = PublishRelay<[SearchKeyword]>()
+    let perfumeSearch = PublishRelay<PerfumeSearch>()
     let perfumes = BehaviorRelay<[Perfume]>(value: [])
     
     self.bindInput(input: input,
                    cellInput: cellInput,
                    perfumes: perfumes,
+                   perfumeSearch: perfumeSearch,
                    disposeBag: disposeBag)
     
     self.bindOutput(output: output,
@@ -64,17 +71,19 @@ final class SearchResultViewModel {
                     perfumes: perfumes,
                     disposeBag: disposeBag)
     
-    self.bindNetwork(keywords: keywords,
-                     perfumes: perfumes,
-                     disposeBag: disposeBag)
+    self.fetchDatas(keywords: keywords,
+                    perfumes: perfumes,
+                    perfumeSearch: perfumeSearch,
+                    disposeBag: disposeBag)
     
-    return output
   }
   
   private func bindInput(input: Input,
                          cellInput: CellInput,
                          perfumes: BehaviorRelay<[Perfume]>,
+                         perfumeSearch: PublishRelay<PerfumeSearch>,
                          disposeBag: DisposeBag) {
+    
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.runSearchKeywordFlow?()
@@ -92,31 +101,13 @@ final class SearchResultViewModel {
         self?.coordinator?.runWebFlow(with: WebURL.reportPerfumeInSearch)
       })
       .disposed(by: disposeBag)
-
-    cellInput.keywordDeleteDidTapEvent.withLatestFrom(perfumeSearch) { updated, originals in
-      switch updated.category {
-      case .searchWord:
-        var updates = originals
-        updates.searchWord = nil
-        return updates
-      case .ingredient:
-        var updates = originals
-        let updatedIngredients = originals.ingredients.filter { $0.idx != updated.idx }
-        updates.ingredients = updatedIngredients
-        return updates
-      case .brand:
-        var updates = originals
-        let updatedBrands = originals.brands.filter { $0.idx != updated.idx }
-        updates.brands = updatedBrands
-        return updates
-      case .keyword:
-        var updates = originals
-        Log(updated)
-        let updatedKeywords = originals.keywords.filter { $0.idx != updated.idx }
-        Log(updatedKeywords)
-        updates.keywords = updatedKeywords
-        return updates
-      }
+    
+    input.perfumeSearchUpdateEvent
+      .bind(to: perfumeSearch)
+      .disposed(by: self.disposeBag)
+    
+    cellInput.keywordDeleteDidTapEvent.withLatestFrom(perfumeSearch) { [weak self] updated, originals in
+      self?.perfumeSearchUpdated(keyword: updated, perfumeSearch: originals) ?? PerfumeSearch.default
     }
     .bind(to: perfumeSearch)
     .disposed(by: disposeBag)
@@ -129,14 +120,8 @@ final class SearchResultViewModel {
     
     cellInput.perfumeHeartDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
-        self?.updatePerfumeLikeUseCase.execute(perfumeIdx: perfume.perfumeIdx)
-          .subscribe(onNext: { _ in
-            let updatedPerfumes = self?.togglePerfumeLike(perfumeIdx: perfume.perfumeIdx, originals: perfumes.value) ?? []
-            perfumes.accept(updatedPerfumes)
-          }, onError: { error in
-            self?.coordinator?.showPopup()
-          })
-          .disposed(by: disposeBag)
+        self?.updatePerfumeLike(perfumeIdx: perfume.perfumeIdx, perfumes: perfumes)
+        
       })
       .disposed(by: disposeBag)
   }
@@ -145,38 +130,40 @@ final class SearchResultViewModel {
                           keywords: PublishRelay<[SearchKeyword]>,
                           perfumes: BehaviorRelay<[Perfume]>,
                           disposeBag: DisposeBag) {
-    keywords.subscribe(onNext: { keywords in
-      let items = keywords.map { KeywordDataSection.Item(keyword: $0) }
-      let model = KeywordDataSection.Model(model: "keyword", items: items)
-      output.hideKeywordView.accept(items.count == 0)
-      output.keywords.accept([model])
-    })
-    .disposed(by: disposeBag)
     
-    perfumes.subscribe(onNext: { perfumes in
-      if perfumes.count == 0 {
-        output.hideEmptyView.accept(false)
-      } else {
-        output.hideEmptyView.accept(true)
-      }
-      let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
-      let model = PerfumeDataSection.Model(model: "perfume", items: items)
-      output.perfumes.accept([model])
-    })
-    .disposed(by: disposeBag)
+    keywords
+      .subscribe(onNext: { keywords in
+        let items = keywords.map { KeywordDataSection.Item(keyword: $0) }
+        let model = KeywordDataSection.Model(model: "keyword", items: items)
+        output.hideKeywordView.accept(items.count == 0)
+        output.keywords.accept([model])
+      })
+      .disposed(by: disposeBag)
+    
+    perfumes
+      .subscribe(onNext: { perfumes in
+        let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
+        let model = PerfumeDataSection.Model(model: "perfume", items: items)
+        output.perfumes.accept([model])
+        output.hideEmptyView.accept(perfumes.count != 0)
+      })
+      .disposed(by: disposeBag)
     
   }
   
-  private func bindNetwork(keywords: PublishRelay<[SearchKeyword]>,
-                           perfumes: BehaviorRelay<[Perfume]>,
-                           disposeBag: DisposeBag) {
+  private func fetchDatas(keywords: PublishRelay<[SearchKeyword]>,
+                          perfumes: BehaviorRelay<[Perfume]>,
+                          perfumeSearch: PublishRelay<PerfumeSearch>,
+                          disposeBag: DisposeBag) {
     
     perfumeSearch
       .subscribe(onNext: { [weak self] data in
-        keywords.accept(data.toKeywordList())
+        keywords.accept(data.toSearchKeywords())
         self?.fetchPerfumes(perfumeSearch: data, perfumes: perfumes, disposeBag: disposeBag)
       })
       .disposed(by: disposeBag)
+    
+    perfumeSearch.accept(self.perfumeSearch)
   }
   
   private func fetchPerfumes(perfumeSearch: PerfumeSearch,
@@ -191,10 +178,35 @@ final class SearchResultViewModel {
       .disposed(by: disposeBag)
   }
   
-  func updateSearchWords(perfumeSearch: PerfumeSearch) {
-    self.perfumeSearch.accept(perfumeSearch)
+  private func perfumeSearchUpdated(keyword: SearchKeyword, perfumeSearch: PerfumeSearch) -> PerfumeSearch {
+    var updated = perfumeSearch
+    switch keyword.category {
+    case .searchWord:
+      updated.searchWord = nil
+    case .ingredient:
+      let updatedIngredients = perfumeSearch.ingredients.filter { $0.idx != keyword.idx }
+      updated.ingredients = updatedIngredients
+    case .brand:
+      let updatedBrands = perfumeSearch.brands.filter { $0.idx != keyword.idx }
+      updated.brands = updatedBrands
+    case .keyword:
+      let updatedKeywords = perfumeSearch.keywords.filter { $0.idx != keyword.idx }
+      updated.keywords = updatedKeywords
+    }
+    return updated
   }
   
+  private func updatePerfumeLike(perfumeIdx: Int, perfumes: BehaviorRelay<[Perfume]>) {
+    self.updatePerfumeLikeUseCase.execute(perfumeIdx: perfumeIdx)
+      .subscribe(onNext: { [weak self] _ in
+        let updatedPerfumes = self?.togglePerfumeLike(perfumeIdx: perfumeIdx, originals: perfumes.value) ?? []
+        perfumes.accept(updatedPerfumes)
+      }, onError: { [weak self] error in
+        self?.coordinator?.showPopup()
+      })
+      .disposed(by: self.disposeBag)
+  }
+
   private func togglePerfumeLike(perfumeIdx: Int, originals perfumes: [Perfume]) -> [Perfume] {
     perfumes.map {
       guard $0.perfumeIdx != perfumeIdx else {
@@ -204,6 +216,10 @@ final class SearchResultViewModel {
       }
       return $0
     }
+  }
+  
+  func updateSearchWords(perfumeSearch: PerfumeSearch) {
+    self.input.perfumeSearchUpdateEvent.accept(perfumeSearch)
   }
   
 }

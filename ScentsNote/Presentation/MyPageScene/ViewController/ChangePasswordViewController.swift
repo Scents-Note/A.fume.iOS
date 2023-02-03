@@ -14,7 +14,7 @@ import Then
 final class ChangePasswordViewController: UIViewController {
   
   // MARK: - Vars & Lets
-  var viewModel: ChangePasswordViewModel?
+  var viewModel: ChangePasswordViewModel!
   let disposeBag = DisposeBag()
   
   // MARK: - UI
@@ -86,14 +86,36 @@ final class ChangePasswordViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = ChangePasswordViewModel.Input(
-      passwordCurrentDidEditEvent: self.passwordCurrentSection.editText(),
-      passwordCurrentCheckButtonDidTapEvent: self.passwordCurrentSection.clickCheckButton(),
-      passwordDidEditEvent: self.passwordSection.editText(),
-      passwordCheckDidEditEvent: self.passwordCheckSection.editText(),
-      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable()
-    )
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.passwordCurrentSection.editText()
+      .bind(to: input.passwordCurrentDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.passwordCurrentSection.clickCheckButton()
+      .bind(to: input.passwordCurrentCheckButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.passwordSection.editText()
+      .bind(to: input.passwordDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.passwordCheckSection.editText()
+      .bind(to: input.passwordCheckDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.doneButton.rx.tap
+      .bind(to: input.doneButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
     self.bindPasswordCurrent(output: output)
     self.bindPassword(output: output)
     self.bindPasswordCheck(output: output)
@@ -107,6 +129,7 @@ final class ChangePasswordViewController: UIViewController {
         self?.updateNewPasswordSection(state: state)
       })
       .disposed(by: self.disposeBag)
+    
   }
   
   private func bindPassword(output: ChangePasswordViewModel.Output?) {
@@ -134,10 +157,10 @@ final class ChangePasswordViewController: UIViewController {
   }
   
   private func updateNewPasswordSection(state: InputState) {
-    guard self.viewModel?.isNewPasswordSectionShown == false else { return }
+    guard self.viewModel.isNewPasswordSectionShown == false else { return }
     
     if state == .success {
-      self.viewModel?.toggleNewPasswordShown()
+      self.viewModel.toggleNewPasswordShown()
       self.passwordSection.isHidden = false
       self.passwordCheckSection.isHidden = false
     }

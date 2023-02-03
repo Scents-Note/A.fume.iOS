@@ -16,7 +16,7 @@ final class FilterKeywordView: UIView {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<FilterKeywordDataSection.Model>
   
   // MARK: - Vars & Lets
-  var viewModel: SearchFilterViewModel
+  var viewModel: SearchFilterKeywordViewModel
   private var dataSource: DataSource!
   let disposeBag = DisposeBag()
   
@@ -41,9 +41,11 @@ final class FilterKeywordView: UIView {
   
   // MARK: - Life Cycle
   init(viewModel: SearchFilterViewModel) {
-    self.viewModel = viewModel
+    self.viewModel = SearchFilterKeywordViewModel(filterDelegate: viewModel,
+                                                  fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared))
     super.init(frame: .zero)
     self.configureUI()
+    self.configureDelegate()
     self.bindViewModel()
   }
   
@@ -81,32 +83,49 @@ final class FilterKeywordView: UIView {
       cell.updateUI(keyword: item.keyword)
       return cell
     }
+  }
+  
+  private func configureDelegate() {
     self.collectionView.delegate = self
   }
   
   // MARK: - Bind ViewModel
   func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  func bindInput() {
+    let input = self.viewModel.input
+    
     self.collectionView.rx.itemSelected.map { $0.item }
-      .subscribe(onNext: { [weak self] pos in
-        self?.viewModel.clickKeyword(pos: pos)
+      .subscribe(onNext: { idx in
+        input.keywordCellDidTapEvent.accept(idx)
       })
       .disposed(by: self.disposeBag)
+  }
+  
+  func bindOutput() {
+    let output = self.viewModel.output
     
-    self.viewModel.keywordDataSource
+    output.keywordDataSource
       .bind(to: self.collectionView.rx.items(dataSource: self.dataSource))
       .disposed(by: self.disposeBag)
   }
 }
+
 extension FilterKeywordView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
+    let output = self.viewModel.output
+
     let label = UILabel().then {
       $0.font = .notoSans(type: .regular, size: 15)
-      $0.text = self.viewModel.keywordDataSource.value[0].items[indexPath.row].keyword.name
+      $0.text = output.keywordDataSource.value[0].items[indexPath.row].keyword.name
       $0.sizeToFit()
     }
     let size = label.frame.size
-    
+
     return CGSize(width: size.width + 50, height: 42)
   }
 }

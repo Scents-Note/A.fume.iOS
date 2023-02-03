@@ -12,3 +12,25 @@ struct PerfumeInMyPage: Equatable {
   let imageUrl: String
   let reviewIdx: Int
 }
+
+extension PerfumeInMyPage {
+  // My Page에서
+  func toPerfumeDetail() -> PerfumeDetail {
+    PerfumeDetail(perfumeIdx: self.idx,
+                  name: self.name,
+                  brandName: self.brandName,
+                  story: "",
+                  abundanceRate: "",
+                  volumeAndPrice: [],
+                  imageUrls: [self.imageUrl],
+                  score: 0, seasonal: [],
+                  sillage: [],
+                  longevity: [],
+                  gender: [],
+                  isLiked: false,
+                  Keywords: [],
+                  noteType: 0,
+                  ingredients: [],
+                  reviewIdx: 0)
+  }
+}

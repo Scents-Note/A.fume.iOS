@@ -15,7 +15,7 @@ import RxDataSources
 final class FilterBrandView: UIView {
   
   // MARK: - Vars & Lets
-  var viewModel: SearchFilterViewModel
+  var viewModel: SearchFilterBrandViewModel
   let disposeBag = DisposeBag()
   
   // MARK: - UI
@@ -36,7 +36,8 @@ final class FilterBrandView: UIView {
   
   // MARK: - Life Cycle
   init(viewModel: SearchFilterViewModel) {
-    self.viewModel = viewModel
+    self.viewModel = SearchFilterBrandViewModel(filterDelegate: viewModel,
+                                                fetchBrandsForFilterUseCase: DefaultFetchBrandsForFilterUseCase(filterRepository: DefaultFilterRepository.shared))
     super.init(frame: .zero)
     self.configureUI()
     self.bindViewModel()
@@ -79,25 +80,36 @@ final class FilterBrandView: UIView {
   
   // MARK: - Bind ViewModel
   func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
     self.initialCollectionView.rx.itemSelected.map { $0.item }
-      .subscribe(onNext: { [weak self] pos in
-        self?.viewModel.clickBrandInitial(pos: pos)
+      .subscribe(onNext: { idx in
+        input.brandInitialCellDidTapEvent.accept(idx)
       })
       .disposed(by: self.disposeBag)
     
     self.brandCollectionView.rx.itemSelected.map { $0.item }
-      .subscribe(onNext: { [weak self] pos in
-        self?.viewModel.clickBrand(pos: pos)
+      .subscribe(onNext: { idx in
+        input.brandCellDidTapEvent.accept(idx)
       })
       .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
     
-    self.viewModel.brandInitials
+    output.brandInitials
       .bind(to: self.initialCollectionView.rx.items(cellIdentifier: "FilterBrandInitialCell", cellType: FilterBrandInitialCell.self)) { index, initial, cell in
         cell.updateUI(initial: initial.text, isSelected: initial.isSelected)
       }
       .disposed(by: self.disposeBag)
-    
-    self.viewModel.brands
+
+    output.brands
       .bind(to: self.brandCollectionView.rx.items(cellIdentifier: "FilterBrandCell", cellType: FilterBrandCell.self)) { index, brand, cell in
         cell.updateUI(brand: brand)
       }

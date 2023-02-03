@@ -42,8 +42,8 @@ final class SearchFilterViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
-    self.bindViewModel()
     self.configureDelegate()
+    self.bindViewModel()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -113,18 +113,36 @@ final class SearchFilterViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = SearchFilterViewModel.Input(
-      tabDidTapEvent: self.tabCollectionView.rx.itemSelected.map { $0.item },
-      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
-      closeButtonDidTapEvent: self.closeButton.rx.tap.asObservable()
-    )
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
-    self.bindTab(output: output)
-    self.bindDoneButton(output: output)
+    self.bindInput()
+    self.bindOutput()
   }
   
-  private func bindTab(output: SearchFilterViewModel.Output?) {
-    output?.tabs
+  private func bindInput() {
+    let input = self.viewModel.input
+
+    self.tabCollectionView.rx.itemSelected.map { $0.item }
+      .bind(to: input.tabDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.doneButton.rx.tap
+      .bind(to: input.doneButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.closeButton.rx.tap
+      .bind(to: input.closeButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
+    self.bindTab(output: output)
+    self.bindDoneButton(output: output)
+    
+  }
+  
+  private func bindTab(output: SearchFilterViewModel.Output) {
+    output.tabs
       .bind(to: self.tabCollectionView.rx.items(
         cellIdentifier: TabCell.identifier, cellType: TabCell.self
       )) { _, searchTab, cell in
@@ -132,14 +150,14 @@ final class SearchFilterViewController: UIViewController {
       }
       .disposed(by: self.disposeBag)
     
-    output?.selectedTab
+    output.tabSelected
       .observe(on: MainScheduler.instance)
       .subscribe(onNext: { [weak self] idx in
         self?.updatePage(idx)
       })
       .disposed(by: disposeBag)
 
-    output?.hightlightViewTransform
+    output.hightlightViewTransform
       .observe(on: MainScheduler.instance)
       .subscribe(onNext: {  [weak self] idx in
         UIView.animate(withDuration: 0.3) {
@@ -198,6 +216,6 @@ extension SearchFilterViewController: UIScrollViewDelegate {
     guard let _ = (scrollView as? FilterScrollView) else { return }
     
     let index = Int(targetContentOffset.pointee.x / self.tabCollectionView.frame.width)
-    self.viewModel?.selectedTab.accept(index)
+//    self.viewModel?.selectedTab.accept(index)
   }
 }

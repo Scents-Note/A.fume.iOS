@@ -12,22 +12,25 @@ final class MyPageMenuViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let closeButtonDidTapEvent: Observable<Void>
-    let menuCellDidTapEvent: Observable<Int>
+    let loadMenuEvent = PublishRelay<Void>()
+    let closeButtonDidTapEvent = PublishRelay<Void>()
+    let menuCellDidTapEvent = PublishRelay<Int>()
   }
   
   struct Output {
     let menus = BehaviorRelay<[String]>(value: [])
+    let loadData = BehaviorRelay<Void>(value: ())
   }
   
   // MARK: - Vars & Lets
   private weak var coordinator: MyPageCoordinator?
-  weak var delegate: MyPageMenuDismissDelegate?
   private let fetchUserDefaultUseCase: FetchUserDefaultUseCase
   private let logoutUseCase: LogoutUseCase
-
+  private let disposeBag = DisposeBag()
+  weak var delegate: MyPageMenuDismissDelegate?
+  let input = Input()
+  let output = Output()
   var menus: [Menu] = []
-  let loadData = BehaviorRelay<Void>(value: ())
   
   // MARK: - Life Cycle
   init(coordinator: MyPageCoordinator,
@@ -36,33 +39,37 @@ final class MyPageMenuViewModel {
     self.coordinator = coordinator
     self.fetchUserDefaultUseCase = fetchUserDefaultUseCase
     self.logoutUseCase = logoutUseCase
-
+    
+    self.transform(input: self.input, output: self.output)
   }
   
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(input: Input, output: Output) {
+    let loadData = PublishRelay<Void>()
     let menus = PublishRelay<[String]>()
     
-    self.bindInput(input: input, disposeBag: disposeBag)
+    self.bindInput(input: input, loadData: loadData)
     self.bindOutput(menus: menus, output: output, disposeBag: disposeBag)
-    self.fetchDatas(loadData: self.loadData, menus: menus, disposeBag: disposeBag)
+    self.fetchDatas(loadData: loadData, menus: menus, disposeBag: disposeBag)
     
-    return output
   }
   
-  private func bindInput(input: Input, disposeBag: DisposeBag) {
+  private func bindInput(input: Input, loadData: PublishRelay<Void>) {
+    input.loadMenuEvent
+      .bind(to: loadData)
+      .disposed(by: self.disposeBag)
+    
     input.closeButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.hideMyPageMenuViewController()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
 
     input.menuCellDidTapEvent
       .subscribe(onNext: { [weak self] idx in
         self?.performAction(idx: idx)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
   private func bindOutput(menus: PublishRelay<[String]>, output: Output, disposeBag: DisposeBag) {
@@ -71,18 +78,21 @@ final class MyPageMenuViewModel {
       .disposed(by: disposeBag)
   }
   
-  private func fetchDatas(loadData: BehaviorRelay<Void>,
+  private func fetchDatas(loadData: PublishRelay<Void>,
                           menus: PublishRelay<[String]>,
                           disposeBag: DisposeBag) {
     
     loadData
       .subscribe(onNext: { [weak self] in
-        let isLoggedIn = self?.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
-        self?.menus = isLoggedIn ? Menu.loggedIn : Menu.loggedOut
-        menus.accept(self?.menus.map { $0.description} ?? [])
+        self?.setMenus(menus: menus)
       })
       .disposed(by: disposeBag)
-    
+  }
+  
+  private func setMenus(menus: PublishRelay<[String]>) {
+    let isLoggedIn = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
+    self.menus = isLoggedIn ? Menu.loggedIn : Menu.loggedOut
+    menus.accept(self.menus.map { $0.description} )
   }
   
   private func performAction(idx: Int) {
@@ -98,7 +108,7 @@ final class MyPageMenuViewModel {
       self.coordinator?.runWebFlow(with: WebURL.inquire)
     case .logout:
       self.logoutUseCase.execute()
-      self.loadData.accept(())
+      self.input.loadMenuEvent.accept(())
       self.delegate?.reloadData()
     case .login:
       self.coordinator?.runOnboardingFlow?()

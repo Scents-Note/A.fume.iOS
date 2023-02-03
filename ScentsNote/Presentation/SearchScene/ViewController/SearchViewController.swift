@@ -15,7 +15,7 @@ final class SearchViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDataSection.Model>
 
   // MARK: - Vars & Lets
-  var viewModel: SearchViewModel?
+  var viewModel: SearchViewModel!
   var dataSource: DataSource!
   let disposeBag = DisposeBag()
   
@@ -41,8 +41,7 @@ final class SearchViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
-    let cellInput = self.configureCollectionView()
-    self.bindViewModel(cellInput: cellInput)
+    self.bindViewModel()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +53,7 @@ final class SearchViewController: UIViewController {
   // MARK: - Configure UI
   private func configureUI() {
     self.configureNavigation()
+    self.configureCollectionView()
     self.view.backgroundColor = .white
     
     self.view.addSubview(self.collectionView)
@@ -71,29 +71,25 @@ final class SearchViewController: UIViewController {
     }
   }
   
-  private func configureCollectionView() -> SearchViewModel.CellInput {
-    let perfumeClicked = PublishRelay<Perfume>()
-    let perfumeHeartClicked = PublishRelay<Perfume>()
+  private func configureCollectionView() {
+    let cellInput = self.viewModel.cellInput
     
     self.dataSource = DataSource { dataSource, tableView, indexPath, item in
       let cell = self.collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
       cell.updateUI(perfume: item.perfume)
       cell.onPerfumeClick()
         .subscribe(onNext: { _ in
-          perfumeClicked.accept(item.perfume)
+          cellInput.perfumeDidTapEvent.accept(item.perfume)
       })
       .disposed(by: cell.disposeBag)
       cell.onHeartClick()
         .subscribe(onNext: {
-          perfumeHeartClicked.accept(item.perfume)
+          cellInput.perfumeHeartDidTapEvent.accept(item.perfume)
         })
         .disposed(by: cell.disposeBag)
       return cell
     }
     
-    return SearchViewModel.CellInput(perfumeDidTapEvent: perfumeClicked,
-                                     perfumeHeartDidTapEvent: perfumeHeartClicked)
-                                         
   }
   
   func configureNavigation() {
@@ -103,15 +99,31 @@ final class SearchViewController: UIViewController {
   }
   
   // MARK: - Binding ViewModel
-  private func bindViewModel(cellInput: SearchViewModel.CellInput) {
-    let input = SearchViewModel.Input(searchButtonDidTapEvent: self.searchButton.rx.tap.asObservable(),
-                                      filterButtonDidTapEvent: self.filterButton.rx.tap.asObservable())
-    let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
+  private func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.searchButton.rx.tap
+      .bind(to: input.searchButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.filterButton.rx.tap
+      .bind(to: input.filterButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindPerfumesNew(output: output)
   }
   
-  private func bindPerfumesNew(output: SearchViewModel.Output?) {
-    output?.perfumes
+  private func bindPerfumesNew(output: SearchViewModel.Output) {
+    output.perfumes
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
   }

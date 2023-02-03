@@ -27,13 +27,6 @@ final class MyPageViewController: UIViewController {
     $0.backgroundColor = .black
   }
   
-  private let loginButton = UIButton().then {
-    $0.setTitle("로그인 하기", for: .normal)
-    $0.setTitleColor(.white, for: .normal)
-    $0.titleLabel?.font = .notoSans(type: .bold, size: 15)
-    $0.backgroundColor = .blackText
-  }
-  
   private lazy var menuButton = UIBarButtonItem(image: .btnSidebar, style: .plain, target: self, action: nil).then {
     $0.tintColor = .blackText
   }
@@ -42,8 +35,9 @@ final class MyPageViewController: UIViewController {
   
   // MARK: - Vars & Lets
   var viewModel: MyPageViewModel!
-  let disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
@@ -56,6 +50,7 @@ final class MyPageViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
+  // MARK: - Configure UI
   func configureUI() {
     self.configureNavigation()
     
@@ -81,20 +76,40 @@ final class MyPageViewController: UIViewController {
     self.navigationItem.rightBarButtonItem = self.menuButton
   }
   
+  // MARK: - Configure Delegate
   private func configureDelegate() {
     self.scrollView.delegate = self
   }
   
+  // MARK: - bind ViewModel
   private func bindViewModel() {
-    let input = MyPageViewModel.Input(viewWillAppearEvent: self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in },
-                                      myPerfumeButtonDidTapEvent: self.myPerfumeButton.rx.tap.asObservable(),
-                                      wishListButtonDidTapEvent: self.wishListButton.rx.tap.asObservable(),
-                                      loginButtonDidTapEvent: self.loginButton.rx.tap.asObservable(),
-                                      menuButtonDidTapEvent: self.menuButton.rx.tap.asObservable())
+    self.bindInput()
+    self.bindOutput()
     
-    self.viewModel.transform(input: input, disposeBag: self.disposeBag)
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+
+    self.rx.methodInvoked(#selector(UIViewController.viewWillAppear)).map { _ in }
+      .bind(to: input.viewWillAppearEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.myPerfumeButton.rx.tap
+      .bind(to: input.myPerfumeButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.wishListButton.rx.tap
+      .bind(to: input.wishListButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+
+    self.menuButton.rx.tap
+      .bind(to: input.menuButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
     let output = self.viewModel.output
-    
     self.bindTab(output: output)
   }
   

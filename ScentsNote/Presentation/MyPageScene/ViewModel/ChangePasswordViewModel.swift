@@ -12,15 +12,16 @@ final class ChangePasswordViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let passwordCurrentDidEditEvent: Observable<String>
-    let passwordCurrentCheckButtonDidTapEvent: Observable<Void>
-    let passwordDidEditEvent: Observable<String>
-    let passwordCheckDidEditEvent: Observable<String>
-    let doneButtonDidTapEvent: Observable<Void>
+    let passwordCurrentDidEditEvent = PublishRelay<String>()
+    let passwordCurrentCheckButtonDidTapEvent = PublishRelay<Void>()
+    let passwordDidEditEvent = PublishRelay<String>()
+    let passwordCheckDidEditEvent = PublishRelay<String>()
+    let doneButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
     let passwordCurrentState = BehaviorRelay<InputState>(value: .empty)
+    let showPasswordSection = BehaviorRelay<Bool>(value: false)
     let passwordState = BehaviorRelay<InputState>(value: .empty)
     let passwordCheckState = BehaviorRelay<InputState>(value: .empty)
     let canDone = BehaviorRelay<Bool>(value: false)
@@ -31,12 +32,14 @@ final class ChangePasswordViewModel {
   private let fetchUserPasswordUseCase: FetchUserPasswordUseCase
   private let changePasswordUseCase: ChangePasswordUseCase
   private let savePasswordUseCase: SavePasswordUseCase
-  
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let output = Output()
   var isNewPasswordSectionShown = false
-  private var passwordOld = ""
-  private var passwordCurrent = ""
-  private var password = ""
-  private var passwordCheck = ""
+  var passwordOld = ""
+  var passwordCurrent = ""
+  var password = ""
+  var passwordCheck = ""
   
   // MARK: - Life Cycle
   init(coordinator: ChangePasswordCoordinator,
@@ -47,34 +50,35 @@ final class ChangePasswordViewModel {
     self.fetchUserPasswordUseCase = fetchUserPasswordUseCase
     self.changePasswordUseCase = changePasswordUseCase
     self.savePasswordUseCase = savePasswordUseCase
+    
+    self.transform(input: self.input, output: self.output)
   }
   
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(input: Input, output: Output) {
     let passwordCurrentState = PublishRelay<InputState>()
     let passwordState = PublishRelay<InputState>()
     let passwordCheckState = PublishRelay<InputState>()
+    let canDone = PublishRelay<Bool>()
     
     self.bindInput(input: input,
                    passwordCurrentState: passwordCurrentState,
                    passwordState: passwordState,
-                   passwordCheckState: passwordCheckState,
-                   disposeBag: disposeBag)
+                   passwordCheckState: passwordCheckState)
+    
     self.bindOutput(output: output,
                     passwordCurrentState: passwordCurrentState,
                     passwordState: passwordState,
                     passwordCheckState: passwordCheckState,
-                    disposeBag: disposeBag)
+                    canDone: canDone)
+    
     self.fetchDatas()
-    return output
   }
   
   private func bindInput(input: Input,
                          passwordCurrentState: PublishRelay<InputState>,
                          passwordState: PublishRelay<InputState>,
-                         passwordCheckState: PublishRelay<InputState>,
-                         disposeBag: DisposeBag) {
+                         passwordCheckState: PublishRelay<InputState>) {
     
     input.passwordCurrentDidEditEvent
       .distinctUntilChanged()
@@ -86,17 +90,16 @@ final class ChangePasswordViewModel {
     
     input.passwordCurrentCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.comparePassword(passwordState: passwordCurrentState)
+        self?.comparePassword(passwordOld: self?.passwordOld, passwordCurrent: self?.passwordCurrent, passwordState: passwordCurrentState)
       })
       .disposed(by: disposeBag)
     
     input.passwordDidEditEvent
       .distinctUntilChanged()
       .subscribe(onNext: { [weak self] text in
-        guard let self = self else { return }
-        self.password = text
-        self.updatePasswordState(password: text, passwordState: passwordState)
-        self.updatePasswordCheckState(password: self.passwordCheck, passwordState: passwordCheckState)
+        self?.password = text
+        self?.updatePasswordState(password: text, passwordCurrent: self?.passwordCurrent, passwordState: passwordState)
+        self?.updatePasswordCheckState(password: text, passwordCheck: self?.passwordCheck, passwordState: passwordCheckState)
       })
       .disposed(by: disposeBag)
     
@@ -104,13 +107,13 @@ final class ChangePasswordViewModel {
       .distinctUntilChanged()
       .subscribe(onNext: { [weak self] text in
         self?.passwordCheck = text
-        self?.updatePasswordCheckState(password: text, passwordState: passwordCheckState)
+        self?.updatePasswordCheckState(password: self?.password, passwordCheck: text, passwordState: passwordCheckState)
       })
       .disposed(by: disposeBag)
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.changePassword(disposeBag: disposeBag)
+        self?.changePassword(passwordCheck: self?.passwordCheck)
       })
       .disposed(by: disposeBag)
 
@@ -120,7 +123,7 @@ final class ChangePasswordViewModel {
                           passwordCurrentState: PublishRelay<InputState>,
                           passwordState: PublishRelay<InputState>,
                           passwordCheckState: PublishRelay<InputState>,
-                          disposeBag: DisposeBag) {
+                          canDone: PublishRelay<Bool>) {
     passwordCurrentState
       .bind(to: output.passwordCurrentState)
       .disposed(by: disposeBag)
@@ -134,12 +137,13 @@ final class ChangePasswordViewModel {
       .disposed(by: disposeBag)
     
     Observable.combineLatest(passwordCurrentState, passwordState, passwordCheckState)
-      .subscribe(onNext: { old, pw, pwCheck in
-        guard old == .success, pw == .success, pwCheck == .success else {
-          output.canDone.accept(false)
-          return
-        }
-        output.canDone.accept(true)
+      .subscribe(onNext: { [weak self] pwCurrent, pw, pwCheck in
+        self?.updateCanDone(passwordCurrent: pwCurrent,
+                           password: pw,
+                           passwordCheck: pwCheck,
+                          canDone: canDone)
+        
+        
       })
       .disposed(by: disposeBag)
 
@@ -162,7 +166,9 @@ final class ChangePasswordViewModel {
     passwordState.accept(.correctFormat)
   }
   
-  private func updatePasswordState(password: String, passwordState: PublishRelay<InputState>) {
+  private func updatePasswordState(password: String, passwordCurrent: String?, passwordState: PublishRelay<InputState>) {
+    guard let passwordCurrent = passwordCurrent else { return }
+    
     guard password.count > 0 else {
       passwordState.accept(.empty)
       return
@@ -171,44 +177,62 @@ final class ChangePasswordViewModel {
       passwordState.accept(.wrongFormat)
       return
     }
-    guard password != self.passwordOld else {
+    guard password != passwordCurrent else {
       passwordState.accept(.duplicate)
       return
     }
-    
     passwordState.accept(.success)
   }
   
-  private func updatePasswordCheckState(password: String, passwordState: PublishRelay<InputState>) {
+  private func updatePasswordCheckState(password: String?, passwordCheck: String?, passwordState: PublishRelay<InputState>) {
+    guard let password = password, let passwordCheck = passwordCheck else { return }
+    
     guard self.passwordCheck.count > 0 else {
       passwordState.accept(.empty)
       return
     }
-    guard self.password == self.passwordCheck else {
+    guard password == passwordCheck else {
       passwordState.accept(.wrongFormat)
       return
     }
     passwordState.accept(.success)
   }
   
-  private func comparePassword(passwordState: PublishRelay<InputState>) {
-    let isEqual = self.passwordOld == self.passwordCurrent
+  private func updateCanDone(passwordCurrent: InputState,
+                             password: InputState,
+                             passwordCheck: InputState,
+                             canDone: PublishRelay<Bool>) {
+    
+    guard passwordCheck != .empty else {
+      return
+    }
+    
+    guard passwordCurrent == .success, password == .success, passwordCheck == .success else {
+      output.canDone.accept(false)
+      return
+    }
+    
+    output.canDone.accept(true)
+    
+  }
+  
+  private func comparePassword(passwordOld: String?, passwordCurrent: String?, passwordState: PublishRelay<InputState>) {
+    let isEqual = passwordOld == passwordCurrent
     passwordState.accept(isEqual ? .success : .notCorrect)
   }
   
-  func toggleNewPasswordShown() {
-    self.isNewPasswordSectionShown.toggle()
-  }
-  
-  private func changePassword(disposeBag: DisposeBag) {
+  private func changePassword(passwordCheck: String?) {
+    guard let passwordCheck = passwordCheck else { return }
     let dto = Password(oldPassword: passwordOld, newPassword: passwordCheck)
     self.changePasswordUseCase.execute(password: dto)
       .subscribe(onNext: { [weak self] _ in
-        guard let self = self else { return }
-        self.savePasswordUseCase.execute(password: self.passwordCheck)
-        self.coordinator?.finishFlow?()
+        self?.savePasswordUseCase.execute(password: passwordCheck)
+        self?.coordinator?.finishFlow?()
       })
-      .disposed(by: disposeBag)
-
+      .disposed(by: self.disposeBag)
+  }
+  
+  func toggleNewPasswordShown() {
+    self.isNewPasswordSectionShown = true
   }
 }

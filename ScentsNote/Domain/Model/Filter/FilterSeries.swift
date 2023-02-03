@@ -8,5 +8,5 @@
 struct FilterSeries: Equatable {
   let idx: Int
   let name: String
-  let ingredients: [FilterIngredient]
+  var ingredients: [FilterIngredient]
 }

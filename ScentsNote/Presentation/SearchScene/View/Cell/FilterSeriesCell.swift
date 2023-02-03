@@ -70,7 +70,7 @@ final class FilterSeriesCell: UICollectionViewCell {
     }
   }
   
-  func clickSeries() -> Observable<UITapGestureRecognizer> {
-    self.rx.tapGesture().when(.recognized).asObservable()
+  func clickSeries() -> Observable<Void> {
+    self.rx.tapGesture().when(.recognized).asObservable().map { _ in}
   }
 }
