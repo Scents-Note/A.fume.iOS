@@ -24,11 +24,7 @@ final class DefaultSaveLoginInfoUseCase: SaveLoginInfoUseCase {
     self.userRepository.setUserDefault(key: UserDefaultKey.gender, value: loginInfo.gender)
     self.userRepository.setUserDefault(key: UserDefaultKey.birth, value: loginInfo.birth)
     self.userRepository.setUserDefault(key: UserDefaultKey.isLoggedIn, value: true)
-    if let email = email {
-      self.userRepository.setUserDefault(key: UserDefaultKey.email, value: email)
-    }
-    if let password = password {
-      self.userRepository.setUserDefault(key: UserDefaultKey.password, value: password)
-    }
+    self.userRepository.setUserDefault(key: UserDefaultKey.email, value: email)
+    self.userRepository.setUserDefault(key: UserDefaultKey.password, value: password)
   }
 }
