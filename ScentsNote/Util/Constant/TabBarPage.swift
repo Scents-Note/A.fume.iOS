@@ -52,6 +52,4 @@ enum TabBarPage: String, CaseIterable {
     case .mypage: return "마이"
     }
   }
-  
-  
 }

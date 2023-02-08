@@ -60,8 +60,11 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
   }
   
   func showPopup() {
-    let vc = LabelPopupViewController()
-    vc.setLabel(content: "정말로 삭제하실 건가요?")
+    let vc = LabelPopupViewController().then {
+      $0.setButtonState(state: .two)
+      $0.setLabel(content: "정말로 삭제하실 건가요?")
+    }
+    
     vc.viewModel = LabelPopupViewModel(
       coordinator: self,
       delegate: self.perfumeReviewViewController.viewModel!

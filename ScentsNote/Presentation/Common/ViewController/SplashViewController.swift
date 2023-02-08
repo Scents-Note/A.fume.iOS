@@ -33,7 +33,7 @@ final class SplashViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
-    self.login()
+    self.checkVersion()
   }
   
   private func configureUI() {
@@ -51,7 +51,7 @@ final class SplashViewController: UIViewController {
     }
   }
   
-  private func login() {
-    self.viewModel.login()
+  private func checkVersion() {
+    self.viewModel.checkVersion()
   }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol SplashCoordinator: AnyObject {
+protocol SplashCoordinator: PopUpCoordinator {
   var finishFlow: (() -> Void)? { get set }
   func showSplashViewController()
 }

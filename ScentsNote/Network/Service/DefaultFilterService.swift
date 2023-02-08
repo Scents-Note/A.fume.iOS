@@ -11,6 +11,7 @@ import RxSwift
 final class DefaultFilterService: ScentsNoteService, FilterService {
   
   static let shared: DefaultFilterService = DefaultFilterService()
+  private override init() {}
 
   func fetchSeriesForFilter() -> Observable<ListInfo<FilterSeriesResponseDTO>> {
     requestObject(.fetchSeriesForFilter)

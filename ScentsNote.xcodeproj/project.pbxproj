@@ -470,6 +470,11 @@
 		4AF455BD2955B15A00E87A4E /* DefaultReportReviewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455BC2955B15A00E87A4E /* DefaultReportReviewUseCase.swift */; };
 		4AF455BF2955B1A000E87A4E /* ReviewReportRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455BE2955B1A000E87A4E /* ReviewReportRequestDTO.swift */; };
 		4AF455C829598FDB00E87A4E /* MockPerfumeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF455C729598FDB00E87A4E /* MockPerfumeRepository.swift */; };
+		4AF595B129937D2F007D135F /* SystemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF595B029937D2F007D135F /* SystemService.swift */; };
+		4AF595B329937D3C007D135F /* DefaultSystemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF595B229937D3C007D135F /* DefaultSystemService.swift */; };
+		4AF595B52993814B007D135F /* SystemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF595B42993814B007D135F /* SystemRepository.swift */; };
+		4AF595B729938163007D135F /* DefaultSystemRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF595B629938163007D135F /* DefaultSystemRepository.swift */; };
+		4AF595BB299384E9007D135F /* DefaultCheckIsSupportableVersionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF595BA299384E9007D135F /* DefaultCheckIsSupportableVersionUseCase.swift */; };
 		4AF9FBE7291DE82300667BD7 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9FBE6291DE82300667BD7 /* Log.swift */; };
 		4AFC7E242973AE5900F09E20 /* FetchFilterBrandInitialUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7E232973AE5900F09E20 /* FetchFilterBrandInitialUseCaseTest.swift */; };
 		4AFC7E262973B00400F09E20 /* FetchSeriesForFilterUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7E252973B00400F09E20 /* FetchSeriesForFilterUseCaseTest.swift */; };
@@ -796,7 +801,7 @@
 		4A893AD9290A167100CA502B /* SignUpBirthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpBirthViewModel.swift; sourceTree = "<group>"; };
 		4A893ADC290A242200CA502B /* DoneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoneButton.swift; sourceTree = "<group>"; };
 		4A893ADE290A832D00CA502B /* BirthPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthPopupViewController.swift; sourceTree = "<group>"; };
-		4A8F89C428F4F91A00ACE0F1 /* ScentsNote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScentsNote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A8F89C428F4F91A00ACE0F1 /* ScentsNote-Dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ScentsNote-Dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8F89C728F4F91A00ACE0F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A8F89C928F4F91A00ACE0F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4A8F89CE28F4F91A00ACE0F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -973,6 +978,11 @@
 		4AF455BC2955B15A00E87A4E /* DefaultReportReviewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultReportReviewUseCase.swift; sourceTree = "<group>"; };
 		4AF455BE2955B1A000E87A4E /* ReviewReportRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewReportRequestDTO.swift; sourceTree = "<group>"; };
 		4AF455C729598FDB00E87A4E /* MockPerfumeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPerfumeRepository.swift; sourceTree = "<group>"; };
+		4AF595B029937D2F007D135F /* SystemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemService.swift; sourceTree = "<group>"; };
+		4AF595B229937D3C007D135F /* DefaultSystemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSystemService.swift; sourceTree = "<group>"; };
+		4AF595B42993814B007D135F /* SystemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemRepository.swift; sourceTree = "<group>"; };
+		4AF595B629938163007D135F /* DefaultSystemRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultSystemRepository.swift; sourceTree = "<group>"; };
+		4AF595BA299384E9007D135F /* DefaultCheckIsSupportableVersionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCheckIsSupportableVersionUseCase.swift; sourceTree = "<group>"; };
 		4AF9FBE6291DE82300667BD7 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		4AFC7E232973AE5900F09E20 /* FetchFilterBrandInitialUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFilterBrandInitialUseCaseTest.swift; sourceTree = "<group>"; };
 		4AFC7E252973B00400F09E20 /* FetchSeriesForFilterUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchSeriesForFilterUseCaseTest.swift; sourceTree = "<group>"; };
@@ -1551,6 +1561,7 @@
 		4A5A94E02929E52D00B4197D /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				4AF595B9299384D7007D135F /* Version */,
 				4A0EB11A293DA21900630F88 /* Review */,
 				4A828474293C2D3B00E37538 /* Keyword */,
 				4A4F6A2C29375735006BBF0B /* User */,
@@ -1945,7 +1956,7 @@
 		4A8F89C528F4F91A00ACE0F1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4A8F89C428F4F91A00ACE0F1 /* ScentsNote.app */,
+				4A8F89C428F4F91A00ACE0F1 /* ScentsNote-Dev.app */,
 				4A8F89DA28F4F91A00ACE0F1 /* ScentsNoteTests.xctest */,
 				4A8F89E428F4F91A00ACE0F1 /* ScentsNoteUITests.xctest */,
 			);
@@ -2041,6 +2052,7 @@
 				4A6F98D029305AFA0085EBE7 /* DefaultFilterRepository.swift */,
 				4A4F6A012934C6AC006BBF0B /* DefaultKeywordRepository.swift */,
 				4A428AC429432DF700B559C7 /* DefaultReviewRepository.swift */,
+				4AF595B629938163007D135F /* DefaultSystemRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -2664,6 +2676,7 @@
 				4A6F98CE29305AC30085EBE7 /* FilterRepository.swift */,
 				4A4F69FF2934C684006BBF0B /* KeywordRepository.swift */,
 				4A428AC229432DCC00B559C7 /* ReviewRepository.swift */,
+				4AF595B42993814B007D135F /* SystemRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -2679,6 +2692,7 @@
 				4A4F6A0B2934C815006BBF0B /* DefaultKeywordService.swift */,
 				4A4F6A612939AC07006BBF0B /* DefaultUserDefaultsPersitenceService.swift */,
 				4A428AC029432D5700B559C7 /* DefaultReviewService.swift */,
+				4AF595B229937D3C007D135F /* DefaultSystemService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -2692,6 +2706,7 @@
 				4A6F98C5293053CB0085EBE7 /* FilterService.swift */,
 				4A4F6A092934C7F5006BBF0B /* KeywordService.swift */,
 				4A44AB6F293EF67B00F42B0D /* ReviewService.swift */,
+				4AF595B029937D2F007D135F /* SystemService.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -2898,6 +2913,14 @@
 			path = Domain;
 			sourceTree = "<group>";
 		};
+		4AF595B9299384D7007D135F /* Version */ = {
+			isa = PBXGroup;
+			children = (
+				4AF595BA299384E9007D135F /* DefaultCheckIsSupportableVersionUseCase.swift */,
+			);
+			path = Version;
+			sourceTree = "<group>";
+		};
 		4AF9FBE8291E1E5B00667BD7 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -2971,7 +2994,7 @@
 			);
 			name = ScentsNote;
 			productName = Scentsnote;
-			productReference = 4A8F89C428F4F91A00ACE0F1 /* ScentsNote.app */;
+			productReference = 4A8F89C428F4F91A00ACE0F1 /* ScentsNote-Dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4A8F89D928F4F91A00ACE0F1 /* ScentsNoteTests */ = {
@@ -3259,6 +3282,7 @@
 				4A6F98CD29305A790085EBE7 /* DefaultFilterService.swift in Sources */,
 				4A3B04212924760F004F155D /* PerfumeDetailInfoItem.swift in Sources */,
 				4A893AD8290A166200CA502B /* SignUpBirthViewController.swift in Sources */,
+				4AF595B52993814B007D135F /* SystemRepository.swift in Sources */,
 				4AC7F8E32918DE7C00A8D032 /* HomeRecentCell.swift in Sources */,
 				4A9A14E2290919290067F04D /* SignUpPasswordViewController.swift in Sources */,
 				4A4F6A7B2939E86A006BBF0B /* DefaultPerfumeReviewCoordinator.swift in Sources */,
@@ -3289,6 +3313,7 @@
 				4AAFE7D928FB9E3900EA6FB4 /* ApplicationCoordinator.swift in Sources */,
 				4AF455BD2955B15A00E87A4E /* DefaultReportReviewUseCase.swift in Sources */,
 				4A4F6A3E29386ECF006BBF0B /* EditInformationGenderView.swift in Sources */,
+				4AF595BB299384E9007D135F /* DefaultCheckIsSupportableVersionUseCase.swift in Sources */,
 				4A857469291361B300F86C3A /* SurveyKeywordCollectionViewCell.swift in Sources */,
 				4A0E9B0129190C9C0050E474 /* HomeMoreCell.swift in Sources */,
 				4A9A14ED2909FDB00067F04D /* SignUpGenderViewModel.swift in Sources */,
@@ -3299,6 +3324,7 @@
 				4A4C985F29276572004851DB /* PerfumeDetailHeaderView.swift in Sources */,
 				4A4F6A6A2939C3E1006BBF0B /* ResponsePlainObject.swift in Sources */,
 				4A9D9161290000FD001551A8 /* ScentsNoteAPI.swift in Sources */,
+				4AF595B129937D2F007D135F /* SystemService.swift in Sources */,
 				4A6F98E0293062700085EBE7 /* FilterSeriesCell.swift in Sources */,
 				4A4F6A5729397F07006BBF0B /* ChangePasswordViewController.swift in Sources */,
 				4AAFE7EE28FBD07A00EA6FB4 /* DefaultOnboardingCoordinator.swift in Sources */,
@@ -3452,6 +3478,7 @@
 				4AE938BE29543133006A7DAF /* ReviewReportCell.swift in Sources */,
 				4A4F6A2E2937574D006BBF0B /* DefaultFetchPerfumesInMyPageUseCase.swift in Sources */,
 				4A857430290A962300F86C3A /* BirthPopupViewModel.swift in Sources */,
+				4AF595B729938163007D135F /* DefaultSystemRepository.swift in Sources */,
 				4A6F98C6293053CB0085EBE7 /* FilterService.swift in Sources */,
 				4AAFE7E728FBCF0F00EA6FB4 /* OnboardingViewController.swift in Sources */,
 				4A9EB9D0297FA9CD003FC245 /* SearchFilterKeywordViewModel.swift in Sources */,
@@ -3485,6 +3512,7 @@
 				4A6F98BB292F8D8F0085EBE7 /* SearchFilterViewModel.swift in Sources */,
 				4A4C986A29278AF8004851DB /* PerfumeDetailAbundanceContentView.swift in Sources */,
 				4A6F98A8292F0A550085EBE7 /* SearchResultViewController.swift in Sources */,
+				4AF595B329937D3C007D135F /* DefaultSystemService.swift in Sources */,
 				4A0EB120293DCE4500630F88 /* DefaultSplashCoordinator.swift in Sources */,
 				4A893ADF290A832D00CA502B /* BirthPopupViewController.swift in Sources */,
 				4AF455BF2955B1A000E87A4E /* ReviewReportRequestDTO.swift in Sources */,
@@ -3730,6 +3758,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_ID_SUFFIX = "-Dev";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3780,6 +3809,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS${BUNDLE_ID_SUFFIX}";
+				PRODUCT_NAME = ScentsNote_Debug;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3790,6 +3821,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_ID_SUFFIX = "";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -3834,6 +3866,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS${BUNDLE_ID_SUFFIX}";
+				PRODUCT_NAME = ScentsNote;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -3847,8 +3881,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUNDLE_ID_SUFFIX = "-Dev";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.0.3;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = F37P7T723R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScentsNote/Resource/Info.plist;
@@ -3862,9 +3898,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.scentsnote.iOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS${BUNDLE_ID_SUFFIX}";
+				PRODUCT_NAME = "$(TARGET_NAME)${BUNDLE_ID_SUFFIX}";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -3880,8 +3916,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.0.3;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = F37P7T723R;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ScentsNote/Resource/Info.plist;
@@ -3895,9 +3933,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.scentsnote.iOS;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS${BUNDLE_ID_SUFFIX}";
+				PRODUCT_NAME = "$(TARGET_NAME)${BUNDLE_ID_SUFFIX}";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -3912,6 +3950,7 @@
 			baseConfigurationReference = 5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_ID_SUFFIX = "";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -3933,6 +3972,7 @@
 			baseConfigurationReference = D37B14197EF78A34619ABB26 /* Pods-ScentsNoteTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_ID_SUFFIX = "";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -3954,6 +3994,7 @@
 			baseConfigurationReference = D5FC19504A916067C2FC9882 /* Pods-ScentsNoteUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 79K7D639YK;
@@ -3973,6 +4014,7 @@
 			baseConfigurationReference = 14C290035DC383158E473CED /* Pods-ScentsNoteUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 79K7D639YK;

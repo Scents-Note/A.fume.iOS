@@ -11,6 +11,7 @@ import RxSwift
 final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
 
   static let shared: DefaultPerfumeService = DefaultPerfumeService()
+  private override init() {}
 
   func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>> {
     requestObject(.fetchPerfumesInSurvey)

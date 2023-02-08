@@ -6,7 +6,6 @@
 //
 
 protocol PopUpCoordinator: AnyObject {
-  
   func showPopup()
   func hidePopup()
 }

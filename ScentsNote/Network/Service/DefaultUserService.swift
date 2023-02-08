@@ -12,6 +12,7 @@ import Moya
 final class DefaultUserService: ScentsNoteService, UserService {
   
   static let shared: DefaultUserService = DefaultUserService()
+  private override init() {}
   
   func login(email: String, password: String) -> Observable<LoginInfoResponseDTO> {
     return requestObject(.login(email: email, password: password))

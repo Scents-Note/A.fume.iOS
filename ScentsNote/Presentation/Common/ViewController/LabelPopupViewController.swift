@@ -14,6 +14,11 @@ import Then
 
 final class LabelPopupViewController: UIViewController {
   
+  enum ButtonState {
+    case one
+    case two
+  }
+  
   // MARK: - Vars & Lets
   var viewModel: LabelPopupViewModel!
   let disposeBag = DisposeBag()
@@ -38,8 +43,6 @@ final class LabelPopupViewController: UIViewController {
   private lazy var buttonStackView = UIStackView().then {
     $0.axis = .horizontal
     $0.distribution = .fillEqually
-    $0.addArrangedSubview(self.cancelButton)
-    $0.addArrangedSubview(self.confirmButton)
   }
   
   private let cancelButton = UIButton().then {
@@ -80,6 +83,13 @@ final class LabelPopupViewController: UIViewController {
       self?.container.transform = .identity
       self?.container.isHidden = true
     }
+  }
+  
+  func setButtonState(state: ButtonState) {
+    if state == .two {
+      self.buttonStackView.addArrangedSubview(self.cancelButton)
+    }
+    self.buttonStackView.addArrangedSubview(self.confirmButton)
   }
   
   func setLabel(content: String) {
