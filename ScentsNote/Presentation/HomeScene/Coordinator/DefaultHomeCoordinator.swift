@@ -84,6 +84,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   func showPopup() {
     let vc = LabelPopupViewController().then {
+      $0.setButtonState(state: .two)
       $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
       $0.setConfirmLabel(content: "로그인 하기")
     }

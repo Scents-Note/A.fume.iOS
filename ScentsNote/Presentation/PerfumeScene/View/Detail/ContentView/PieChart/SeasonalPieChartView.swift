@@ -25,7 +25,7 @@ class SeasonalPieChartView: UIView {
         colors = [.SNDarkBeige1, .SNLightBeige1, .SNLightBeige2, .SNDarkBeige2]
         labels = ["봄", "여름", "가을", "겨울"]
       case .gender:
-        colors = [.SNDarkBeige1, .SNDarkBeige1, .pointBeige, .SNLightBeige239]
+        colors = [.SNDarkBeige1, .pointBeige, .SNLightBeige239]
         labels = ["남성", "여성", "중성"]
       default:
         break

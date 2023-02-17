@@ -203,6 +203,11 @@ final class PerfumeReviewViewController: UIViewController {
     self.keywordCollectionView.layoutIfNeeded()
   }
   
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    self.keywordCollectionView.layoutIfNeeded()
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -354,6 +359,7 @@ final class PerfumeReviewViewController: UIViewController {
     self.keywordCollectionView.snp.makeConstraints {
       $0.top.equalTo(self.keywordAddButton.snp.bottom).offset(12)
       $0.left.right.equalToSuperview().inset(16)
+      $0.height.greaterThanOrEqualTo(10)
     }
     
     self.containerView.addSubview(self.dividerViewUnderKeyword)
@@ -593,7 +599,6 @@ final class PerfumeReviewViewController: UIViewController {
   
   private func bindKeyword(output: PerfumeReviewViewModel.Output) {
     output.keywords
-      .observe(on: MainScheduler.instance)
       .bind(to: self.keywordCollectionView.rx.items(cellIdentifier: "SurveyKeywordCollectionViewCell", cellType: SurveyKeywordCollectionViewCell.self)) { _, keyword, cell in
         cell.updateUI(keyword: keyword)
       }
@@ -699,9 +704,12 @@ final class PerfumeReviewViewController: UIViewController {
 
 extension PerfumeReviewViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    Log("h")
     guard let cell = cell as? SurveyKeywordCollectionViewCell else { return }
-    if cell.frame.size.width == SurveyKeywordCollectionViewCell.width {
+    Log("hihi")
+    if cell.frame.size.width == 100 {
       DispatchQueue.main.async {
+        Log("hihiiiiii")
         collectionView.collectionViewLayout.invalidateLayout()
         collectionView.layoutIfNeeded()
       }

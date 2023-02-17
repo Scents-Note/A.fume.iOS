@@ -11,6 +11,7 @@ import UIKit
 class DynamicCollectionView: UICollectionView {
   override func layoutSubviews() {
     super.layoutSubviews()
+    Log(contentSize.height)
     if !__CGSizeEqualToSize(bounds.size, self.intrinsicContentSize) {
       self.invalidateIntrinsicContentSize()
     }
@@ -23,4 +24,6 @@ class DynamicCollectionView: UICollectionView {
     }
     return contentSize
   }
+  
+  
 }
