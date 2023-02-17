@@ -9,9 +9,11 @@ import RxSwift
 
 final class DefaultFilterRepository: FilterRepository {
   
+  static let shared = DefaultFilterRepository(filterService: DefaultFilterService.shared)
+  
   private let filterService: FilterService
   
-  init(filterService: FilterService){
+  private init(filterService: FilterService){
     self.filterService = filterService
   }
   

@@ -7,7 +7,8 @@
 
 import Foundation
 
-protocol PerfumeNewCoordinator: AnyObject {
+protocol PerfumeNewCoordinator: PopUpCoordinator {
   var runPerfumeDetailFlow: ((Int) -> Void)? { get set }
+  var runOnboardingFlow: (() -> Void)? { get set }
   func runWebFlow(with url: String)
 }

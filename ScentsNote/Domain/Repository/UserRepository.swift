@@ -13,8 +13,6 @@ protocol UserRepository {
   
   // MARK: - Login
   func login(email: String, password: String) -> Observable<LoginInfo>
-  func logout()
-  func saveLoginInfo(loginInfo: LoginInfo, email: String?, password: String?)
   
   // MARK: - SignUp
   func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo>
@@ -26,16 +24,16 @@ protocol UserRepository {
 
   // MARK: - My Page
   func fetchPerfumesInMyPage(userIdx: Int) -> Observable<[PerfumeInMyPage]>
-  func updateUserInfo(userIdx: Int, userInfo: UserInfo) -> Observable<UserInfo>
+  func updateUserInfo(userIdx: Int, userInfo: EditUserInfo) -> Observable<EditUserInfo>
   func changePassword(password: Password) -> Observable<String>
 
-  func fetchUserDefaults<T>(key: String) -> T?
-  func saveUserInfo(userInfo: UserInfo)
-  func savePassword(password: String)
-  
-//  func clearUserInfo()
-  
-  // MAKR: - Review
+  // MARK: - Review
   func fetchReviewsInMyPage() -> Observable<[ReviewInMyPage]>
+  
+  // MARK: - User Default
+  func fetchUserDefaults<T>(key: String) -> T?
+  func setUserDefault(key: String, value: Any?)
+  func removeUserDefault(key: String)
+
 }
 

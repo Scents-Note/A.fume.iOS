@@ -19,6 +19,7 @@ target 'ScentsNote' do
   pod 'Cosmos', '~> 23.0'
   pod 'Toast-Swift', '~> 5.0.1'
 
+
   target 'ScentsNoteTests' do
     inherit! :search_paths
     pod 'RxSwift'

@@ -20,13 +20,11 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
   }
   
   func showSignUpInformationViewController() {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                                       userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     let vc = SignUpInformationViewController()
     vc.viewModel = SignUpInformationViewModel(
       coordinator: self,
-      checkDuplcateEmailUseCase: CheckDuplcateEmailUseCase(userRepository: userRepository),
-      checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: userRepository)
+      checkDuplcateEmailUseCase: DefaultCheckDuplcateEmailUseCase(userRepository: DefaultUserRepository.shared),
+      checkDuplicateNicknameUseCase: DefaultCheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared)
     )
     self.navigationController.pushViewController(vc, animated: true)
   }
@@ -40,7 +38,8 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showSignUpGenderViewController(with signUpInfo: SignUpInfo) {
+  func showSignUpGenderViewController(with signUpInfo: SignUpInfo?) {
+    guard let signUpInfo = signUpInfo else { return }
     let vc = SignUpGenderViewController()
     vc.viewModel = SignUpGenderViewModel(
       coordinator: self,
@@ -49,30 +48,26 @@ final class DefaultSignUpCoordinator: BaseCoordinator, SignUpCoordinator {
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showSignUpBirthViewController(with signUpInfo: SignUpInfo) {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                                       userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
-    
+  func showSignUpBirthViewController(with signUpInfo: SignUpInfo?) {
+    guard let signUpInfo = signUpInfo else { return }
     let vc = SignUpBirthViewController()
     vc.viewModel = SignUpBirthViewModel(
       coordinator: self,
-      signUpUseCase: SignUpUseCase(userRepository: userRepository),
-      saveLoginInfoUseCase: SaveLoginInfoUseCase(userRepository: userRepository),
+      signUpUseCase: DefaultSignUpUseCase(userRepository: DefaultUserRepository.shared),
+      saveLoginInfoUseCase: DefaultSaveLoginInfoUseCase(userRepository: DefaultUserRepository.shared),
       signUpInfo: signUpInfo
     )
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showBirthPopupViewController(with birth: Int) {
-    guard let pvc = self.navigationController.viewControllers.last as? SignUpBirthViewController else {
+  func showBirthPopupViewController(with birth: Int?) {
+    guard let pvc = self.navigationController.viewControllers.last as? SignUpBirthViewController, let birth = birth else {
       return
     }
     
     let vc = BirthPopupViewController()
-    vc.delegate = pvc
-    vc.viewModel = BirthPopupViewModel(signCoordinator: self,
-                                       birth: birth,
-                                       from: .signUp)
+    vc.viewModel = BirthPopupViewModel(birthPopUpCoordinator: self, birth: birth)
+    vc.viewModel?.delegate = pvc.viewModel
     
     vc.modalPresentationStyle = .overFullScreen
     self.navigationController.present(vc, animated: false, completion: nil)

@@ -21,8 +21,8 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   override func start() {
     self.searchViewController.viewModel = SearchViewModel(
       coordinator: self,
-      fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared))
+      fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared)
     )
     self.navigationController.pushViewController(self.searchViewController, animated: true)
   }
@@ -95,7 +95,6 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
       case .search:
         self?.runSearchResultFlow(perfumeSearch: perfumeSearch)
       case .searchResult:
-//        self?.navigationController.dismiss(animated: true)
         let vc = self?.findViewController(SearchResultViewController.self) as! SearchResultViewController
         vc.viewModel?.updateSearchWords(perfumeSearch: perfumeSearch)
       default:
@@ -127,6 +126,7 @@ final class DefaultSearchCoordinator: BaseCoordinator, SearchCoordinator {
   
   func showPopup() {
     let vc = LabelPopupViewController().then {
+      $0.setButtonState(state: .two)
       $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
       $0.setConfirmLabel(content: "로그인 하기")
     }

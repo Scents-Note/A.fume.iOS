@@ -9,27 +9,28 @@ import RxSwift
 import RxRelay
 
 final class EditInformationViewModel {
+  
   // MARK: - Input & Output
   struct Input {
-    let nicknameTextFieldDidEditEvent: Observable<String>
-    let nicknameCheckButtonDidTapEvent: Observable<Void>
-    let manButtonDidTapEvent: Observable<Void>
-    let womanButtonDidTapEvent: Observable<Void>
-    let birthButtonDidTapEvent: Observable<Void>
-    let doneButtonDidTapEvent: Observable<Void>
-    let withdrawalButtonDidTapEvent: Observable<Void>
+    let nicknameTextFieldDidEditEvent = PublishRelay<String>()
+    let nicknameCheckButtonDidTapEvent = PublishRelay<Void>()
+    let manButtonDidTapEvent = PublishRelay<Void>()
+    let womanButtonDidTapEvent = PublishRelay<Void>()
+    let birthButtonDidTapEvent = PublishRelay<Void>()
+    let doneButtonDidTapEvent = PublishRelay<Void>()
+    let withdrawalButtonDidTapEvent = PublishRelay<Void>()
+  }
+  
+  struct PopupInput {
+    let birthDidEditEvent = PublishRelay<Int>()
   }
   
   struct Output {
     let nickname = BehaviorRelay<String>(value: "")
     let nicknameState = BehaviorRelay<InputState>(value: .empty)
-    let gender = BehaviorRelay<String>(value: "")
-    let birth = BehaviorRelay<Int>(value: 1990)
+    let gender = BehaviorRelay<String?>(value: nil)
+    let birth = BehaviorRelay<Int?>(value: nil)
     let canDone = BehaviorRelay<Bool>(value: false)
-  }
-  
-  struct PopupInput {
-    let birthDidEditEvent = PublishRelay<Int>()
   }
   
   // MARK: - Vars & Lets
@@ -37,156 +38,156 @@ final class EditInformationViewModel {
   private let fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase
   private let checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase
   private let updateUserInformationUseCase: UpdateUserInformationUseCase
-  private let saveUserInfoUseCase: SaveUserInfoUseCase
-  
-  private let popupInput = PopupInput()
-  private var oldUserInfo = UserInfo.default
+  private let saveEditUserInfoUseCase: SaveEditUserInfoUseCase
+  private let disposeBag = DisposeBag()
+  var oldUserInfo = EditUserInfo.default
+  var newUserInfo = EditUserInfo.default
+  let input = Input()
+  let popupInput = PopupInput()
+  let output = Output()
   
   // MARK: - Life Cycle
   init(coordinator: EditInformationCoordinator,
        fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase,
        checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase,
        updateUserInformationUseCase: UpdateUserInformationUseCase,
-       saveUserInfoUseCase: SaveUserInfoUseCase) {
+       saveUserInfoUseCase: SaveEditUserInfoUseCase) {
     self.coordinator = coordinator
     self.fetchUserInfoForEditUseCase = fetchUserInfoForEditUseCase
     self.checkDuplicateNicknameUseCase = checkDuplicateNicknameUseCase
     self.updateUserInformationUseCase = updateUserInformationUseCase
-    self.saveUserInfoUseCase = saveUserInfoUseCase
+    self.saveEditUserInfoUseCase = saveUserInfoUseCase
+    
+    self.transform(input: self.input, popupInput: self.popupInput, output: self.output)
   }
   
   
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
-    let nicknameState = BehaviorRelay<InputState>(value: .empty)
+  func transform(input: Input, popupInput: PopupInput, output: Output) {
+    let nickname = PublishRelay<String>()
+    let nicknameState = PublishRelay<InputState>()
+    let gender = PublishRelay<String?>()
+    let birth = PublishRelay<Int?>()
     let canDone = PublishRelay<Bool>()
-    let nickname = BehaviorRelay<String>(value: "")
-    let gender = BehaviorRelay<String>(value: "")
-    let birth = BehaviorRelay<Int>(value: 1990)
     
     self.bindInput(input: input,
                    nickname: nickname,
                    nicknameState: nicknameState,
                    gender: gender,
-                   birth: birth,
-                   canDone: canDone,
-                   disposeBag: disposeBag)
+                   canDone: canDone)
     
-    self.bindPopupInput(input: self.popupInput,
-                        birth: birth,
-                        disposeBag: disposeBag)
+    self.bindPopupInput(input: popupInput,
+                        birth: birth)
     
     self.bindOutput(output: output,
                     nickname: nickname,
                     nicknameState: nicknameState,
                     gender: gender,
                     birth: birth,
-                    canDone: canDone,
-                    disposeBag: disposeBag)
+                    canDone: canDone)
     
     self.fetchDatas(nickname: nickname,
+                    nicknameState: nicknameState,
                     gender: gender,
-                    birth: birth,
-                    disposeBag: disposeBag)
-    return output
+                    birth: birth)
   }
   
   private func bindInput(input: Input,
-                         nickname: BehaviorRelay<String>,
-                         nicknameState: BehaviorRelay<InputState>,
-                         gender: BehaviorRelay<String>,
-                         birth: BehaviorRelay<Int>,
-                         canDone: PublishRelay<Bool>,
-                         disposeBag: DisposeBag) {
+                         nickname: PublishRelay<String>,
+                         nicknameState: PublishRelay<InputState>,
+                         gender: PublishRelay<String?>,
+                         canDone: PublishRelay<Bool>) {
+    
     input.nicknameTextFieldDidEditEvent
+      .skip(1)
       .subscribe(onNext: { [weak self] text in
-        nickname.accept(text)
+        Log(text)
+        self?.newUserInfo.nickname = text
         self?.updateNicknameState(nickname: text, nicknameState: nicknameState)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.nicknameCheckButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.checkDuplicateNickname(nickname: nickname, nicknameState: nicknameState, disposeBag: disposeBag)
+        self?.checkDuplicateNickname(nickname: self?.newUserInfo.nickname, nicknameState: nicknameState)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.manButtonDidTapEvent
-      .subscribe(onNext: {
+      .subscribe(onNext: { [weak self] in
+        self?.newUserInfo.gender = "MAN"
         gender.accept("MAN")
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.womanButtonDidTapEvent
-      .subscribe(onNext: {
+      .subscribe(onNext: { [weak self] in
+        self?.newUserInfo.gender = "WOMAN"
         gender.accept("WOMAN")
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.birthButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.showBirthPopupViewController(with: birth.value)
+        self?.coordinator?.showBirthPopupViewController(with: self?.newUserInfo.birth ?? 2023)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.updateUserInfo(userInfo: UserInfo(nickname: nickname.value,
-                                                gender: gender.value,
-                                                birth: birth.value),
-                             disposeBag: disposeBag)
+        self?.updateUserInfo(userInfo: self?.newUserInfo)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.withdrawalButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.showWebViewController(with: WebURL.withdrawal)
       })
-      .disposed(by: disposeBag)
-
+      .disposed(by: self.disposeBag)
+    
   }
   
   private func bindPopupInput(input: PopupInput,
-                              birth: BehaviorRelay<Int>,
-                              disposeBag: DisposeBag) {
+                              birth: PublishRelay<Int?>) {
     input.birthDidEditEvent
-      .bind(to: birth)
-      .disposed(by: disposeBag)
+      .subscribe(onNext: { [weak self] year in
+        self?.newUserInfo.birth = year
+        birth.accept(year)
+      })
+      .disposed(by: self.disposeBag)
     
   }
   
   private func bindOutput(output: Output,
-                          nickname: BehaviorRelay<String>,
-                          nicknameState: BehaviorRelay<InputState>,
-                          gender: BehaviorRelay<String>,
-                          birth: BehaviorRelay<Int>,
-                          canDone: PublishRelay<Bool>,
-                          disposeBag: DisposeBag) {
+                          nickname: PublishRelay<String>,
+                          nicknameState: PublishRelay<InputState>,
+                          gender: PublishRelay<String?>,
+                          birth: PublishRelay<Int?>,
+                          canDone: PublishRelay<Bool>) {
     nickname
-      .take(2)
       .bind(to: output.nickname)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     nicknameState
       .bind(to: output.nicknameState)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     gender
       .bind(to: output.gender)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     birth
       .bind(to: output.birth)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    Observable.combineLatest(nicknameState, nickname, gender, birth)
-      .subscribe(onNext: { [weak self] nicknameState, nickname, gender, birth in
-        if nickname == self?.oldUserInfo.nickname && gender == self?.oldUserInfo.gender && birth == self?.oldUserInfo.birth {
+    Observable.combineLatest(nicknameState, gender, birth)
+      .subscribe(onNext: { [weak self] nicknameState, gender, birth in
+        guard let new = self?.newUserInfo, let old = self?.oldUserInfo else { return }
+        if new == old {
           output.canDone.accept(false)
           return
         }
-        if nickname != self?.oldUserInfo.nickname && nicknameState != .success {
+        if new.nickname != old.nickname && nicknameState != .success {
           output.canDone.accept(false)
           return
         }
@@ -195,28 +196,26 @@ final class EditInformationViewModel {
       .disposed(by: disposeBag)
   }
   
-  private func fetchDatas(nickname: BehaviorRelay<String>,
-                          gender: BehaviorRelay<String>,
-                          birth: BehaviorRelay<Int>,
-                          disposeBag: DisposeBag) {
+  private func fetchDatas(nickname: PublishRelay<String>,
+                          nicknameState: PublishRelay<InputState>,
+                          gender: PublishRelay<String?>,
+                          birth: PublishRelay<Int?>) {
+    
     self.fetchUserInfoForEditUseCase.execute()
       .subscribe(onNext: { [weak self] userInfo in
-        self?.setOldValue(userInfo: userInfo)
+        Log(userInfo)
+        self?.oldUserInfo = userInfo
+        self?.newUserInfo = userInfo
         nickname.accept(userInfo.nickname)
+        nicknameState.accept(.success)
         gender.accept(userInfo.gender)
         birth.accept(userInfo.birth)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
-  // MARK: - Action
-  private func setOldValue(userInfo: UserInfo) {
-    self.oldUserInfo = UserInfo(nickname: userInfo.nickname,
-                                gender: userInfo.gender,
-                                birth: userInfo.birth)
-  }
-  
-  private func updateNicknameState(nickname: String, nicknameState: BehaviorRelay<InputState>) {
+  // MARK: - Update
+  private func updateNicknameState(nickname: String, nicknameState: PublishRelay<InputState>) {
     guard nickname.count > 0 && nickname != self.oldUserInfo.nickname else {
       nicknameState.accept(.empty)
       return
@@ -228,8 +227,9 @@ final class EditInformationViewModel {
     nicknameState.accept(.correctFormat)
   }
   
-  private func checkDuplicateNickname(nickname: BehaviorRelay<String>, nicknameState: BehaviorRelay<InputState>, disposeBag: DisposeBag) {
-    self.checkDuplicateNicknameUseCase.execute(nickname: nickname.value)
+  private func checkDuplicateNickname(nickname: String?, nicknameState: PublishRelay<InputState>) {
+    guard let nickname = nickname else { return }
+    self.checkDuplicateNicknameUseCase.execute(nickname: nickname)
       .subscribe { _ in
         nicknameState.accept(.success)
       } onError: { error in
@@ -239,17 +239,22 @@ final class EditInformationViewModel {
       .disposed(by: disposeBag)
   }
   
-  private func updateUserInfo(userInfo: UserInfo, disposeBag: DisposeBag) {
+  private func updateUserInfo(userInfo: EditUserInfo?) {
+    guard let userInfo = userInfo else { return }
     self.updateUserInformationUseCase.execute(userInfo: userInfo)
       .subscribe(onNext: { [weak self] result in
-        self?.saveUserInfoUseCase.execute(userInfo: result)
+        self?.saveEditUserInfoUseCase.execute(userInfo: result)
         self?.coordinator?.finishFlow?()
+      }, onError: { error in
+        Log(userInfo)
+        Log(error)
       })
       .disposed(by: disposeBag)
-
   }
-  
-  func updateBirth(birth: Int) {
+}
+
+extension EditInformationViewModel: BirthPopupDismissDelegate {
+  func confirm(with birth: Int) {
     self.popupInput.birthDidEditEvent.accept(birth)
   }
 }

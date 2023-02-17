@@ -8,5 +8,5 @@
 import Foundation
 
 protocol MainCoordinator: AnyObject {
-
+  func showTabBarController()
 }

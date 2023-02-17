@@ -9,7 +9,7 @@ import UIKit
 
 final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   
-  var onOnboardingFlow: (() -> Void)?
+  var runOnboardingFlow: (() -> Void)?
   
   var myPageViewController: MyPageViewController
   override init(_ navigationController: UINavigationController) {
@@ -18,13 +18,10 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
   }
   
   override func start() {
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
-    
     self.myPageViewController.viewModel = MyPageViewModel(coordinator: self,
-                                                          fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
-                                                          fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase(userRepository: userRepository),
-                                                          fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase(userRepository: userRepository))
+                                                          fetchUserDefaultUseCase: DefaultFetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                          fetchReviewsInMyPageUseCase: DefaultFetchReviewsInMyPageUseCase(userRepository: DefaultUserRepository.shared),
+                                                          fetchPerfumesInMyPageUseCase: DefaultFetchPerfumesInMyPageUseCase(userRepository: DefaultUserRepository.shared))
     
     self.navigationController.pushViewController(self.myPageViewController, animated: true)
   }
@@ -105,12 +102,10 @@ final class DefaultMyPageCoordinator: BaseCoordinator, MyPageCoordinator {
       return
     }
     
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     let vc = MyPageMenuViewController()
     vc.viewModel = MyPageMenuViewModel(coordinator: self,
-                                       fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: userRepository),
-                                       logoutUseCase: LogoutUseCase(userRepository: userRepository))
+                                       fetchUserDefaultUseCase: DefaultFetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                       logoutUseCase: DefaultLogoutUseCase(userRepository: DefaultUserRepository.shared))
     vc.viewModel?.delegate = pvc.viewModel
     
     vc.modalTransitionStyle = .crossDissolve

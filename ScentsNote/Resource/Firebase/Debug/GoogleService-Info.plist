@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>792361201139-oo2qehd5jafif6fal3brn41eqhevc4eg.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.792361201139-oo2qehd5jafif6fal3brn41eqhevc4eg</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>792361201139-nphkm4k878hfabclfpe27e0crrlkfj6u.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBOjL6bRtRP_Rkf639soGpNx8r-kUWBdVQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>792361201139</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.scentsnote.iOS-Dev</string>
+	<key>PROJECT_ID</key>
+	<string>scentsnote-1aa9f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>scentsnote-1aa9f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:792361201139:ios:9c367a295dc42b67b47686</string>
+</dict>
+</plist>

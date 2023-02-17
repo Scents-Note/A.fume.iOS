@@ -23,27 +23,25 @@ final class DefaultEditInformationCoordinator: BaseCoordinator, EditInformationC
   
   private func showEditInfoController() {
     let vc = self.editInfoViewController
-    let userRepository = DefaultUserRepository(userService: DefaultUserService.shared,
-                                               userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)
     vc.viewModel = EditInformationViewModel(coordinator: self,
-                                     fetchUserInfoForEditUseCase: FetchUserInfoForEditUseCase(userRepository: userRepository),
-                                     checkDuplicateNicknameUseCase: CheckDuplicateNicknameUseCase(userRepository: userRepository),
-                                     updateUserInformationUseCase: UpdateUserInformationUseCase(userRepository: userRepository),
-                                     saveUserInfoUseCase: SaveUserInfoUseCase(userRepository: userRepository))
+                                     fetchUserInfoForEditUseCase: DefaultFetchUserInfoForEditUseCase(userRepository: DefaultUserRepository.shared),
+                                     checkDuplicateNicknameUseCase: DefaultCheckDuplicateNicknameUseCase(userRepository: DefaultUserRepository.shared),
+                                     updateUserInformationUseCase: DefaultUpdateUserInformationUseCase(userRepository: DefaultUserRepository.shared),
+                                     saveUserInfoUseCase: DefaultSaveEditUserInfoUseCase(userRepository: DefaultUserRepository.shared))
     vc.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(vc, animated: true)
   }
   
-  func showBirthPopupViewController(with birth: Int) {
-    guard let viewController = self.navigationController.viewControllers.last as? EditInformationViewController else {
+  func showBirthPopupViewController(with birth: Int?) {
+    guard let pvc = self.navigationController.viewControllers.last as? EditInformationViewController, let birth = birth else {
       return
     }
     
     let birthPopupViewController = BirthPopupViewController()
-    birthPopupViewController.delegate = viewController
-    birthPopupViewController.viewModel = BirthPopupViewModel(editInfoCoordinator: self,
-                                                             birth: birth,
-                                                             from: .myPage)
+    birthPopupViewController.viewModel = BirthPopupViewModel(birthPopUpCoordinator: self,
+                                                             birth: birth)
+    
+    birthPopupViewController.viewModel?.delegate = pvc.viewModel
     birthPopupViewController.modalPresentationStyle = .overFullScreen
     self.navigationController.present(birthPopupViewController, animated: false, completion: nil)
   }

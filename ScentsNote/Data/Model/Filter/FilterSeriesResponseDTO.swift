@@ -13,6 +13,6 @@ struct FilterSeriesResponseDTO: Decodable {
 
 extension FilterSeriesResponseDTO {
   func toDomain() -> FilterSeries {
-    FilterSeries(idx: self.seriesIdx, name: self.name, ingredients: self.ingredients.map { $0.toDomain() })
+    FilterSeries(idx: self.seriesIdx, name: self.name, ingredients: self.ingredients.map { $0.toDomain(with: name) })
   }
 }

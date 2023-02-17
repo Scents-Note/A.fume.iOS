@@ -16,7 +16,7 @@ final class PerfumeNewViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDataSection.Model>
   
   // MARK: - Vars & Lets
-  var viewModel: PerfumeNewViewModel?
+  var viewModel: PerfumeNewViewModel!
   var dataSource: DataSource!
   let disposeBag = DisposeBag()
   
@@ -47,10 +47,8 @@ final class PerfumeNewViewController: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.setNavigationBar(title: "새로 등록된 향수")
-    let cellInput = self.setupCollectionView()
     self.configureUI()
-    self.bindViewModel(cellInput: cellInput)
+    self.bindViewModel()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -58,23 +56,21 @@ final class PerfumeNewViewController: UIViewController {
     self.navigationController?.setNavigationBarHidden(false, animated: animated)
   }
   
-  
   // MARK: - Configure UI
-  private func setupCollectionView() -> PerfumeNewViewModel.CellInput {
-    let perfumeClicked = PublishRelay<Perfume>()
-    let perfumeHeartClicked = PublishRelay<Perfume>()
+  private func configureCollectionView() {
+    let input = self.viewModel.cellInput
     
     self.dataSource = DataSource { dataSource, tableView, indexPath, item in
       let cell = self.collectionView.dequeueReusableCell(HomeNewCell.self, for: indexPath)
       cell.updateUI(perfume: item.perfume)
       cell.onPerfumeClick()
         .subscribe(onNext: { _ in
-          perfumeClicked.accept(item.perfume)
+          input.perfumeDidTapEvent.accept(item.perfume.perfumeIdx)
       })
       .disposed(by: cell.disposeBag)
       cell.onHeartClick()
         .subscribe(onNext: {
-          perfumeHeartClicked.accept(item.perfume)
+          input.perfumeHeartDidTapEvent.accept(item.perfume.perfumeIdx)
         })
         .disposed(by: cell.disposeBag)
       return cell
@@ -88,13 +84,12 @@ final class PerfumeNewViewController: UIViewController {
         return UICollectionReusableView()
       }
     }
-    
-    return PerfumeNewViewModel.CellInput(perfumeDidTapEvent: perfumeClicked,
-                                         perfumeHeartDidTapEvent: perfumeHeartClicked)
-                                         
   }
   
   private func configureUI() {
+    self.setNavigationBar(title: "새로 등록된 향수")
+    self.configureCollectionView()
+    
     self.view.backgroundColor = .white
     
     self.view.addSubview(self.reportView)
@@ -125,16 +120,27 @@ final class PerfumeNewViewController: UIViewController {
   }
   
   // MARK: - Bind ViewModel
-  private func bindViewModel(cellInput: PerfumeNewViewModel.CellInput) {
-    let input = PerfumeNewViewModel.Input(
-      reportButtonDidTapEvent: self.reportButton.rx.tap.asObservable()
-    )
-    let output = viewModel?.transform(from: input, from: cellInput, disposeBag: self.disposeBag)
+  private func bindViewModel() {
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.reportButton.rx.tap
+      .bind(to: input.reportButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindPerfumesNew(output: output)
   }
   
-  private func bindPerfumesNew(output: PerfumeNewViewModel.Output?) {
-    output?.perfumes
+  private func bindPerfumesNew(output: PerfumeNewViewModel.Output) {
+    output.perfumes
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
   }

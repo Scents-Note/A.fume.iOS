@@ -26,14 +26,14 @@ final class SplashViewController: UIViewController {
   }
   
   // MARK: - Vars & Lets
-  var viewModel: SplashViewModel?
+  var viewModel: SplashViewModel!
   private let disposeBag = DisposeBag()
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     self.configureUI()
-    self.bindViewModel()
+    self.checkVersion()
   }
   
   private func configureUI() {
@@ -51,8 +51,7 @@ final class SplashViewController: UIViewController {
     }
   }
   
-  // MARK: - Bind ViewModel
-  private func bindViewModel() {
-    self.viewModel?.transform(disposeBag: self.disposeBag)
+  private func checkVersion() {
+    self.viewModel.checkVersion()
   }
 }

@@ -11,8 +11,8 @@ import RxRelay
 final class SearchKeywordViewModel {
   // MARK: - Input & Output
   struct Input {
-    let keywordTextFieldDidEditEvent: Observable<String>
-    let searchButtonDidTapEvent: Observable<Void>
+    let keywordTextFieldDidEditEvent = PublishRelay<String>()
+    let searchButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
@@ -20,46 +20,49 @@ final class SearchKeywordViewModel {
   }
   
   // MARK: - Vars & Lets
-  weak var coordinator: SearchKeywordCoordinator?
-  let from: CoordinatorType
+  private weak var coordinator: SearchKeywordCoordinator?
+  private let from: CoordinatorType
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let output = Output()
+  var searchWord = ""
   
   // MARK: - Life Cycle
   init(coordinator: SearchKeywordCoordinator, from: CoordinatorType) {
     self.coordinator = coordinator
     self.from = from
+    
+    self.transform(input: self.input, output: self.output)
   }
   
-  
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
-    var searchWord = ""
-    
+  func transform(input: Input, output: Output) {
+    let finish = PublishRelay<CoordinatorType>()
+    self.bindInput(input: input, finish: finish)
+    self.bindOutput(output: output, finish: finish)
+  }
+  
+  private func bindInput(input: Input, finish: PublishRelay<CoordinatorType>) {
     input.keywordTextFieldDidEditEvent
-      .subscribe(onNext: { text in
-        searchWord = text
+      .subscribe(onNext: { [weak self] text in
+        self?.searchWord = text
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        let perfumeSearch = PerfumeSearch(searchWord: searchWord)
-        if self.from == .search { output.finish.accept(self.from) }
-        self.coordinator?.finishFlow?(perfumeSearch)
+        if self?.from == .search {
+          finish.accept(self?.from ?? .search)
+        }
+        let perfumeSearch = PerfumeSearch(searchWord: self?.searchWord)
+        self?.coordinator?.finishFlow?(perfumeSearch)
       })
-      .disposed(by: disposeBag)
-    
-    self.bindOutput(output: output, disposeBag: disposeBag)
-    self.fetchDatas(disposeBag: disposeBag)
-    return output
+      .disposed(by: self.disposeBag)
   }
   
-  private func bindOutput(output: Output, disposeBag: DisposeBag) {
-    
-  }
-  
-  private func fetchDatas(disposeBag: DisposeBag) {
-    
+  private func bindOutput(output: Output, finish: PublishRelay<CoordinatorType>) {
+    finish
+      .bind(to: output.finish)
+      .disposed(by: self.disposeBag)
   }
 }

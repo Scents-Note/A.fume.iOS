@@ -15,7 +15,7 @@ enum ScentsNoteAPI {
   case checkDuplicateEmail(email: String)
   case checkDuplicateNickname(nickname: String)
   case fetchPerfumesInMyPage(userIdx: Int)
-  case updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO)
+  case updateUserInfo(userIdx: Int, userInfo: EditUserInfoRequestDTO)
   case changePassword(password: PasswordRequestDTO)
   
   // MARK: - Perfume
@@ -47,6 +47,9 @@ enum ScentsNoteAPI {
   case reportReview(reviewIdx: Int, reason: ReviewReportRequestDTO)
   case updateReviewLike(reviewIdx: Int)
   case deleteReview(reviewIdx: Int)
+  
+  // MARK: - Version
+  case checkIsSupportableVersion(apkVersion: String)
 
 }
 
@@ -64,6 +67,8 @@ extension ScentsNoteAPI: TargetType {
       base += "/filter"
     case .fetchReviewDetail, .updateReview, .reportReview, .updateReviewLike, .deleteReview:
       base += "/review"
+    case .checkIsSupportableVersion:
+      base += "/system"
     default:
       break
     }
@@ -148,6 +153,8 @@ extension ScentsNoteAPI: TargetType {
       return "/\(userIdx)"
     case .changePassword:
       return "/changePassword"
+    case .checkIsSupportableVersion:
+      return "/supportable"
     }
   }
   
@@ -167,7 +174,7 @@ extension ScentsNoteAPI: TargetType {
   var task: Moya.Task {
     switch self {
     case .login, .signUp,.checkDuplicateEmail, .checkDuplicateNickname, .registerSurvey, .fetchPerfumesNew, .fetchPerfumesSearched,
-        .updateUserInfo, .changePassword, .addReview, .updateReview:
+        .updateUserInfo, .changePassword, .addReview, .updateReview, .checkIsSupportableVersion:
       return .requestParameters(parameters: bodyParameters ?? [:], encoding: parameterEncoding)
     default:
       return .requestPlain
@@ -241,8 +248,13 @@ extension ScentsNoteAPI: TargetType {
       if let keywordList = perfumeReview.keywordList {
         params["keywordList"] = keywordList
       }
+    case let .checkIsSupportableVersion(apkVersion):
+      Log(apkVersion)
+      params["apkversion"] = "1.0.1"
+      params["deviceOS"] = "iOS"
     case let .reportReview(_, reason):
       params["reason"] = reason.reason
+
     default:
       break
     }
@@ -251,7 +263,7 @@ extension ScentsNoteAPI: TargetType {
   
   private var parameterEncoding: ParameterEncoding {
     switch self {
-    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesNew:
+    case .checkDuplicateEmail, .checkDuplicateNickname, .fetchPerfumesNew, .checkIsSupportableVersion:
       return URLEncoding.init(destination: .queryString, arrayEncoding: .noBrackets, boolEncoding: .literal)
     default:
       return JSONEncoding.default

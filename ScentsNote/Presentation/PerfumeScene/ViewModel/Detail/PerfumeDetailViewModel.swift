@@ -10,35 +10,28 @@ import RxRelay
 
 final class PerfumeDetailViewModel {
   
-  
-  // TODO: 로직 전면 리팩토링
-  struct InfoInput {
-    let suggestionDidTapEvent = PublishRelay<Void>()
-    let perfumeDidTapEvent = PublishRelay<Perfume>()
-  }
-  
   struct Input {
-    let viewWillAppearEvent: Observable<Void>
-    let viewDidDisappearEvent: Observable<Void>
-    let likeButtonDidTapEvent: Observable<Void>
-    let reviewButtonDidTapEvent: Observable<Void>
-  }
-  
-  struct ScrollInput {
+    let likeButtonDidTapEvent = PublishRelay<Void>()
+    let reviewButtonDidTapEvent = PublishRelay<Void>()
     let tabButtonTapEvent = PublishRelay<Int>()
+    let showToastEvent = PublishRelay<Void>()
   }
   
-  struct ReviewInput {
+  /// 하위 뷰 `Info` & `review` 의 Input
+  struct ChildInput {
+    let suggestionDidTapEvent = PublishRelay<Void>()
+    let perfumeDidTapEvent = PublishRelay<Int>()
     let reviewCellHeartTapEvent = PublishRelay<Int>()
+    let reviewCellReportTapEvent = PublishRelay<Int>()
   }
   
   struct Output {
-    let models = BehaviorRelay<[PerfumeDetailDataSection.Model]>(value: [])
+    let perfumeDetailDatas = BehaviorRelay<[PerfumeDetailDataSection.Model]>(value: [])
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
     let reviews = BehaviorRelay<[ReviewInPerfumeDetail]>(value: [])
     let pageViewPosition = BehaviorRelay<Int>(value: 0)
-    let updatePerfumeLike = PublishRelay<Bool>()
-    let toast = PublishRelay<Void>()
+    let isLiked = PublishRelay<Bool>()
+    let showToast = PublishRelay<Void>()
   }
   
   private weak var coordinator: PerfumeDetailCoordinator?
@@ -47,17 +40,13 @@ final class PerfumeDetailViewModel {
   private let updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase
   private let updateReviewLikeUseCase: UpdateReviewLikeUseCase
   private let fetchUserDefaultUseCase: FetchUserDefaultUseCase
-  
-  let input = ScrollInput()
-  let reviewInput = ReviewInput()
-  let infoInput = InfoInput()
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let childInput = ChildInput()
   let output = Output()
-  
-  private let perfumeIdx: Int
-  private let toast = PublishRelay<Void>()
-  private var perfumeDetail: PerfumeDetail?
-  private var isLiked = false
-  private var isLoggedIn = false
+  let perfumeIdx: Int
+  var perfumeDetail: PerfumeDetail?
+  var isLoggedIn: Bool?
   
   init(coordinator: PerfumeDetailCoordinator?,
        fetchPerfumeDetailUseCase: FetchPerfumeDetailUseCase,
@@ -73,113 +62,100 @@ final class PerfumeDetailViewModel {
     self.updateReviewLikeUseCase = updateReviewLikeUseCase
     self.fetchUserDefaultUseCase = fetchUserDefaultUseCase
     self.perfumeIdx = perfumeIdx
+    
+    self.transform(input: self.input, childInput: self.childInput, output: self.output)
   }
   
-  func transform(input: Input, disposeBag: DisposeBag) {
-    let loadView = PublishRelay<Void>()
+  func transform(input: Input, childInput: ChildInput, output: Output) {
     let perfumeDetail = BehaviorRelay<PerfumeDetail?>(value: nil)
-    let updatePerfumeLike = PublishRelay<Bool>()
+    let isLiked = BehaviorRelay<Bool>(value: true)
     let reviews = BehaviorRelay<[ReviewInPerfumeDetail]>(value: [])
     let pageViewPosition = PublishRelay<Int>()
+    let showToast = PublishRelay<Void>()
     
     self.bindInput(input: input,
-                   scrollInput: self.input,
-                   reviewInput: self.reviewInput,
-                   infoInput: self.infoInput,
-                   loadView: loadView,
+                   childInput: childInput,
                    pageViewPosition: pageViewPosition,
                    perfumeDetail: perfumeDetail,
-                   updatePerfumeLike: updatePerfumeLike,
+                   isLiked: isLiked,
                    reviews: reviews,
-                   disposeBag: disposeBag)
+                   showToast: showToast)
     
-    self.bindOutput(output: self.output,
+    self.bindOutput(output: output,
                     pageViewPosition: pageViewPosition,
                     perfumeDetail: perfumeDetail,
-                    updatePerfumeLike: updatePerfumeLike,
+                    isLiked: isLiked,
                     reviews: reviews,
-                    toast: self.toast,
-                    disposeBag: disposeBag)
+                    showToast: showToast)
     
-    self.fetchDatas(loadView: loadView,
-                    perfumeDetail: perfumeDetail,
+    self.fetchDatas(perfumeDetail: perfumeDetail,
                     reviews: reviews,
-                    disposeBag: disposeBag)
+                    isLiked: isLiked)
   }
   
   private func bindInput(input: Input,
-                         scrollInput: ScrollInput,
-                         reviewInput: ReviewInput,
-                         infoInput: InfoInput,
-                         loadView: PublishRelay<Void>,
+                         childInput: ChildInput,
                          pageViewPosition: PublishRelay<Int>,
                          perfumeDetail: BehaviorRelay<PerfumeDetail?>,
-                         updatePerfumeLike: PublishRelay<Bool>,
+                         isLiked: BehaviorRelay<Bool>,
                          reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
-                         disposeBag: DisposeBag) {
-    
-    input.viewWillAppearEvent
-      .bind(to: loadView)
-      .disposed(by: disposeBag)
-    
-    input.viewDidDisappearEvent
-      .subscribe(onNext: { [weak self] in
-        self?.coordinator?.finishFlow?()
-      })
-      .disposed(by: disposeBag)
+                         showToast: PublishRelay<Void>) {
     
     input.likeButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.updatePerfumeLike(perfumeIdx: self?.perfumeDetail?.perfumeIdx,
-                                updatePerfumeLike: updatePerfumeLike,
-                                disposeBag: disposeBag)
+        self?.handlePerfumeLike(isLiked: isLiked)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.reviewButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        if self?.isLoggedIn == true {
-          self?.runPerfumeReview()
-        } else {
-          self?.coordinator?.showPopup()
-        }
+        self?.handleReviewButton()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    infoInput.suggestionDidTapEvent
-      .subscribe(onNext: { [weak self] in
-        self?.coordinator?.runWebFlow(with: WebURL.perfumeDetailSuggestion)
-      })
-      .disposed(by: disposeBag)
-
-    
-    infoInput.perfumeDidTapEvent
-      .subscribe(onNext: { [weak self] perfume in
-        self?.coordinator?.runPerfumeDetailFlow?(perfume.perfumeIdx)
-      })
-      .disposed(by: disposeBag)
-    
-    reviewInput.reviewCellHeartTapEvent
-      .subscribe(onNext: { [weak self] reviewIdx in
-        self?.updateReviewLike(reviewIdx: reviewIdx, reviews: reviews, disposeBag: disposeBag)
-      })
-      .disposed(by: disposeBag)
-
-    scrollInput.tabButtonTapEvent
+    input.tabButtonTapEvent
       .subscribe(onNext: { idx in
         pageViewPosition.accept(idx)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
+    
+    input.showToastEvent
+      .bind(to: showToast)
+      .disposed(by: self.disposeBag)
+    
+    childInput.suggestionDidTapEvent
+      .subscribe(onNext: { [weak self] in
+        self?.coordinator?.runWebFlow(with: WebURL.perfumeDetailSuggestion)
+      })
+      .disposed(by: self.disposeBag)
+    
+    
+    childInput.perfumeDidTapEvent
+      .subscribe(onNext: { [weak self] perfumeIdx in
+        self?.coordinator?.runPerfumeDetailFlow?(perfumeIdx)
+      })
+      .disposed(by: self.disposeBag)
+    
+    childInput.reviewCellHeartTapEvent
+      .subscribe(onNext: { [weak self] reviewIdx in
+        self?.handleReviewLike(reviewIdx: reviewIdx, reviews: reviews)
+      })
+      .disposed(by: self.disposeBag)
+    
+    childInput.reviewCellReportTapEvent
+      .subscribe(onNext: { [weak self] reviewIdx in
+        self?.handleReviewReport(reviewIdx: reviewIdx)
+      })
+      .disposed(by: self.disposeBag)
     
   }
   
   private func bindOutput(output: Output,
                           pageViewPosition: PublishRelay<Int>,
                           perfumeDetail: BehaviorRelay<PerfumeDetail?>,
-                          updatePerfumeLike: PublishRelay<Bool>,
+                          isLiked: BehaviorRelay<Bool>,
                           reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
-                          toast: PublishRelay<Void>,
-                          disposeBag: DisposeBag) {
+                          showToast: PublishRelay<Void>) {
     
     pageViewPosition
       .bind(to: output.pageViewPosition)
@@ -189,106 +165,105 @@ final class PerfumeDetailViewModel {
       .subscribe(onNext: { detail in
         output.perfumeDetail.accept(detail)
         output.pageViewPosition.accept(0)
+        output.perfumeDetailDatas.accept(detail?.toDataSources() ?? [])
       })
       .disposed(by: disposeBag)
     
-    perfumeDetail.withLatestFrom(output.models) { detail, models in
-      guard let detail = detail else { return [] }
-      let titleItems = PerfumeDetailDataSection.Item.title(detail)
-      let titleSection = PerfumeDetailDataSection.Model(model: .title, items: [titleItems])
-      let contentItems = PerfumeDetailDataSection.Item.content(detail)
-      let contentSection = PerfumeDetailDataSection.Model(model: .content, items: [contentItems])
-      return [titleSection, contentSection]
-    }
-    .bind(to: output.models)
-    .disposed(by: disposeBag)
-    
-    updatePerfumeLike
-      .bind(to: output.updatePerfumeLike)
+    isLiked
+      .bind(to: output.isLiked)
       .disposed(by: disposeBag)
     
     reviews
       .bind(to: output.reviews)
       .disposed(by: disposeBag)
-
-    toast
-      .bind(to: output.toast)
+    
+    showToast
+      .bind(to: output.showToast)
       .disposed(by: disposeBag)
     
   }
   
-  private func fetchDatas(loadView: PublishRelay<Void>,
-                          perfumeDetail: BehaviorRelay<PerfumeDetail?>,
+  private func fetchDatas(perfumeDetail: BehaviorRelay<PerfumeDetail?>,
                           reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
-                          disposeBag: DisposeBag) {
+                          isLiked: BehaviorRelay<Bool>) {
     
-    self.isLoggedIn = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
+    self.isLoggedIn = self.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn)
     
-    loadView.subscribe(onNext: { [weak self] in
-      guard let perfumeIdx = self?.perfumeIdx else { return }
-      self?.fetchPerfumeDetailUseCase.execute(perfumeIdx: perfumeIdx)
-        .subscribe(onNext: { [weak self] detail in
-          self?.perfumeDetail = detail
-          self?.isLiked = detail.isLiked
-          perfumeDetail.accept(detail)
-          
-        })
-        .disposed(by: disposeBag)
-      
-      self?.fetchReviewsInPerfumeDetailUseCase.execute(perfumeIdx: perfumeIdx)
-        .subscribe(onNext: { result in
-          reviews.accept(result)
-        }, onError: { error in
-          Log(error)
-        })
-        .disposed(by: disposeBag)
-    })
-    .disposed(by: disposeBag)
+    self.fetchPerfumeDetailUseCase.execute(perfumeIdx: self.perfumeIdx)
+      .subscribe(onNext: { [weak self] perfumeDetailFetched in
+        self?.perfumeDetail = perfumeDetailFetched
+        perfumeDetail.accept(perfumeDetailFetched)
+        isLiked.accept(perfumeDetailFetched.isLiked)
+      })
+      .disposed(by: self.disposeBag)
+    
+    self.fetchReviewsInPerfumeDetailUseCase.execute(perfumeIdx: perfumeIdx)
+      .subscribe(onNext: { reviewsFetched in
+        reviews.accept(reviewsFetched)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: self.disposeBag)
     
   }
   
   func runPerfumeReview() {
-    guard let detail = perfumeDetail else { return }
-    if detail.reviewIdx == 0 {
-      self.coordinator?.runPerfumeReviewFlow?(detail)
+    guard let perfumeDetail = self.perfumeDetail else { return }
+    if perfumeDetail.reviewIdx == 0 {
+      self.coordinator?.runPerfumeReviewFlow?(perfumeDetail)
     } else {
-      self.coordinator?.runPerfumeReviewFlowWithReviewIdx?(detail.reviewIdx)
+      self.coordinator?.runPerfumeReviewFlowWithReviewIdx?(perfumeDetail.reviewIdx)
     }
   }
   
-  func updatePerfumeLike(perfumeIdx: Int?,
-                         updatePerfumeLike: PublishRelay<Bool>,
-                         disposeBag: DisposeBag) {
-    guard let perfumeIdx = perfumeIdx else { return }
-    self.updatePerfumeLikeUseCase.execute(perfumeIdx: perfumeIdx)
-      .subscribe(onNext: { [weak self] _ in
-        guard let isLiked = self?.isLiked else { return }
-        updatePerfumeLike.accept(!isLiked)
-        self?.isLiked = !isLiked
-      }, onError: { [weak self] error in
-        self?.coordinator?.showPopup()
+  func handlePerfumeLike(isLiked: BehaviorRelay<Bool>) {
+    if self.isLoggedIn == true {
+      self.updatePerfumeLike(isLiked: isLiked)
+    } else {
+      self.coordinator?.showPopup()
+    }
+  }
+  
+  
+  func updatePerfumeLike(isLiked: BehaviorRelay<Bool>) {
+    self.updatePerfumeLikeUseCase.execute(perfumeIdx: self.perfumeIdx)
+      .subscribe(onNext: { _ in
+        isLiked.accept(!isLiked.value)
+      }, onError: { error in
         Log(error)
       })
-      .disposed(by: disposeBag)
-
+      .disposed(by: self.disposeBag)
   }
   
-  func updateReviewLike(reviewIdx: Int,
-                        reviews: BehaviorRelay<[ReviewInPerfumeDetail]>,
-                        disposeBag: DisposeBag) {
+  func handleReviewButton() {
+    if self.isLoggedIn == true {
+      self.runPerfumeReview()
+    } else {
+      self.coordinator?.showPopup()
+    }
+  }
+  
+  func handleReviewLike(reviewIdx: Int, reviews: BehaviorRelay<[ReviewInPerfumeDetail]>) {
+    if self.isLoggedIn == true {
+      self.updateReviewLike(reviewIdx: reviewIdx, reviews: reviews)
+    } else {
+      self.coordinator?.showPopup()
+    }
+  }
+  
+  func updateReviewLike(reviewIdx: Int, reviews: BehaviorRelay<[ReviewInPerfumeDetail]>) {
     self.updateReviewLikeUseCase.execute(reviewIdx: reviewIdx)
       .subscribe(onNext: { [weak self] _ in
-        let updated = self?.toggleReviewLike(reviewIdx: reviewIdx, reviews: reviews.value)
+        let updated = self?.reviewsUpdated(reviewIdx: reviewIdx, reviews: reviews.value)
         guard let updated = updated else { return }
         reviews.accept(updated)
-      }) { [weak self] error in
-        self?.coordinator?.showPopup()
+      }) { error in
         Log(error)
       }
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
-  func toggleReviewLike(reviewIdx: Int, reviews: [ReviewInPerfumeDetail]) -> [ReviewInPerfumeDetail] {
+  func reviewsUpdated(reviewIdx: Int, reviews: [ReviewInPerfumeDetail]) -> [ReviewInPerfumeDetail] {
     reviews.map {
       guard $0.idx != reviewIdx else {
         var review = $0
@@ -304,20 +279,16 @@ final class PerfumeDetailViewModel {
     }
   }
   
-  func clickReport(reviewIdx: Int) {
-    if self.isLoggedIn {
+  func handleReviewReport(reviewIdx: Int) {
+    if self.isLoggedIn == true {
       self.coordinator?.showReviewReportPopupViewController(reviewIdx: reviewIdx)
     } else {
       self.coordinator?.showPopup()
     }
   }
   
-  func clickHeart(reviewIdx: Int) {
-    self.reviewInput.reviewCellHeartTapEvent.accept(reviewIdx)
-  }
-  
   func showToast() {
-    self.toast.accept(())
+    self.input.showToastEvent.accept(())
   }
 }
 

@@ -13,12 +13,12 @@ final class PerfumeNewViewModel {
   
   // MARK: - Input & Output
   struct Input {
-    let reportButtonDidTapEvent: Observable<Void>
+    let reportButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct CellInput {
-    let perfumeDidTapEvent: PublishRelay<Perfume>
-    let perfumeHeartDidTapEvent: PublishRelay<Perfume>
+    let perfumeDidTapEvent = PublishRelay<Int>()
+    let perfumeHeartDidTapEvent = PublishRelay<Int>()
   }
   
   struct Output {
@@ -28,66 +28,94 @@ final class PerfumeNewViewModel {
   // MARK: - Vars & Lets
   private weak var coordinator: PerfumeNewCoordinator?
   private let fetchPerfumesNewUseCase: FetchPerfumesNewUseCase
+  private let updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let cellInput = CellInput()
+  let output = Output()
   
   // MARK: - Life Cycle
-  init(coordinator: PerfumeNewCoordinator, fetchPerfumesNewUseCase: FetchPerfumesNewUseCase) {
+  init(coordinator: PerfumeNewCoordinator,
+       fetchPerfumesNewUseCase: FetchPerfumesNewUseCase,
+       updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase) {
     self.coordinator = coordinator
     self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
+    self.updatePerfumeLikeUseCase = updatePerfumeLikeUseCase
+    
+    self.transform(input: self.input, cellInput: self.cellInput, output: self.output)
   }
-  
   
   // MARK: - Binding
-  func transform(from input: Input, from cellInput: CellInput, disposeBag: DisposeBag) -> Output {
-    let output = Output()
-    let perfumes = PublishRelay<[Perfume]>()
+  func transform(input: Input, cellInput: CellInput, output: Output) {
+    let perfumes = BehaviorRelay<[Perfume]>(value: [])
     
-    self.bindInput(input: input, cellInput: cellInput, perfumes: perfumes, disposeBag: disposeBag)
-    self.bindOutput(output: output, perfumes: perfumes, disposeBag: disposeBag)
-    self.fetchDatas(perfumes: perfumes, disposeBag: disposeBag)
-    return output
+    self.bindInput(input: input, cellInput: cellInput, perfumes: perfumes)
+    self.bindOutput(output: output, perfumes: perfumes)
+    self.fetchDatas(perfumes: perfumes)
   }
   
-  private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+  private func bindInput(input: Input, cellInput: CellInput, perfumes: BehaviorRelay<[Perfume]>) {
     input.reportButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.runWebFlow(with: WebURL.reportPerfumeInNew)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     cellInput.perfumeDidTapEvent
-      .subscribe(onNext: { [weak self] perfume in
-        self?.coordinator?.runPerfumeDetailFlow?(perfume.perfumeIdx)
+      .subscribe(onNext: { [weak self] perfumeIdx in
+        self?.coordinator?.runPerfumeDetailFlow?(perfumeIdx)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    cellInput.perfumeHeartDidTapEvent.withLatestFrom(perfumes) { updated, originals in
-      originals.map {
-        guard $0.perfumeIdx != updated.perfumeIdx else {
-          var item = updated
-          item.isLiked.toggle()
-          return item
-        }
-        return $0
-      }
-    }
-    .bind(to: perfumes)
-    .disposed(by: disposeBag)
+    cellInput.perfumeHeartDidTapEvent
+      .subscribe(onNext: { [weak self] perfumeIdx in
+        self?.updatePerfumeLike(perfumeIdx: perfumeIdx, perfumes: perfumes)
+      })
+      .disposed(by: self.disposeBag)
   }
   
-  private func bindOutput(output: Output, perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+  private func bindOutput(output: Output, perfumes: BehaviorRelay<[Perfume]>) {
     perfumes.subscribe(onNext: { perfumes in
       let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
       let model = PerfumeDataSection.Model(model: "perfumeNew", items: items)
       output.perfumes.accept([model])
     })
-    .disposed(by: disposeBag)
+    .disposed(by: self.disposeBag)
   }
   
-  private func fetchDatas(perfumes: PublishRelay<[Perfume]>, disposeBag: DisposeBag) {
+  private func fetchDatas(perfumes: BehaviorRelay<[Perfume]>) {
     self.fetchPerfumesNewUseCase.execute(size: nil)
       .subscribe(onNext: { data in
         perfumes.accept(data)
       })
       .disposed(by: disposeBag)
+  }
+  
+  private func updatePerfumeLike(perfumeIdx: Int, perfumes: BehaviorRelay<[Perfume]>) {
+    self.updatePerfumeLikeUseCase.execute(perfumeIdx: perfumeIdx)
+      .subscribe(onNext: { [weak self] _ in
+        let perfumesUpdated = self?.perfumesUpdated(perfumeIdx: perfumeIdx, perfumes: perfumes.value) ?? []
+        perfumes.accept(perfumesUpdated)
+      }, onError: { [weak self] error in
+        self?.coordinator?.showPopup()
+      })
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func perfumesUpdated(perfumeIdx: Int, perfumes: [Perfume]) -> [Perfume] {
+    perfumes.map {
+      guard $0.perfumeIdx != perfumeIdx else {
+        var updatePerfume = $0
+        updatePerfume.isLiked = !updatePerfume.isLiked
+        return updatePerfume
+      }
+      return $0
+    }
+  }
+}
+
+extension PerfumeNewViewModel: LabelPopupDelegate {
+  func confirm() {
+    self.coordinator?.runOnboardingFlow?()
   }
 }

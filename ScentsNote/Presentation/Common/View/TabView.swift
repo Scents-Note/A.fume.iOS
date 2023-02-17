@@ -59,6 +59,7 @@ final class Tabview: UIView {
     self.addSubview(highlightView)
     highlightView.snp.makeConstraints {
       $0.width.equalTo(Int(UIScreen.main.bounds.width) / self.tabCnt)
+      $0.left.equalToSuperview()
       $0.bottom.equalTo(self.tabStackView)
       $0.height.equalTo(4)
     }

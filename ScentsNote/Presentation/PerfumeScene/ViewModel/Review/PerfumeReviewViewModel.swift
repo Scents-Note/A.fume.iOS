@@ -17,24 +17,23 @@ final class PerfumeReviewViewModel {
     case reviewUpdate
   }
   // MARK: - Input & Output
-  struct BottomSheetInput {
-    let keywords = PublishRelay<[Keyword]>()
+  struct Input {
+    let perfumeDetailViewDidTapEvent = PublishRelay<Void>()
+    let starViewDidUpdateEvent = PublishRelay<Double>()
+    let noteTextFieldDidEditEvent = PublishRelay<String>()
+    let keywordAddButtonDidTapEvent = PublishRelay<Void>()
+    let longevityCellDidTapEvent = PublishRelay<Int>()
+    let sillageCellDidTapEvent = PublishRelay<Int>()
+    let seasonalCellDidTapEvent = PublishRelay<Int>()
+    let genderCellDidTapEvent = PublishRelay<Int>()
+    let shareButtonDidTapEvent = PublishRelay<Void>()
+    let doneButtonDidTapEvent = PublishRelay<Void>()
+    let deleteButtonDidTapEvent = PublishRelay<Void>()
+    let updateButtonDidTapEvent = PublishRelay<Void>()
   }
   
-  struct Input {
-    let imageContainerDidTapEvent: Observable<UITapGestureRecognizer>
-    let detailStackViewDidTapEvent: Observable<Void>
-    let starViewDidUpdateEvent: PublishRelay<Double>
-    let noteTextFieldDidEditEvent: Observable<String>
-    let keywordAddButtonDidTapEvent: Observable<Void>
-    let longevityCellDidTapEvent: Observable<Int>
-    let sillageCellDidTapEvent: Observable<Int>
-    let seasonalCellDidTapEvent: Observable<Int>
-    let genderCellDidTapEvent: Observable<Int>
-    let shareButtonDidTapEvent: Observable<Void>
-    let doneButtonDidTapEvent: Observable<Void>
-    let deleteButtonDidTapEvent: Observable<Void>
-    let updateButtonDidTapEvent: Observable<Void>
+  struct BottomSheetInput {
+    let keywords = PublishRelay<[Keyword]>()
   }
   
   struct Output {
@@ -45,7 +44,7 @@ final class PerfumeReviewViewModel {
     let genders = BehaviorRelay<[Gender]>(value: [])
     let seasonals = BehaviorRelay<[Seasonal]>(value: [])
     let sillages = BehaviorRelay<[Sillage]>(value: [])
-    let isShareButtonSelected = BehaviorRelay<Bool>(value: false)
+    let isShared = BehaviorRelay<Bool>(value: false)
     let canDone = BehaviorRelay<Bool>(value: false)
     let canUpdate = BehaviorRelay<Bool>(value: false)
     let showToast = PublishRelay<Void>()
@@ -59,19 +58,22 @@ final class PerfumeReviewViewModel {
   private var addReviewUseCase: AddReviewUseCase?
   private var updateReviewUseCase: UpdateReviewUseCase?
   private var deleteReviewUseCase: DeleteReviewUseCase?
-  private let mode: Mode
-  
   private let disposeBag = DisposeBag()
-  private var perfumeDetail: PerfumeDetail?
-  private var perfumeIdx: Int = 0
-  private var reviewIdx: Int = 0
-  private var keywords: [Keyword] = []
   
-  private let bottomSheetInput = BottomSheetInput()
+  let input = Input()
+  let bottomSheetInput = BottomSheetInput()
+  let output = Output()
+  
+  let mode: Mode
+  var perfumeDetail: PerfumeDetail?
+  var perfumeIdx: Int = 0
+  var reviewIdx: Int = 0
+  var keywords: [Keyword] = []
+  
   
   // Vars for Request
-  private var oldReviewDetail: ReviewDetail?
-  private var newReviewDetail = ReviewDetail.default
+  var oldReviewDetail: ReviewDetail?
+  var newReviewDetail = ReviewDetail.default
   
   // MARK: - Life Cycle
   /// 작성한 review가 없을때
@@ -85,6 +87,8 @@ final class PerfumeReviewViewModel {
     self.addReviewUseCase = addReviewUseCase
     self.fetchKeywordsUseCase = fetchKeywordsUseCase
     self.mode = .review
+    
+    self.transform(input: self.input, bottomSheetInput: self.bottomSheetInput, output: self.output)
   }
   
   /// 작성한 리뷰가 있을때
@@ -102,19 +106,20 @@ final class PerfumeReviewViewModel {
     self.fetchKeywordsUseCase = fetchKeywordsUseCase
     self.deleteReviewUseCase = deleteReviewUseCase
     self.mode = .reviewUpdate
+    
+    self.transform(input: self.input, bottomSheetInput: self.bottomSheetInput, output: self.output)
   }
   
   
   // MARK: - Binding
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  func transform(input: Input, bottomSheetInput: BottomSheetInput, output: Output) {
     let reviewDetail = PublishRelay<ReviewDetail>()
     let keywords = BehaviorRelay<[Keyword]>(value: [])
     let longevities = BehaviorRelay<[Longevity]>(value: Longevity.default)
     let genders = BehaviorRelay<[Gender]>(value: Gender.default)
     let seasonals = BehaviorRelay<[Seasonal]>(value: Seasonal.default)
     let sillages = BehaviorRelay<[Sillage]>(value: Sillage.default)
-    let isShareButtonSelected = BehaviorRelay<Bool>(value: false)
+    let isShared = BehaviorRelay<Bool>(value: false)
     let canDone = PublishRelay<Bool>()
     let canUpdate = PublishRelay<Bool>()
     let showToast = PublishRelay<Void>()
@@ -127,12 +132,11 @@ final class PerfumeReviewViewModel {
                    sillages: sillages,
                    seasonals: seasonals,
                    genders: genders,
-                   isShareButtonSelected: isShareButtonSelected,
+                   isShared: isShared,
                    canDone: canDone,
                    canUpdate: canUpdate,
                    showToast: showToast,
-                   pop: pop,
-                   disposeBag: disposeBag)
+                   pop: pop)
     
     self.bindOutput(output: output,
                     reviewDetail: reviewDetail,
@@ -141,15 +145,13 @@ final class PerfumeReviewViewModel {
                     sillages: sillages,
                     seasonals: seasonals,
                     genders: genders,
-                    isShareButtonSelected: isShareButtonSelected,
+                    isShared: isShared,
                     canDone: canDone,
                     canUpdate: canUpdate,
                     showToast: showToast,
-                    pop: pop,
-                    disposeBag: disposeBag)
+                    pop: pop)
     
-    self.fetchDatas(reviewDetail: reviewDetail, disposeBag: disposeBag)
-    return output
+    self.fetchDatas(reviewDetail: reviewDetail)
   }
   
   private func bindInput(input: Input,
@@ -159,15 +161,14 @@ final class PerfumeReviewViewModel {
                          sillages: BehaviorRelay<[Sillage]>,
                          seasonals: BehaviorRelay<[Seasonal]>,
                          genders: BehaviorRelay<[Gender]>,
-                         isShareButtonSelected: BehaviorRelay<Bool>,
+                         isShared: BehaviorRelay<Bool>,
                          canDone: PublishRelay<Bool>,
                          canUpdate: PublishRelay<Bool>,
                          showToast: PublishRelay<Void>,
-                         pop: PublishRelay<Void>,
-                         disposeBag: DisposeBag) {
+                         pop: PublishRelay<Void>) {
     
     // TODO: 통일
-    input.imageContainerDidTapEvent
+    input.perfumeDetailViewDidTapEvent
       .subscribe(onNext: { [weak self] _ in
         if self?.isPerfumeDetailPushed() == true {
           self?.coordinator?.finishFlow?()
@@ -176,94 +177,83 @@ final class PerfumeReviewViewModel {
           pop.accept(())
         }
       })
-      .disposed(by: disposeBag)
-    
-    input.detailStackViewDidTapEvent
-      .subscribe(onNext: { [weak self] _ in
-        if self?.isPerfumeDetailPushed() == true {
-          self?.coordinator?.finishFlow?()
-        } else {
-          self?.coordinator?.runPerfumeDetailFlow?(self?.perfumeIdx ?? 0)
-          pop.accept(())
-        }
-      })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.starViewDidUpdateEvent
       .subscribe(onNext: { [weak self] score in
         self?.newReviewDetail.score = score
         self?.checkChange(canUpdate: canUpdate)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.noteTextFieldDidEditEvent
       .subscribe(onNext: { [weak self] text in
         self?.newReviewDetail.content = text
         self?.checkChange(canUpdate: canUpdate)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.keywordAddButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         guard let keywords = self?.keywords else { return }
         self?.coordinator?.showKeywordBottomSheetViewController(keywords: keywords)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.longevityCellDidTapEvent.withLatestFrom(longevities) { [weak self] updatedIdx, originals in
       self?.longevitiesUpdated(updatedIdx: updatedIdx, longevities: originals, canUpdate: canUpdate) ?? []
     }
     .bind(to: longevities)
-    .disposed(by: disposeBag)
+    .disposed(by: self.disposeBag)
     
-    input.sillageCellDidTapEvent.withLatestFrom(sillages) { [weak self] updatedIdx, originals in
-      self?.sillagesUpdated(updatedIdx: updatedIdx, sillages: originals, canUpdate: canUpdate) ?? []
-    }
-    .bind(to: sillages)
-    .disposed(by: disposeBag)
+    input.sillageCellDidTapEvent.filter { $0 != 1 && $0 != 3}
+      .withLatestFrom(sillages) { [weak self] updatedIdx, originals in
+        self?.sillagesUpdated(updatedIdx: updatedIdx, sillages: originals, canUpdate: canUpdate) ?? []
+      }
+      .bind(to: sillages)
+      .disposed(by: self.disposeBag)
     
     input.seasonalCellDidTapEvent.withLatestFrom(seasonals) { [weak self] updatedIdx, originals in
       self?.seasonalUpdated(updatedIdx: updatedIdx, seasonals: originals, canUpdate: canUpdate) ?? []
     }
     .bind(to: seasonals)
-    .disposed(by: disposeBag)
+    .disposed(by: self.disposeBag)
     
-    input.genderCellDidTapEvent.withLatestFrom(genders) { [weak self] updatedIdx, originals in
-      self?.gendersUpdated(updatedIdx: updatedIdx, genders: originals, canUpdate: canUpdate) ?? []
-    }
-    .bind(to: genders)
-    .disposed(by: disposeBag)
+    input.genderCellDidTapEvent.filter { $0 != 1 && $0 != 3}
+      .withLatestFrom(genders) { [weak self] updatedIdx, originals in
+        self?.gendersUpdated(updatedIdx: updatedIdx, genders: originals, canUpdate: canUpdate) ?? []
+      }
+      .bind(to: genders)
+      .disposed(by: self.disposeBag)
     
     input.shareButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        let isAccessable = self?.newReviewDetail.access ?? false
-        self?.newReviewDetail.access = !isAccessable
+        let isAccessable = self?.newReviewDetail.isShared ?? false
+        self?.newReviewDetail.isShared = !isAccessable
         self?.checkChange(canUpdate: canUpdate)
-        isShareButtonSelected.accept(!isAccessable)
+        isShared.accept(!isAccessable)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.deleteButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.coordinator?.showPopup()
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.doneButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.checkRegister(detail: self?.newReviewDetail,
-                            showToast: showToast,
-                            disposeBag: disposeBag)
+                            showToast: showToast)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.updateButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
         self?.checkRegister(detail: self?.newReviewDetail,
-                            showToast: showToast,
-                            disposeBag: disposeBag)
+                            showToast: showToast)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     bottomSheetInput.keywords
       .subscribe(onNext: { [weak self] updated in
@@ -273,7 +263,7 @@ final class PerfumeReviewViewModel {
         self?.checkChange(canUpdate: canUpdate)
         self?.keywords = updated
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     Observable.combineLatest(input.starViewDidUpdateEvent, input.noteTextFieldDidEditEvent)
       .subscribe(onNext: { score, text in
@@ -283,7 +273,7 @@ final class PerfumeReviewViewModel {
         }
         canDone.accept(true)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
   private func bindOutput(output: Output,
@@ -293,12 +283,11 @@ final class PerfumeReviewViewModel {
                           sillages: BehaviorRelay<[Sillage]>,
                           seasonals: BehaviorRelay<[Seasonal]>,
                           genders: BehaviorRelay<[Gender]>,
-                          isShareButtonSelected: BehaviorRelay<Bool>,
+                          isShared: BehaviorRelay<Bool>,
                           canDone: PublishRelay<Bool>,
                           canUpdate: PublishRelay<Bool>,
                           showToast: PublishRelay<Void>,
-                          pop: PublishRelay<Void>,
-                          disposeBag: DisposeBag) {
+                          pop: PublishRelay<Void>) {
     
     if let perfumeDetail = self.perfumeDetail {
       output.perfumeDetail.accept(perfumeDetail)
@@ -313,64 +302,63 @@ final class PerfumeReviewViewModel {
                               sillages: sillages,
                               seasonals: seasonals,
                               genders: genders,
-                              isShareButtonSelected: isShareButtonSelected,
+                              isShared: isShared,
                               canDone: canDone,
-                              canUpdate: canUpdate,
-                              disposeBag: disposeBag)
+                              canUpdate: canUpdate)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     
     keywords
       .bind(to: output.keywords)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     longevities
       .bind(to: output.longevities)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     genders
       .bind(to: output.genders)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     seasonals
       .bind(to: output.seasonals)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     sillages
       .bind(to: output.sillages)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
-    isShareButtonSelected
-      .bind(to: output.isShareButtonSelected)
-      .disposed(by: disposeBag)
+    isShared
+      .bind(to: output.isShared)
+      .disposed(by: self.disposeBag)
     
     canDone
       .bind(to: output.canDone)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     canUpdate
       .bind(to: output.canUpdate)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     showToast
       .bind(to: output.showToast)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     pop
       .bind(to: output.pop)
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
   }
   
   // MARK: - Network
-  private func fetchDatas(reviewDetail: PublishRelay<ReviewDetail>, disposeBag: DisposeBag) {
+  private func fetchDatas(reviewDetail: PublishRelay<ReviewDetail>) {
     self.fetchKeywordsUseCase?.execute()
       .subscribe { [weak self] result in
         self?.keywords = result
       } onError: { error in
         Log(error)
       }
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     if self.reviewIdx != 0 {
       self.fetchReviewDetailUseCase?.execute(reviewIdx: reviewIdx)
@@ -380,11 +368,11 @@ final class PerfumeReviewViewModel {
         } onError: { error in
           Log(error)
         }
-        .disposed(by: disposeBag)
+        .disposed(by: self.disposeBag)
     }
   }
   
-  private func registerReview(disposeBag: DisposeBag) {
+  private func registerReview() {
     let selectedKeywords = self.keywords.filter { $0.isSelected }
     
     let perfumeReview = ReviewDetail(score: self.newReviewDetail.score,
@@ -397,9 +385,7 @@ final class PerfumeReviewViewModel {
                                      perfume: nil,
                                      keywords: selectedKeywords,
                                      brand: nil,
-                                     access: self.newReviewDetail.access)
-    
-    Log(perfumeReview)
+                                     isShared: self.newReviewDetail.isShared)
     
     if self.reviewIdx == 0 {
       self.addReviewUseCase?.execute(perfumeIdx: self.perfumeDetail!.perfumeIdx, perfumeReview: perfumeReview)
@@ -408,7 +394,7 @@ final class PerfumeReviewViewModel {
         }, onError: { error in
           Log(error)
         })
-        .disposed(by: disposeBag)
+        .disposed(by: self.disposeBag)
     } else {
       self.updateReviewUseCase?.execute(reviewDetail: perfumeReview)
         .subscribe(onNext: { [weak self] _ in
@@ -416,21 +402,21 @@ final class PerfumeReviewViewModel {
         }, onError: { error in
           Log(error)
         })
-        .disposed(by: disposeBag)
+        .disposed(by: self.disposeBag)
     }
   }
   
-  private func checkRegister(detail: ReviewDetail?, showToast: PublishRelay<Void>, disposeBag: DisposeBag) {
-    guard let detail = detail else { return }
-    if detail.access {
-      if detail.longevity == -1 || detail.sillage == -1 || detail.keywords.isEmpty || detail.gender == -1 || detail.seasonal.isEmpty {
+  private func checkRegister(detail: ReviewDetail?, showToast: PublishRelay<Void>) {
+    if self.newReviewDetail.isShared {
+      let review = self.newReviewDetail
+      if review.longevity == -1 || review.sillage == -1 || review.keywords.isEmpty || review.gender == -1 || review.seasonal.isEmpty {
         showToast.accept(())
         return
       }
     }
-    
-    self.registerReview(disposeBag: disposeBag)
+    self.registerReview()
   }
+  
   
   // Review 가 존재할때 초기 세팅
   private func setReviewDetail(output: Output,
@@ -440,10 +426,9 @@ final class PerfumeReviewViewModel {
                                sillages: BehaviorRelay<[Sillage]>,
                                seasonals: BehaviorRelay<[Seasonal]>,
                                genders: BehaviorRelay<[Gender]>,
-                               isShareButtonSelected: BehaviorRelay<Bool>,
+                               isShared: BehaviorRelay<Bool>,
                                canDone: PublishRelay<Bool>,
-                               canUpdate: PublishRelay<Bool>,
-                               disposeBag: DisposeBag) {
+                               canUpdate: PublishRelay<Bool>) {
     
     let updatedLongevity = self.longevitiesUpdated(updatedIdx: reviewDetail.longevity,
                                                    longevities: longevities.value,
@@ -466,7 +451,7 @@ final class PerfumeReviewViewModel {
     sillages.accept(updatedSillage)
     seasonals.accept(updatedSeasonal)
     genders.accept(updatedGender)
-    isShareButtonSelected.accept(reviewDetail.access)
+    isShared.accept(reviewDetail.isShared)
     
     self.updateKeywords(keywords: keywords.value)
     
@@ -503,9 +488,6 @@ final class PerfumeReviewViewModel {
   private func sillagesUpdated(updatedIdx: Int,
                                sillages: [Sillage],
                                canUpdate: PublishRelay<Bool>) -> [Sillage] {
-    if updatedIdx == 1 || updatedIdx == 3 {
-      return sillages
-    }
     self.newReviewDetail.sillage = updatedIdx / 2
     self.checkChange(canUpdate: canUpdate)
     return sillages.enumerated().map { idx, sillage in
@@ -513,6 +495,8 @@ final class PerfumeReviewViewModel {
     }
   }
   
+  ///  `남성` : 0 `중성` : 2 `여성`: 4
+  ///  클릭에 의해서 변경 될 때
   private func seasonalUpdated(updatedIdx: Int,
                                seasonals: [Seasonal],
                                canUpdate: PublishRelay<Bool>) -> [Seasonal] {
@@ -527,10 +511,11 @@ final class PerfumeReviewViewModel {
     return updatedSeasonals
   }
   
+  
   private func seasonalUpdated(newSeasonals: [String],
                                seasonals: [Seasonal],
                                canUpdate: PublishRelay<Bool>) -> [Seasonal] {
-    let indice = getSeasonalIdx(newSeasonals)
+    let indice = seasonalIdice(newSeasonals)
     let updatedSeasonals = seasonals.enumerated().map { idx, seasonal in
       guard !indice.contains(idx) else {
         return Seasonal(season: seasonal.season, percent: seasonal.percent, color: seasonal.color, isAccent: true)
@@ -542,10 +527,8 @@ final class PerfumeReviewViewModel {
     return updatedSeasonals
   }
   
+  ///  `남성` : 0 `중성` : 2 `여성`: 4
   private func gendersUpdated(updatedIdx: Int, genders: [Gender], canUpdate: PublishRelay<Bool>) -> [Gender] {
-    if updatedIdx == 1 || updatedIdx == 3 {
-      return genders
-    }
     self.newReviewDetail.gender = updatedIdx / 2
     self.checkChange(canUpdate: canUpdate)
     return genders.enumerated().map { idx, gender in
@@ -553,7 +536,8 @@ final class PerfumeReviewViewModel {
     }
   }
   
-  private func getSeasonalIdx(_ newSeasonals: [String]) -> [Int] {
+  ///  `봄` : 0 `여름`: 1 `가을` : 2 `겨울`: 3
+  private func seasonalIdice(_ newSeasonals: [String]) -> [Int] {
     var indice: [Int] = []
     newSeasonals.forEach {
       switch $0 {
@@ -571,6 +555,8 @@ final class PerfumeReviewViewModel {
     return indice
   }
   
+  /// `true` : 향수 상세 페이지가 기존에 존재해서 리뷰 페이지를 pop 처리 해줌
+  /// `false` : 향수 상세 페이지가 없어 push를 통해 향수 상세 페이지를 띄워줌
   private func isPerfumeDetailPushed() -> Bool {
     return (self.coordinator as? DefaultPerfumeReviewCoordinator)?.findViewController(PerfumeDetailViewController.self) != nil
   }
@@ -578,17 +564,17 @@ final class PerfumeReviewViewModel {
 }
 
 extension PerfumeReviewViewModel: BottomSheetDismissDelegate {
+  /// `Keyword BottomSheet`에서 키워드 적용시 콜백 함수
   func setKeywordsFromBottomSheet(keywords: [Keyword]) {
     self.bottomSheetInput.keywords.accept(keywords)
   }
 }
 
 extension PerfumeReviewViewModel: LabelPopupDelegate {
+  /// 삭제 확인 팝업에서 확인 클릭시
   func confirm() {
-    Log(self.reviewIdx)
     self.deleteReviewUseCase?.execute(reviewIdx: self.reviewIdx)
-      .subscribe(onNext: { [weak self] a in
-        Log(a)
+      .subscribe(onNext: { [weak self] _ in
         self?.coordinator?.finishFlow?()
       }, onError: { error in
         Log(error)

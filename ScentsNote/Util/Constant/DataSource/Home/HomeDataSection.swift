@@ -40,6 +40,17 @@ struct HomeDataSection {
       }
       return false
     }
+    
+    func content() -> Content? {
+      switch self {
+      case .recommendation(let content):
+        return content
+      case .popularity(let content):
+        return content
+      default:
+        return nil
+      }
+    }
   }
   
   enum HomeItem: Hashable, IdentifiableType {

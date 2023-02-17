@@ -12,8 +12,9 @@ import SnapKit
 import Then
 
 final class EditInformationViewController: UIViewController {
+  
   // MARK: - Vars & Lets
-  var viewModel: EditInformationViewModel?
+  var viewModel: EditInformationViewModel!
   let disposeBag = DisposeBag()
   
   // MARK: - UI
@@ -47,7 +48,6 @@ final class EditInformationViewController: UIViewController {
   private let nicknameView = EditInformationNicknameView()
   private let genderView = EditInformationGenderView()
   private let doneButton = DoneButton(title: "수정 완료")
-  
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -122,54 +122,83 @@ final class EditInformationViewController: UIViewController {
   
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = EditInformationViewModel.Input(
-      nicknameTextFieldDidEditEvent: self.nicknameView.editTextField(),
-      nicknameCheckButtonDidTapEvent: self.nicknameView.clickDoubleCheck(),
-      manButtonDidTapEvent: self.genderView.clickManButton(),
-      womanButtonDidTapEvent: self.genderView.clickWomanButton(),
-      birthButtonDidTapEvent: self.birthButton.rx.tap.asObservable(),
-      doneButtonDidTapEvent: self.doneButton.rx.tap.asObservable(),
-      withdrawalButtonDidTapEvent: self.withdrawalButton.rx.tap.asObservable()
-    )
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.nicknameView.editTextField()
+      .bind(to: input.nicknameTextFieldDidEditEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.nicknameView.clickDoubleCheck()
+      .bind(to: input.nicknameCheckButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.genderView.clickManButton()
+      .bind(to: input.manButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.genderView.clickWomanButton()
+      .bind(to: input.womanButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.birthButton.rx.tap
+      .bind(to: input.birthButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.doneButton.rx.tap
+      .bind(to: input.doneButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.withdrawalButton.rx.tap
+      .bind(to: input.withdrawalButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindNickname(output: output)
     self.bindGender(output: output)
     self.bindBirth(output: output)
     self.bindDoneButton(output: output)
   }
   
-  private func bindNickname(output: EditInformationViewModel.Output?) {
-    output?.nickname
+  private func bindNickname(output: EditInformationViewModel.Output) {
+    output.nickname
       .subscribe(onNext: { [weak self] nickname in
         self?.updateNickname(nickname: nickname)
       })
       .disposed(by: self.disposeBag)
     
-    output?.nicknameState
+    output.nicknameState
       .subscribe(onNext: { [weak self] state in
         self?.updateNicknameSection(state: state)
       })
       .disposed(by: self.disposeBag)
 
   }
-  private func bindGender(output: EditInformationViewModel.Output?) {
-    output?.gender
+  private func bindGender(output: EditInformationViewModel.Output) {
+    output.gender
       .subscribe(onNext: { [weak self] gender in
         self?.updateGender(gender: gender)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func bindBirth(output: EditInformationViewModel.Output?) {
-    output?.birth
+  private func bindBirth(output: EditInformationViewModel.Output) {
+    output.birth
       .subscribe(onNext: { [weak self] birth in
         self?.updateBirth(birth: birth)
       })
       .disposed(by: self.disposeBag)
   }
   
-  private func bindDoneButton(output: EditInformationViewModel.Output?) {
-    output?.canDone
+  private func bindDoneButton(output: EditInformationViewModel.Output) {
+    output.canDone
       .subscribe(onNext: { [weak self] canDone in
         self?.updateDoneButton(canDone: canDone)
       })
@@ -186,12 +215,12 @@ final class EditInformationViewController: UIViewController {
     self.nicknameWarningLabel.text = state.nicknameDescription
   }
   
-  private func updateGender(gender: String) {
+  private func updateGender(gender: String?) {
     self.genderView.updateGenderSection(gender: gender)
   }
   
-  private func updateBirth(birth: Int) {
-    self.birthButton.setTitle("\(birth)", for: .normal)
+  private func updateBirth(birth: Int?) {
+    self.birthButton.setTitle("\(birth ?? 2023)", for: .normal)
   }
   
   private func updateDoneButton(canDone: Bool) {
@@ -200,8 +229,4 @@ final class EditInformationViewController: UIViewController {
   }
 }
 
-extension EditInformationViewController: BirthPopupDismissDelegate{
-  func birthPopupDismiss(with birth: Int) {
-    self.viewModel?.updateBirth(birth: birth)
-  }
-}
+

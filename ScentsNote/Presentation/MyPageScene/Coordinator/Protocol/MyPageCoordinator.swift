@@ -7,7 +7,7 @@
 
 protocol MyPageCoordinator: AnyObject {
 
-  var onOnboardingFlow: (() -> Void)? { get set }
+  var runOnboardingFlow: (() -> Void)? { get set }
   
   func runPerfumeReviewFlow(reviewIdx: Int)
   func runPerfumeReviewFlow(perfumeDetail: PerfumeDetail)

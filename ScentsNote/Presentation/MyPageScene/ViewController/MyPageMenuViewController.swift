@@ -13,10 +13,7 @@ import SnapKit
 import Then
 
 final class MyPageMenuViewController: UIViewController {
-  // MARK: - Vars & Lets
-  var viewModel: MyPageMenuViewModel?
-  let disposeBag = DisposeBag()
-  
+ 
   // MARK: - UI
   private let containerView = UIView().then { $0.backgroundColor = .white }
   private let closeButton = UIButton().then { $0.setImage(.btnClose, for: .normal) }
@@ -30,6 +27,10 @@ final class MyPageMenuViewController: UIViewController {
     $0.isScrollEnabled = false
     $0.register(MenuCell.self)
   }
+  
+  // MARK: - Vars & Lets
+  var viewModel: MyPageMenuViewModel!
+  let disposeBag = DisposeBag()
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -93,14 +94,32 @@ final class MyPageMenuViewController: UIViewController {
   }
   // MARK: - Bind ViewModel
   private func bindViewModel() {
-    let input = MyPageMenuViewModel.Input(closeButtonDidTapEvent: self.closeButton.rx.tap.asObservable(),
-                                          menuCellDidTapEvent: self.collectionView.rx.itemSelected.map { $0.item} )
-    let output = viewModel?.transform(from: input, disposeBag: self.disposeBag)
+    self.bindInput()
+    self.bindOutput()
+  }
+  
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    input.loadMenuEvent.accept(())
+    
+    self.closeButton.rx.tap
+      .bind(to: input.closeButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.collectionView.rx.itemSelected.map { $0.item}
+      .bind(to: input.menuCellDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
     self.bindMenus(output: output)
   }
   
-  private func bindMenus(output: MyPageMenuViewModel.Output?) {
-    output?.menus
+  private func bindMenus(output: MyPageMenuViewModel.Output) {
+    output.menus
       .bind(to: self.collectionView.rx.items(cellIdentifier: "MenuCell", cellType: MenuCell.self)) { _, menu, cell in
         cell.updateUI(menu: menu)
       }

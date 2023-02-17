@@ -11,12 +11,13 @@ import RxSwift
 final class DefaultPerfumeService: ScentsNoteService, PerfumeService {
 
   static let shared: DefaultPerfumeService = DefaultPerfumeService()
+  private override init() {}
 
   func fetchPerfumesInSurvey() -> Observable<ListInfo<PerfumeResponseDTO>> {
     requestObject(.fetchPerfumesInSurvey)
   }
   
-  func fetchSeries() -> Observable<ListInfo<SurveySeries>> {
+  func fetchSeries() -> Observable<ListInfo<SurveySeriesResponseDTO>> {
     requestObject(.fetchSeries)
   }
   

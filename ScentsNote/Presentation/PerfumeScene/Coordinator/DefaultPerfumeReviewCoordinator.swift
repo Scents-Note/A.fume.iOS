@@ -22,23 +22,21 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       perfumeDetail: perfumeDetail,
-      addReviewUseCase: AddReviewUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared))
+      addReviewUseCase: DefaultAddReviewUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+      fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared)
     )
-    self.navigationController.hidesBottomBarWhenPushed = true
+    self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
   }
   
   func start(reviewIdx: Int) {
-    let reviewRepository = DefaultReviewRepository(reviewService: DefaultReviewService.shared)
-    
     self.perfumeReviewViewController.viewModel = PerfumeReviewViewModel(
       coordinator: self,
       reviewIdx: reviewIdx,
-      fetchReviewDetailUseCase: FetchReviewDetailUseCase(reviewRepository: reviewRepository),
-      updateReviewUseCase: UpdateReviewUseCase(reviewRepository: reviewRepository),
-      fetchKeywordsUseCase: FetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository(keywordService: DefaultKeywordService.shared)),
-      deleteReviewUseCase: DeleteReviewUseCase(reviewRepository: reviewRepository)
+      fetchReviewDetailUseCase: DefaultFetchReviewDetailUseCase(reviewRepository: DefaultReviewRepository.shared),
+      updateReviewUseCase: DefaultUpdateReviewUseCase(reviewRepository: DefaultReviewRepository.shared),
+      fetchKeywordsUseCase: DefaultFetchKeywordsUseCase(keywordRepository: DefaultKeywordRepository.shared),
+      deleteReviewUseCase: DefaultDeleteReviewUseCase(reviewRepository: DefaultReviewRepository.shared)
     )
     self.perfumeReviewViewController.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(self.perfumeReviewViewController, animated: true)
@@ -62,8 +60,11 @@ final class DefaultPerfumeReviewCoordinator: BaseCoordinator, PerfumeReviewCoord
   }
   
   func showPopup() {
-    let vc = LabelPopupViewController()
-    vc.setLabel(content: "정말로 삭제하실 건가요?")
+    let vc = LabelPopupViewController().then {
+      $0.setButtonState(state: .two)
+      $0.setLabel(content: "정말로 삭제하실 건가요?")
+    }
+    
     vc.viewModel = LabelPopupViewModel(
       coordinator: self,
       delegate: self.perfumeReviewViewController.viewModel!

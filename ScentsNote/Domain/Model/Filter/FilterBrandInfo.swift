@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FilterBrandInfo {
+struct FilterBrandInfo: Equatable {
   let initial: String
   var brands: [FilterBrand]
 }

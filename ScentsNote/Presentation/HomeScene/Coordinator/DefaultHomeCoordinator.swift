@@ -11,33 +11,34 @@ import Then
 final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   var runOnboardingFlow: (() -> Void)?
-  var viewController: HomeViewController
+  var homeViewController: HomeViewController
   
   override init(_ navigationController: UINavigationController) {
-    self.viewController = HomeViewController()
+    self.homeViewController = HomeViewController()
     super.init(navigationController)
   }
   
   override func start() {
-    let perfumeRepository = DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)
-    self.viewController.viewModel = HomeViewModel(coordinator: self,
-                                                  fetchUserDefaultUseCase: FetchUserDefaultUseCase(userRepository: DefaultUserRepository(userService: DefaultUserService.shared, userDefaultsPersitenceService: DefaultUserDefaultsPersitenceService.shared)),
-                                                  updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesRecommendedUseCase: FetchPerfumesRecommendedUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesPopularUseCase: FetchPerfumesPopularUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesRecentUseCase: FetchPerfumesRecentUseCase(perfumeRepository: perfumeRepository),
-                                                  fetchPerfumesNewUseCase: FetchPerfumesNewUseCase(perfumeRepository: perfumeRepository))
-    self.navigationController.pushViewController(self.viewController, animated: true)
+    self.showHomeViewController()
   }
   
-  
+  private func showHomeViewController() {
+    self.homeViewController.viewModel = HomeViewModel(coordinator: self,
+                                                  fetchUserDefaultUseCase: DefaultFetchUserDefaultUseCase(userRepository: DefaultUserRepository.shared),
+                                                  updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecommendedUseCase: DefaultFetchPerfumesRecommendedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesPopularUseCase: DefaultFetchPerfumesPopularUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesRecentUseCase: DefaultFetchPerfumesRecentUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                  fetchPerfumesNewUseCase: DefaultFetchPerfumesNewUseCase(perfumeRepository: DefaultPerfumeRepository.shared))
+    self.navigationController.pushViewController(self.homeViewController, animated: true)
+  }
   
   func runPerfumeDetailFlow(perfumeIdx: Int) {
     let coordinator = DefaultPerfumeDetailCoordinator(self.navigationController)
     coordinator.finishFlow = { [unowned self] in
       self.removeDependency(coordinator)
     }
-    coordinator.runOnboardingFlow = runOnboardingFlow
+    coordinator.runOnboardingFlow = self.runOnboardingFlow
     coordinator.runPerfumeReviewFlow = { [unowned self] perfumeDetail in
       self.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
     }
@@ -53,6 +54,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
   
   func runPerfumeNewFlow() {
     let coordinator = DefaultPerfumeNewCoordinator(self.navigationController)
+    coordinator.runOnboardingFlow = self.runOnboardingFlow
     coordinator.runPerfumeDetailFlow = { perfumeIdx in
       self.runPerfumeDetailFlow(perfumeIdx: perfumeIdx)
     }
@@ -87,7 +89,7 @@ final class DefaultHomeCoordinator: BaseCoordinator, HomeCoordinator {
     }
     vc.viewModel = LabelPopupViewModel(
       coordinator: self,
-      delegate: self.viewController.viewModel!
+      delegate: self.homeViewController.viewModel!
     )
     
     vc.modalTransitionStyle = .crossDissolve

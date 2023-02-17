@@ -8,8 +8,11 @@
 import UIKit
 
 final class DefaultWebCoordinator: BaseCoordinator, WebCoordinator {
+  
+  // MARK: - Navigate
   var finishFlow: (() -> Void)?
   
+  // MARK: - ViewController
   var webViewController: WebViewController
   
   override init(_ navigationController: UINavigationController) {
@@ -21,9 +24,9 @@ final class DefaultWebCoordinator: BaseCoordinator, WebCoordinator {
     self.showWebController(url: url)
   }
   
-  private func showWebController(url: String) {
+  func showWebController(url: String) {
     let vc = self.webViewController
-    vc.urlString = url
+    vc.url = url
     vc.hidesBottomBarWhenPushed = true
     self.navigationController.pushViewController(vc, animated: true)
   }

@@ -115,10 +115,8 @@ final class SurveyViewModel {
       .disposed(by: disposeBag)
     
     self.fetchSeriesUseCase.execute()
-      .subscribe { [weak self] seriesInfo in
-        self?.series = seriesInfo.rows.compactMap({
-          return SurveySeries(seriesIdx: $0.seriesIdx, name: $0.name, imageUrl: $0.imageUrl, isLiked: false)
-        })
+      .subscribe { [weak self] series in
+        self?.series = series
         output.loadData.accept(true)
       } onError: { error in
         print("User Log: error - \(error)")

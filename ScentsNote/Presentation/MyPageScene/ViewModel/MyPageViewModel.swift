@@ -15,20 +15,18 @@ final class MyPageViewModel {
     let perfumeCellDidTapEvent = PublishRelay<Int>()
     let reviewButtonDidTapEvent = PublishRelay<PerfumeInMyPage>()
     let loginButtonDidTapEvent = PublishRelay<Void>()
-
   }
   
   struct Input {
-    let viewWillAppearEvent: Observable<Void>
-    let myPerfumeButtonDidTapEvent: Observable<Void>
-    let wishListButtonDidTapEvent: Observable<Void>
-    let loginButtonDidTapEvent: Observable<Void>
-    let menuButtonDidTapEvent: Observable<Void>
+    let viewWillAppearEvent = PublishRelay<Void>()
+    let myPerfumeButtonDidTapEvent = PublishRelay<Void>()
+    let wishListButtonDidTapEvent = PublishRelay<Void>()
+    let menuButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
     let selectedTab = BehaviorRelay<Int>(value: 0)
-    let loginState = BehaviorRelay<Bool>(value: true)
+    let loginState = BehaviorRelay<Bool>(value: false)
     let reviews = BehaviorRelay<[[ReviewInMyPage]]>(value: [])
     let perfumes = BehaviorRelay<[PerfumeInMyPage]>(value: [])
   }
@@ -38,11 +36,10 @@ final class MyPageViewModel {
   private let fetchUserDefaultUseCase: FetchUserDefaultUseCase
   private let fetchPerfumesInMyPageUseCase: FetchPerfumesInMyPageUseCase
   private let fetchReviewsInMyPageUseCase: FetchReviewsInMyPageUseCase
-  
+  private let disposeBag = DisposeBag()
+  let input = Input()
   let scrollInput = ScrollInput()
   let output = Output()
-  let loadData = PublishRelay<Void>()
-  var isLoggedIn = false
   
   init(coordinator: MyPageCoordinator,
        fetchUserDefaultUseCase: FetchUserDefaultUseCase,
@@ -52,40 +49,39 @@ final class MyPageViewModel {
     self.fetchUserDefaultUseCase = fetchUserDefaultUseCase
     self.fetchReviewsInMyPageUseCase = fetchReviewsInMyPageUseCase
     self.fetchPerfumesInMyPageUseCase = fetchPerfumesInMyPageUseCase
+    
+    self.transform(input: self.input, scrollInput: self.scrollInput, output: self.output)
   }
   
-  func transform(input: Input, disposeBag: DisposeBag){
+  func transform(input: Input, scrollInput: ScrollInput, output: Output){
+    let loadData = PublishRelay<Void>()
     let selectedTab = PublishRelay<Int>()
     let loginState = PublishRelay<Bool>()
     let reviews = PublishRelay<[[ReviewInMyPage]]>()
     let perfumes = PublishRelay<[PerfumeInMyPage]>()
     
     self.bindInput(input: input,
-                   scrollInput: self.scrollInput,
-                   loadData: self.loadData,
-                   selectedTab: selectedTab,
-                   disposeBag: disposeBag)
+                   scrollInput: scrollInput,
+                   loadData: loadData,
+                   selectedTab: selectedTab)
     
-    self.bindOutput(output: self.output,
+    self.bindOutput(output: output,
                     selectedTab: selectedTab,
                     loginState: loginState,
                     reviews: reviews,
-                    perfumes: perfumes,
-                    disposeBag: disposeBag)
+                    perfumes: perfumes)
     
-    self.fetchDatas(loadData: self.loadData,
+    self.fetchDatas(loadData: loadData,
                     loginState: loginState,
                      reviews: reviews,
-                     perfumes: perfumes,
-                     disposeBag: disposeBag)
+                     perfumes: perfumes)
     
   }
   
   private func bindInput(input: Input,
                          scrollInput: ScrollInput,
                          loadData: PublishRelay<Void>,
-                         selectedTab: PublishRelay<Int>,
-                         disposeBag: DisposeBag) {
+                         selectedTab: PublishRelay<Int>) {
     
     input.viewWillAppearEvent
       .bind(to: loadData)
@@ -100,12 +96,6 @@ final class MyPageViewModel {
     input.wishListButtonDidTapEvent
       .subscribe(onNext: {
         selectedTab.accept(1)
-      })
-      .disposed(by: disposeBag)
-    
-    input.loginButtonDidTapEvent
-      .subscribe(onNext: { [weak self] in
-        self?.coordinator?.onOnboardingFlow?()
       })
       .disposed(by: disposeBag)
     
@@ -130,9 +120,7 @@ final class MyPageViewModel {
     scrollInput.reviewButtonDidTapEvent
       .subscribe(onNext: { [weak self] perfume in
         if perfume.reviewIdx == 0 {
-          let perfumeDetail = self?.getPerfumeDetail(perfume: perfume)
-          guard let perfumeDetail = perfumeDetail else { return }
-          self?.coordinator?.runPerfumeReviewFlow(perfumeDetail: perfumeDetail)
+          self?.coordinator?.runPerfumeReviewFlow(perfumeDetail: perfume.toPerfumeDetail())
         } else {
           self?.coordinator?.runPerfumeReviewFlow(reviewIdx: perfume.reviewIdx)
         }
@@ -141,7 +129,7 @@ final class MyPageViewModel {
     
     scrollInput.loginButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        self?.coordinator?.onOnboardingFlow?()
+        self?.coordinator?.runOnboardingFlow?()
       })
       .disposed(by: disposeBag)
   }
@@ -150,8 +138,7 @@ final class MyPageViewModel {
                           selectedTab: PublishRelay<Int>,
                           loginState: PublishRelay<Bool>,
                           reviews: PublishRelay<[[ReviewInMyPage]]>,
-                          perfumes: PublishRelay<[PerfumeInMyPage]>,
-                          disposeBag: DisposeBag) {
+                          perfumes: PublishRelay<[PerfumeInMyPage]>) {
     
     selectedTab
       .bind(to: output.selectedTab)
@@ -174,46 +161,47 @@ final class MyPageViewModel {
   private func fetchDatas(loadData: PublishRelay<Void>,
                           loginState: PublishRelay<Bool>,
                           reviews: PublishRelay<[[ReviewInMyPage]]>,
-                          perfumes: PublishRelay<[PerfumeInMyPage]>,
-                          disposeBag: DisposeBag) {
+                          perfumes: PublishRelay<[PerfumeInMyPage]>) {
     
     loadData
       .subscribe(onNext: { [weak self] in
         let isLoggedIn = self?.fetchUserDefaultUseCase.execute(key: UserDefaultKey.isLoggedIn) ?? false
-        self?.isLoggedIn = isLoggedIn
         
         loginState.accept(isLoggedIn)
         if isLoggedIn {
-          self?.fetchReviewsInMyPageUseCase.execute()
-            .subscribe(onNext: { result in
-              reviews.accept(result)
-            }, onError: { error in
-              reviews.accept([])
-              Log(error)
-            })
-            .disposed(by: disposeBag)
-          
-          self?.fetchPerfumesInMyPageUseCase.execute()
-            .subscribe(onNext: { result in
-              perfumes.accept(result)
-            }, onError: { error in
-              perfumes.accept([])
-              Log(error)
-            })
-            .disposed(by: disposeBag)
+          self?.fetchReviews(reviews: reviews)
+          self?.fetchPerfumes(perfumes: perfumes)
+        } else {
+          reviews.accept([])
+          perfumes.accept([])
         }
       })
       .disposed(by: disposeBag)
   }
   
-  private func getPerfumeDetail(perfume: PerfumeInMyPage) -> PerfumeDetail {
-    PerfumeDetail(perfumeIdx: perfume.idx, name: perfume.name, brandName: perfume.brandName, story: "", abundanceRate: "", volumeAndPrice: [], imageUrls: [perfume.imageUrl], score: 0, seasonal: [], sillage: [], longevity: [], gender: [], isLiked: false, Keywords: [], noteType: 0, ingredients: [], reviewIdx: 0)
+  private func fetchReviews(reviews: PublishRelay<[[ReviewInMyPage]]>) {
+    self.fetchReviewsInMyPageUseCase.execute()
+      .subscribe(onNext: { result in
+        reviews.accept(result)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: self.disposeBag)
   }
   
+  private func fetchPerfumes(perfumes: PublishRelay<[PerfumeInMyPage]>) {
+    self.fetchPerfumesInMyPageUseCase.execute()
+      .subscribe(onNext: { result in
+        perfumes.accept(result)
+      }, onError: { error in
+        Log(error)
+      })
+      .disposed(by: self.disposeBag)
+  }
 }
 
 extension MyPageViewModel: MyPageMenuDismissDelegate {
   func reloadData() {
-    self.loadData.accept(())
+    self.input.viewWillAppearEvent.accept(())
   }
 }

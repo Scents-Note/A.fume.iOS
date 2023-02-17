@@ -8,10 +8,12 @@
 import Foundation
 
 enum TabBarPage: String, CaseIterable {
-  case home, search, mypage
+  case home
+  case search
+  case mypage
   
-  init?(index: Int) {
-    switch index {
+  init?(idx: Int) {
+    switch idx {
     case 0: self = .home
     case 1: self = .search
     case 2: self = .mypage
@@ -50,6 +52,4 @@ enum TabBarPage: String, CaseIterable {
     case .mypage: return "마이"
     }
   }
-  
-  
 }

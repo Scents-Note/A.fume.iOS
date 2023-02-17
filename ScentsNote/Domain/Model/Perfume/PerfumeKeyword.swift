@@ -37,14 +37,14 @@ extension PerfumeSearch {
                             brandList: self.brands.map { $0.idx })
   }
   
-  func toKeywordList() -> [SearchKeyword] {
+  func toSearchKeywords() -> [SearchKeyword] {
     var list: [SearchKeyword] = []
     if searchWord != nil {
       list += [SearchKeyword(idx: -1, name: self.searchWord!, category: .searchWord)]
     } else {
-      list += keywords
       list += ingredients
       list += brands
+      list += keywords
     }
     return list
   }

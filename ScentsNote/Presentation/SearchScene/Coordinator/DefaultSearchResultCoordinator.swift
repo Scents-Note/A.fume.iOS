@@ -24,8 +24,8 @@ final class DefaultSearchResultCoordinator: BaseCoordinator, SearchResultCoordin
   
   func start(perfumeSearch: PerfumeSearch) {
     self.searchResultViewController.viewModel = SearchResultViewModel(coordinator: self,
-                                                                      fetchPerfumeSearchedUseCase: FetchPerfumeSearchedUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
-                                                                      updatePerfumeLikeUseCase: UpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository(perfumeService: DefaultPerfumeService.shared)),
+                                                                      fetchPerfumeSearchedUseCase: DefaultFetchPerfumeSearchedUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
+                                                                      updatePerfumeLikeUseCase: DefaultUpdatePerfumeLikeUseCase(perfumeRepository: DefaultPerfumeRepository.shared),
                                                                       perfumeSearch: perfumeSearch)
     
 //    self.searchResultViewController.hidesBottomBarWhenPushed = false
@@ -44,6 +44,7 @@ final class DefaultSearchResultCoordinator: BaseCoordinator, SearchResultCoordin
   
   func showPopup() {
     let vc = LabelPopupViewController().then {
+      $0.setButtonState(state: .two)
       $0.setLabel(content: "로그인 후 사용 가능합니다.\n로그인을 해주세요.")
       $0.setConfirmLabel(content: "로그인 하기")
     }

@@ -10,7 +10,8 @@ import RxSwift
 final class DefaultReviewService: ScentsNoteService, ReviewService {
   
   static let shared: DefaultReviewService = DefaultReviewService()
-  
+  private override init() {}
+
   func fetchReviewDetail(reviewIdx: Int) -> Observable<ReviewDetailResponseDTO> {
     requestObject(.fetchReviewDetail(reviewIdx: reviewIdx))
   }

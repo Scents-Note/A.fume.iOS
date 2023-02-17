@@ -12,6 +12,8 @@ struct Perfume: Hashable {
   let imageUrl: String
   let keywordList: [String]?
   var isLiked: Bool
+  
+  static let `default` = Perfume(perfumeIdx: 0, brandName: "마르지엘라", name: "향수", imageUrl: "", keywordList: [], isLiked: false)
 }
 
 

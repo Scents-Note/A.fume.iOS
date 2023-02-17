@@ -10,6 +10,7 @@ import RxSwift
 final class DefaultKeywordService: ScentsNoteService, KeywordService {
   
   static let shared: DefaultKeywordService = DefaultKeywordService()
+  private override init() {}
 
   func fetchKeywords() -> Observable<ListInfo<KeywordResponseDTO>> {
     requestObject(.fetchKeywords)

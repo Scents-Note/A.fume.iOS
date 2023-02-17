@@ -16,10 +16,9 @@ final class PerfumeDetailReviewViewController: UIViewController {
   
   // MARK: - Output
   var onUpdateHeight: ((CGFloat) -> Void)?
-  //  var reviews: BehaviorRelay<[ReviewInPerfumeDetail]>?
   
   // MARK: - Vars & Lets
-  var viewModel: PerfumeDetailViewModel?
+  var viewModel: PerfumeDetailViewModel!
   private let disposeBag = DisposeBag()
   var isLoaded = false
   var height: CGFloat = 0
@@ -66,6 +65,7 @@ final class PerfumeDetailReviewViewController: UIViewController {
   }
   
   private func bindViewModel() {
+    let input = self.viewModel.childInput
     rx.methodInvoked(#selector(viewWillLayoutSubviews))
       .take(2)
       .subscribe(onNext: { [weak self] _ in
@@ -89,13 +89,12 @@ final class PerfumeDetailReviewViewController: UIViewController {
         Log(review)
         cell.updateUI(review: review)
         cell.clickReport()
-          .subscribe(onNext: { [weak self] in
-            self?.viewModel?.clickReport(reviewIdx: review.idx)
-          })
+          .subscribe(onNext: {
+            input.reviewCellReportTapEvent.accept(review.idx)          })
           .disposed(by: cell.disposeBag)
         cell.clickHeart()
-          .subscribe(onNext: { [weak self] in
-            self?.viewModel?.clickHeart(reviewIdx: review.idx)
+          .subscribe(onNext: {
+            input.reviewCellHeartTapEvent.accept(review.idx)
           })
           .disposed(by: cell.disposeBag)
       }

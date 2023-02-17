@@ -10,81 +10,134 @@ import RxRelay
 
 final class SignUpPasswordViewModel {
   
+  // MARK: - Input & Output
   struct Input {
-    let passwordTextFieldDidEditEvent: Observable<String>
-    let passwordCheckTextFieldDidEditEvent: Observable<String>
-    let nextButtonDidTapEvent: Observable<Void>
+    let passwordTextFieldDidEditEvent = PublishRelay<String>()
+    let passwordCheckTextFieldDidEditEvent = PublishRelay<String>()
+    let nextButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct Output {
-    var passwordValidationState = BehaviorRelay<InputState>(value: .empty)
-    var passwordCheckValidationState = BehaviorRelay<InputState>(value: .empty)
+    let passwordState = BehaviorRelay<InputState>(value: .empty)
+    let passwordCheckState = BehaviorRelay<InputState>(value: .empty)
+    let hidePasswordCheckSection = BehaviorRelay<Bool>(value: true)
+    let canDone = BehaviorRelay<Bool>(value: false)
   }
   
+  // MARK: - Vars & Lets
   private weak var coordinator: SignUpCoordinator?
   private var signUpInfo: SignUpInfo
-  
-  private var password = ""
-  private var passwordCheck = ""
+  private let disposeBag = DisposeBag()
+  let input = Input()
+  let output = Output()
+  var password = ""
+  var passwordCheck = ""
   
   init(coordinator: SignUpCoordinator?, signUpInfo: SignUpInfo) {
     self.coordinator = coordinator
     self.signUpInfo = signUpInfo
+    
+    self.transform(input: self.input, output: self.output)
   }
   
-  func transform(from input: Input, disposeBag: DisposeBag) -> Output {
-    let output = Output()
+  // MARK: - Transform
+  func transform(input: Input, output: Output){
+    let passwordState = PublishRelay<InputState>()
+    let passwordCheckState = PublishRelay<InputState>()
+    let hidePasswordCheckSection = PublishRelay<Bool>()
+    
+    self.bindInput(input: input,
+                   passwordState: passwordState,
+                   passwordCheckState: passwordCheckState,
+                   hidePasswordCheckSection: hidePasswordCheckSection)
+    
+    self.bindOutput(output: output,
+                    passwordState: passwordState,
+                    passwordCheckState: passwordCheckState,
+                    hidePasswordCheckSection: hidePasswordCheckSection)
+  }
+  
+  private func bindInput(input: Input,
+                         passwordState: PublishRelay<InputState>,
+                         passwordCheckState:  PublishRelay<InputState>,
+                         hidePasswordCheckSection: PublishRelay<Bool>) {
+    
     input.passwordTextFieldDidEditEvent
       .distinctUntilChanged()
       .subscribe(onNext: { [weak self] password in
         self?.password = password
-        self?.updatePasswordValidationState(output: output)
+        self?.updatePasswordState(password: password, passwordState: passwordState, hidePasswordCheckSection: hidePasswordCheckSection)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.passwordCheckTextFieldDidEditEvent
       .distinctUntilChanged()
       .subscribe(onNext: { [weak self] passwordCheck in
         self?.passwordCheck = passwordCheck
-        self?.updatePasswordCheckValidationState(output: output)
+        self?.updatePasswordCheckState(password: self?.password, passwordCheck: passwordCheck, passwordCheckState: passwordCheckState)
       })
-      .disposed(by: disposeBag)
+      .disposed(by: self.disposeBag)
     
     input.nextButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
-        guard let self = self else { return }
-        self.signUpInfo.password = self.passwordCheck
-        self.coordinator?.showSignUpGenderViewController(with: self.signUpInfo)
+        self?.signUpInfo.password = self?.passwordCheck
+        guard let signupInfo = self?.signUpInfo else { return }
+        self?.coordinator?.showSignUpGenderViewController(with: signupInfo)
       })
-      .disposed(by: disposeBag)
-    
-    return output
+      .disposed(by: self.disposeBag)
   }
-}
-
-extension SignUpPasswordViewModel {
-  private func updatePasswordValidationState(output: Output) {
+  
+  private func bindOutput(output: Output,
+                          passwordState: PublishRelay<InputState>,
+                          passwordCheckState: PublishRelay<InputState>,
+                          hidePasswordCheckSection: PublishRelay<Bool>) {
+    passwordState
+      .bind(to: output.passwordState)
+      .disposed(by: self.disposeBag)
+    
+    passwordCheckState
+      .bind(to: output.passwordCheckState)
+      .disposed(by: self.disposeBag)
+    
+    hidePasswordCheckSection
+      .bind(to: output.hidePasswordCheckSection)
+      .disposed(by: self.disposeBag)
+    
+    Observable.combineLatest(passwordState, passwordCheckState)
+      .subscribe(onNext: { passwordState, passwordCheckState in
+        if passwordState == .success, passwordCheckState == .success {
+          output.canDone.accept(true)
+        } else {
+          output.canDone.accept(false)
+        }
+      })
+      .disposed(by: self.disposeBag)
+  }
+  
+  // MARK: - Update
+  private func updatePasswordState(password: String, passwordState: PublishRelay<InputState>, hidePasswordCheckSection: PublishRelay<Bool>) {
     guard self.password.count > 0 else {
-      output.passwordValidationState.accept(.empty)
+      passwordState.accept(.empty)
       return
     }
     guard self.password.count >= 4 else {
-      output.passwordValidationState.accept(.wrongFormat)
+      passwordState.accept(.wrongFormat)
       return
     }
-    output.passwordValidationState.accept(.success)
+    passwordState.accept(.success)
+    hidePasswordCheckSection.accept(false)
   }
   
-  private func updatePasswordCheckValidationState(output: Output) {
+  private func updatePasswordCheckState(password: String?, passwordCheck: String, passwordCheckState: PublishRelay<InputState>) {
     guard self.passwordCheck.count > 0 else {
-      output.passwordCheckValidationState.accept(.empty)
+      passwordCheckState.accept(.empty)
       return
     }
     guard self.password == self.passwordCheck else {
-      output.passwordCheckValidationState.accept(.wrongFormat)
+      passwordCheckState.accept(.wrongFormat)
       return
     }
-    output.passwordCheckValidationState.accept(.success)
+    passwordCheckState.accept(.success)
     
   }
 }

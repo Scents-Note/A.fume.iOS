@@ -16,9 +16,9 @@ final class FilterSeriesView: UIView {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<FilterSeriesDataSection.Model>
   
   // MARK: - Vars & Lets
-  var viewModel: SearchFilterViewModel
-  let disposeBag = DisposeBag()
   private var dataSource: DataSource!
+  var viewModel: SearchFilterSeriesViewModel
+  let disposeBag = DisposeBag()
   
   let series = BehaviorRelay<[FilterIngredient]>(value: [])
   
@@ -38,7 +38,9 @@ final class FilterSeriesView: UIView {
   
   // MARK: - Life Cycle
   init(viewModel: SearchFilterViewModel) {
-    self.viewModel = viewModel
+    self.viewModel = SearchFilterSeriesViewModel(filterDelegate: viewModel,
+                                                 fetchSeriesForFilterUseCase: DefaultFetchSeriesForFilterUseCase(filterRepository: DefaultFilterRepository.shared))
+    
     super.init(frame: .zero)
     self.configureUI()
     self.bindViewModel()
@@ -64,7 +66,6 @@ final class FilterSeriesView: UIView {
       $0.centerY.centerX.equalToSuperview()
     }
     
-//    self.collectionView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.collectionView)
     self.collectionView.snp.makeConstraints {
       $0.top.equalTo(self.notyView.snp.bottom)
@@ -73,14 +74,16 @@ final class FilterSeriesView: UIView {
   }
   
   private func configureCollectionView() {
+    // TODO: Configure과 bindViewModel이 동시에 있을때 어떻게 처리할 것인가?
+    let input = self.viewModel.input
     
     self.dataSource = DataSource(
       configureCell: { dataSource, collectionView, indexPath, item in
         let cell = self.collectionView.dequeueReusableCell(FilterSeriesCell.self, for: indexPath)
         cell.updateUI(ingredient: item.ingredient)
         cell.clickSeries()
-          .subscribe(onNext: {_ in
-            self.viewModel.clickSeries(section: indexPath.section, ingredient: item.ingredient)
+          .subscribe(onNext: {
+            input.ingredientDidTapEvent.accept((indexPath.section, item.ingredient))
           })
           .disposed(by: cell.disposeBag)
         return cell
@@ -91,7 +94,7 @@ final class FilterSeriesView: UIView {
         section.updateUI(title: title)
         section.clickMoreButton()
           .subscribe(onNext: {
-            self.viewModel.clickSeriesMoreButton(section: indexPath.section)
+            input.seiresMoreButtonDidTapEvent.accept(indexPath.section)
           })
           .disposed(by: section.disposeBag)
         return section
@@ -100,7 +103,9 @@ final class FilterSeriesView: UIView {
   
   // MARK: - Bind ViewModel
   func bindViewModel() {
-    self.viewModel.seriesDataSource
+    let output = self.viewModel.output
+    
+    output.seriesDataSource
       .bind(to: self.collectionView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
   }

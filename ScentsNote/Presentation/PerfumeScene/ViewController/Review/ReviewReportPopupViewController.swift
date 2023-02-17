@@ -14,7 +14,7 @@ import Then
 
 final class ReviewReportPopupViewController: UIViewController {
   
-  var viewModel: ReviewReportPopupViewModel?
+  var viewModel: ReviewReportPopupViewModel!
   private var disposeBag = DisposeBag()
   
   private let container = UIView().then {
@@ -78,23 +78,40 @@ final class ReviewReportPopupViewController: UIViewController {
   }
   
   private func bindViewModel() {
-    let input = ReviewReportPopupViewModel.Input(reportCellDidTapEvent: self.collectionView.rx.itemSelected.map { $0.row },
-                                                 cancelButtonDidTapEvent: self.cancelButton.rx.tap.asObservable(),
-                                                 reportButtonDidTapEvent: self.reportButton.rx.tap.asObservable())
-    let output = self.viewModel?.transform(from: input, disposeBag: disposeBag)
-    
-    self.bindReports(output: output)
-    
+    self.bindInput()
+    self.bindOutput()
   }
   
-  private func bindReports(output: ReviewReportPopupViewModel.Output?) {
-    output?.reports
+  private func bindInput() {
+    let input = self.viewModel.input
+    
+    self.collectionView.rx.itemSelected.map { $0.row }
+      .bind(to: input.reportCellDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.cancelButton.rx.tap
+      .bind(to: input.cancelButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+    
+    self.reportButton.rx.tap
+      .bind(to: input.reportButtonDidTapEvent)
+      .disposed(by: self.disposeBag)
+  }
+  
+  private func bindOutput() {
+    let output = self.viewModel.output
+    
+    bindReports(output: output)
+  }
+  
+  private func bindReports(output: ReviewReportPopupViewModel.Output) {
+    output.reports
       .bind(to: self.collectionView.rx.items(cellIdentifier: "ReviewReportCell", cellType: ReviewReportCell.self)) { _, report, cell in
         cell.updateUI(report: report)
       }
       .disposed(by: self.disposeBag)
     
-    output?.isSelected
+    output.isSelected
       .asDriver(onErrorJustReturn: ())
       .drive(onNext: { [weak self] in
         self?.reportButton.backgroundColor = .blackText

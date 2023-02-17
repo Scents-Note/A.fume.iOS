@@ -12,12 +12,13 @@ import Moya
 final class DefaultUserService: ScentsNoteService, UserService {
   
   static let shared: DefaultUserService = DefaultUserService()
+  private override init() {}
   
-  func login(email: String, password: String) -> Observable<LoginInfo> {
+  func login(email: String, password: String) -> Observable<LoginInfoResponseDTO> {
     return requestObject(.login(email: email, password: password))
   }
   
-  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfoResponseDTO> {
     requestObject(.signUp(signUpInfo: signUpInfo))
   }
   
@@ -37,7 +38,7 @@ final class DefaultUserService: ScentsNoteService, UserService {
     requestObject(.fetchPerfumesInMyPage(userIdx: userIdx))
   }
   
-  func updateUserInfo(userIdx: Int, userInfo: UserInfoRequestDTO) -> Observable<UserInfoResponseDTO> {
+  func updateUserInfo(userIdx: Int, userInfo: EditUserInfoRequestDTO) -> Observable<EditUserInfoResponseDTO> {
     requestObject(.updateUserInfo(userIdx: userIdx, userInfo: userInfo))
   }
   
