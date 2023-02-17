@@ -6,7 +6,7 @@
 //
 
 import RxSwift
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockReviewRepository: ReviewRepository {
   func fetchReviewDetail(reviewIdx: Int) -> Observable<ReviewDetail> {

@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2023/02/02.
 //
 
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 struct MockModel {
   static let perfumeDetail = PerfumeDetail(perfumeIdx: 7, name: "154 코롱", brandName: "조 말론", story: "story",

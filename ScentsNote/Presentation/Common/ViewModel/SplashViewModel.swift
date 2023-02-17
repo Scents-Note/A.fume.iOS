@@ -38,7 +38,7 @@ final class SplashViewModel {
     self.checkIsSupportableVersionUseCase.excute()
       .subscribe(onNext: { [weak self] isSupportableFetched in
         Log(isSupportableFetched)
-        if isSupportableFetched { self?.showUpdatePopup() }
+        if isSupportableFetched { self?.login() }
         else { self?.showUpdatePopup() }
       }, onError: { error in
         Log(error)

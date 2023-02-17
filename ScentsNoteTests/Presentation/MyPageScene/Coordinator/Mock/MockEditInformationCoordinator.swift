@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2023/01/20.
 //
 
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockEditInformationCoordinator: EditInformationCoordinator {
   
@@ -36,6 +36,6 @@ final class MockEditInformationCoordinator: EditInformationCoordinator {
   
   func start() {}
   
-  func start(from: ScentsNote.CoordinatorType) {}
+  func start(from: CoordinatorType) {}
   
 }

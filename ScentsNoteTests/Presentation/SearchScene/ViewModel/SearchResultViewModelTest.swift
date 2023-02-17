@@ -8,7 +8,7 @@
 import XCTest
 import RxSwift
 import RxTest
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class SearchResultViewModelTest: XCTestCase {
   private var coordinator: SearchResultCoordinator!

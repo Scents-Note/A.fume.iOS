@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockOnboardingCoordinator: OnboardingCoordinator {
   

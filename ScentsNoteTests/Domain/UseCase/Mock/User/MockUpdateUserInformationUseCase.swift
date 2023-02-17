@@ -6,7 +6,7 @@
 //
 
 import RxSwift
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockUpdateUserInformationUseCase: UpdateUserInformationUseCase {
   

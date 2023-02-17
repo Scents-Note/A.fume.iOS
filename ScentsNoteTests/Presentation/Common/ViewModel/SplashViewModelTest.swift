@@ -8,13 +8,14 @@
 import XCTest
 import RxSwift
 import RxTest
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class SplashViewModelTest: XCTestCase {
   private var coordinator: SplashCoordinator!
   private var loginUseCase: LoginUseCase!
   private var logoutUseCase: LogoutUseCase!
   private var saveLoginInfoUseCase: SaveLoginInfoUseCase!
+  private var checkIsSupportableVersionUseCase: CheckIsSupportableVersionUseCase!
   private var disposeBag: DisposeBag!
   private var scheduler: TestScheduler!
   
@@ -23,6 +24,7 @@ final class SplashViewModelTest: XCTestCase {
     self.loginUseCase = MockLoginUseCase()
     self.logoutUseCase = MockLogoutUseCase()
     self.saveLoginInfoUseCase = MockSaveLoginInfoUseCase()
+    self.checkIsSupportableVersionUseCase = MockCheckIsSupportableVersionUseCase()
     
     self.scheduler = TestScheduler(initialClock: 0)
     self.disposeBag = DisposeBag()
@@ -34,6 +36,7 @@ final class SplashViewModelTest: XCTestCase {
     self.loginUseCase = nil
     self.logoutUseCase = nil
     self.saveLoginInfoUseCase = nil
+    self.checkIsSupportableVersionUseCase = nil
     self.scheduler = nil
     self.disposeBag = nil
   }
@@ -44,6 +47,7 @@ final class SplashViewModelTest: XCTestCase {
     // Given
     // TODO: 이런 경우에 그냥 ViewModel을 분리해서 Test를 하는 것이 더 깔끔한지?
     let viewModel = SplashViewModel(coordinator: self.coordinator,
+                                    checkIsSupportableVersionUseCase: self.checkIsSupportableVersionUseCase,
                                     loginUseCase: self.loginUseCase,
                                     logoutUseCase: self.logoutUseCase,
                                     saveLoginInfoUseCase: self.saveLoginInfoUseCase)
@@ -70,6 +74,7 @@ final class SplashViewModelTest: XCTestCase {
     // Given
     (self.loginUseCase as! MockLoginUseCase).setState(state: .failure)
     let viewModel = SplashViewModel(coordinator: self.coordinator,
+                                    checkIsSupportableVersionUseCase: self.checkIsSupportableVersionUseCase,
                                     loginUseCase: self.loginUseCase,
                                     logoutUseCase: self.logoutUseCase,
                                     saveLoginInfoUseCase: self.saveLoginInfoUseCase)

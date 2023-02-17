@@ -6,7 +6,7 @@
 //
 
 import RxSwift
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockUpdateReviewLikeUseCase: UpdateReviewLikeUseCase {
   func execute(reviewIdx: Int) -> Observable<Bool> {

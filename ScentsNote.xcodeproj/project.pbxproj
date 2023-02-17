@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2851444100D02B64E1A0A233 /* Pods_ScentsNote.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A132D74C89C02A890A80D01 /* Pods_ScentsNote.framework */; };
+		4A020AA7299F2496004E3B91 /* MockCheckIsSupportableVersionUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A020AA6299F2496004E3B91 /* MockCheckIsSupportableVersionUseCase.swift */; };
 		4A05FBCC2973DA0C00813C71 /* FetchPerfumesInMyPageUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBCB2973DA0C00813C71 /* FetchPerfumesInMyPageUseCaseTest.swift */; };
 		4A05FBCE2973F07500813C71 /* FetchUserInfoForEditUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBCD2973F07500813C71 /* FetchUserInfoForEditUseCaseTest.swift */; };
 		4A05FBD02973F59E00813C71 /* CheckDuplicateNicknameUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05FBCF2973F59E00813C71 /* CheckDuplicateNicknameUseCaseTest.swift */; };
@@ -511,6 +512,7 @@
 		1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNoteUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		21E07E4F3006358C71EFB2FA /* Pods-ScentsNote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote/Pods-ScentsNote.release.xcconfig"; sourceTree = "<group>"; };
 		47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ScentsNoteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A020AA6299F2496004E3B91 /* MockCheckIsSupportableVersionUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCheckIsSupportableVersionUseCase.swift; sourceTree = "<group>"; };
 		4A05FBCB2973DA0C00813C71 /* FetchPerfumesInMyPageUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPerfumesInMyPageUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBCD2973F07500813C71 /* FetchUserInfoForEditUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserInfoForEditUseCaseTest.swift; sourceTree = "<group>"; };
 		4A05FBCF2973F59E00813C71 /* CheckDuplicateNicknameUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDuplicateNicknameUseCaseTest.swift; sourceTree = "<group>"; };
@@ -1043,6 +1045,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4A020AA5299F248F004E3B91 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				4A020AA6299F2496004E3B91 /* MockCheckIsSupportableVersionUseCase.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
 		4A05FBE72974185200813C71 /* Keyword */ = {
 			isa = PBXGroup;
 			children = (
@@ -1300,6 +1310,7 @@
 		4A430D3D297A552300FF8DD1 /* Mock */ = {
 			isa = PBXGroup;
 			children = (
+				4A020AA5299F248F004E3B91 /* System */,
 				4A9EB9E529823E0F003FC245 /* Keyword */,
 				4A9EB9D929812F57003FC245 /* Filter */,
 				4A9EB9D4298124DE003FC245 /* Search */,
@@ -3655,6 +3666,7 @@
 				4ABF6D6629890F5A0044E8FC /* MockBottomSheetDismissDelegate.swift in Sources */,
 				4A39EFB3297420E900AD2AE7 /* DeleteReviewUseCaseTest.swift in Sources */,
 				4A9EB9BA297BAC32003FC245 /* SearchViewModelTest.swift in Sources */,
+				4A020AA7299F2496004E3B91 /* MockCheckIsSupportableVersionUseCase.swift in Sources */,
 				4ADC03092972663A00C9D750 /* FetchSeriesUseCaseTest.swift in Sources */,
 				4A9EB9E029821E32003FC245 /* SearchFilterBrandViewModelTest.swift in Sources */,
 				4A93A74B297A71F5005CF505 /* MockLogoutUseCase.swift in Sources */,
@@ -3883,7 +3895,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "-Dev";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0.3;
+				CURRENT_PROJECT_VERSION = 1.0.1.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = F37P7T723R;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3918,7 +3930,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0.3;
+				CURRENT_PROJECT_VERSION = 1.0.1.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = F37P7T723R;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3950,20 +3962,20 @@
 			baseConfigurationReference = 5412590942997EE8014D1BA3 /* Pods-ScentsNoteTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_ID_SUFFIX = "";
+				BUNDLE_ID_SUFFIX = "-Dev";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 79K7D639YK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.afume.ScentsNoteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScentsNote.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScentsNote";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScentsNote-Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScentsNote-Dev";
 			};
 			name = Debug;
 		};
@@ -3978,14 +3990,14 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 79K7D639YK;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.afume.ScentsNoteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScentsNote.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScentsNote";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ScentsNote-Dev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ScentsNote-Dev";
 			};
 			name = Release;
 		};

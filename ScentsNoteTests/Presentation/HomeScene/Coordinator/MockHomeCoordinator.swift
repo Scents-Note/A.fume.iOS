@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2023/01/27.
 //
 
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockHomeCoordinator: HomeCoordinator {
   

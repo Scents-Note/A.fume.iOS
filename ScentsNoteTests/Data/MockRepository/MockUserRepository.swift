@@ -6,7 +6,7 @@
 //
 
 import RxSwift
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockUserRepository: UserRepository {
   
@@ -18,7 +18,7 @@ final class MockUserRepository: UserRepository {
     }
   }
   
-  func signUp(signUpInfo: ScentsNote.SignUpInfo) -> Observable<LoginInfo> {
+  func signUp(signUpInfo: SignUpInfo) -> Observable<LoginInfo> {
     let loginInfo = LoginInfo(userIdx: 6, nickname: "득연", gender: "MAN", birth: 1995, token: "token", refreshToken: "refreshToken")
     return Observable.create { observer in
       observer.onNext(loginInfo)

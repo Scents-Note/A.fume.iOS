@@ -6,7 +6,7 @@
 //
 
 import Foundation
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockSignUpCoordinator: SignUpCoordinator {
 
@@ -56,7 +56,7 @@ final class MockSignUpCoordinator: SignUpCoordinator {
     
   }
   
-  func start(from: ScentsNote.CoordinatorType) {
+  func start(from: CoordinatorType) {
   }
   
   

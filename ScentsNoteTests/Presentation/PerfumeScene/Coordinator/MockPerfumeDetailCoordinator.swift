@@ -5,7 +5,7 @@
 //  Created by 황득연 on 2023/01/31.
 //
 
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockPerfumeDetailCoordinator: PerfumeDetailCoordinator {
   
@@ -13,6 +13,8 @@ final class MockPerfumeDetailCoordinator: PerfumeDetailCoordinator {
   var finishFlowCalledCount = 0
   var runOnboardingFlowCalledCount = 0
   var showPerfumeDetailViewControllerCalledCount = 0
+  var runPerfumeReviewFlowCalledCount = 0
+  var runPerfumeReviewFlowCalledCountWithReviewIdx = 0
   var runWebFlowCalledCount = 0
   var showReviewReportPopupViewControllerCalledCount = 0
   var hideReviewReportPopupViewControllerCalledCount = 0
@@ -41,10 +43,12 @@ final class MockPerfumeDetailCoordinator: PerfumeDetailCoordinator {
     }
     
     self.runPerfumeReviewFlow = { [weak self] perfumeDetail in
+      self?.runPerfumeReviewFlowCalledCount += 1
       self?.perfumeDetail = perfumeDetail
     }
     
     self.runPerfumeReviewFlowWithReviewIdx = { [weak self] reviewIdx in
+      self?.runPerfumeReviewFlowCalledCountWithReviewIdx += 1
       self?.reviewIdx = reviewIdx
     }
     

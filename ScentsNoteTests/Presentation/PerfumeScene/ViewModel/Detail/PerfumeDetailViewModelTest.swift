@@ -8,7 +8,7 @@
 import XCTest
 import RxSwift
 import RxTest
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class PerfumeDetailViewModelTest: XCTestCase {
   private var coordinator: PerfumeDetailCoordinator!
@@ -144,7 +144,8 @@ final class PerfumeDetailViewModelTest: XCTestCase {
     // Given
     let observable = self.scheduler.createHotObservable([.next(10, ())])
     
-    let expected = MockModel.perfumeDetail
+    let expectedDetail = MockModel.perfumeDetail
+    let expectedPerfumeReviewCalledCount = 1
     
     // When
     observable
@@ -154,8 +155,11 @@ final class PerfumeDetailViewModelTest: XCTestCase {
     self.scheduler.start()
     
     // Then
-    let actual = (self.coordinator as! MockPerfumeDetailCoordinator).perfumeDetail
-    XCTAssertEqual(actual, expected)
+    let actualDetail = (self.coordinator as! MockPerfumeDetailCoordinator).perfumeDetail
+    XCTAssertEqual(actualDetail, expectedDetail)
+    
+    let actualPerfumeReviewCalledCount = (self.coordinator as! MockPerfumeDetailCoordinator).runPerfumeReviewFlowCalledCount
+    XCTAssertEqual(actualPerfumeReviewCalledCount, expectedPerfumeReviewCalledCount)
   }
   
   // review Button 클릭시 로그인 상태 & 작성된 리뷰가 있으면 runPerfumeReviewFlow 실행

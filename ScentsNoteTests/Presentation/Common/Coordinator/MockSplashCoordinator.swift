@@ -5,11 +5,12 @@
 //  Created by 황득연 on 2023/02/02.
 //
 
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class MockSplashCoordinator: SplashCoordinator {
-  
   var finishFlowCalledCount = 0
+  var showPopupCalledCount = 0
+  var hidePopupCalledCount = 0
   var showSplashViewControllerCalledCount = 0
   
   var finishFlow: (() -> Void)?
@@ -22,5 +23,13 @@ final class MockSplashCoordinator: SplashCoordinator {
   
   func showSplashViewController() {
     self.showSplashViewControllerCalledCount += 1
+  }
+  
+  func showPopup() {
+    self.showPopupCalledCount += 1
+  }
+  
+  func hidePopup() {
+    self.hidePopupCalledCount += 1
   }
 }

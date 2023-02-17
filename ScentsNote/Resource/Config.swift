@@ -16,7 +16,7 @@ struct Config {
   enum Network {
     static var baseURL: String {
       return Config.appConfiguration == .debug
-      ? "http://13.124.104.53:3001/A.fume/api/0.0.1" : "http://13.124.104.53:8082/A.fume/api/0.0.1"
+      ? "https://api-dev.scentsnote.co.kr" : "https://api-prd1.scentsnote.co.kr"
     }
   }
   static var isDebug: Bool {

@@ -10,7 +10,7 @@ import XCTest
 import XCTest
 import RxSwift
 import RxTest
-@testable import ScentsNote
+@testable import ScentsNote_Dev
 
 final class UpdateReviewLikeUseCaseTest: XCTestCase {
   
