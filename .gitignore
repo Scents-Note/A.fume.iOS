@@ -92,5 +92,5 @@ iOSInjectionProject/
 # Custom
 *.xcuserstate
 
-/ScentsNote/Resource/Config.swift
+ScentsNote/Resource/Config.swift
 
