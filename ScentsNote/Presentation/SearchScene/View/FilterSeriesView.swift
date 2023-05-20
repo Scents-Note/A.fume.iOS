@@ -27,6 +27,7 @@ final class FilterSeriesView: UIView {
   private let notyView = UIView().then { $0.backgroundColor = .lightGray2 }
   private let notyLabel = UILabel().then {
     $0.text = "카테고리 당 최대 5개까지 중복 선택 가능합니다."
+      //깃연결 확인용
     $0.textColor = .darkGray7d
     $0.font = .notoSans(type: .regular, size: 12)
   }
