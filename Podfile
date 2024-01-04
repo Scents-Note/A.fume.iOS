@@ -15,7 +15,7 @@ target 'ScentsNote' do
   pod 'Alamofire', '5.3'
   pod 'SnapKit', '~> 5.6.0'
   pod 'Then', '3.0.0'
-  pod 'Kingfisher', '7.0'
+  pod 'Kingfisher', '7.6.1'
   pod 'Cosmos', '~> 23.0'
   pod 'Toast-Swift', '~> 5.0.1'
 
