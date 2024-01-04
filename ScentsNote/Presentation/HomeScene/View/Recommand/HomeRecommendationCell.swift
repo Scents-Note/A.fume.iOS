@@ -24,11 +24,11 @@ final class HomeRecommendationCell: UICollectionViewCell {
   }
   private let brandLabel = UILabel().then {
     $0.textColor = .grayCd
-    $0.font = .notoSans(type: .regular, size: 14)
+    $0.font = .appleSDGothic(type: .regular, size: 14)
   }
   private let nameLabel = UILabel().then {
     $0.textColor = .black1d
-    $0.font = .notoSans(type: .bold, size: 16)
+    $0.font = .appleSDGothic(type: .bold, size: 16)
   }
 
   private let perfumeRecommandKeyword = HomeRecommendationKeywordView()

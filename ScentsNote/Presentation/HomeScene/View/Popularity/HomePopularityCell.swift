@@ -34,12 +34,12 @@ final class HomePopularityCell: UICollectionViewCell {
   
   private let brandLabel = UILabel().then {
     $0.textColor = .grayCd
-    $0.font = .notoSans(type: .regular, size: 12)
+    $0.font = .appleSDGothic(type: .regular, size: 12)
   }
   
   private let nameLabel = UILabel().then {
     $0.textColor = .black1d
-    $0.font = .notoSans(type: .medium, size: 16)
+    $0.font = .appleSDGothic(type: .medium, size: 16)
   }
   
   override init(frame: CGRect) {

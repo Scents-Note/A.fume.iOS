@@ -19,6 +19,12 @@ extension UIFont {
     case extraBold = "ExtraBold"
     case bold = "Bold"
   }
+    
+    enum AppleSDGothicNeoType: String {
+        case regular = "Regular"
+        case medium = "Medium"
+        case bold = "Bold"
+    }
   
   static func notoSans(type: notoSansType, size: CGFloat) -> UIFont {
     return UIFont(name: "NotoSansCJKkr-\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
@@ -27,5 +33,9 @@ extension UIFont {
   static func nanumMyeongjo(type: nanumMyeongjoType, size: CGFloat) -> UIFont {
     return UIFont(name: "NanumMyeongjoOTF\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
   }
+    
+    static func appleSDGothic(type: AppleSDGothicNeoType, size: CGFloat) -> UIFont {
+      return UIFont(name: "AppleSDGothicNeo-\(type.rawValue)", size: size) ?? UIFont.systemFont(ofSize: size)
+    }
   
 }
