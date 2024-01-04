@@ -6,12 +6,12 @@
 //
 
 struct FilterIngredientResponseDTO: Decodable {
-  let ingredientIdx: Int
+  let id: Int
   let name: String
 }
 
 extension FilterIngredientResponseDTO {
   func toDomain(with series :String) -> FilterIngredient {
-    FilterIngredient(id: "\(series)\(self.ingredientIdx)",idx: self.ingredientIdx, name: self.name, isSelected: false)
+    FilterIngredient(id: "\(series)\(self.id)",idx: self.id, name: self.name, isSelected: false)
   }
 }
