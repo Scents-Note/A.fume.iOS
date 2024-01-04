@@ -37,6 +37,7 @@ final class SearchKeywordViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    self.configureDelegate()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -80,9 +81,18 @@ final class SearchKeywordViewController: UIViewController {
       .bind(to: input.keywordTextFieldDidEditEvent)
       .disposed(by: self.disposeBag)
     
-    self.searchButton.rx.tap
-      .bind(to: input.searchButtonDidTapEvent)
-      .disposed(by: self.disposeBag)
+//    self.searchButton.rx.tap
+//      .bind(to: input.searchButtonDidTapEvent)
+//      .disposed(by: self.disposeBag)
+      
+      self.searchButton.rx.tap
+          .subscribe(onNext: { [weak self] _ in
+              if self?.keywordTextField.text == "" {
+                  self?.view.makeToast("검색어를 입력해주세요.")
+              } else {
+                  input.searchButtonDidTapEvent.accept(())
+              }
+          }).disposed(by: disposeBag)
   }
   
   private func bindOutput() {
@@ -96,13 +106,28 @@ final class SearchKeywordViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
   }
-  
-  private func popViewController(from: CoordinatorType) {
-    self.navigationController?.hidesBottomBarWhenPushed = false
-    DispatchQueue.main.async {
+    
+    private func configureDelegate() {
+       self.keywordTextField.delegate = self
+    }
+    
+    private func popViewController(from: CoordinatorType) {
+        self.navigationController?.hidesBottomBarWhenPushed = false
+        DispatchQueue.main.async {
       if let idx = self.navigationController?.viewControllers.firstIndex(where: { $0 === self }) {
         self.navigationController?.viewControllers.remove(at: idx)
       }
     }
   }
+}
+
+extension SearchKeywordViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if keywordTextField.text == "" {
+            self.view.makeToast("검색어를 입력해주세요.")
+        } else {
+            self.viewModel.input.searchButtonDidTapEvent.accept(())
+        }
+        return true
+    }
 }
