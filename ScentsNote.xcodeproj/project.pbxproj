@@ -485,6 +485,7 @@
 		4AFC7E2F2973B8CC00F09E20 /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC7E2E2973B8CC00F09E20 /* LoginInfo.swift */; };
 		6C86FD673F00A764FE7F4E98 /* Pods_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */; };
 		8386930A65262E87EF5A32C1 /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */; };
+		EB4E8F572B4AAFED00FF48C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1002,6 +1003,7 @@
 		D5FC19504A916067C2FC9882 /* Pods-ScentsNoteUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNoteUITests.debug.xcconfig"; path = "Target Support Files/Pods-ScentsNoteUITests/Pods-ScentsNoteUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		E8310DB383F15C0DABB20B95 /* Pods-ScentsNote-ScentsNoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; sourceTree = "<group>"; };
+		EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2469,6 +2471,7 @@
 		4AAFE78428F8E7AC00EA6FB4 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EBD537142B4AA1CD00FF66F6 /* Firebase */,
 				4AAFE78828FA824200EA6FB4 /* Font */,
 				4AAFE78628F8E7EE00EA6FB4 /* Storyboard */,
 				4AAFE78528F8E7C800EA6FB4 /* Asset */,
@@ -2986,6 +2989,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		EBD537142B4AA1CD00FF66F6 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2998,6 +3009,7 @@
 				4A8F89C128F4F91A00ACE0F1 /* Frameworks */,
 				4A8F89C228F4F91A00ACE0F1 /* Resources */,
 				2B431AB739B277AC06A92E3C /* [CP] Embed Pods Frameworks */,
+				EBD537152B4AA27A00FF66F6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3103,6 +3115,7 @@
 				4A8F89CF28F4F91A00ACE0F1 /* Main.storyboard in Resources */,
 				4AAFE80C28FBF7DE00EA6FB4 /* NotoSansCJKkr-Medium.otf in Resources */,
 				4AAFE81128FBF7F600EA6FB4 /* NanumMyeongjoExtraBold.otf in Resources */,
+				EB4E8F572B4AAFED00FF48C7 /* GoogleService-Info.plist in Resources */,
 				4AAFE81328FBF7F600EA6FB4 /* NanumMyeongjoBold.otf in Resources */,
 				4AAFE81228FBF7F600EA6FB4 /* NanumMyeongjo.otf in Resources */,
 			);
@@ -3224,6 +3237,25 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		EBD537152B4AA27A00FF66F6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
 		};
 		F8ABF3E3102B67785C989D17 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

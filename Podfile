@@ -18,6 +18,8 @@ target 'ScentsNote' do
   pod 'Kingfisher', '7.6.1'
   pod 'Cosmos', '~> 23.0'
   pod 'Toast-Swift', '~> 5.0.1'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
 
 
   target 'ScentsNoteTests' do
