@@ -11,6 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 import RxDataSources
+import FirebaseAnalytics
 
 final class FilterKeywordView: UIView {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<FilterKeywordDataSection.Model>
@@ -47,6 +48,7 @@ final class FilterKeywordView: UIView {
     self.configureUI()
     self.configureDelegate()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.filterKeyword, parameters: nil)
   }
   
   required init?(coder: NSCoder) {

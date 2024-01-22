@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class SurveySeriesView: UICollectionView {
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
     self.showsVerticalScrollIndicator = false
     self.configureUI()
+    Analytics.logEvent(GoogleAnalytics.Screen.surveyProductLine, parameters: nil)
   }
   
   required init?(coder: NSCoder) {

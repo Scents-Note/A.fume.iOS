@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class SurveyPerfumeView: UICollectionView {
   
@@ -16,6 +17,7 @@ class SurveyPerfumeView: UICollectionView {
     super.init(frame: frame, collectionViewLayout: UICollectionViewLayout())
     self.showsVerticalScrollIndicator = false
     self.configureUI()
+    Analytics.logEvent(GoogleAnalytics.Screen.surveyPerfume, parameters: nil)
   }
   
   required init?(coder: NSCoder) {

@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class SearchResultViewController: UIViewController {
   typealias KeywordDataSource = RxCollectionViewSectionedNonAnimatedDataSource<KeywordDataSection.Model>
@@ -229,6 +230,7 @@ final class SearchResultViewController: UIViewController {
   
   private func updateEmptyView(isHidden: Bool) {
     self.emptyView.isHidden = isHidden
+      Analytics.logEvent(isHidden ? GoogleAnalytics.Screen.noSearchResult : GoogleAnalytics.Screen.searchResult, parameters: nil)
   }
 }
 

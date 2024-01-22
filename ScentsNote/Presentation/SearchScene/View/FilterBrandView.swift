@@ -11,6 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 import RxDataSources
+import FirebaseAnalytics
 
 final class FilterBrandView: UIView {
   
@@ -41,6 +42,7 @@ final class FilterBrandView: UIView {
     super.init(frame: .zero)
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.filterBrand, parameters: nil)
   }
   
   required init?(coder: NSCoder) {

@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class SearchFilterViewController: UIViewController {
   
@@ -44,6 +45,7 @@ final class SearchFilterViewController: UIViewController {
     self.configureUI()
     self.configureDelegate()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.filter, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class LoginViewController: UIViewController {
   
@@ -67,6 +68,7 @@ final class LoginViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+      Analytics.logEvent(GoogleAnalytics.Screen.login, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

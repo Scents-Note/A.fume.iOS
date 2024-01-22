@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class SearchViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDataSection.Model>
@@ -42,6 +43,7 @@ final class SearchViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.search, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

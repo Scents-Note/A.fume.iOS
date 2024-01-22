@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import FirebaseAnalytics
 
 import SnapKit
 import Then
@@ -66,6 +67,7 @@ final class HomeViewController: UIViewController {
     self.configureUI()
     self.bindViewModel()
     self.loadViewIfNeeded()
+    Analytics.logEvent(GoogleAnalytics.Screen.homePage, parameters: nil)
   }
   
   override func viewDidLayoutSubviews() {
@@ -147,6 +149,7 @@ final class HomeViewController: UIViewController {
         case .more:
           let cell = self.collectionView.dequeueReusableCell(HomeMoreCell.self, for: indexPath)
           cell.onMoreClick().subscribe(onNext : {
+            Analytics.logEvent(GoogleAnalytics.Event.newRegisterButton, parameters: nil)
             input.moreCellDidTapEvent.accept(())
           })
           .disposed(by: cell.disposeBag)

@@ -13,6 +13,7 @@ import RxGesture
 import SnapKit
 import Then
 import Toast_Swift
+import FirebaseAnalytics
 
 final class PerfumeDetailViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDetailDataSection.Model>
@@ -90,6 +91,7 @@ final class PerfumeDetailViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.detailInfo, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

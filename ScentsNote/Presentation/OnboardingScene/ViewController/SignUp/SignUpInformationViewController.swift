@@ -9,6 +9,7 @@ import UIKit
 import RxSwift
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class SignUpInformationViewController: UIViewController {
   
@@ -42,6 +43,7 @@ final class SignUpInformationViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.createAccount, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

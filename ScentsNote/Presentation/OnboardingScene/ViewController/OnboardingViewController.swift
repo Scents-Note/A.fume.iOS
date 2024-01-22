@@ -12,7 +12,7 @@ import RxCocoa
 
 import SnapKit
 import Then
-
+import FirebaseAnalytics
 
 
 final class OnboardingViewController: UIViewController {
@@ -51,6 +51,7 @@ final class OnboardingViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.splash, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

@@ -11,6 +11,7 @@ import RxCocoa
 import UIKit
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class MyPageViewController: UIViewController {
   
@@ -43,6 +44,7 @@ final class MyPageViewController: UIViewController {
     self.configureUI()
     self.configureDelegate()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.myPage, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

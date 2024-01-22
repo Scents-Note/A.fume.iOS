@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class SearchKeywordViewController: UIViewController {
   
@@ -38,6 +39,7 @@ final class SearchKeywordViewController: UIViewController {
     self.configureUI()
     self.bindViewModel()
     self.configureDelegate()
+    Analytics.logEvent(GoogleAnalytics.Screen.searchWindow, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

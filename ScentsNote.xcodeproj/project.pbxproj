@@ -486,6 +486,8 @@
 		6C86FD673F00A764FE7F4E98 /* Pods_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */; };
 		8386930A65262E87EF5A32C1 /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */; };
 		EB4E8F572B4AAFED00FF48C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */; };
+		EB4E8F592B4AB6CE00FF48C7 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4E8F582B4AB6CE00FF48C7 /* UILabel+Extension.swift */; };
+		EBC69F582B51191A00920B74 /* GoogleAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC69F572B51191A00920B74 /* GoogleAnalytics.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1004,6 +1006,8 @@
 		D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		E8310DB383F15C0DABB20B95 /* Pods-ScentsNote-ScentsNoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EB4E8F582B4AB6CE00FF48C7 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		EBC69F572B51191A00920B74 /* GoogleAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleAnalytics.swift; sourceTree = "<group>"; };
 		FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2545,6 +2549,7 @@
 				4A44AB69293EE32000F42B0D /* Array+Division.swift */,
 				4AE9389F2952D93B006A7DAF /* PrimitiveSequence+handleResponse.swift */,
 				4A9EB9EE2983495D003FC245 /* Array+SectionModel.swift */,
+				EB4E8F582B4AB6CE00FF48C7 /* UILabel+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -2586,6 +2591,7 @@
 				4A4F6A35293843B5006BBF0B /* Menu.swift */,
 				4A4F6A762939D3B8006BBF0B /* WebURL.swift */,
 				4AE938BF29543318006A7DAF /* Report.swift */,
+				EBC69F572B51191A00920B74 /* GoogleAnalytics.swift */,
 			);
 			path = Constant;
 			sourceTree = "<group>";
@@ -3325,6 +3331,7 @@
 				4A6F98CD29305A790085EBE7 /* DefaultFilterService.swift in Sources */,
 				4A3B04212924760F004F155D /* PerfumeDetailInfoItem.swift in Sources */,
 				4A893AD8290A166200CA502B /* SignUpBirthViewController.swift in Sources */,
+				EBC69F582B51191A00920B74 /* GoogleAnalytics.swift in Sources */,
 				4AF595B52993814B007D135F /* SystemRepository.swift in Sources */,
 				4AC7F8E32918DE7C00A8D032 /* HomeRecentCell.swift in Sources */,
 				4A9A14E2290919290067F04D /* SignUpPasswordViewController.swift in Sources */,
@@ -3402,6 +3409,7 @@
 				4AAFE7EC28FBCF4B00EA6FB4 /* OnboardingCoordinator.swift in Sources */,
 				4AA281142917BA6200D30A99 /* DefaultMyPageCoordinator.swift in Sources */,
 				4A4F69FC29349F2E006BBF0B /* FilterBrandCell.swift in Sources */,
+				EB4E8F592B4AB6CE00FF48C7 /* UILabel+Extension.swift in Sources */,
 				4A4F6A152935F3DA006BBF0B /* ReviewInPerfumeDetailResponseDTO.swift in Sources */,
 				4A6F98A4292F09BD0085EBE7 /* SearchResultCoordinator.swift in Sources */,
 				4A857448290BF77900F86C3A /* BaseCoordinator.swift in Sources */,

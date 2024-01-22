@@ -12,6 +12,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class SplashViewController: UIViewController {
   
@@ -34,6 +35,7 @@ final class SplashViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.checkVersion()
+      Analytics.logEvent(GoogleAnalytics.Screen.loading, parameters: nil)
   }
   
   private func configureUI() {

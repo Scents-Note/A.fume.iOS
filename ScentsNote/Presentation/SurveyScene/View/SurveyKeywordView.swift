@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import FirebaseAnalytics
 
 class SurveyKeywordView: UICollectionView {
   override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
     super.init(frame: frame, collectionViewLayout: .init())
     self.configureUI()
+    Analytics.logEvent(GoogleAnalytics.Screen.surveyKeyword, parameters: nil)
   }
   
   required init?(coder: NSCoder) {

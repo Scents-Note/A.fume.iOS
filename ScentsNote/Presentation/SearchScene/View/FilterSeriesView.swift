@@ -11,6 +11,7 @@ import RxCocoa
 import SnapKit
 import Then
 import RxDataSources
+import FirebaseAnalytics
 
 final class FilterSeriesView: UIView {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<FilterSeriesDataSection.Model>
@@ -45,6 +46,7 @@ final class FilterSeriesView: UIView {
     super.init(frame: .zero)
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.filterProductLine, parameters: nil)
   }
   
   required init?(coder: NSCoder) {

@@ -11,6 +11,7 @@ import RxCocoa
 import RxDataSources
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class PerfumeNewViewController: UIViewController {
   typealias DataSource = RxCollectionViewSectionedNonAnimatedDataSource<PerfumeDataSection.Model>
@@ -49,6 +50,7 @@ final class PerfumeNewViewController: UIViewController {
     super.viewDidLoad()
     self.configureUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.newRegister, parameters: nil)
   }
   
   override func viewWillAppear(_ animated: Bool) {

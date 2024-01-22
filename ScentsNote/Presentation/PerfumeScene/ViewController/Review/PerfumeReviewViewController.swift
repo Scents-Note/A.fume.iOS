@@ -13,6 +13,7 @@ import SnapKit
 import Then
 import Cosmos
 import Toast_Swift
+import FirebaseAnalytics
 
 
 final class PerfumeReviewViewController: UIViewController {
@@ -593,6 +594,9 @@ final class PerfumeReviewViewController: UIViewController {
       .asDriver()
       .drive(onNext: { [weak self] perfumeDetail in
         self?.updateUI(perfumeDetail: perfumeDetail)
+          if let isUpdate = self?.updateButton.isEnabled {
+              Analytics.logEvent(isUpdate ? GoogleAnalytics.Screen.editScentsNote : GoogleAnalytics.Screen.writeSentsNote, parameters: nil)
+          }
       })
       .disposed(by: self.disposeBag)
   }

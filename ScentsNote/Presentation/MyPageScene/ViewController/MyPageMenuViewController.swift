@@ -11,6 +11,7 @@ import RxCocoa
 import RxGesture
 import SnapKit
 import Then
+import FirebaseAnalytics
 
 final class MyPageMenuViewController: UIViewController {
  
@@ -38,6 +39,7 @@ final class MyPageMenuViewController: UIViewController {
     self.configureUI()
     self.bindUI()
     self.bindViewModel()
+    Analytics.logEvent(GoogleAnalytics.Screen.sidebar, parameters: nil)
   }
   
   override func viewDidAppear(_ animated: Bool) {
