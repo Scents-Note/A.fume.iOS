@@ -23,7 +23,7 @@ final class HomeHeaderView: UICollectionReusableView {
   
   private let contentLabel = UILabel().then {
     $0.textColor = .darkGray7d
-    $0.font = .nanumMyeongjo(type: .regular, size: 14)
+    $0.font = .appleSDGothic(type: .regular, size: 14)
     $0.numberOfLines = 0
   }
 
