@@ -19,4 +19,5 @@ protocol PerfumeDetailCoordinator: PopUpCoordinator {
   func showReviewReportPopupViewController(reviewIdx: Int)
   func hideReviewReportPopupViewController()
   func hideReviewReportPopupViewController(hasToast: Bool)
+  func showComparePriceViewController()
 }

@@ -10,16 +10,21 @@ import SnapKit
 import Then
 import Cosmos
 import Kingfisher
+import RxSwift
+import RxGesture
+import RxRelay
 
 final class PerfumeDetailTitleCell: UICollectionViewCell {
  
+    var clickCompareViewSubject = PublishRelay<Void>()
+    
   // MARK: - UI
   private let mainImageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
   }
   
   private let brandLabel = UILabel().then {
-    $0.textColor = .pointBeige
+    $0.textColor = .gray125
     $0.font = .nanumMyeongjo(type: .regular, size: 16)
   }
   private let nameLabel = UILabel().then {
@@ -36,7 +41,7 @@ final class PerfumeDetailTitleCell: UICollectionViewCell {
   }
   
   private let scoreLabel = UILabel().then {
-    $0.textColor = .blackText
+    $0.textColor = .perfumeDetailScore
     $0.font = .nanumMyeongjo(type: .regular, size: 14)
   }
   
@@ -46,10 +51,35 @@ final class PerfumeDetailTitleCell: UICollectionViewCell {
     $0.addArrangedSubview(self.scoreLabel)
     $0.spacing = 8
   }
+    
+    private let compareLabel = UILabel().then {
+        $0.text = "가격 비교하기"
+        $0.textColor = #colorLiteral(red: 0.07058823854, green: 0.07058823854, blue: 0.07058823854, alpha: 1)
+        $0.font = .notoSans(type: .regular, size: 14.0)
+    }
+    
+    private let arrowRightView = UIImageView().then {
+      $0.image = .arrowRightCenter
+    }
+    
+    private lazy var compareStackView = UIStackView().then {
+      $0.axis = .horizontal
+      $0.spacing = 2
+    }
+    
+    private let comparePriceView = UIView().then {
+        $0.layer.borderColor = UIColor.gray125.cgColor
+        $0.layer.borderWidth = 1.0
+        $0.layer.masksToBounds = true
+        $0.layer.cornerRadius = 2.0
+    }
+    
+    var disposeBag = DisposeBag()
   
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.configureUI()
+      self.bindRx()
   }
   
   required init?(coder: NSCoder) {
@@ -80,6 +110,25 @@ final class PerfumeDetailTitleCell: UICollectionViewCell {
       $0.top.equalTo(self.nameLabel.snp.bottom).offset(10.5)
       $0.left.equalToSuperview().offset(20)
     }
+      
+      self.contentView.addSubview(self.comparePriceView)
+      self.comparePriceView.snp.makeConstraints {
+          $0.top.equalTo(self.scoreStackView.snp.bottom).offset(26)
+          $0.leading.equalToSuperview().offset(16)
+          $0.trailing.equalToSuperview().inset(16)
+          $0.height.equalTo(42)
+      }
+      
+      self.comparePriceView.addSubview(compareStackView)
+      compareStackView.addArrangedSubview(self.compareLabel)
+      compareStackView.addArrangedSubview(self.arrowRightView)
+      compareStackView.snp.makeConstraints {
+          $0.center.equalToSuperview()
+          self.arrowRightView.snp.makeConstraints {
+              $0.size.equalTo(16)
+          }
+      }
+
   }
   
   func updateUI(perfumeDetail: PerfumeDetail) {
@@ -89,4 +138,11 @@ final class PerfumeDetailTitleCell: UICollectionViewCell {
     self.starView.rating = perfumeDetail.score
     self.scoreLabel.text = "\(perfumeDetail.score)"
   }
+    
+    func bindRx() {
+        self.comparePriceView.rx.tapGesture()
+            .subscribe(onNext: { [weak self] _ in
+                self?.clickCompareViewSubject.accept(())
+            }).disposed(by: disposeBag)
+    }
 }

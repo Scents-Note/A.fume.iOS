@@ -29,6 +29,7 @@ extension UIImage {
   static let btnNext = UIImage(named: "btnNext")
   static let btnClose = UIImage(named: "btnClose")
   static let arrowRight = UIImage(named: "arrowRight")
+  static let arrowRightCenter = UIImage(named: "arrowRightCenter")
   static let arrowDown = UIImage(named: "arrowDown")
   static let checkBeige = UIImage(named: "icCheckBeige")
   static let checkWhite = UIImage(named: "icCheckWhite")

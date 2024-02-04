@@ -486,6 +486,7 @@
 		6C86FD673F00A764FE7F4E98 /* Pods_ScentsNoteUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D5F25D843816F3E05DA0A83 /* Pods_ScentsNoteUITests.framework */; };
 		8386930A65262E87EF5A32C1 /* Pods_ScentsNoteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47BCFBD57F584B54ABEDF412 /* Pods_ScentsNoteTests.framework */; };
 		EB4E8F572B4AAFED00FF48C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */; };
+		EBEBECAB2B6F86DF00DDEA49 /* PerfumeComparePriceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBEBECAA2B6F86DF00DDEA49 /* PerfumeComparePriceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1004,6 +1005,7 @@
 		D84881AA4831F36D30424ED9 /* Pods-ScentsnoteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsnoteTests.release.xcconfig"; path = "Target Support Files/Pods-ScentsnoteTests/Pods-ScentsnoteTests.release.xcconfig"; sourceTree = "<group>"; };
 		E8310DB383F15C0DABB20B95 /* Pods-ScentsNote-ScentsNoteUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; path = "Target Support Files/Pods-ScentsNote-ScentsNoteUITests/Pods-ScentsNote-ScentsNoteUITests.release.xcconfig"; sourceTree = "<group>"; };
 		EB4E8F562B4AAFED00FF48C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		EBEBECAA2B6F86DF00DDEA49 /* PerfumeComparePriceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerfumeComparePriceViewController.swift; sourceTree = "<group>"; };
 		FF58F9CBE35539235013DDEC /* Pods-Scentsnote.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Scentsnote.release.xcconfig"; path = "Target Support Files/Pods-Scentsnote/Pods-Scentsnote.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1617,6 +1619,7 @@
 				4A5A94EE292A37BA00B4197D /* PerfumeDetailInfoViewController+Configuration.swift */,
 				4A6F988C292E0C030085EBE7 /* PerfumeDetailInfoViewController+CollectionViewLayout.swift */,
 				4A4F6A0F2935DF82006BBF0B /* PerfumeDetailReviewViewController.swift */,
+				EBEBECAA2B6F86DF00DDEA49 /* PerfumeComparePriceViewController.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -3505,6 +3508,7 @@
 				4AA280E929153E1200D30A99 /* DefaultMainCoordinator.swift in Sources */,
 				4AE938A42952F12A006A7DAF /* DefaultFetchReviewsInPerfumeDetailUseCase.swift in Sources */,
 				4A85745F291127D600F86C3A /* DefaultPerfumeRepository.swift in Sources */,
+				EBEBECAB2B6F86DF00DDEA49 /* PerfumeComparePriceViewController.swift in Sources */,
 				4A428ACE2943310B00B559C7 /* BrandInReviewDetailResponseDTO.swift in Sources */,
 				4AFC7E2F2973B8CC00F09E20 /* LoginInfo.swift in Sources */,
 				4A4C986629277669004851DB /* PerfumeDetailIngredientContentView.swift in Sources */,

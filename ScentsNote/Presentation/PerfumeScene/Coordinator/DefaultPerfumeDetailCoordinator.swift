@@ -73,6 +73,11 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
       pvc.viewModel?.showToast()
     }
   }
+    
+    func showComparePriceViewController() {
+        let vc = PerfumeComparePriceViewController()
+        self.navigationController.present(vc, animated: true)
+    }
   
   func showPopup() {
     let vc = LabelPopupViewController().then {
