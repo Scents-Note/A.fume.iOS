@@ -130,9 +130,18 @@ final class SearchFilterViewController: UIViewController {
       .bind(to: input.doneButtonDidTapEvent)
       .disposed(by: self.disposeBag)
     
-    self.closeButton.rx.tap
-      .bind(to: input.closeButtonDidTapEvent)
-      .disposed(by: self.disposeBag)
+//      self.doneButton.rx.tap
+//          .subscribe(onNext: { _ in
+//              // 버튼 파라미터 필요
+////              Analytics.logEvent(<#T##name: String##String#>, parameters: nil)
+//              input.doneButtonDidTapEvent.accept(())
+//          }).disposed(by: disposeBag)
+    
+      self.closeButton.rx.tap
+          .subscribe(onNext: { _ in
+              Analytics.logEvent(GoogleAnalytics.Event.filterPauseButton, parameters: nil)
+              input.closeButtonDidTapEvent.accept(())
+          }).disposed(by: disposeBag)
   }
   
   private func bindOutput() {

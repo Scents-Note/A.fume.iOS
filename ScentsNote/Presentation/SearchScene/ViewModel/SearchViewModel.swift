@@ -7,6 +7,7 @@
 
 import RxSwift
 import RxRelay
+import FirebaseAnalytics
 
 final class SearchViewModel {
 
@@ -42,9 +43,13 @@ final class SearchViewModel {
     self.coordinator = coordinator
     self.fetchPerfumesNewUseCase = fetchPerfumesNewUseCase
     self.updatePerfumeLikeUseCase = updatePerfumeLikeUseCase
-    
+      print("SearchViewModel init")
     self.transform(input: self.input, cellInput: self.cellInput, output: self.output)
   }
+    
+    deinit {
+        print("SearchViewModel deinit")
+    }
   
   // MARK: - Binding
     func transform(input: Input, cellInput: CellInput, output: Output) {
@@ -58,12 +63,14 @@ final class SearchViewModel {
   private func bindInput(input: Input, cellInput: CellInput, perfumes: PublishRelay<[Perfume]>) {
     input.searchButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
+        Analytics.logEvent(GoogleAnalytics.Event.loupeButton, parameters: nil)
         self?.coordinator?.runSearchKeywordFlow(from: .search)
       })
       .disposed(by: self.disposeBag)
     
     input.filterButtonDidTapEvent
       .subscribe(onNext: { [weak self] in
+        Analytics.logEvent(GoogleAnalytics.Event.searchFilterButton, parameters: nil)
         self?.coordinator?.runSearchFilterFlow(from: .search)
       })
       .disposed(by: self.disposeBag)

@@ -92,6 +92,7 @@ final class SearchKeywordViewController: UIViewController {
               if self?.keywordTextField.text == "" {
                   self?.view.makeToast("검색어를 입력해주세요.")
               } else {
+                  Analytics.logEvent(GoogleAnalytics.Event.searchLoupeButton, parameters: nil)
                   input.searchButtonDidTapEvent.accept(())
               }
           }).disposed(by: disposeBag)
