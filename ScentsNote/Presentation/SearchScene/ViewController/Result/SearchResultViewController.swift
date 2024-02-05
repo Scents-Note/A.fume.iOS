@@ -62,13 +62,20 @@ final class SearchResultViewController: UIViewController {
     $0.layer.borderColor = UIColor.blackText.cgColor
   }
   
-  private let filterButton = UIButton().then {
-    $0.setTitle("필터", for: .normal)
-    $0.setTitleColor(.white, for: .normal)
-    $0.titleLabel?.font = .notoSans(type: .medium, size: 16)
-    $0.layer.cornerRadius = 21
-    $0.layer.backgroundColor = UIColor.black.cgColor
+    private lazy var filterButton = UIBarButtonItem(image: .btnFilter, style: .plain, target: self, action: nil).then {
+      $0.tintColor = .blackText
   }
+    
+    private let searchResultLabel = UILabel().then {
+        $0.text = "검색 결과"
+        $0.font = UIFont.appleSDGothic(type: .medium, size: 14.0)
+        $0.textColor = .gray151
+    }
+    
+    private let searchResultCountLabel = UILabel().then {
+        $0.font = UIFont.appleSDGothic(type: .medium, size: 14.0)
+        $0.textColor = .gray151
+    }
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -95,10 +102,22 @@ final class SearchResultViewController: UIViewController {
       $0.left.right.equalToSuperview()
       $0.height.equalTo(56)
     }
+      
+      self.view.addSubview(searchResultLabel)
+      searchResultLabel.snp.makeConstraints {
+          $0.top.equalTo(keywordCollectionView.snp.bottom).offset(16)
+          $0.leading.equalToSuperview().offset(20)
+      }
+      
+      self.view.addSubview(searchResultCountLabel)
+      searchResultCountLabel.snp.makeConstraints {
+          $0.centerY.equalTo(searchResultLabel)
+          $0.leading.equalTo(searchResultLabel.snp.trailing).offset(8)
+      }
     
     self.view.addSubview(self.perfumeCollectionView)
     self.perfumeCollectionView.snp.makeConstraints {
-      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(56)
+      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(104)
       $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
       $0.left.right.equalToSuperview()
     }
@@ -113,20 +132,12 @@ final class SearchResultViewController: UIViewController {
       $0.left.right.equalToSuperview().inset(26)
       $0.height.equalTo(52)
     }
-    
-    self.view.addSubview(self.filterButton)
-    self.filterButton.snp.makeConstraints {
-      $0.centerX.equalToSuperview()
-      $0.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-24)
-      $0.width.equalTo(95)
-      $0.height.equalTo(42)
-    }
   }
   
   private func configureNavigation() {
     self.setBackButton()
     self.setNavigationTitle(title: "검색 결과")
-    self.navigationItem.rightBarButtonItem = self.searchButton
+    self.navigationItem.rightBarButtonItems = [self.searchButton, self.filterButton]
   }
   
   private func configureCollectionView() {
@@ -218,18 +229,28 @@ final class SearchResultViewController: UIViewController {
         self?.updateEmptyView(isHidden: isHidden)
       })
       .disposed(by: self.disposeBag)
+      
+      output.perfumeCount.asDriver()
+          .drive(onNext: { [weak self] count in
+              self?.configureSearchCount(count: count)
+          })
+          .disposed(by: self.disposeBag)
   }
   
   private func updateKeywordView(isHidden: Bool) {
     self.keywordCollectionView.isHidden = isHidden
     self.perfumeCollectionView.snp.updateConstraints {
-      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(isHidden ? 0 : 56)
+      $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(isHidden ? 0 : 104)
     }
   }
   
   private func updateEmptyView(isHidden: Bool) {
     self.emptyView.isHidden = isHidden
   }
+    
+    private func configureSearchCount(count: Int) {
+        self.searchResultCountLabel.text = "\(count)"
+    }
 }
 
 extension SearchResultViewController: UICollectionViewDelegateFlowLayout {

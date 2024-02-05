@@ -9,21 +9,21 @@ import UIKit
 
 class DoneButton: UIButton {
   
-  required init(title: String) {
+    required init(title: String, isFilterButton: Bool? = false) {
     super.init(frame: .zero)
-    self.setTitle(title: title)
+        self.setTitle(title: title, isFilterButton: isFilterButton ?? false)
   }
   
   required init?(coder: NSCoder) {
     fatalError()
   }
   
-  private func setTitle(title: String) {
+    private func setTitle(title: String, isFilterButton: Bool) {
     self.setTitle(title, for: .normal)
     self.setTitleColor(.white, for: .normal)
     self.titleLabel?.font = .notoSans(type: .bold, size: 15)
     self.layer.backgroundColor = UIColor.blackText.cgColor
-    self.contentEdgeInsets = .init(top: 0, left: 0, bottom: 34, right: 0)
+        self.contentEdgeInsets = .init(top: 0, left: 0, bottom: isFilterButton ? 0 : 34, right: 0)
   }
   
   func updateTitle(title: String) {

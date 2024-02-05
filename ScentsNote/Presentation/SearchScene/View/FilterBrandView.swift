@@ -23,13 +23,6 @@ final class FilterBrandView: UIView {
     $0.register(FilterBrandInitialCell.self)
   }
   
-  private let notyView = UIView().then { $0.backgroundColor = .lightGray2 }
-  private let notyLabel = UILabel().then {
-    $0.text = "카테고리 당 최대 5개까지 중복 선택 가능합니다."
-    $0.textColor = .darkGray7d
-    $0.font = .notoSans(type: .regular, size: 12)
-  }
-  
   private lazy var brandCollectionView = UICollectionView(frame: .zero, collectionViewLayout: CollectionViewLayoutFactory.filterBrandLayout).then {
     $0.register(FilterBrandCell.self)
   }
@@ -53,28 +46,15 @@ final class FilterBrandView: UIView {
     self.initialCollectionView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.initialCollectionView)
     self.initialCollectionView.snp.makeConstraints {
-      $0.top.equalToSuperview()
-      $0.left.right.equalToSuperview()
-      $0.height.equalTo(36)
-    }
-
-    self.addSubview(self.notyView)
-    self.notyView.snp.makeConstraints {
-      $0.top.equalTo(self.initialCollectionView.snp.bottom)
-      $0.left.right.equalToSuperview()
-      $0.height.equalTo(36)
-    }
-
-    self.notyView.addSubview(self.notyLabel)
-    self.notyLabel.snp.makeConstraints {
-      $0.centerY.centerX.equalToSuperview()
+        $0.top.leading.bottom.equalToSuperview()
+      $0.width.equalTo(48)
     }
     
     self.brandCollectionView.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.brandCollectionView)
     self.brandCollectionView.snp.makeConstraints {
-      $0.top.equalTo(self.notyView.snp.bottom)
-      $0.bottom.left.right.equalToSuperview()
+        $0.top.bottom.trailing.equalToSuperview()
+        $0.leading.equalTo(initialCollectionView.snp.trailing)
     }
   }
   

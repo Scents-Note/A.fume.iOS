@@ -28,6 +28,7 @@ final class SearchResultViewModel {
     let perfumes = BehaviorRelay<[PerfumeDataSection.Model]>(value: [])
     let hideKeywordView = BehaviorRelay<Bool>(value: true)
     let hideEmptyView = BehaviorRelay<Bool>(value: true)
+    let perfumeCount = BehaviorRelay<Int>(value: 0)
   }
   
   // MARK: - Vars & Lets
@@ -145,6 +146,7 @@ final class SearchResultViewModel {
         let items = perfumes.map { PerfumeDataSection.Item(perfume: $0) }
         let model = PerfumeDataSection.Model(model: "perfume", items: items)
         output.perfumes.accept([model])
+        output.perfumeCount.accept(items.count)
         output.hideEmptyView.accept(perfumes.count != 0)
       })
       .disposed(by: disposeBag)

@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import SnapKit
 import Then
+import RxGesture
 
 final class SearchFilterViewController: UIViewController {
   
@@ -36,7 +37,23 @@ final class SearchFilterViewController: UIViewController {
   private let dividerView = UIView().then { $0.backgroundColor = .grayCd }
   private let highlightView = UIView().then { $0.backgroundColor = .black }
   private lazy var filterScrollView = FilterScrollView(viewModel: self.viewModel)
-  private let doneButton = DoneButton(title: "적용")
+  private let bottomView = UIView().then { $0.backgroundColor = .lightGray }
+    private let dividerViewOfBottomView = UIView().then { $0.backgroundColor = .lightGray }
+    private let resetView = UIView().then {
+      $0.backgroundColor = .white
+      $0.layer.cornerRadius = 2
+      $0.layer.borderColor = UIColor.grayCd.cgColor
+      $0.layer.borderWidth = 0.5
+    }
+    private let resetImageView = UIImageView().then {
+        $0.image = .resetFilter
+    }
+    private let resetLabel = UILabel().then {
+      $0.text = "재설정"
+      $0.textColor = .blackText
+      $0.font = .appleSDGothic(type: .regular, size: 12.0)
+    }
+  private let doneButton = DoneButton(title: "적용", isFilterButton: true)
 
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -95,17 +112,54 @@ final class SearchFilterViewController: UIViewController {
       $0.height.equalTo(4)
       $0.width.equalTo(UIScreen.main.bounds.width / 3)
     }
-    
-    self.view.addSubview(self.doneButton)
-    self.doneButton.snp.makeConstraints {
-      $0.bottom.left.right.equalToSuperview()
-      $0.height.equalTo(86)
-    }
-    
+      
+      self.view.addSubview(bottomView)
+      self.bottomView.snp.makeConstraints {
+        $0.left.right.bottom.equalToSuperview()
+        $0.bottom.equalTo(self.view.safeAreaLayoutGuide)
+        $0.height.equalTo(72)
+      }
+      
+      self.bottomView.addSubview(self.resetView)
+      self.resetView.snp.makeConstraints {
+        $0.top.equalToSuperview().offset(10)
+        $0.left.equalToSuperview().offset(18)
+        $0.width.equalTo(90)
+        $0.height.equalTo(52)
+      }
+      
+      self.bottomView.addSubview(self.dividerViewOfBottomView)
+      self.dividerViewOfBottomView.snp.makeConstraints {
+        $0.top.left.right.equalToSuperview()
+        $0.height.equalTo(1)
+      }
+      
+      self.resetView.addSubview(self.resetImageView)
+      self.resetImageView.snp.makeConstraints {
+        $0.centerX.equalToSuperview()
+        $0.top.equalToSuperview().offset(4)
+        $0.size.equalTo(24)
+      }
+      
+      self.resetView.addSubview(self.resetLabel)
+      self.resetLabel.snp.makeConstraints {
+        $0.centerX.equalToSuperview()
+        $0.bottom.equalToSuperview().offset(-4)
+          
+      }
+      
+      self.bottomView.addSubview(self.doneButton)
+      self.doneButton.snp.makeConstraints {
+        $0.top.equalToSuperview().offset(10)
+        $0.left.equalTo(self.resetView.snp.right).offset(17)
+        $0.right.equalToSuperview().offset(-18)
+          $0.height.equalTo(52)
+      }
+      
     self.view.addSubview(self.filterScrollView)
     self.filterScrollView.snp.makeConstraints {
       $0.top.equalTo(self.tabCollectionView.snp.bottom)
-      $0.bottom.equalTo(self.doneButton.snp.top)
+      $0.bottom.equalTo(self.bottomView.snp.top)
       $0.left.right.equalToSuperview()
     }
     
@@ -131,6 +185,21 @@ final class SearchFilterViewController: UIViewController {
     self.closeButton.rx.tap
       .bind(to: input.closeButtonDidTapEvent)
       .disposed(by: self.disposeBag)
+      
+      self.resetView.rx.tapGesture()
+          .when(.recognized).map{ _ in }
+          .subscribe(onNext: { [weak self] _ in
+//              self?.filterScrollView.updatePage(<#T##idx: Int##Int#>)
+              self?.filterScrollView.removeFromSuperview()
+              self?.view.addSubview(self?.filterScrollView ?? UIView())
+              self?.filterScrollView.snp.makeConstraints {
+                  $0.top.equalTo((self?.tabCollectionView.snp.bottom)!)
+                  $0.bottom.equalTo((self?.bottomView.snp.top)!)
+                $0.left.right.equalToSuperview()
+              }
+              input.resetFilterButtonDidTapEvent.accept(())
+          })
+          .disposed(by: disposeBag)
   }
   
   private func bindOutput() {

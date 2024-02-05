@@ -23,6 +23,7 @@ final class SearchFilterViewModel {
     let tabDidTapEvent = PublishRelay<Int>()
     let doneButtonDidTapEvent = PublishRelay<Void>()
     let closeButtonDidTapEvent = PublishRelay<Void>()
+    let resetFilterButtonDidTapEvent = PublishRelay<Void>()
   }
   
   struct ChildInput {
@@ -105,6 +106,19 @@ final class SearchFilterViewModel {
         self?.coordinator?.finishFlow?(nil)
       })
       .disposed(by: disposeBag)
+      
+      input.resetFilterButtonDidTapEvent
+          .subscribe(onNext: { [weak self] in
+              self?.ingredients = []
+              self?.brands = []
+              self?.keywords = []
+              brands.accept([])
+              ingredients.accept([])
+              keywords.accept([])
+//              self?.updateBrands(brands: [])
+//              self?.updateKeywords(keywords: [])
+//              self?.updateIngredients(ingredients: [])
+          }).disposed(by: disposeBag)
     
     childInput.ingredientsDidUpdateEvent
       .subscribe(onNext: { [weak self] ingredientsUpdated in

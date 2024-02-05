@@ -79,7 +79,7 @@ struct CollectionViewLayoutFactory {
     let section = NSCollectionLayoutSection(group: group)
     let sectionBackground = NSCollectionLayoutDecorationItem.background(elementKind: "background-lightGray")
     section.decorationItems = [sectionBackground]
-    section.orthogonalScrollingBehavior = .continuous
+    section.orthogonalScrollingBehavior = .none
     
     return UICollectionViewCompositionalLayout(section: section).then {
       $0.register(SectionBackgroundDecorationView.self, forDecorationViewOfKind: "background-lightGray")

@@ -42,6 +42,8 @@ extension UIImage {
   // MARK: - Search
   static let btnSearch = UIImage(named: "btnSearch")
   static let btnCancelWhite = UIImage(named: "btnCancelWhite")
+    static let btnFilter = UIImage(named: "btnFilter")?.withRenderingMode(.alwaysOriginal)
+    static let resetFilter = UIImage(named: "refresh")?.withRenderingMode(.alwaysOriginal)
   
   // MARK: - My Page
   static let bgMypageReview = UIImage(named: "bgMypageReview")

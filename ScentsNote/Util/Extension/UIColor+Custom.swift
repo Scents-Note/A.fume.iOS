@@ -14,6 +14,7 @@ extension UIColor {
   static var bgSurveySelected: UIColor { return UIColor(red: 200 / 255, green: 187 / 255, blue: 182 / 255, alpha: 0.9) }
   static var perfumeDetailScore: UIColor { return UIColor(red: 40 / 255, green: 39 / 255, blue: 37 / 255, alpha: 1) }
   static var gray125: UIColor { return UIColor(red: 125 / 255, green: 125 / 255, blue: 125 / 255, alpha: 1) }
+    static var gray151: UIColor { return UIColor(red: 151 / 255, green: 151 / 255, blue: 151 / 255, alpha: 1) }
   
   static var black1d: UIColor { return UIColor(white: 29 / 255, alpha: 1) }
   static var black42: UIColor { return UIColor(white: 42 / 255, alpha: 1) }
