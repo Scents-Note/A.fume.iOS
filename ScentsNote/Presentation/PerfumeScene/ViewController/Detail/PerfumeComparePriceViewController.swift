@@ -14,10 +14,11 @@ class PerfumeComparePriceViewController: UIViewController, WKNavigationDelegate 
     
     var webView: WKWebView!
     var disposeBag = DisposeBag()
+    var url: String = ""
     
     private let navigationView = UIView().then { $0.backgroundColor = .white }
     private let titleLabel = UILabel().then {
-      $0.text = "필터"
+      $0.text = "가격 비교"
       $0.textColor = .blackText
       $0.font = .nanumMyeongjo(type: .extraBold, size: 22)
     }
@@ -41,8 +42,8 @@ class PerfumeComparePriceViewController: UIViewController, WKNavigationDelegate 
         webView = WKWebView(frame: view.bounds)
         webView.navigationDelegate = self
 
-        // 네이버 웹 페이지 로드
-        if let url = URL(string: "https://www.naver.com") {
+        // 웹 페이지 로드
+        if let url = URL(string: url) {
             let request = URLRequest(url: url)
             webView.load(request)
         }

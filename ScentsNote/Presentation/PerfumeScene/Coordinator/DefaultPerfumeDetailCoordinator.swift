@@ -74,8 +74,9 @@ final class DefaultPerfumeDetailCoordinator: BaseCoordinator, PerfumeDetailCoord
     }
   }
     
-    func showComparePriceViewController() {
+    func showComparePriceViewController(url: String) {
         let vc = PerfumeComparePriceViewController()
+        vc.url = url
         self.navigationController.present(vc, animated: true)
     }
   

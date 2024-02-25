@@ -25,6 +25,7 @@ struct PerfumeDetailResponseDTO: Decodable, Hashable {
   let noteType: Int
   let ingredients: IngredientResponseDTO
   let reviewIdx: Int
+  let priceComparisonUrl: String
 }
 
 extension PerfumeDetailResponseDTO {
@@ -45,6 +46,7 @@ extension PerfumeDetailResponseDTO {
                   Keywords: self.Keywords,
                   noteType: self.noteType,
                   ingredients: self.ingredients.toDomain(),
-                  reviewIdx: self.reviewIdx)
+                  reviewIdx: self.reviewIdx,
+                  priceComparisonUrl: self.priceComparisonUrl)
   }
 }

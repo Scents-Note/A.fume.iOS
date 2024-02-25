@@ -163,8 +163,8 @@ final class PerfumeDetailViewController: UIViewController {
           let cell = self?.collectionView.dequeueReusableCell(PerfumeDetailTitleCell.self, for: indexPath)
           guard let cell = cell else { return UICollectionViewCell()}
           cell.updateUI(perfumeDetail: perfumeDetail)
-            cell.clickCompareViewSubject.subscribe(onNext: { [weak self] _ in
-                childInput.comparePriceTapEvent.accept(())
+            cell.clickCompareViewSubject.subscribe(onNext: { _ in
+                childInput.comparePriceTapEvent.accept(perfumeDetail.priceComparisonUrl)
             }).disposed(by: cell.disposeBag)
           return cell
         case .content(let perfumeDetail):

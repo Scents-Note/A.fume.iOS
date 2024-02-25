@@ -11,6 +11,7 @@ struct PerfumeInMyPage: Equatable {
   let brandName: String
   let imageUrl: String
   let reviewIdx: Int
+  let priceComparisonUrl: String
 }
 
 extension PerfumeInMyPage {
@@ -31,6 +32,7 @@ extension PerfumeInMyPage {
                   Keywords: [],
                   noteType: 0,
                   ingredients: [],
-                  reviewIdx: 0)
+                  reviewIdx: 0,
+                  priceComparisonUrl: self.priceComparisonUrl)
   }
 }

@@ -12,6 +12,7 @@ struct PerfumeInMyPageResponseDTO: Decodable {
   let imageUrl: String
   let isLiked: Bool
   let reviewIdx: Int
+  let priceComparisonUrl: String
 }
 
 extension PerfumeInMyPageResponseDTO {
@@ -20,6 +21,7 @@ extension PerfumeInMyPageResponseDTO {
                  name: self.name,
                  brandName: self.brandName,
                  imageUrl: self.imageUrl,
-                 reviewIdx: self.reviewIdx)
+                 reviewIdx: self.reviewIdx,
+                 priceComparisonUrl: self.priceComparisonUrl)
   }
 }

@@ -25,6 +25,7 @@ struct PerfumeDetail: Hashable {
   let ingredients: [Ingredient]
   var reviewIdx: Int
   var similarPerfumes: [Perfume]? = nil
+  let priceComparisonUrl: String
 }
 
 extension PerfumeDetail {

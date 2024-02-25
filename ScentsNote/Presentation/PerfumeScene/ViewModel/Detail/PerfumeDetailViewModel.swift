@@ -23,7 +23,7 @@ final class PerfumeDetailViewModel {
     let perfumeDidTapEvent = PublishRelay<Int>()
     let reviewCellHeartTapEvent = PublishRelay<Int>()
     let reviewCellReportTapEvent = PublishRelay<Int>()
-    let comparePriceTapEvent = PublishRelay<Void>()
+    let comparePriceTapEvent = PublishRelay<String>()
   }
   
   struct Output {
@@ -150,8 +150,8 @@ final class PerfumeDetailViewModel {
       .disposed(by: self.disposeBag)
     
       childInput.comparePriceTapEvent
-          .subscribe(onNext: { [weak self] _ in
-              self?.handleComparePrice()
+          .subscribe(onNext: { [weak self] url in
+              self?.handleComparePrice(url: url)
           }).disposed(by: disposeBag)
   }
   
@@ -292,8 +292,8 @@ final class PerfumeDetailViewModel {
     }
   }
     
-    func handleComparePrice() {
-        self.coordinator?.showComparePriceViewController()
+    func handleComparePrice(url: String) {
+        self.coordinator?.showComparePriceViewController(url: url)
     }
   
   func showToast() {

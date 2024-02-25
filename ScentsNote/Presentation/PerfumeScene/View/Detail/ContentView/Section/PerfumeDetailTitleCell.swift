@@ -137,6 +137,7 @@ final class PerfumeDetailTitleCell: UICollectionViewCell {
     self.nameLabel.text = perfumeDetail.name
     self.starView.rating = perfumeDetail.score
     self.scoreLabel.text = "\(perfumeDetail.score)"
+    self.comparePriceView.isUserInteractionEnabled = perfumeDetail.priceComparisonUrl == "" ? false : true
   }
     
     func bindRx() {
