@@ -3931,7 +3931,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "-Dev";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2.0;
+				CURRENT_PROJECT_VERSION = 1.0.3.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = F37P7T723R;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3946,7 +3946,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS${BUNDLE_ID_SUFFIX}";
 				PRODUCT_NAME = "$(TARGET_NAME)${BUNDLE_ID_SUFFIX}";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -3966,7 +3966,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2.0;
+				CURRENT_PROJECT_VERSION = 1.0.3.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = F37P7T723R;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -3981,8 +3981,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS${BUNDLE_ID_SUFFIX}";
+				MARKETING_VERSION = 1.0.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.scentsnote.iOS--BUNDLE-ID-SUFFIX-";
 				PRODUCT_NAME = "$(TARGET_NAME)${BUNDLE_ID_SUFFIX}";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
